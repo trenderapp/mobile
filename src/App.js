@@ -1,0 +1,46 @@
+import './locales/i18n';
+import 'react-native-gesture-handler';
+
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
+import { SafeAreaProvider } from "react-native-safe-area-context"
+
+import { ClientContainer, ThemeContainer, WebsocketProvider } from './Components/Container';
+import { BaseToast, MessageToast } from './Components/Elements/Toasts';
+import Routes from './Routes';
+import { DmGroupListContextProvider } from './Context/DmGuildListContext';
+import { PostsListContextProvider } from './Context/PostsContext';
+
+const App = () => {
+
+  const toastConfig  = {
+    success: (props) => (
+      <BaseToast {...props} />
+    ),
+    message: (props) => {
+      <MessageToast {...props} />
+    }
+  }
+
+  return (
+    <ThemeContainer>
+      <NavigationContainer>
+        <ClientContainer>
+          <WebsocketProvider>
+            <PostsListContextProvider>
+              <DmGroupListContextProvider>
+                <SafeAreaProvider >
+                  <Routes />
+                </SafeAreaProvider>
+              </DmGroupListContextProvider>
+            </PostsListContextProvider>
+          </WebsocketProvider>
+        </ClientContainer>
+      </NavigationContainer>
+      <Toast onPress={() => Toast.hide()} config={toastConfig} />
+    </ThemeContainer>
+  );
+};
+
+export default App;
