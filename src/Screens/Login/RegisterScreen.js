@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { View, ScrollView, SafeAreaView, Platform } from 'react-native';
-import { TextInput as PaperTextInput, Text, Switch, Checkbox } from 'react-native-paper';
+import { View, ScrollView, SafeAreaView } from 'react-native';
+import { TextInput as PaperTextInput, Text, Checkbox } from 'react-native-paper';
 import dayjs from "dayjs";
 
 import styles from '../../Style/style';
