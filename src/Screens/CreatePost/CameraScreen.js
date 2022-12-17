@@ -3,7 +3,6 @@ import { useRef, useState, useMemo, useCallback, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity as PressableOpacity, Platform } from 'react-native';
 import { PinchGestureHandler, TapGestureHandler } from 'react-native-gesture-handler';
-import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 import {
   sortFormats,
   useCameraDevices
@@ -18,7 +17,6 @@ import { useIsForeground } from '../../Components/Camera/useIsForeground';
 import { getPermissions } from '../../Services';
 import { useNavigation } from '../../Components/Container';
 import SvgElement from '../../Components/Elements/Svg';
-import PostCreatorScreen from '../../Components/Posts/Creator/PostCreatorScreen';
 
 const ReanimatedCamera = Reanimated.createAnimatedComponent(Camera);
 Reanimated.addWhitelistedNativeProps({
@@ -30,7 +28,6 @@ export function CameraScreen({ route: { params } }) {
   const camera = useRef(null);
   const navigation = useNavigation();
   const [isCameraInitialized, setIsCameraInitialized] = useState(false);
-  const [createPost, setCreatePost] = useState(false);
   const [hasMicrophonePermission, setHasMicrophonePermission] = useState(false);
   const zoom = useSharedValue(0);
   const isPressingButton = useSharedValue(false);
@@ -57,10 +54,6 @@ export function CameraScreen({ route: { params } }) {
   useEffect(() => {
     async function getData() {
       await getPermissions()
-      /*CameraRoll.getPhotos({
-        first: 20,
-        assetType: 'Photos',
-      }).then((roll) => console.log(roll))*/
     }
     getData()
     Camera.getMicrophonePermissionStatus().then((status) => setHasMicrophonePermission(status === 'authorized'));
@@ -189,7 +182,6 @@ export function CameraScreen({ route: { params } }) {
 
   return (
     <View style={styles.container}>
-      <PostCreatorScreen visible={createPost} changeVisibilty={setCreatePost} />
       {device != null && (
         <PinchGestureHandler onGestureEvent={onPinchGesture} enabled={isActive}>
           <Reanimated.View style={StyleSheet.absoluteFill}>

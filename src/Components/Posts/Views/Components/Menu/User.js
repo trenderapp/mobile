@@ -24,6 +24,7 @@ function User({ modalVisible, setModalVisible }) {
         Toast.show({
             text1: t("commons.success")
         })
+        setModalVisible(false)
     }
 
     const block = async () => {
@@ -34,6 +35,7 @@ function User({ modalVisible, setModalVisible }) {
         Toast.show({
             text1: t("commons.success")
         })
+        setModalVisible(false)
     }
 
     const report = async () => {
@@ -44,6 +46,7 @@ function User({ modalVisible, setModalVisible }) {
         Toast.show({
             text1: t("commons.success")
         })
+        setModalVisible(false)
     }
 
     const copyPostID = () => {
@@ -51,6 +54,7 @@ function User({ modalVisible, setModalVisible }) {
         Toast.show({
             text1: t("commons.success")
         })
+        setModalVisible(false)
     }
 
     return (

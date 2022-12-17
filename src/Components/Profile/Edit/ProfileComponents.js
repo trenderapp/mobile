@@ -93,8 +93,12 @@ function ProfileComponent({ nickname, pined, informations, setInfo }){
                     <View style={{ paddingTop: 10 }}>
                         <Text>{informations.user_info.username}</Text>
                         <View style={styles.row}>
-                            <Text>@{informations.user_info.nickname} { client.user.flags(informations.user_info.flags).has(userFlags.TRENDER_EMPLOYEE) && <UserBadges url={client.user.badge("TRENDER_EMPLOYEE")} /> }</Text>
-                            { informations.user_info.is_private && <SvgElement margin={5} size={18} name="lock" color={colors.text_normal} /> }
+                            { informations.user_info.certified && <SvgElement size={18} name="verified" color={colors.text_normal} /> }
+                           { client.user.flags(informations.user_info.flags).has(userFlags.TRENDER_EMPLOYEE) && <UserBadges url={client.user.badge("TRENDER_EMPLOYEE")} /> }
+                        </View>
+                        <View style={styles.row}>
+                            { informations.user_info.is_private && <SvgElement size={18} name="lock" color={colors.text_normal} /> }
+                            <Text>@{informations.user_info.nickname}</Text>
                         </View>
                     </View>
                     <View style={{ paddingTop: 5 }}>

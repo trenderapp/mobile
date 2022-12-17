@@ -1,14 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Image, Pressable, StyleSheet, View } from 'react-native';
+import { Image, Platform, Pressable, StyleSheet, View } from 'react-native';
+import Video from 'react-native-video';
+import Toast from 'react-native-toast-message';
+import { CameraRoll } from '@react-native-camera-roll/camera-roll';
+import { PERMISSIONS, RESULTS, check, request } from "react-native-permissions";
+
+import { useNavigation } from '../../Components/Container';
 import SvgElement from '../../Components/Elements/Svg';
 import { full_height, full_width } from '../../Style/style';
-import Video from 'react-native-video';
-import { useNavigation } from '../../Components/Container';
+import { useTranslation } from 'react-i18next';
 
 
 export function DisplayRenderScreen({ route: { params }}) {
   
   const { type, info } = params;
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const videoPlayer = useRef(null);
   const [currentTime, setCurrentTime] = useState(0)
@@ -19,6 +25,20 @@ export function DisplayRenderScreen({ route: { params }}) {
   useEffect(() => {
     info && setFile(info)
   }, [info])
+
+  const downloadFile = async () => {
+    if(Platform.OS === "android") {
+      const camera = await check(PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE);
+      if(camera !== RESULTS.GRANTED || camera !== RESULTS.LIMITED) await request(PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE);  
+    }
+
+    await CameraRoll.save(info.uri, { 
+      type: info.type,
+      album: "Trender"
+    })
+    Toast.show({ text1: t(`commons.success`) })
+  }
+
   return (
     <View style={styles.container}>
       {
@@ -82,6 +102,9 @@ export function DisplayRenderScreen({ route: { params }}) {
       <View style={styles.leftButtonRow}>
         <SvgElement name={"chevron-left"} noColor size={24} onPress={() => navigation.replace("CameraScreen", params)} />
       </View>
+      <View style={styles.rightButtonRow}>
+        <SvgElement name={"download"} noColor size={24} onPress={() => downloadFile()} />
+      </View>
       <View style={styles.bottomButtonRow}> 
         <SvgElement name={"chevron-right"} noColor size={24} onPress={() => navigation.replace("PostCreatorScreen", {
           ...params,
@@ -103,8 +126,8 @@ const styles = StyleSheet.create({
   },
   rightButtonRow: {
     position: "absolute",
-    right: 20,
-    top: 20,
+    left: 20,
+    bottom: 30,
   },
   bottomButtonRow: {
     position: "absolute",

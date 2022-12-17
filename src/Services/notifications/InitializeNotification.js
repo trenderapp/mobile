@@ -5,7 +5,7 @@ import { checkNotifications, requestNotifications, RESULTS } from 'react-native-
 import { Platform } from 'react-native';
 
 export const currentFcmToken = async () => {
-  const token = await EncryptedStorage.getItem("fcmToken");
+  const token = await EncryptedStorage.getItem("pushNotificationToken");
   if (token) return token;
   return;
 }
@@ -48,7 +48,7 @@ export const resetFcmToken = async () => {
   try {
     const fcmToken = await messaging().getToken();
     if (fcmToken) {
-      await EncryptedStorage.setItem("fcmToken", fcmToken);
+      await EncryptedStorage.setItem("pushNotificationToken", fcmToken);
 
       return fcmToken
     }
@@ -59,7 +59,7 @@ export const resetFcmToken = async () => {
 }
 
 export const initNotificationToken = async () => {
-  const token = await EncryptedStorage.getItem("fcmToken");
+  const token = await EncryptedStorage.getItem("pushNotificationToken");
   if (!token || token === "null") {
     const fcmToken = await resetFcmToken();
     return fcmToken;
@@ -97,6 +97,7 @@ export async function requestNotificationPermission() {
 
 export const notificationListener = async () => {
   // Assume a message-notification contains a "type" property in the data payload of the screen to open
+  
 
   messaging().onNotificationOpenedApp(remoteMessage => {
     console.log('Notification caused app to open from background state:', remoteMessage.notification);

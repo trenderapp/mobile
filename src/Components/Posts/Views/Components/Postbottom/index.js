@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { View, Share } from 'react-native';
 
 import styles from "../../../../../Style/style";
@@ -7,14 +7,12 @@ import { SinglePostContext } from "../../../PostContext";
 import { Text } from "react-native-paper";
 import SvgElement from "../../../../Elements/Svg";
 import { posturl } from "../../../../../Services/constante";
-import PostCreatorScreen from "../../../Creator/PostCreatorScreen";
 import { useTheme } from "../../../../Container";
 import { useNavigation } from "@react-navigation/native";
 
 function Postbottom() {
 
     const { info } = useContext(SinglePostContext);
-    const [createPost, setCreatePost] = useState(false);
     const { colors } = useTheme();
     const navigation = useNavigation();
 
@@ -30,7 +28,6 @@ function Postbottom() {
             borderBottomColor: colors.bg_secondary,
             borderBottomWidth: 1
         }}>
-            <PostCreatorScreen changeVisibilty={setCreatePost} visible={createPost} attached_post_id={info.post_id} />
             <View
                 style={[ styles.row, { 
                     justifyContent: "space-evenly", 

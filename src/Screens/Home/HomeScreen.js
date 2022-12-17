@@ -28,14 +28,23 @@ const HomeScreen = () => {
     
 }, [])
 
-  const bottomHandler = async (refresh) => {
-    refresh ? setLoaderF(true) : setLoader(true)
-    if(loader || loaderF) return;
+  const bottomHandler = async () => {
+    setLoader(true)
+    if(loader) return;
     const response = await client.post.fetch({ skip: posts.length });
-    refresh ? setLoaderF(false) : setLoader(false);
+    setLoaderF(false);
     if(response.error) return;
     if(response.data < 1) return setLoader(false);
     dispatch(addPosts(response.data));
+  }
+
+  const refreshPosts = async () => {
+    setLoaderF(true)
+    if(loaderF) return;
+    const response = await client.post.fetch({ skip: posts.length });
+    setLoaderF(false)
+    if(response.error) return;
+    dispatch(initPosts(response.data));
   }
 
   return (
@@ -45,9 +54,9 @@ const HomeScreen = () => {
           renderItem={({ item, index }) => <DisplayPosts key={index} comments={false} informations={item} />} 
           keyExtractor={item => item.post_id}
           ListFooterComponent={loader && <Loader />}
-          onScrollEndDrag={() => bottomHandler(false)}
+          onScrollEndDrag={() => bottomHandler()}
           ListEmptyComponent={<Text style={{ padding: 5 }}>{t("commons.nothing_display")}</Text>}
-          refreshControl={<RefreshControl refreshing={loaderF} progressBackgroundColor={colors.bg_primary} tintColor={colors.fa_primary} colors={[colors.fa_primary, colors.fa_secondary, colors.fa_third]} onRefresh={() => bottomHandler(true)} />}
+          refreshControl={<RefreshControl refreshing={loaderF} progressBackgroundColor={colors.bg_primary} tintColor={colors.fa_primary} colors={[colors.fa_primary, colors.fa_secondary, colors.fa_third]} onRefresh={() => refreshPosts()} />}
         />
     </PageContainer>
   );

@@ -16,7 +16,6 @@ const SearchContainer = ({ children }) => {
     const { colors } = useTheme();
     const { client, user } = useClient();
     const { t } = useTranslation();
-    const [searchModal, setSearchModal] = useState(false);
     const navigation = useNavigation();
 
     return (  
@@ -55,9 +54,7 @@ const SearchContainer = ({ children }) => {
                         }} />
                 </View>
             </Appbar.Header>
-            <View style={{ padding: 5 }}>
-                { children }
-            </View>
+            { children }
         </View>
     )
 };

@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from "react-i18next";
-import { Keyboard } from 'react-native';
-import { TextInput as PaperTextInput } from 'react-native-paper';
+import { Keyboard, View } from 'react-native';
+import { Text,  Button, Dialog, Portal, TextInput as PaperTextInput } from 'react-native-paper';
 import { useClient, useTheme } from '../../Components/Container';
 import SettingsContainer from '../../Components/Container/SettingsContainer';
 import Clipboard from "@react-native-clipboard/clipboard";
 import Toast from 'react-native-toast-message';
+import styles from '../../Style/style';
 
 function AffiliationScreen() {
 
     const { t } = useTranslation();
-    const { client } = useClient();
+    const { client, user } = useClient();
     const { colors } = useTheme();
     const [affiliation_code, setAffiliate] = useState("");
     const [myCode, setCode] = useState(" ");

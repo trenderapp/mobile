@@ -1,23 +1,24 @@
 import React, { useContext, useEffect } from 'react';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import dayjs from 'dayjs';
+import { useTranslation } from 'react-i18next';
+import notifee from "@notifee/react-native";
+import { Linking } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { webSocketRoutes } from 'trender-client';
 
 import { BottomNavigation, LoginNavigator, SplashScreen } from './Navigator';
 import { PostStack, ProfileStack, SettingsStack } from './Navigator/Stacks';
 import { useClient, useWebSocket } from './Components/Container';
+import { DmGroupListContext, initDmGroup, modifyDmGroup } from './Context/DmGuildListContext';
+import { changeElementPlaceArray, parseURL } from './Services';
+import { notificationListener, requestNotificationPermission } from './Services/notifications';
+import VerificationCode from './Screens/Login/Verify/VerificationCode';
 import CreateStack from './Navigator/Stacks/CreateStack';
 import MessageStack from './Navigator/Stacks/MessageStack';
-import { useTranslation } from 'react-i18next';
 
 import 'dayjs/locale/fr'
 import 'dayjs/locale/en'
-import { DmGroupListContext, initDmGroup, modifyDmGroup } from './Context/DmGuildListContext';
-import { webSocketRoutes } from 'trender-client';
-import { changeElementPlaceArray, parseURL } from './Services';
-import { Linking } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import VerificationCode from './Screens/Login/Verify/VerificationCode';
-import { notificationListener, requestNotificationPermission } from './Services/notifications';
 
 const Stack = createStackNavigator();
 
@@ -41,10 +42,10 @@ function Routes() {
         DmGroupList.setUnreads(request.data);
     }
 
-
     useEffect(() => {
         dayjs.locale(i18n.language);
 
+        notifee.setBadgeCount(0);
         const getUrlAsync = async () => {
             // Get the deep link used to open the app
             const initialUrl = await Linking.getInitialURL();

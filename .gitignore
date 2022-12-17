@@ -27,7 +27,6 @@ build/
 app/bin
 .idea
 .gradle
-gradle.properties
 local.properties
 *.iml
 *.hprof

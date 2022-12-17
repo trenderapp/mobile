@@ -9,6 +9,7 @@ import { useClient, useTheme } from "../../../../Container";
 import SvgElement from "../../../../Elements/Svg";
 import { Divider, Text } from "react-native-paper";
 import { deletePosts, ProfilePostsListContext } from "../../../../Profile/ProfileContext";
+import { useNavigation } from "@react-navigation/native";
 
 function Owner({ modalVisible, setModalVisible, pined, post_id }) {
 
@@ -16,13 +17,19 @@ function Owner({ modalVisible, setModalVisible, pined, post_id }) {
     const { client } = useClient();
     const { dispatch } = useContext(ProfilePostsListContext);
     const { colors } = useTheme();
+    const navigation = useNavigation();
 
     const deletePost = async () => {
         const response = await client.post.delete(post_id);
         if (response.error) return Toast.show({
             text1: t(`errors.${response.error.code}`)
         })
-        dispatch(deletePosts(post_id));
+        if(navigation.getState().routeNames[0] === "PostScreen") {
+            if(navigation.canGoBack()) return navigation.goBack();
+        } else {
+            dispatch(deletePosts(post_id));
+            setModalVisible(false);
+        }
     }
 
     const pinPost = async () => {
@@ -33,6 +40,7 @@ function Owner({ modalVisible, setModalVisible, pined, post_id }) {
         Toast.show({
             text1: t("commons.success")
         })
+        setModalVisible(false)
     }
 
     const unPinPost = async () => {
@@ -43,6 +51,7 @@ function Owner({ modalVisible, setModalVisible, pined, post_id }) {
         Toast.show({
             text1: t("commons.success")
         })
+        setModalVisible(false)
     }
 
     const copyPostID = () => {
@@ -50,6 +59,7 @@ function Owner({ modalVisible, setModalVisible, pined, post_id }) {
         Toast.show({
             text1: t("commons.success")
         })
+        setModalVisible(false)
     }
 
     return (

@@ -93,7 +93,7 @@ const readMessage = (data) => {
       content: content
     })
     if(request.error) return Toast.show({ text1: t(`errors.${request.error.code}`)});
-    setInwait(false)
+    setInwait(false);
     dispatch(addOneDmMessages(request.data));
     const idx = DmGroupList.groups.findIndex(g => g.guild_id === params.guild_id);
     if(idx < 1) return readMessage(request.data);
@@ -124,7 +124,7 @@ const readMessage = (data) => {
             scrollsToTop={scrollTop}
             onScrollToTop={() => setScrollToTop(false)}
             renderItem={({ item }) => <MessageBox info={item} />}
-            keyExtractor={(item) => item.message_id}
+            keyExtractor={(item, index) => item?.message_id ?? index}
             ListEmptyComponent={<Text>{t("commons.nothing_display")}</Text>}
             ListFooterComponent={<Button onPress={() => getMessages()}>{t("messages.load_more_messages")}</Button>}
           />

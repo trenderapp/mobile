@@ -163,7 +163,7 @@ const PostCreatorScreenStack = ({ route: { params }}) => {
             {
               files.length > 0 ? files[0]?.type.startsWith("video") ? <VideoPlayer creator uri={files[0].uri} /> : files[0].type.startsWith("image") ? <Carroussel changeList={deleteImage} creator={files} /> : <Text>{files.length}</Text> : null
             }
-            <BottomButtonPostCreator setCameraVisible={() => navigation.replace("CameraScreen", {
+            <BottomButtonPostCreator setFiles={(info) => setFiles([ ...files, info])} setCameraVisible={() => navigation.replace("CameraScreen", {
               ...params,
               initContent: content,
               initFiles: files

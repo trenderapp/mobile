@@ -26,6 +26,9 @@
         "delete_all": "Delete all",
         "next": "Next"
     },
+    "explore": {
+        "no_trends_selected_region": "No Trends in your selected region. Create the first Trend of the day !"
+    },
     "posts": {
         "create_post": "What's new ?",
         "publish": "Publish",

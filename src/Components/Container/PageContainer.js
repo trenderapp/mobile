@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Appbar } from "react-native-paper";
 
 import styles, { full_width } from "../../Style/style";
@@ -7,7 +7,6 @@ import { TouchableOpacity, View } from "react-native";
 import useTheme from "./Theme/useTheme";
 import useClient from "./Client/useClient";
 import { useNavigation } from "@react-navigation/native";
-import PostCreatorScreen from "../Posts/Creator/PostCreatorScreen";
 import FastImage from "react-native-fast-image";
 
 const PageContainer = ({ children }) => {

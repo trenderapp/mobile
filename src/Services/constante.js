@@ -1,4 +1,4 @@
-const dev_ip = undefined;
+const dev_ip = "192.168.45.1";
 
 const link = typeof dev_ip !== "undefined" ? dev_ip : "api.beta.trenderapp.com";
 const s = link === "api.beta.trenderapp.com" ? "s" : "";

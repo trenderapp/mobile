@@ -14,7 +14,7 @@ function Postheader({ info, created_at }) {
     const [showModal, setShowModal] = useState(false);
     const { client, user } = useClient();
     const navigation = useNavigation();
-    const post = useContext(SinglePostContext)
+    const post = useContext(SinglePostContext);
 
     return (
         <View style={{ 

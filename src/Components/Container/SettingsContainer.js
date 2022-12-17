@@ -10,6 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import useClient from "./Client/useClient";
 import SafeBottomContainer from "./SafeBottomContainer";
 import { currentFcmToken } from "../../Services/notifications";
+import { firebase } from "@react-native-firebase/messaging";
 
 const SettingsContainer = ({ children, title, disconnect = false }) => {
     
@@ -31,7 +32,7 @@ const SettingsContainer = ({ children, title, disconnect = false }) => {
               await client.client.user.logout();
               const fcmToken = await currentFcmToken();
               if(fcmToken) await client.client.pushNotification.delete(fcmToken)
-              
+              await firebase.messaging().deleteToken()
               EncryptedStorage.clear().then(() => {
                 client.setValue({
                   ...client,

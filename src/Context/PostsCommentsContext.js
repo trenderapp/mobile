@@ -37,6 +37,7 @@ export const deletePosts = (info) => {
 export const reducer = (state = initialState, action) => {
     switch(action.type) {
         case ADD_POST:
+            if(state.some(i => i.post_id === action.info.post_id)) state = state.filter(i => i.post_id !== action.info.post_id);
             return state.concat(action.info);
         case DELETE_POST :
             return state.filter(p => p.post_id !== action.info);
