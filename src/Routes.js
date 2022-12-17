@@ -12,7 +12,7 @@ import { PostStack, ProfileStack, SettingsStack } from './Navigator/Stacks';
 import { useClient, useWebSocket } from './Components/Container';
 import { DmGroupListContext, initDmGroup, modifyDmGroup } from './Context/DmGuildListContext';
 import { changeElementPlaceArray, parseURL } from './Services';
-import { notificationListener, requestNotificationPermission } from './Services/notifications';
+// import { notificationListener, requestNotificationPermission } from './Services/notifications';
 import VerificationCode from './Screens/Login/Verify/VerificationCode';
 import CreateStack from './Navigator/Stacks/CreateStack';
 import MessageStack from './Navigator/Stacks/MessageStack';
@@ -58,19 +58,18 @@ function Routes() {
           };
       
           getUrlAsync();
-          notificationListener();
       
     }, [])
 
-    const registerFCMToken = async () => {
+    /*const registerFCMToken = async () => {
         const fcmToken = await requestNotificationPermission();
         if(fcmToken) await client.pushNotification.register(fcmToken);
         return;
-    }
+    }*/
 
     useEffect(() => {
         if(state === "loged") {
-            registerFCMToken()
+            // registerFCMToken()
             getGuilds()
             getUnreads()
         }
