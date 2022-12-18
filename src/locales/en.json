@@ -129,6 +129,7 @@
         "9": "Invalid request ID or already used",
         "10": "Invalid field size",
         "11": "Invalid query name",
+        "100": "A verification email has been sent",
         "200": "success",
         "204": "Successfully deleted",
         "404": "This root doesn't exit",
