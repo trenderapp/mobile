@@ -5,12 +5,12 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import { SafeAreaProvider } from "react-native-safe-area-context"
+import { Provider } from 'react-redux';
 
 import { ClientContainer, ThemeContainer, WebsocketProvider } from './Components/Container';
 import { BaseToast, MessageToast } from './Components/Elements/Toasts';
 import Routes from './Routes';
-import { DmGroupListContextProvider } from './Context/DmGuildListContext';
-import { PostsListContextProvider } from './Context/PostsContext';
+import { store } from './Redux';
 
 const App = () => {
 
@@ -28,13 +28,11 @@ const App = () => {
       <NavigationContainer>
         <ClientContainer>
           <WebsocketProvider>
-            <PostsListContextProvider>
-              <DmGroupListContextProvider>
-                <SafeAreaProvider >
-                  <Routes />
-                </SafeAreaProvider>
-              </DmGroupListContextProvider>
-            </PostsListContextProvider>
+            <Provider store={store}>
+              <SafeAreaProvider >
+                <Routes />
+              </SafeAreaProvider>
+            </Provider>
           </WebsocketProvider>
         </ClientContainer>
       </NavigationContainer>

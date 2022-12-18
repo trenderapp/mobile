@@ -101,7 +101,9 @@ function BottomButtonPostCreator({ setFiles, addFiles, setCameraVisible }) {
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "flex-end",
-                padding: 10
+                padding: 10,
+                borderColor: colors.bg_secondary,
+                borderTopWidth: 1
             }}>
             {
                 buttons.map((b, idx) => (

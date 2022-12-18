@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { TouchableHighlight, View } from "react-native";
-import { Text, Avatar as PaperAvatar, Badge, Divider } from "react-native-paper";
+import { Text, Badge } from "react-native-paper";
 import Toast from 'react-native-toast-message';
 import { full_width } from "../../Style/style";
 import { useClient, useNavigation, useTheme } from "../Container";
@@ -47,13 +47,11 @@ function GuildInfo({ info }) {
                     <SvgElement name="copy" margin={5} size={22} /> 
                     <Text>{t("messages.copy_id")}</Text>
                 </ModalSection>
-                <Divider />
                 <ModalSection onPress={() => leaveDm()}>
                     <SvgElement name="disconnect" margin={5} size={22} /> 
                     <Text>{t("messages.leave_conversation")}</Text>
                 </ModalSection>
-                <Divider />
-                <ModalSection onPress={() => setModalVisible(false)} >
+                <ModalSection noDivider onPress={() => setModalVisible(false)} >
                     <Text style={{ color: colors.warning_color }}>{t("commons.cancel")}</Text>
                 </ModalSection>
             </BottomModal>

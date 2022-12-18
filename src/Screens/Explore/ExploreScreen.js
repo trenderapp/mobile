@@ -6,7 +6,7 @@ import ExploreScreenNavigator from './ExploreNavigator';
 function ExploreScreen() {
   return (
     <SearchContainer>
-        <ExploreScreenNavigator />
+      <ExploreScreenNavigator />
     </SearchContainer>
   );
 }

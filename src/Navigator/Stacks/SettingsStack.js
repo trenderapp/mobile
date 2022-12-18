@@ -2,7 +2,6 @@ import React from "react";
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
 import { NavigationProvider } from "../../Components/Container";
-import { PostsCommentsContextListContextProvider } from "../../Context/PostsCommentsContext";
 import HomeSettingsScreen from "../../Screens/Settings/HomeSettingsScreen";
 import LanguageThemeScreen from "../../Screens/Settings/LanguageThemeScreen";
 import BlockedScreen from "../../Screens/Settings/BlockedScreen";
@@ -16,9 +15,7 @@ const SettingsStack = ({ navigation }) => {
 
     return (
       <NavigationProvider value={navigation}>
-        <PostsCommentsContextListContextProvider>
-          <Stack.Navigator initialRouteName="HomeSettingsScreen">
-
+        <Stack.Navigator initialRouteName="HomeSettingsScreen">
             <Stack.Screen name="HomeSettingsScreen" component={HomeSettingsScreen}  options={{
             cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, 
             headerShown: false
@@ -43,8 +40,7 @@ const SettingsStack = ({ navigation }) => {
             cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, 
             headerShown: false
           }}/>
-            </Stack.Navigator>
-        </PostsCommentsContextListContextProvider>
+        </Stack.Navigator>
       </NavigationProvider>
     );
 };

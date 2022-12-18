@@ -24,7 +24,7 @@ const PageContainer = ({ children }) => {
                   nickname: user.nickname
                 }
               })}>
-                <FastImage source={{ uri: `${client.user.avatar(user.user_id, user.avatar)}`, cache: FastImage.cacheControl.web }} style={[ styles.pdp33, { marginLeft: 5 } ]} />
+                <FastImage source={{ uri: `${client.user.avatar(user.user_id, user.avatar)}`, cache: FastImage.cacheControl.web }} style={[ styles.pdp33, { marginLeft: 5, backgroundColor: colors.bg_secondary } ]} />
               </TouchableOpacity>
               <View style={[styles.row, { justifyContent: "flex-end" }]}>
                   { /** <Appbar.Action color={colors.text_normal} icon="qrcode-scan" onPress={() => console.log("qrcode")} /> */ }

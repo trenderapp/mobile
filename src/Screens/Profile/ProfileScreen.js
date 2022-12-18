@@ -1,18 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { useClient } from '../../Components/Container';
 import DisplayPosts from '../../Components/Posts/DisplayPost';
 import ProfileComponent from '../../Components/Profile/Edit/ProfileComponents';
 import ProfileNotFound from '../../Components/Profile/Edit/ProfileNotFound';
 import ProfileContainer from '../../Components/Container/ProfileContainer';
-import { initPosts, addPosts, ProfilePostsListContext } from '../../Components/Profile/ProfileContext';
 import { Loader } from '../../Other';
+import { addProfileTrends, initProfileTrends } from '../../Redux/profileFeed/action';
 
 function ProfileScreen({ route }) {
 
     const { nickname } = route.params;
     const { client } = useClient();
-    const { posts, dispatch } = useContext(ProfilePostsListContext);
+    const posts = useSelector((state) => state.profileFeed);
+    const dispatch = useDispatch();
     const [pined, setPined] = useState(null);
     const [informations, setInfo] = useState(null);
     const [error, setError] = useState(false);
@@ -21,7 +23,7 @@ function ProfileScreen({ route }) {
 
     useEffect(() => {
         async function getData() {
-            dispatch(initPosts([]))
+            dispatch(initProfileTrends([]))
 
             const response_profile = await client.user.profile(nickname);
 
@@ -38,7 +40,7 @@ function ProfileScreen({ route }) {
 
             setLoader(false)
             if(response.error) return setError(response.error.code);
-            dispatch(initPosts(response.data));
+            dispatch(initProfileTrends(response.data));
 
             if(response.data.length > 0) {
                 if(!response.data[0]?.from?.pined_post) return;
@@ -61,7 +63,7 @@ function ProfileScreen({ route }) {
         const response = await client.post.user.fetch(nickname, { skip: posts.length });
         if(response.error) return setError(response.error.code);
         if(response.data < 1) return setLoader(false);
-        dispatch(addPosts(response.data));
+        dispatch(addProfileTrends(response.data));
     }
 
     return(
@@ -85,4 +87,15 @@ function ProfileScreen({ route }) {
     )
 }
 
-export default ProfileScreen;
+const mapStateToProps = (state) => {
+    return {
+      profileFeed: state.profileFeed,
+    };
+};
+  
+const mapDispatchToProps = {
+    addProfileTrends,
+    initProfileTrends
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);

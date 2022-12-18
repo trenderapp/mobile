@@ -10,13 +10,16 @@ import PostImage from "./Views/PostImage";
 import PostNormal from "./Views/PostNormal";
 import PostVideo from "./Views/PostVideo";
 
-function DisplayPosts({ informations, pined, comments }) {
+function DisplayPosts({ informations, pined, comments, is_comment }) {
     
     const { t } = useTranslation();
     const navigation = useNavigation();
 
     return (
-        <SinglePostContextProvider informations={informations}>
+        <SinglePostContextProvider informations={{
+            ...informations,
+            is_comment: is_comment
+        }}>
             <TouchableOpacity activeOpacity={0.7} onPress={() => comments ? null : navigation.push("PostStack", { screen: "PostScreen", params: { post_id: informations.post_id, informations: informations } })} >
             { pined && <View style={{ marginLeft: 5 }}><Text style={styles.pined}><SvgElement name="pin" noColor size={12} /> {t("posts.pin")}</Text></View> }
             {   

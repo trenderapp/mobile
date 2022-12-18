@@ -5,7 +5,7 @@ import { TouchableHighlight, View } from "react-native";
 import { messageFormatDate } from "../../../Services";
 import { useClient, useTheme } from "../../Container";
 import { Markdown } from "../../Elements/Text";
-import { Divider, Text } from "react-native-paper";
+import { Text } from "react-native-paper";
 import { Avatar } from "../../Member";
 import { SinglePostContextProvider } from "../../Posts/PostContext";
 import { useTranslation } from "react-i18next";
@@ -37,17 +37,15 @@ function MessageBox({ info }) {
                     <SvgElement name="copy" margin={5} size={22} />
                     <Text>{t("messages.copy_id")}</Text>
                 </ModalSection>
-                <Divider />
                 <ModalSection onPress={() => copyText(info.content)}>  
                     <SvgElement name="copy" margin={5} size={22} />
                     <Text>{t("messages.copy_message")}</Text>
                 </ModalSection>
-                <Divider />
                 <ModalSection onPress={() => reportMessage()}>  
                     <SvgElement name="ban" margin={5} size={22} /> 
                     <Text>{t("messages.report_message")}</Text>
                 </ModalSection>
-                <ModalSection onPress={() => setModalVisible(false)}>
+                <ModalSection noDivider onPress={() => setModalVisible(false)}>
                     <Text style={{ color: colors.warning_color }}>{t("commons.cancel")}</Text>
                 </ModalSection>
             </BottomModal>

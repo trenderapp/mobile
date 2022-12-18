@@ -1,34 +1,35 @@
+import React, { useEffect, useState } from 'react';
 import { useIsFocused } from "@react-navigation/native";
-import React, { useContext, useEffect, useState } from "react";
+import { connect, useDispatch, useSelector  } from 'react-redux';
 import { useTranslation } from "react-i18next";
 import { RefreshControl } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { Text } from "react-native-paper";
 import { useClient, useTheme } from "../../Container";
 import DisplayPosts from "../../Posts/DisplayPost";
-import { addPosts, initPosts, PostsRecentTrendsContext } from "./PostsRecentTrendsContext";
+import { addExploreRecentTrends, initExploreRecentTrends } from '../../../Redux/exploreRecentTrends/action';
 
 function RecentTrends() {
 
     const { client } = useClient();
     const { t } = useTranslation();
     const { colors } = useTheme();
-    const { posts, dispatch } = useContext(PostsRecentTrendsContext);
+    const posts = useSelector((state) => state.exploreRecentTrends);
+    const dispatch = useDispatch();
     const [loader, setLoader] = useState(true);
     const [loaderF, setLoaderF] = useState(false);
     const isFocused = useIsFocused();
 
     useEffect(() => {
         async function getData() {
-            dispatch(initPosts([]))
+            dispatch(initExploreRecentTrends([]))
             const response = await client.explore.recentTrends();
             if(response.error) return;
-            dispatch(initPosts(response.data));
+            dispatch(initExploreRecentTrends(response.data));
             setLoader(false)
         }
         
         getData()
-    
     }, [isFocused])
 
     const bottomHandler = async () => {
@@ -37,7 +38,7 @@ function RecentTrends() {
         const response = await client.explore.recentTrends({ skip: posts.length });
         if(response.error) return setError(response.error.code);
         if(response.data < 1) return setLoader(false);
-        dispatch(addPosts(response.data));
+        dispatch(addExploreRecentTrends(response.data));
         setLoader(false)
     }
 
@@ -47,13 +48,13 @@ function RecentTrends() {
         const response = await client.explore.recentTrends({ skip: posts.length });
         setLoaderF(false);
         if(response.error) return setError(response.error.code);
-        dispatch(initPosts(response.data));
+        dispatch(initExploreRecentTrends(response.data));
     }
 
     return (
         <FlatList
             ListEmptyComponent={<Text style={{ padding: 5 }}>{t("explore.no_trends_selected_region")}</Text>}
-            data={posts} 
+            data={posts}
             onScrollEndDrag={() => bottomHandler()}
             renderItem={({ item, index }) => <DisplayPosts key={index} informations={item} />} 
             keyExtractor={item => item.post_id}
@@ -62,4 +63,16 @@ function RecentTrends() {
     )
 }
 
-export default RecentTrends
+const mapStateToProps = (state) => {
+    return {
+        exploreRecentTrends: state.exploreRecentTrends,
+    };
+  };
+  
+  const mapDispatchToProps = {
+    addExploreRecentTrends,
+    initExploreRecentTrends
+  };
+  
+
+  export default connect(mapStateToProps, mapDispatchToProps)(RecentTrends);

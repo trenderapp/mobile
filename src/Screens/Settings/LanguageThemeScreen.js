@@ -45,7 +45,7 @@ function LanguageThemeScreen() {
     return (
         <SettingsContainer title={t("settings.lang_and_theme")}>
             <View style={{ padding: 5 }}>
-                <View style={{ justifyContent: "center", flexDirection: "row", marginBottom: 10 }}>
+                <View style={{ justifyContent: "center", marginBottom: 10 }}>
                     <SegmentedButtons
                         value={theme}
                         onValueChange={(v) => {

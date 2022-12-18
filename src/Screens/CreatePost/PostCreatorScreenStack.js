@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { KeyboardAvoidingView, Modal, View } from 'react-native';
+import { KeyboardAvoidingView, View } from 'react-native';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
 import Toast from 'react-native-toast-message';
 import { ProgressBar, Text } from 'react-native-paper';
@@ -10,9 +11,9 @@ import SvgElement from '../../Components/Elements/Svg';
 import VideoPlayer from '../../Components/Posts/Views/Components/VideoPlayer';
 import Carroussel from '../../Components/Posts/Views/Components/Carroussel';
 import { axiosInstance } from '../../Services';
-import { addPosts, PostsListContext } from '../../Context/PostsContext';
 import TextAreaAutoComplete from '../../Components/Posts/Creator/TextAreaAutoComplete';
 import BottomButtonPostCreator from '../../Components/Posts/Creator/BottomButton';
+import { addMainTrends } from '../../Redux/mainFeed/action';
 
 const PostCreatorScreenStack = ({ route: { params }}) => {
 
@@ -25,7 +26,7 @@ const PostCreatorScreenStack = ({ route: { params }}) => {
   });
   const { client, token, user } = useClient();
   const { t } = useTranslation();
-  const { dispatch } = useContext(PostsListContext);
+  const dispatch = useDispatch();
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -82,7 +83,7 @@ const PostCreatorScreenStack = ({ route: { params }}) => {
       })
     }
 
-    if(response.data && !attached_post_id) dispatch(addPosts({ ...response?.data, from: { ...user } }));
+    if(response.data && !attached_post_id) dispatch(addMainTrends({ ...response?.data, from: { ...user } }));
 
     setSending({ send: false, progress: 0 })
     setFiles([])
@@ -174,4 +175,15 @@ const PostCreatorScreenStack = ({ route: { params }}) => {
   );
 };
 
-export default PostCreatorScreenStack;
+const mapStateToProps = (state) => {
+  return {
+    mainFeed: state.mainFeed,
+  };
+};
+
+const mapDispatchToProps = {
+  addMainTrends
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostCreatorScreenStack);

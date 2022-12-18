@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from 'react-i18next'
 import Toast from 'react-native-toast-message';
-import { Divider, Text } from "react-native-paper";
+import { Text } from "react-native-paper";
 import Clipboard from "@react-native-clipboard/clipboard";
 
 import { useClient, useTheme } from "../../../Container";
@@ -51,18 +51,15 @@ function ProfileUserModal({ setModalVisible, modalVisible, informations }) {
                 <SvgElement name="copy" margin={5} size={22} />
                 <Text>{t("profile.copy_user_id")}</Text>
             </ModalSection>
-            <Divider />
             <ModalSection onPress={() => report()} >
                 <SvgElement name="shield" margin={5} size={22} />
                 <Text>{t("commons.report")}</Text>
             </ModalSection>
-            <Divider />
             <ModalSection onPress={() => block()} >
                 <SvgElement name="ban" margin={5} size={22} />
                 <Text>{t("profile.block")}</Text>
             </ModalSection>
-            <Divider />
-            <ModalSection onPress={() => setModalVisible(false)} >
+            <ModalSection noDivider onPress={() => setModalVisible(false)} >
                 <Text style={{ color: colors.warning_color }}>{t("commons.cancel")}</Text>
             </ModalSection>
         </BottomModal>

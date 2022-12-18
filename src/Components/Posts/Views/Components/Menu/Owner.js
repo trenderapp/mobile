@@ -1,35 +1,45 @@
 import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import Toast from 'react-native-toast-message';
+import { useDispatch } from 'react-redux';
 import Clipboard from "@react-native-clipboard/clipboard";
+import { Text } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 
 import { BottomModal, ModalSection } from "../../../../../Other";
 import styles from "../../../../../Style/style";
 import { useClient, useTheme } from "../../../../Container";
 import SvgElement from "../../../../Elements/Svg";
-import { Divider, Text } from "react-native-paper";
-import { deletePosts, ProfilePostsListContext } from "../../../../Profile/ProfileContext";
-import { useNavigation } from "@react-navigation/native";
+import { deleteProfileTrends } from "../../../../../Redux/profileFeed/action";
+import { deleteMainTrends } from "../../../../../Redux/mainFeed/action";
+import { deleteCommentTrends } from "../../../../../Redux/commentFeed/action";
+import { SinglePostContext } from "../../../PostContext";
 
 function Owner({ modalVisible, setModalVisible, pined, post_id }) {
 
     const { t } = useTranslation();
     const { client } = useClient();
-    const { dispatch } = useContext(ProfilePostsListContext);
+    const dispatch = useDispatch();
     const { colors } = useTheme();
+    const { info } = useContext(SinglePostContext)
     const navigation = useNavigation();
 
     const deletePost = async () => {
+        const currentScreen = navigation.getState().routes[0].name;
         const response = await client.post.delete(post_id);
         if (response.error) return Toast.show({
             text1: t(`errors.${response.error.code}`)
         })
-        if(navigation.getState().routeNames[0] === "PostScreen") {
+        if(info.is_comment) {
+            dispatch(deleteCommentTrends(post_id));
+        }else if(currentScreen === "PostScreen") {
             if(navigation.canGoBack()) return navigation.goBack();
-        } else {
-            dispatch(deletePosts(post_id));
-            setModalVisible(false);
+        } else if(currentScreen === "ProfileScreen"){
+            dispatch(deleteProfileTrends(post_id));
+        } else if(currentScreen === "HomeScreen"){
+            dispatch(deleteMainTrends(post_id));
         }
+        setModalVisible(false);
     }
 
     const pinPost = async () => {
@@ -70,14 +80,12 @@ function Owner({ modalVisible, setModalVisible, pined, post_id }) {
                     <Text>{t("posts.copy_post_id")}</Text>
                 </Text>
             </ModalSection>
-            <Divider />
             <ModalSection onPress={() => deletePost()}>
                 <SvgElement name="delete" margin={5} size={22} />
                 <Text style={styles.row}>
                     <Text>{t("posts.delete")}</Text>
                 </Text>
             </ModalSection>
-            <Divider />
             {pined && pined === post_id && <ModalSection onPress={() => unPinPost()}>
                 <SvgElement name="pin" margin={5} size={22} />
                 <Text>{t("posts.unpin")}</Text>
@@ -89,8 +97,7 @@ function Owner({ modalVisible, setModalVisible, pined, post_id }) {
             </ModalSection> : null
 
             }
-            <Divider />
-            <ModalSection onPress={() => setModalVisible(false)}>
+            <ModalSection noDivider onPress={() => setModalVisible(false)}>
                 <Text style={{ color: colors.warning_color }}>{t("commons.cancel")}</Text>
             </ModalSection>
         </BottomModal>
