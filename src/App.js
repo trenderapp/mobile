@@ -11,6 +11,7 @@ import { ClientContainer, ThemeContainer, WebsocketProvider } from './Components
 import { BaseToast, MessageToast } from './Components/Elements/Toasts';
 import Routes from './Routes';
 import { store } from './Redux';
+import { DmGroupListContextProvider } from './Context/DmGuildListContext';
 
 const App = () => {
 
@@ -28,11 +29,13 @@ const App = () => {
       <NavigationContainer>
         <ClientContainer>
           <WebsocketProvider>
-            <Provider store={store}>
-              <SafeAreaProvider >
-                <Routes />
-              </SafeAreaProvider>
-            </Provider>
+            <DmGroupListContextProvider>
+              <Provider store={store}>
+                <SafeAreaProvider >
+                  <Routes />
+                </SafeAreaProvider>
+              </Provider>
+            </DmGroupListContextProvider>
           </WebsocketProvider>
         </ClientContainer>
       </NavigationContainer>

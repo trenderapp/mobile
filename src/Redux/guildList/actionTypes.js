@@ -1,0 +1,5 @@
+export const ADD_GUILDS = "ADD_GUILD_LIST";
+export const DELETE_GUILDS = "DELETE_GUILD_LIST";
+export const RESET_GUILDS = "RESET_GUILD_LIST";
+export const INIT_GUILDS = "INIT_GUILD_LIST";
+export const MODIFY_GUILDS = "MODIFY_GUILD_LIST";
