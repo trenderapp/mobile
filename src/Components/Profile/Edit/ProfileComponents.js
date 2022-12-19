@@ -94,7 +94,9 @@ function ProfileComponent({ nickname, pined, informations, setInfo }){
                         <Text>{informations.user_info.username}</Text>
                         <View style={styles.row}>
                             { informations.user_info.certified && <SvgElement size={18} name="verified" color={colors.text_normal} /> }
-                           { client.user.flags(informations.user_info.flags).has(userFlags.TRENDER_EMPLOYEE) && <UserBadges url={client.user.badge("TRENDER_EMPLOYEE")} /> }
+                            { client.user.flags(informations.user_info.flags).has(userFlags.TRENDER_EMPLOYEE) && <UserBadges url={client.user.badge("TRENDER_EMPLOYEE")} /> }
+                            { client.user.flags(informations.user_info.flags).has(userFlags.EARLY_SUPPORTER) && <UserBadges url={client.user.badge("EARLY_SUPPORTER")} /> }
+                            { client.user.flags(informations.user_info.flags).has(userFlags.TRENDER_PARTNER) && <UserBadges url={client.user.badge("TRENDER_PARTNER")} /> }
                         </View>
                         <View style={styles.row}>
                             { informations.user_info.is_private && <SvgElement size={18} name="lock" color={colors.text_normal} /> }

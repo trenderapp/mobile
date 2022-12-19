@@ -8,6 +8,7 @@ import { exploreTopTrendsReducer } from './exploreTopTrends';
 import { profileFeedReducer } from './profileFeed';
 import { commentFeedReducer } from './commentFeed';
 import { guildListReducer } from './guildList';
+import { guildMessagesReducer } from './guildMessages';
 
 // Combine les réducteurs en un seul objet de réducteur
 const rootReducer = combineReducers({
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   exploreTopTrends: exploreTopTrendsReducer,
   profileFeed: profileFeedReducer,
   commentFeed: commentFeedReducer,
-  guildList: guildListReducer
+  guildList: guildListReducer,
+  guildMessages: guildMessagesReducer
 });
 
 // Crée le magasin Redux en utilisant le réducteur combiné
