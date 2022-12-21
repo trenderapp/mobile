@@ -29,11 +29,7 @@ const NotificationContainer = ({ children, title }) => {
                 </TouchableOpacity>
                 <Text style={{ fontSize: 16, fontWeight:'700', marginLeft: 5 }}>{t("commons.notifications")}</Text>
             </Appbar.Header>
-            <View style={{
-                padding: 5
-            }}>
-                { children }
-            </View>
+            { children }
         </View>
     )
 };

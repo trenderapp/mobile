@@ -1,1 +1,1 @@
-export { default as FollowListScreen } from "./FollowListScreen";
+export { default as NotificationScreen } from "./NotificationScreen";

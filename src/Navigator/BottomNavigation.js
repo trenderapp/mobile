@@ -7,7 +7,7 @@ import { NavigationProvider, useTheme } from "../Components/Container";
 import { DmGroupListContext } from "../Context/DmGuildListContext";
 import HomeScreen from "../Screens/Home/HomeScreen";
 import GuildListScreen from "../Screens/Messages/GuildListScreen";
-import FollowListScreen from "../Screens/Notifications/FollowListScreen";
+import { NotificationScreen } from "../Screens/Notifications";
 import SearchStack from "./Stacks/SearchStack";
 
 function BottomStack({ navigation }) {
@@ -45,7 +45,7 @@ function BottomStack({ navigation }) {
     const renderScene = BottomNavigation.SceneMap({
         home: HomeScreen,
         search: SearchStack,
-        notifications: FollowListScreen,
+        notifications: NotificationScreen,
         messages: GuildListScreen
     });
 

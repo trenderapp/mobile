@@ -1,10 +1,9 @@
-import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Toast from 'react-native-toast-message';
 import { FlatList, RefreshControl } from 'react-native';
 import { Button, Text } from 'react-native-paper';
-import { NotificationContainer, useClient, useTheme } from '../../Components/Container';
+import { useClient, useTheme } from '../../Components/Container';
 import { UserInfo } from "../../Components/Member";
 
 const FollowListScreen = () => {
@@ -39,7 +38,6 @@ const FollowListScreen = () => {
   }
 
   return (
-    <NotificationContainer>
       <FlatList
         style={{
           height: "100%"
@@ -50,7 +48,6 @@ const FollowListScreen = () => {
         refreshControl={<RefreshControl refreshing={loading} progressBackgroundColor={colors.bg_primary} tintColor={colors.fa_primary} colors={[colors.fa_primary, colors.fa_secondary, colors.fa_third]} onRefresh={() => followList()} />}
         ListEmptyComponent={() => <Text>{t("commons.nothing_display")}</Text>}
       />
-    </NotificationContainer>
   );
 };
 
