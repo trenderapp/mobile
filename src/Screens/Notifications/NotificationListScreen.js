@@ -4,12 +4,15 @@ import Toast from 'react-native-toast-message';
 import { FlatList, RefreshControl } from 'react-native';
 import { Text } from 'react-native-paper';
 import { useClient, useTheme } from '../../Components/Container';
+import { useIsFocused } from '@react-navigation/native';
+import DisplayNotifications from '../../Components/Notifications/DisplayNotifications';
 
 const NoficationListScreen = () => {
 
   const { colors } = useTheme();
   const { client } = useClient();
   const { t } = useTranslation();
+  const isFocused = useIsFocused();
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState([]);
 
@@ -25,7 +28,7 @@ const NoficationListScreen = () => {
 
   useEffect(() => {
     notificationList()
-  }, [])
+  }, [isFocused])
 
   return (
       <FlatList
@@ -34,7 +37,7 @@ const NoficationListScreen = () => {
         }}
         data={list}
         keyExtractor={item => item.notification_id}
-        renderItem={({ item }) => <Text>{item.notification_type}</Text>}
+        renderItem={({ item }) => <DisplayNotifications info={item} />}
         refreshControl={<RefreshControl refreshing={loading} progressBackgroundColor={colors.bg_primary} tintColor={colors.fa_primary} colors={[colors.fa_primary, colors.fa_secondary, colors.fa_third]} onRefresh={() => notificationList()} />}
         ListEmptyComponent={() => <Text>{t("commons.nothing_display")}</Text>}
       />

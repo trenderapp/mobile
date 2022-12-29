@@ -1,0 +1,49 @@
+{
+    "created_at": "2022-12-29T09:56:55.667Z",
+    "from": {
+        "accent_color": "#DCDCDC",
+        "avatar": "base_1.png",
+        "certified": false,
+        "created_at": "2022-04-07T07:57:48.990Z",
+        "flags": 0,
+        "is_private": false,
+        "nickname": "bv0d7lafatkxoh418",
+        "user_id": "384440096277004289",
+        "username": "Fortunée.Baron9"
+    },
+    "mentions": [
+        {
+            "accent_color": "#DCDCDC",
+            "avatar": "base_2.png",
+            "certified": true,
+            "created_at": "2022-11-30T02:57:18.412Z",
+            "flags": 21,
+            "is_private": false,
+            "nickname": "kwzfiwbopayiuf2_brunet",
+            "user_id": "384440096172146688",
+            "username": "Honoré_Legrand"
+        }
+    ],
+    "notification_id": "396240158896291851",
+    "notification_type": "mentions",
+    "post": {
+        "attached_post_id": "384443448939381320",
+        "attachments": [],
+        "content": "Ratio",
+        "created_at": "2022-12-29T09:56:55.664Z",
+        "embeds": [],
+        "hashtags": [],
+        "locale": "ru",
+        "mentions": [
+            "384440096172146688",
+            "384440096172146688"
+        ],
+        "poll": {},
+        "post_id": "396240158879514634",
+        "type": 0
+    },
+    "post_id": "396240158879514634",
+    "read": false,
+    "target_id": "384440096172146688",
+    "user_id": "384440096277004289"
+}
