@@ -734,6 +734,13 @@
     pirates "^4.0.5"
     source-map-support "^0.5.16"
 
+"@babel/runtime@>=7":
+  version "7.20.7"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.20.7.tgz#fcb41a5a70550e04a7b708037c7c32f7f356d8fd"
+  integrity sha512-UF0tvkUtxwAgZ5W/KrkHf0Rn0fdnLDU9ScxBrEVNUprE/MzirjK4MJUX1/BVDv00Sv8cljtukVK1aky++X1SjQ==
+  dependencies:
+    regenerator-runtime "^0.13.11"
+
 "@babel/runtime@^7.0.0", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.14.5", "@babel/runtime@^7.15.4", "@babel/runtime@^7.20.6", "@babel/runtime@^7.9.2":
   version "7.20.6"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.20.6.tgz#facf4879bfed9b5326326273a64220f099b0fce3"
@@ -1540,6 +1547,11 @@
     color "^4.2.3"
     warn-once "^0.1.0"
 
+"@realm/babel-plugin@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@realm/babel-plugin/-/babel-plugin-0.1.1.tgz#e4447333d11c52d1d190ac8f4549a895d54e30d7"
+  integrity sha512-abSu6oXDkCes1lfI1XE0aWiS4vG86KukjmD09ufaBa/QCs27/1FNqtEOuWvCf/QGERWIGj4GwDJf7DHELvIdKw==
+
 "@realm/common@^0.1.4":
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/@realm/common/-/common-0.1.4.tgz#48ff628a22b27c61ba886caff395909632240927"
@@ -1553,6 +1565,17 @@
     "@realm/common" "^0.1.4"
     abort-controller "^3.0.0"
     node-fetch "^2.6.0"
+
+"@realm/react@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@realm/react/-/react-0.4.1.tgz#6f3e15ae028aba3f0191fb81dc16c651909e3696"
+  integrity sha512-mhApcxfnghQ1hQYxaB3M3FqyntVD9gHMMvXmq51mubIW6hXnMFPbnvkyme6D4PbiA8+FHaJFBsbu+KOgS6FE8Q==
+  dependencies:
+    "@realm/common" "^0.1.4"
+    lodash "^4.17.21"
+  optionalDependencies:
+    "@babel/runtime" ">=7"
+    react-native ">=0.68"
 
 "@reduxjs/toolkit@^1.9.1":
   version "1.9.1"
@@ -7234,7 +7257,7 @@ react-native-webview@^11.26.0:
     escape-string-regexp "2.0.0"
     invariant "2.2.4"
 
-react-native@0.70.6:
+react-native@0.70.6, react-native@>=0.68:
   version "0.70.6"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.70.6.tgz#d692f8b51baffc28e1a8bc5190cdb779de937aa8"
   integrity sha512-xtQdImPHnwgraEx3HIZFOF+D1hJ9bC5mfpIdUGoMHRws6OmvHAjmFpO6qfdnaQ29vwbmZRq7yf14sbury74R/w==

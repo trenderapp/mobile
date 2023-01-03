@@ -2,8 +2,6 @@ export { default as useClient } from "./Client/useClient";
 export { default as ClientContainer } from "./Client/ClientProvider";
 export { default as useWebSocket } from "./WebSocket/useWebSocket";
 export { default as WebsocketProvider } from "./WebSocket/WebsocketProvider";
-export { default as useRealm } from "./Realm/useRealm";
-export { default as RealmProvider } from "./Realm/RealmProvider";
 export { default as useNavigation } from "./Navigation/useNavigation";
 export { default as NavigationProvider } from "./Navigation/NavigationProvider";
 export { default as useTheme } from "./Theme/useTheme";

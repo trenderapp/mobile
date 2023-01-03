@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { FlatList, RefreshControl } from 'react-native';
@@ -7,16 +7,22 @@ import { Text } from 'react-native-paper';
 import DisplayPosts from '../../Components/Posts/DisplayPost';
 import { addMainTrends, initMainTrends } from '../../Redux/mainFeed/action';
 import { Loader } from '../../Other';
+import { RealmContext } from '../../Services/Realm';
+import { PostMainFeed } from '../../Services/Realm/postsMainFeed';
+
+const { useQuery } = RealmContext;
 
 const HomeScreen = () => {
   
   const { client } = useClient();
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const { colors } = useTheme();
+  const queryPosts = useQuery(PostMainFeed);
   const posts = useSelector((state) => state.mainFeed);
   const dispatch = useDispatch();
   const [loader, setLoader] = useState(true);
   const [loaderF, setLoaderF] = useState(false);
+  const mainFeed = useMemo(() => queryPosts.length > 0 ? queryPosts.sorted("created_at") : false, [queryPosts])
 
   useEffect(() => {
 
@@ -49,11 +55,15 @@ const HomeScreen = () => {
     dispatch(initMainTrends(response.data));
   }
 
+  const RenderItem = ({ item }) => (
+    <DisplayPosts comments={false} informations={item} />
+  )
+
   return (
     <PageContainer>
         <FlatList
-          data={posts}
-          renderItem={({ item, index }) => <DisplayPosts key={index} comments={false} informations={item} />} 
+          data={mainFeed}
+          renderItem={({ item, index }) => <RenderItem key={index} item={item} />} 
           keyExtractor={item => item.post_id}
           ListFooterComponent={loader && <Loader />}
           onScrollEndDrag={() => bottomHandler()}
