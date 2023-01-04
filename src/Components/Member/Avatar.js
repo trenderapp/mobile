@@ -15,8 +15,7 @@ export default function Avatar({ url, size = 33 }) {
             resizeMode: "cover",
             backgroundColor: colors.bg_secondary
         }} source={{
-            uri: url,
-            cache: FastImage.cacheControl.web
+            uri: url
         }} />
     )
 }

@@ -32,10 +32,7 @@ function Carroussel({ pictures, creator, changeList }) {
                     <FastImage 
                         resizeMode={openModal ? "contain" : "cover"}
                         style={styles.media_image}
-                        source={{
-                            uri: img.uri,
-                            cache: FastImage.cacheControl.web
-                        }}/>
+                        source={{ uri: img.uri }}/>
                 </Pressable>
                 ) : pictures.map((img, i) => (
                     <ImageModal

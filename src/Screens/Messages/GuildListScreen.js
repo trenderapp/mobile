@@ -25,7 +25,7 @@ const GuildListScreen = () => {
               nickname: user.nickname
             }
           })}>
-          <FastImage source={{ uri: `${client.user.avatar(user.user_id, user.avatar)}`, cache: FastImage.cacheControl.web }} style={[ styles.pdp33, { marginLeft: 5 } ]} />
+          <FastImage source={{ uri: `${client.user.avatar(user.user_id, user.avatar)}` }} style={[ styles.pdp33, { marginLeft: 5 } ]} />
         </TouchableOpacity>
         <Text style={{ fontSize: 16, fontWeight:'700', marginLeft: 5 }}>{t("commons.messages")}</Text>
       </Appbar.Header>

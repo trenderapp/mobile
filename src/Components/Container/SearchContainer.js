@@ -27,7 +27,7 @@ const SearchContainer = ({ children }) => {
                     nickname: user.nickname
                     }
                 })}>
-                    <FastImage source={{ uri: `${client.user.avatar(user.user_id, user.avatar)}`, cache: FastImage.cacheControl.web }} style={[ styles.pdp33, { marginLeft: 5 } ]} />
+                    <FastImage source={{ uri: `${client.user.avatar(user.user_id, user.avatar)}` }} style={[ styles.pdp33, { marginLeft: 5 } ]} />
                 </TouchableOpacity>
                 <View>
                     <SearchBar

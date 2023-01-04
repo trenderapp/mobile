@@ -171,13 +171,13 @@ function ProfileEditScreen({ route }) {
                         <View style={{ height: 100 }}>
                             <Pressable style={[styles.banner_image]} onPress={() => changePictures("banner")}>
                             {
-                                modif.banner ? <FastImage style={styles.banner_image} source={{ uri: `${profilePictures.banner}`, cache: FastImage.cacheControl.web }} /> : <View style={[styles.banner_image, { backgroundColor: info.accent_color }]} />   
+                                modif.banner ? <FastImage style={styles.banner_image} source={{ uri: `${profilePictures.banner}` }} /> : <View style={[styles.banner_image, { backgroundColor: info.accent_color }]} />   
                             }
                             </Pressable>
                         </View>
                         <View style={[{ padding: 5 }]}>
                             <Pressable onPress={() => changePictures("avatar")}>
-                                <FastImage style={[styles.pdp64, { marginTop: -30, zIndex: 3 }]} source={{ uri: `${profilePictures.avatar}`, cache: FastImage.cacheControl.web }} />
+                                <FastImage style={[styles.pdp64, { marginTop: -30, zIndex: 3 }]} source={{ uri: `${profilePictures.avatar}` }} />
                             </Pressable>
                             <View style={styles.EditSectionStyle}>
                                 <TextInput

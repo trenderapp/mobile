@@ -69,14 +69,15 @@ function ProfileComponent({ nickname, pined, informations, setInfo }){
             <View>
                 <View style={{ height: 100 }}>
                     {
-                        informations.user_info?.banner ? <FastImage style={styles.banner_image} source={{ uri: `${client.user.banner(informations.user_info.user_id, informations.user_info.banner)}`, cache: FastImage.cacheControl.web }} /> : <View style={[styles.banner_image, { backgroundColor: informations.user_info.accent_color }]} />
+                        informations.user_info?.banner ? <FastImage style={[
+                            styles.banner_image, { backgroundColor: colors.bg_secondary }
+                        ]} source={{ uri: `${client.user.banner(informations.user_info.user_id, informations.user_info.banner)}` }} /> : <View style={[styles.banner_image, { backgroundColor: informations.user_info.accent_color }]} />
                     }
                 </View> 
                 <View style={[{ padding: 5 }]}>
                     <View style={{flexDirection: "row", justifyContent: "space-between"}}>
-                        <FastImage style={[styles.pdp64, { marginTop: -30 }]} source={{
-                            uri: `${client.user.avatar(informations.user_info.user_id, informations.user_info.avatar)}`,
-                            cache: FastImage.cacheControl.web
+                        <FastImage style={[styles.pdp64, { marginTop: -30, backgroundColor: colors.bg_secondary }]} source={{
+                            uri: `${client.user.avatar(informations.user_info.user_id, informations.user_info.avatar)}`
                         }} />
                         <View style={{
                             display: "flex",

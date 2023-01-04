@@ -11,8 +11,7 @@ export default function MultipleAvatar({ url, size = 33, number = 0 }) {
             marginRight: 5,
             resizeMode: "cover"
             }} source={{
-                uri: "https://cdn2.trenderapp.com/guilds_avatars/guilds_1.png", 
-                cache: FastImage.cacheControl.web
+                uri: "https://cdn2.trenderapp.com/guilds_avatars/guilds_1.png"
             }} />
     )
 }
