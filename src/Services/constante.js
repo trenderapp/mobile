@@ -1,12 +1,10 @@
-const dev_ip = "192.168.34.163";
+import Config from "react-native-config";
 
-const link = typeof dev_ip !== "undefined" ? dev_ip : "api.beta.trenderapp.com";
-const s = link === "api.beta.trenderapp.com" ? "s" : "";
-const port = link === "api.beta.trenderapp.com" ? "" : ":4000";
-
-export const apibaseurl = `http${s}://${link}${port}/api`;
-export const cdnbaseurl = "https://cdn.trenderapp.com";
-export const websiteurl = "https://trenderapp.com";
-export const websocketurl = `ws${s}://${link}${port}`;
-export const captchasiteKey = "6c5b583c-f335-4af1-ba18-d6cf3c5814ca";
-export const posturl = `${websiteurl}/trends`;
+export const apibaseurl = Config.API_URL;
+export const apibetabaseurl = Config.API_BETA_URL;
+export const cdnbaseurl = Config.CDN_BASE_URL;
+export const websiteurl = Config.WEBSITE_URL;
+export const websocketurl = Config.WEBSOCKET_URL;
+export const websocketbetaurl = Config.WEBSOCKET_BETA_URL;
+export const captchasiteKey = Config.CAPTCHA_SITE_KEY;
+export const posturl = Config.POST_URL;

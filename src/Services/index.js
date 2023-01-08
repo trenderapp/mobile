@@ -54,7 +54,7 @@ export const deviceInfo = async () => {
 
 export const axiosInstance = axios.create({
   baseURL: apibaseurl,
-  validateStatus: s => s < 501
+  validateStatus: s => s < 501,
 });
 
 export const getPermissions = async () => {

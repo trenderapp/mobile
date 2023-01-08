@@ -8,15 +8,15 @@
     "url": "https://github.com/trenderapp/mobile.git"
   },
   "scripts": {
-    "android": "react-native run-android --active-arch-only",
-    "ios": "react-native run-ios",
+    "android": "SET ENVFILE=.env.development && react-native run-android --active-arch-only",
+    "ios": "ENVFILE=.env.development react-native run-ios",
     "start": "react-native start",
     "test": "jest",
     "test:typescript": "tsc --noEmit",
     "lint": "eslint .",
     "build": "cd android ; ./gradlew bundleRelease",
-    "android:release": "react-native run-android --variant=release",
-    "ios:release": "react-native run-ios --configuration Release",
+    "android:release": "SET ENVFILE=.env.production && react-native run-android --variant=release",
+    "ios:release": "ENVFILE=.env.production react-native run-ios --configuration Release",
     "update": "yarn upgrade-interactive --latest",
     "upgrade": "react-native upgrade",
     "clear": "react-native start --reset-cache"
@@ -45,6 +45,7 @@
     "react": "18.2.0",
     "react-i18next": "^12.1.1",
     "react-native": "0.70.6",
+    "react-native-config": "^1.4.11",
     "react-native-date-picker": "^4.2.5",
     "react-native-device-info": "^10.1.2",
     "react-native-dynamic-search-bar": "^2.0.2",
@@ -76,6 +77,7 @@
     "react-native-webview": "^11.26.0",
     "react-redux": "^8.0.5",
     "realm": "^11.3.1",
+    "recyclerlistview": "^4.2.0",
     "redux": "^4.2.0",
     "trender-client": "^1.6.2"
   },

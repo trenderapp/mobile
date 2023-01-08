@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Svg, { G, Path } from "react-native-svg"
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { useTheme } from "../../Container";
 import svgList from "./SvgList";
 
@@ -17,28 +17,52 @@ function SvgElement({ onPress = undefined, name, size = 33, margin, noColor }) {
 
     useEffect(() => {
         const find_one = svgList.find(s => s.name === name)
-        if(find_one) return setSvg(find_one);
+        if (find_one) return setSvg(find_one);
     }, [name]);
 
     return (
-        <TouchableOpacity style={{
-            marginRight: margin ? margin : 0,
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: 5,
-            borderRadius: 60 / 2 
-        }} onPress={() => onPress ? onPress() : null}>
-            <Svg width={size} height={size} viewBox={`0 0 ${svg.w} ${svg.h}`}>
-                <G fill={noColor ? "white" : colors.fa_primary} fillRule="nonzero">
-                {
-                    svg.d.map((path, index) => 
-                        <Path key={index} d={path} />
-                    )
-                }
-                </G>
-            </Svg>
-        </TouchableOpacity>
+        <>
+            {
+                onPress ? (
+                    <TouchableOpacity style={{
+                        marginRight: margin ? margin : 0,
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        padding: 5,
+                        borderRadius: 60 / 2
+                    }} onPress={() => onPress()}>
+                        <Svg width={size} height={size} viewBox={`0 0 ${svg.w} ${svg.h}`}>
+                            <G fill={noColor ? "white" : colors.fa_primary} fillRule="nonzero">
+                                {
+                                    svg.d.map((path, index) =>
+                                        <Path key={index} d={path} />
+                                    )
+                                }
+                            </G>
+                        </Svg>
+                    </TouchableOpacity>) : (
+                    <View style={{
+                        marginRight: margin ? margin : 0,
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        padding: 5,
+                        borderRadius: 60 / 2
+                    }}>
+                        <Svg width={size} height={size} viewBox={`0 0 ${svg.w} ${svg.h}`}>
+                            <G fill={noColor ? "white" : colors.fa_primary} fillRule="nonzero">
+                                {
+                                    svg.d.map((path, index) =>
+                                        <Path key={index} d={path} />
+                                    )
+                                }
+                            </G>
+                        </Svg>
+                    </View>
+                )
+            }
+        </>
     )
 }
 

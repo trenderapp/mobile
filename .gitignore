@@ -89,3 +89,5 @@ licenseInfos.json
 android/keystores/informations.json
 ios/trenderapp/GoogleService-Info.plist
 ios/GoogleService-Info.plist
+.env.development
+.env.production

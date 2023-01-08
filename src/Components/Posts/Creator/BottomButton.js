@@ -57,8 +57,7 @@ function BottomButtonPostCreator({ setFiles, addFiles, setCameraVisible }) {
             name: split[split.length - 1],
             type: type,
             uri: uri
-          }
-          console.log(to_return);
+        }
         return to_return;
     }
     const buttons = [

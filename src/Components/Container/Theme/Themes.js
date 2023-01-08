@@ -22,6 +22,7 @@ export const DarkBlueTheme = {
         color_green : "#339900",
         color_yellow : "#ffcc00",
         hover_overlay: "rgba(255, 255, 255, 0.1)",
+        bg_secondary_rgba : "rgba(20, 20, 24, 1)"
     }
 }
   
@@ -48,7 +49,8 @@ export const WhiteTheme = {
         color_red: "#cc3300",
         color_green: "#339900",
         color_yellow: "#ffcc00",
-        hover_overlay: "rgba(255, 255, 255, 0.1)"
+        hover_overlay: "rgba(255, 255, 255, 0.1)",
+        bg_secondary_rgba : "rgba(234, 234, 234, 1)"
     }
 }
 
@@ -75,6 +77,7 @@ export const DarkTheme = {
         color_red: "#cc3300",
         color_green: "#339900",
         color_yellow: "#ffcc00",
-        hover_overlay: "rgba(255, 255, 255, 0.1)"
+        hover_overlay: "rgba(255, 255, 255, 0.1)",
+        bg_secondary_rgba : "rgba(18, 18, 18, 1)"
     }
 }
