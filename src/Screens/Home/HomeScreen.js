@@ -9,10 +9,11 @@ import { addMainTrends, initMainTrends } from '../../Redux/mainFeed/action';
 import { Loader } from '../../Other';
 import { RealmContext } from '../../Services/Realm';
 import { PostMainFeed } from '../../Services/Realm/postsMainFeed';
+import EmptyHome from '../../Components/Home/EmptyHome';
 
 const { useQuery } = RealmContext;
 
-const HomeScreen = () => {
+const HomeScreen = (navigation) => {
   
   const { client } = useClient();
   const { t } = useTranslation();
@@ -67,7 +68,7 @@ const HomeScreen = () => {
           keyExtractor={item => item.post_id}
           ListFooterComponent={loader && <Loader />}
           onScrollEndDrag={() => bottomHandler()}
-          ListEmptyComponent={<Text style={{ padding: 5 }}>{t("commons.nothing_display")}</Text>}
+          ListEmptyComponent={<EmptyHome navigation={navigation} />}
           refreshControl={<RefreshControl refreshing={loaderF} progressBackgroundColor={colors.bg_primary} tintColor={colors.fa_primary} colors={[colors.fa_primary, colors.fa_secondary, colors.fa_third]} onRefresh={() => refreshPosts()} />}
         />
     </PageContainer>

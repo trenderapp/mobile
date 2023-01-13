@@ -46,7 +46,7 @@ const FollowListScreen = () => {
         keyExtractor={item => item.user_id}
         renderItem={({ item, index }) => <UserInfo full_width informations={item} LeftComponent={<Button onPress={() => accept_follow(index)} mode='contained-tonal'>{item.accepted ? t("commons.accepted") : t("commons.waiting") }</Button>} />}
         refreshControl={<RefreshControl refreshing={loading} progressBackgroundColor={colors.bg_primary} tintColor={colors.fa_primary} colors={[colors.fa_primary, colors.fa_secondary, colors.fa_third]} onRefresh={() => followList()} />}
-        ListEmptyComponent={() => <Text>{t("commons.nothing_display")}</Text>}
+        ListEmptyComponent={() => <Text style={{ padding: 5 }}>{t("notification.no_new_followers")}</Text>}
       />
   );
 };

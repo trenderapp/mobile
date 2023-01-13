@@ -26,8 +26,14 @@
         "delete_all": "Delete all",
         "next": "Next"
     },
+    "notification": {
+        "no_new_followers": "No new followers.",
+        "no_trends_interactions": "No interactions with your Trends."
+    },
     "explore": {
-        "no_trends_selected_region": "No Trends in your selected region. Create the first Trend of the day !"
+        "no_trends_selected_region": "No Trends in your country today. Create the first Trend of the day !",
+        "no_trends_selected_region_all_time": "No Trends in your country. Create the first Trend of your country !",
+        "explore_the_top_trends": "Explore the best Trends of the day"
     },
     "posts": {
         "create_post": "What's new ?",

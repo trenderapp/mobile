@@ -39,7 +39,7 @@ const NoficationListScreen = () => {
         keyExtractor={item => item.notification_id}
         renderItem={({ item }) => <DisplayNotifications info={item} />}
         refreshControl={<RefreshControl refreshing={loading} progressBackgroundColor={colors.bg_primary} tintColor={colors.fa_primary} colors={[colors.fa_primary, colors.fa_secondary, colors.fa_third]} onRefresh={() => notificationList()} />}
-        ListEmptyComponent={() => <Text>{t("commons.nothing_display")}</Text>}
+        ListEmptyComponent={() => <Text style={{ padding: 5 }}>{t("notification.no_trends_interactions")}</Text>}
       />
   );
 };

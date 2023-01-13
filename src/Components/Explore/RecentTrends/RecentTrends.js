@@ -52,7 +52,7 @@ function RecentTrends() {
 
     return (
         <FlatList
-            ListEmptyComponent={<Text style={{ padding: 5 }}>{t("explore.no_trends_selected_region")}</Text>}
+            ListEmptyComponent={<Text style={{ padding: 5 }}>{t("explore.no_trends_selected_region_all_time")}</Text>}
             data={posts}
             onScrollEndDrag={() => bottomHandler()}
             renderItem={({ item, index }) => <DisplayPosts key={index} informations={item} />} 

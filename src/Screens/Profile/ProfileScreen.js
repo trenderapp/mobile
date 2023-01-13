@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { FlatList } from 'react-native';
 import { connect, useDispatch, useSelector } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
 import { useClient } from '../../Components/Container';
 import DisplayPosts from '../../Components/Posts/DisplayPost';
 import ProfileComponent from '../../Components/Profile/Edit/ProfileComponents';
@@ -8,15 +9,17 @@ import ProfileNotFound from '../../Components/Profile/Edit/ProfileNotFound';
 import ProfileContainer from '../../Components/Container/ProfileContainer';
 import { Loader } from '../../Other';
 import { addProfileTrends, initProfileTrends } from '../../Redux/profileFeed/action';
+import { ProfileContext } from '../../Context/AppContext';
 
 function ProfileScreen({ route }) {
 
     const { nickname } = route.params;
     const { client } = useClient();
+    const { profile, setProfile } = useContext(ProfileContext);
     const posts = useSelector((state) => state.profileFeed);
     const dispatch = useDispatch();
+    const isFocused = useIsFocused();
     const [pined, setPined] = useState(null);
-    const [informations, setInfo] = useState(null);
     const [error, setError] = useState(false);
     const [loader, setLoader] = useState(true);
     const [loading, setLoading] = useState(true);
@@ -30,10 +33,9 @@ function ProfileScreen({ route }) {
             if(response_profile.error) {
                 setLoading(false)
                 setLoader(false)
-                return setInfo(response_profile.error);
+                return setProfile(response_profile.error);
             }
-
-            setInfo(response_profile.data);
+            setProfile(response_profile.data);
             setLoading(false)
 
             const response = await client.post.user.fetch(nickname);
@@ -53,10 +55,10 @@ function ProfileScreen({ route }) {
                 })
             }
         }
-        if(informations?.nickname && nickname === informations.nickname) return;
+        if(profile?.nickname && nickname === profile.nickname) return;
         getData()
         
-    }, [nickname])
+    }, [nickname, isFocused])
 
     const bottomHandler = async () => {
         if(!loader) return;
@@ -67,14 +69,14 @@ function ProfileScreen({ route }) {
     }
 
     return(
-        <ProfileContainer username={informations?.user_info?.username}>
+        <ProfileContainer username={profile?.user_info?.username}>
         {
             !loading ? 
                 <FlatList
                     onEndReached={() => bottomHandler()} 
-                    ListHeaderComponent={informations ? informations?.code ? 
-                        <ProfileNotFound error={informations} nickname={nickname} /> 
-                            : <ProfileComponent setInfo={setInfo} pined={pined} informations={informations} nickname={nickname} /> 
+                    ListHeaderComponent={profile ? profile?.code ? 
+                        <ProfileNotFound error={profile} nickname={nickname} /> 
+                            : <ProfileComponent setInfo={setProfile} pined={pined} informations={profile} nickname={nickname} /> 
                                 : <Loader />}
                     data={posts}
                     renderItem={({ item, index }) => <DisplayPosts key={index} informations={item} />} 

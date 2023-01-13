@@ -36,4 +36,4 @@
 }
 
 # react-native-config https://github.com/luggit/react-native-config#problems-with-proguard
--keep class com.mypackage.BuildConfig { *; }
+-keep class com.trenderapp.social.BuildConfig { *; }

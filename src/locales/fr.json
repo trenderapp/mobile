@@ -26,8 +26,14 @@
         "delete_all": "Tout supprimer",
         "next": "Suivant"
     },
+    "notification": {
+        "no_new_followers": "Aucun nouvel abonné.",
+        "no_trends_interactions": "Aucune interaction avec vos Trends."
+    },
     "explore": {
-        "no_trends_selected_region": "Aucune Trends dans la région. Crée la première Trend de la journée !"
+        "no_trends_selected_region": "Aucune Trends dans ton pays aujourd'hui. Crée la première Trend de la journée !",
+        "no_trends_selected_region_all_time": "Aucune Trend dans ton pays. Soit le premier de ton pays à créer une Trend !",
+        "explore_the_top_trends": "Explorer les meilleurs Trends de la journée"
     },
     "posts": {
         "create_post": "Quoi de neuf ?",
