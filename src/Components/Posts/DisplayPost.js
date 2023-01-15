@@ -6,9 +6,7 @@ import { useNavigation } from "../Container";
 import SvgElement from "../Elements/Svg";
 import { Text } from "react-native-paper";
 import { SinglePostContextProvider } from "./PostContext";
-import PostImage from "./Views/PostImage";
 import PostNormal from "./Views/PostNormal";
-import PostVideo from "./Views/PostVideo";
 
 function DisplayPosts({ informations, pined, comments, is_comment }) {
     

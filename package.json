@@ -1,22 +1,21 @@
 {
   "name": "trender",
-  "version": "b22.01.13.2",
-  "version_number": 53,
+  "version": "1.0.3",
+  "version_number": 54,
   "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/trenderapp/mobile.git"
   },
   "scripts": {
-    "android": "SET ENVFILE=.env.development && react-native run-android --active-arch-only",
-    "ios": "ENVFILE=.env.development react-native run-ios",
+    "android": "react-native run-android --variant=release",
+    "ios": "react-native run-ios",
+    "ios:release": "react-native run-ios --configuration Release",
     "start": "react-native start",
     "test": "jest",
     "test:typescript": "tsc --noEmit",
     "lint": "eslint .",
     "build": "cd android ; ./gradlew bundleRelease",
-    "android:release": "SET ENVFILE=.env.production && react-native run-android --variant=release",
-    "ios:release": "ENVFILE=.env.production react-native run-ios --configuration Release",
     "update": "yarn upgrade-interactive --latest",
     "upgrade": "react-native upgrade",
     "clear": "react-native start --reset-cache"
@@ -45,7 +44,6 @@
     "react": "18.2.0",
     "react-i18next": "^12.1.1",
     "react-native": "0.70.6",
-    "react-native-config": "^1.4.11",
     "react-native-date-picker": "^4.2.5",
     "react-native-device-info": "^10.1.2",
     "react-native-dynamic-search-bar": "^2.0.2",

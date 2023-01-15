@@ -3,14 +3,6 @@ apply plugin: 'com.google.gms.google-services'
 
 import org.apache.tools.ant.taskdefs.condition.Os
 import groovy.json.JsonSlurper
-
-project.ext.envConfigFiles = [
-    debug: ".env.development",
-    release: ".env.production",
-]
-
-apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
-
 import com.android.build.OutputFile
 
 /**
@@ -107,7 +99,7 @@ def enableSeparateBuildPerCPUArchitecture = false
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 
 /**
  * The preferred build flavor of JavaScriptCore.
@@ -166,7 +158,6 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.trenderapp.social"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode googleVer

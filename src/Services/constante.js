@@ -1,10 +1,6 @@
-import Config from "react-native-config";
-
-export const apibaseurl = Config.API_URL;
-export const apibetabaseurl = Config.API_BETA_URL;
-export const cdnbaseurl = Config.CDN_BASE_URL;
-export const websiteurl = Config.WEBSITE_URL;
-export const websocketurl = Config.WEBSOCKET_URL;
-export const websocketbetaurl = Config.WEBSOCKET_BETA_URL;
-export const captchasiteKey = Config.CAPTCHA_SITE_KEY;
-export const posturl = Config.POST_URL;
+export const apibaseurl = "https://api.trenderapp.com/api";
+export const websocketurl = "wss://api.trenderapp.com";
+export const cdnbaseurl = "https://cdn.trenderapp.com";
+export const websiteurl = "https://trenderapp.com";
+export const captchasiteKey = "6c5b583c-f335-4af1-ba18-d6cf3c5814ca";
+export const posturl = "https://trenderapp.com/trends";

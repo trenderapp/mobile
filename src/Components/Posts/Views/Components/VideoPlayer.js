@@ -8,7 +8,7 @@ import SvgElement from "../../../Elements/Svg";
 function VideoPlayer({ uri, creator }) {
 
   const videoPlayer = useRef(null);
-  const [repeat, setRepeat] = useState(false);
+  const [repeat] = useState(false);
   const [paused, setPaused] = useState(false);
   const [muted, setMuted] = useState(true);
   const [full_screen, setFullScreen] = useState(false);

@@ -30,6 +30,11 @@ const NoficationListScreen = () => {
     notificationList()
   }, [isFocused])
 
+  const RenderItem = ({ item }) => (
+    <DisplayNotifications info={item} />
+  )
+
+
   return (
       <FlatList
         style={{
@@ -37,7 +42,7 @@ const NoficationListScreen = () => {
         }}
         data={list}
         keyExtractor={item => item.notification_id}
-        renderItem={({ item }) => <DisplayNotifications info={item} />}
+        renderItem={({ item }) => <RenderItem item={item} />}
         refreshControl={<RefreshControl refreshing={loading} progressBackgroundColor={colors.bg_primary} tintColor={colors.fa_primary} colors={[colors.fa_primary, colors.fa_secondary, colors.fa_third]} onRefresh={() => notificationList()} />}
         ListEmptyComponent={() => <Text style={{ padding: 5 }}>{t("notification.no_trends_interactions")}</Text>}
       />
