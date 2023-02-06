@@ -7787,11 +7787,6 @@ react-native-toast-message@^2.1.5:
     prop-types "^15.7.2"
     yargs "^16.1.1"
 
-react-native-video-cache@^2.7.3:
-  version "2.7.3"
-  resolved "https://registry.yarnpkg.com/react-native-video-cache/-/react-native-video-cache-2.7.3.tgz#b6dc456def5972cfcd2f22135a82e3be2e5c7762"
-  integrity sha512-207f0YcLF3b7Vzt2XilOlLm8TJxKrZSYOrTG2qSreRYnxlRP475La7303OjxEtzV4madvWZUtKnAhSy5gk1hRw==
-
 react-native-video-controls@^2.8.1:
   version "2.8.1"
   resolved "https://registry.yarnpkg.com/react-native-video-controls/-/react-native-video-controls-2.8.1.tgz#30ae707d8d218fed34bba3fc027b3943c5f438d9"

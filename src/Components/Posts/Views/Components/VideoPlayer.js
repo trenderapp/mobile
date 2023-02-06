@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Modal, Pressable, View } from "react-native";
 import Video from 'react-native-video';
 import VideoControls from "react-native-video-controls";
@@ -12,6 +12,15 @@ function VideoPlayer({ uri, creator, thumbnail }) {
   const [paused, setPaused] = useState(true);
   const [muted, setMuted] = useState(false);
   const [full_screen, setFullScreen] = useState(false);
+
+  useEffect(() => {
+    if(!thumbnail) {
+    setPaused(false);
+    setTimeout(() => {
+      setPaused(true)
+    }, 500)
+    }
+  }, [])
 
   return (
     <>
@@ -41,7 +50,7 @@ function VideoPlayer({ uri, creator, thumbnail }) {
         height: 250
       }}>
           <Video
-            poster={thumbnail ?? "https://i.stack.imgur.com/PtbGQ.png"}
+            poster={thumbnail}
             onEnd={() => setPaused(true)}
             source={{
               uri: uri
