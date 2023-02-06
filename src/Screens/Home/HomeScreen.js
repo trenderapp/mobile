@@ -1,26 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { FlatList, RefreshControl } from 'react-native';
 import { PageContainer, useClient, useTheme } from '../../Components/Container';
 import DisplayPosts from '../../Components/Posts/DisplayPost';
 import { addMainTrends, initMainTrends } from '../../Redux/mainFeed/action';
 import { Loader } from '../../Other';
-import { RealmContext } from '../../Services/Realm';
-import { PostMainFeed } from '../../Services/Realm/postsMainFeed';
 import EmptyHome from '../../Components/Home/EmptyHome';
 
-const { useQuery } = RealmContext;
 
 const HomeScreen = (navigation) => {
   
   const { client } = useClient();
   const { colors } = useTheme();
-  const queryPosts = useQuery(PostMainFeed);
   const posts = useSelector((state) => state.mainFeed);
   const dispatch = useDispatch();
   const [loader, setLoader] = useState(true);
   const [loaderF, setLoaderF] = useState(false);
-  // const mainFeed = useMemo(() => queryPosts.length > 0 ? queryPosts.sorted("created_at") : false, [queryPosts])
 
   useEffect(() => {
     async function getData() {
@@ -47,18 +42,23 @@ const HomeScreen = (navigation) => {
     const response = await client.post.fetch({ skip: posts.length });
     setLoaderF(false)
     if(response.error) return;
+    if(response.data.length < 1) return;
     dispatch(initMainTrends(response.data));
   }
 
-  const RenderItem = ({ item }) => (
+  const renderItem = ({ item }) => (
     <DisplayPosts comments={false} informations={item} />
   )
+
+  const memoizedValue = useMemo(() => renderItem, [posts]);
 
   return (
     <PageContainer>
         <FlatList
+          removeClippedSubviews={true}
+          initialNumToRender={15}
           data={posts}
-          renderItem={({ item, index }) => <RenderItem key={index} item={item} />} 
+          renderItem={memoizedValue} 
           keyExtractor={item => item.post_id}
           ListFooterComponent={loader && <Loader />}
           onScrollEndDrag={() => bottomHandler()}

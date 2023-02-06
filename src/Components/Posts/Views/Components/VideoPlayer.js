@@ -5,12 +5,12 @@ import VideoControls from "react-native-video-controls";
 import { full_height, full_width } from "../../../../Style/style";
 import SvgElement from "../../../Elements/Svg";
 
-function VideoPlayer({ uri, creator }) {
+function VideoPlayer({ uri, creator, thumbnail }) {
 
   const videoPlayer = useRef(null);
-  const [repeat] = useState(false);
-  const [paused, setPaused] = useState(false);
-  const [muted, setMuted] = useState(true);
+  const [repeat] = useState(true);
+  const [paused, setPaused] = useState(true);
+  const [muted, setMuted] = useState(false);
   const [full_screen, setFullScreen] = useState(false);
 
   return (
@@ -41,11 +41,12 @@ function VideoPlayer({ uri, creator }) {
         height: 250
       }}>
           <Video
+            poster={thumbnail ?? "https://i.stack.imgur.com/PtbGQ.png"}
             onEnd={() => setPaused(true)}
             source={{
               uri: uri
             }}
-            resizeMode={'contain'}
+            resizeMode={'cover'}
             style={{
               position: 'absolute',
               top: 0,
@@ -66,7 +67,7 @@ function VideoPlayer({ uri, creator }) {
             <View
                 style={{
                   position: 'absolute',
-                  bottom: 75,
+                  top: 10,
                   left: 10,
                 }} >
                 <SvgElement onPress={() => {

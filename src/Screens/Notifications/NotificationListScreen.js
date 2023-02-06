@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Toast from 'react-native-toast-message';
 import { FlatList, RefreshControl } from 'react-native';
@@ -23,17 +23,19 @@ const NoficationListScreen = () => {
     });
     setLoading(false);
     if (request.error) return Toast.show({ text1: t(`errors.${request.error.code}`) });
+    if(request.data.length < 1) return;
     setList([...list, ...request.data]);
   }
 
   useEffect(() => {
     notificationList()
   }, [isFocused])
-
-  const RenderItem = ({ item }) => (
+  
+  const renderItem = ({ item }) => (
     <DisplayNotifications info={item} />
   )
 
+  const memoizedValue = useMemo(() => renderItem, [list]);
 
   return (
       <FlatList
@@ -42,7 +44,7 @@ const NoficationListScreen = () => {
         }}
         data={list}
         keyExtractor={item => item.notification_id}
-        renderItem={({ item }) => <RenderItem item={item} />}
+        renderItem={memoizedValue}
         refreshControl={<RefreshControl refreshing={loading} progressBackgroundColor={colors.bg_primary} tintColor={colors.fa_primary} colors={[colors.fa_primary, colors.fa_secondary, colors.fa_third]} onRefresh={() => notificationList()} />}
         ListEmptyComponent={() => <Text style={{ padding: 5 }}>{t("notification.no_trends_interactions")}</Text>}
       />

@@ -13,7 +13,7 @@ import Carroussel from '../../Components/Posts/Views/Components/Carroussel';
 import { axiosInstance } from '../../Services';
 import TextAreaAutoComplete from '../../Components/Posts/Creator/TextAreaAutoComplete';
 import BottomButtonPostCreator from '../../Components/Posts/Creator/BottomButton';
-import { addMainTrends } from '../../Redux/mainFeed/action';
+import { addMainCreatedTrends } from '../../Redux/mainFeed/action';
 
 const PostCreatorScreenStack = ({ route: { params }}) => {
 
@@ -42,33 +42,30 @@ const PostCreatorScreenStack = ({ route: { params }}) => {
     let data = { content: content ?? "" };
 
     if (files.length > 0) {
-      if (typeof window !== "undefined") {
-        var formdata = new FormData();
+      var formdata = new FormData();
 
-        files.forEach(a => formdata.append("posts", a))
+      files.forEach(a => formdata.append("posts", a))
 
-        var config = {
-          headers: {
-            'content-type': 'multipart/form-data',
-            "trendertokenapi": token
-          },
-          onUploadProgress: function (progressEvent) {
-            setSending({ send: true, progress: progressEvent.loaded / progressEvent.total })
-          },
-          validateStatus: s => s < 501
-        };
+      var config = {
+        headers: {
+          'content-type': 'multipart/form-data',
+          "trendertokenapi": token
+        },
+        onUploadProgress: function (progressEvent) {
+          setSending({ send: true, progress: progressEvent.loaded / progressEvent.total })
+        },
+        validateStatus: s => s < 501
+      };
 
-        const request = await axiosInstance.post("/upload?type=posts", formdata, config);
-        const req_data = request.data;
-        if (!req_data.data) {
-          setSending({ send: false, progress: 0 })
-          return Toast.show({
-            text1: t(`errors.${req_data.error.code}`)
-          })
-        }
-        data = { ...data, ...req_data.data }
+      const request = await axiosInstance.post("/upload?type=posts", formdata, config);
+      const req_data = request.data;
+      if (!req_data.data) {
+        setSending({ send: false, progress: 0 })
+        return Toast.show({
+          text1: t(`errors.${req_data.error.code}`)
+        })
       }
-
+      data = { ...data, ...req_data.data }
     }
 
     const response = await client.post.create({ ...data, attached_post_id: attached_post_id });
@@ -80,7 +77,7 @@ const PostCreatorScreenStack = ({ route: { params }}) => {
       })
     }
 
-    if(response.data && !attached_post_id) dispatch(addMainTrends({ ...response?.data, from: { ...user } }));
+    if(response.data && !attached_post_id) dispatch(addMainCreatedTrends({ ...response?.data, from: { ...user } }));
 
     setSending({ send: false, progress: 0 })
     setFiles([])
@@ -179,7 +176,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  addMainTrends
+  addMainCreatedTrends
 };
 
 

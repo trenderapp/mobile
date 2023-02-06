@@ -6,7 +6,7 @@ import ClientContext from './ClientContext';
 import SplashScreen from 'react-native-splash-screen';
 import { DefaultTheme, Provider } from 'react-native-paper';
 import useTheme from '../Theme/useTheme';
-import { apibaseurl } from '../../../Services/constante';
+import { apibaseurl, cdnbaseurl } from '../../../Services/constante';
 import { useTranslation } from 'react-i18next';
 import { check, PERMISSIONS, RESULTS, request } from 'react-native-permissions';
 
@@ -16,8 +16,8 @@ function ClientProvider({ children }) {
         client: new Client({
             token: ""
         }),
-        token: null,
-        user: null,
+        token: undefined,
+        user: undefined,
         state: "loading"
     });
     const { i18n } = useTranslation();
@@ -49,7 +49,8 @@ function ClientProvider({ children }) {
 
             const client = new Client({
                 token: user_token,
-                apiurl: apibaseurl
+                apiurl: apibaseurl,
+                cdnurl: cdnbaseurl
             });
 
             const user = await client.informations();

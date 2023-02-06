@@ -16,9 +16,9 @@ function DisplayPosts({ informations, pined, comments, is_comment }) {
     return (
         <SinglePostContextProvider informations={{
             ...informations,
-            is_comment: is_comment
+            is_comment: is_comment,
         }}>
-            <TouchableOpacity activeOpacity={0.7} onPress={() => comments ? null : navigation.push("PostStack", { screen: "PostScreen", params: { post_id: informations.post_id, informations: informations } })} >
+            <TouchableOpacity activeOpacity={0.7} onPress={() => comments ? null : navigation.push("PostStack", { screen: "PostScreen", params: { post_id: informations.post_id } })} >
                 { pined && <View style={{ marginLeft: 5 }}><Text style={styles.pined}><SvgElement name="pin" noColor size={12} /> {t("posts.pin")}</Text></View> } 
                 <PostNormal /> 
             </TouchableOpacity>

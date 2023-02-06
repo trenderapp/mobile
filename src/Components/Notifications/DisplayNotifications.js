@@ -5,11 +5,9 @@ import { Username, Avatar } from "../Member";
 import { useClient, useTheme, useNavigation } from "../Container";
 import styles, { full_width } from "../../Style/style";
 import SvgElement from "../Elements/Svg";
-import VideoPlayer from "../Posts/Views/Components/VideoPlayer";
-import { Text } from "react-native-paper";
 import FastImage from "react-native-fast-image";
 
-function DisplayNotifications({ info }) {
+const DisplayNotifications = ({ info }) => {
 
     const { client } = useClient();
     const { colors } = useTheme();
@@ -29,14 +27,12 @@ function DisplayNotifications({ info }) {
     }
 
     const navigateScreen = (notification_type) => {
+        if(!navigation) return;
         switch (notification_type) {
             case "follows":
-                return navigation.navigate("ProfileStack", {
-                    screen: "ProfileScreen",
-                    params: {
-                        nickname: info.from.nickname
-                    }
-                })
+                return navigation.navigate("ProfileStack", { screen: "ProfileScreen", params: { nickname: info.from.nickname }})
+            case "likes":
+                return navigation.push("PostStack", { screen: "PostScreen", params: { post_id: info?.post.post_id }})
             default:
                 return ""
         }
@@ -47,14 +43,18 @@ function DisplayNotifications({ info }) {
         if(info.post.attachments.length < 1) return <View></View>;
         const type = info.post.type;
         const attachments = info.post.attachments;
-        if(type === 1) return <FastImage 
+        if(type === 1 || type === 2) return <View style={{
+            backgroundColor: colors.bg_secondary
+        }}>
+            <FastImage
         resizeMode={"cover"}
         style={{
             width: full_width,
-            height: 100
+            height: 250
         }}
-        source={{ uri: client.post.file(info?.target_id, info?.post.post_id, attachments[0].name) }}/>
-        if(type === 2) return <Text>Video</Text> // <VideoPlayer uri={`${client.post.file(info.from.user_id, info.post.post_id, attachments[0]?.name)}`} />
+        source={{ uri: client.post.file(info?.target_id, info?.post.post_id, type === 1 ? attachments[0].name : attachments[0]?.thumbnail) }}/>
+        </View>
+        // if(type === 2) return <VideoPlayer uri={`${client.post.file(info.from.user_id, info.post.post_id, attachments[0]?.name)}`} />
         return <View></View>
     }
 

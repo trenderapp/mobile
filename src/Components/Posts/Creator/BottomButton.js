@@ -48,9 +48,9 @@ function BottomButtonPostCreator({ setFiles, addFiles, setCameraVisible }) {
 
     const fileInfo = (node) => {
         const uri = node.image.uri;
-        const type = node.type.split("/")[0];
+        const type = node.type;
         const split = uri.split("/");
-        const size = node.image?.fileSize ?? 0;
+        const size = node.image?.fileSize ?? 1;
 
         const to_return = {
             size: size,

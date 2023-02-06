@@ -1,11 +1,11 @@
 import {Realm} from '@realm/react';
-import * as Type from "trender-client/Managers/Interfaces/Post";
+import { PostInterface } from "trender-client";
 
 export class PostMainFeed extends Realm.Object<PostMainFeed> {
 
-  params: Type.postResponseSchema | undefined;
+  params: PostInterface.postResponseSchema | undefined;
   
-  constructor(realm: Realm, params: Type.postResponseSchema) {
+  constructor(realm: Realm, params: PostInterface.postResponseSchema) {
     super(realm, params);
   }
 }

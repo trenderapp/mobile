@@ -11,11 +11,8 @@ import { BaseToast, MessageToast } from './Components/Elements/Toasts';
 import Routes from './Routes';
 import { store } from './Redux';
 import { DmGroupListContextProvider } from './Context/DmGuildListContext';
-import { RealmContext } from "./Services/Realm";
 
 const App = () => {
-
-  const { RealmProvider } = RealmContext;
 
   const toastConfig = {
     success: (props) => (
@@ -27,7 +24,6 @@ const App = () => {
   }
 
   return (
-    <RealmProvider>
       <ThemeContainer>
         <NavigationContainer>
           <ClientContainer>
@@ -44,7 +40,6 @@ const App = () => {
         </NavigationContainer>
         <Toast onPress={() => Toast.hide()} config={toastConfig} />
       </ThemeContainer>
-    </RealmProvider>
   );
 };
 

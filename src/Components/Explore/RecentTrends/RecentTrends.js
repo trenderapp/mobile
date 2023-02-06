@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useIsFocused } from "@react-navigation/native";
 import { connect, useDispatch, useSelector  } from 'react-redux';
 import { useTranslation } from "react-i18next";
@@ -50,12 +50,18 @@ function RecentTrends() {
         dispatch(initExploreRecentTrends(response.data));
     }
 
+    const renderItem = ({ item }) => (
+        <DisplayPosts comments={false} informations={item} />
+      )
+
+    const memoizedValue = useMemo(() => renderItem, [posts]);
+
     return (
         <FlatList
             ListEmptyComponent={<Text style={{ padding: 5 }}>{t("explore.no_trends_selected_region_all_time")}</Text>}
+            renderItem={memoizedValue} 
             data={posts}
             onScrollEndDrag={() => bottomHandler()}
-            renderItem={({ item, index }) => <DisplayPosts key={index} informations={item} />} 
             keyExtractor={item => item.post_id}
             refreshControl={<RefreshControl refreshing={loaderF} progressBackgroundColor={colors.bg_primary} tintColor={colors.fa_primary} colors={[colors.fa_primary, colors.fa_secondary, colors.fa_third]} onRefresh={() => refreshTrends()} />}
         />
