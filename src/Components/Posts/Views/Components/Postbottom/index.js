@@ -44,11 +44,11 @@ function Postbottom() {
                       initFiles: [],
                       initContent: ""
                     }})} name='comment' size={22} />
-                    <Text>{info?.comments?.total ?? 0}</Text>
+                    <Text>{info?.comments ?? 0}</Text>
                 </View>
                 <View style={styles.row}>
                     <LikeButton />
-                    <Text>{info?.likes?.total ?? 0}</Text>
+                    <Text>{info?.likes ?? 0}</Text>
                 </View>
                 <View style={styles.row}>
                     <SvgElement onPress={onShare} margin={10} name='share' size={22} />

@@ -16,7 +16,7 @@ function LikeButton() {
         if(response.error) return  Toast.show({
             text1: t(`errors.${response.error.code}`)
         })
-        setInfo({ ...info, likes: { total: info?.likes?.total > 0 ? info?.likes?.total + 1 : 1 }, liked: true})
+        setInfo({ ...info, likes: info?.likes > 0 ? info?.likes + 1 : 1, liked: true})
     }
 
     const deleteLike = async () => {
@@ -24,7 +24,7 @@ function LikeButton() {
         if(response.error) return Toast.show({
             text1: t(`errors.${response.error.code}`)
         })
-        setInfo({ ...info, likes: { total: info?.likes?.total > 0 ? info?.likes?.total - 1 : 0 }, liked: undefined})
+        setInfo({ ...info, likes: info?.likes > 0 ? info?.likes - 1 : 0, liked: false})
     }
 
     return (

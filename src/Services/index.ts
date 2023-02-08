@@ -16,14 +16,14 @@ export const PATTERN_CARD_EXPIRE_DATE = /\d{2}\/\d{2}/;
 export const PATTERN_CARD_CVV = /\d{3}/;
 export const PATTERN_FULLNAME = /^$|^[a-zA-ZčČćĆđĐšŠžŽ-]+ [a-zA-ZčČćĆđĐšŠžŽ-]+$/;
 
-export const convertFirstCharacterToUppercase = (stringToConvert) => {
+export const convertFirstCharacterToUppercase = (stringToConvert: string) => {
   var firstCharacter = stringToConvert.substring(0, 1);
   var restString = stringToConvert.substring(1);
 
   return firstCharacter.toUpperCase() + restString;
 }
 
-export const messageFormatDate = (date) => new formatDate(date);
+export const messageFormatDate = (date: Date | string) => new formatDate(date);
 
 /**
  * 
@@ -32,7 +32,7 @@ export const messageFormatDate = (date) => new formatDate(date);
  * @param {Number} fromIndex 
  * @returns 
  */
-export const changeElementPlaceArray = (arr, toIndex, fromIndex) => {
+export const changeElementPlaceArray = (arr: Array<any>, toIndex: number, fromIndex: number) => {
 
   const element = arr.splice(fromIndex, 1)[0];
 
@@ -57,26 +57,50 @@ export const axiosInstance = axios.create({
   validateStatus: s => s < 501,
 });
 
+export const getAppInfo = async () => {
+  const version = DeviceInfo.getBuildNumber();
+  const request = await axiosInstance.get("/status");
+  const response = request.data as { 
+    data: {
+      status: "Online",
+      api_version: string,
+      android_version?: number,
+      ios_version?: number
+    }
+  }
+  
+  if(!response.data?.ios_version || !response.data?.android_version) return false;
+  if(Platform.OS === "ios") return response.data.ios_version > parseInt(version);
+  if(Platform.OS === "android") return response.data.android_version > parseInt(version);
+  return false;
+}
+
+export const storeLink = (): string => {
+  if(Platform.OS === "ios") return "https://apps.apple.com/app/trender-social-network/id6443865410";
+  if(Platform.OS === "android") return "https://play.google.com/store/apps/details?id=com.trenderapp.social";
+  return "https://trenderapp.com"
+}
+
 export const getPermissions = async () => {
   const camera = await check(Platform.OS === "ios" ? PERMISSIONS.IOS.CAMERA : PERMISSIONS.ANDROID.CAMERA);
-  if(camera !== RESULTS.GRANTED || camera !== RESULTS.LIMITED) await request(Platform.OS === "ios" ? PERMISSIONS.IOS.CAMERA : PERMISSIONS.ANDROID.CAMERA);
+  if(camera !== RESULTS.GRANTED) await request(Platform.OS === "ios" ? PERMISSIONS.IOS.CAMERA : PERMISSIONS.ANDROID.CAMERA);
 
   const library = await check(Platform.OS === "ios" ? PERMISSIONS.IOS.MEDIA_LIBRARY : PERMISSIONS.ANDROID.ACCESS_MEDIA_LOCATION);
-  if(library !== RESULTS.GRANTED || library !== RESULTS.LIMITED) await request(Platform.OS === "ios" ? PERMISSIONS.IOS.MEDIA_LIBRARY : PERMISSIONS.ANDROID.ACCESS_MEDIA_LOCATION);
+  if(library !== RESULTS.GRANTED) await request(Platform.OS === "ios" ? PERMISSIONS.IOS.MEDIA_LIBRARY : PERMISSIONS.ANDROID.ACCESS_MEDIA_LOCATION);
 
-  const IOSLibrary = Platform.OS === "ios" && await check([PERMISSIONS.IOS.PHOTO_LIBRARY]);
-  if(IOSLibrary !== RESULTS.GRANTED || IOSLibrary !== RESULTS.LIMITED) await request(PERMISSIONS.IOS.PHOTO_LIBRARY);
+  const IOSLibrary = Platform.OS === "ios" && await check(PERMISSIONS.IOS.PHOTO_LIBRARY);
+  if(IOSLibrary !== RESULTS.GRANTED) await request(PERMISSIONS.IOS.PHOTO_LIBRARY);
 
-  const IOSMicrophone = Platform.OS === "ios" && await check([PERMISSIONS.IOS.MICROPHONE]);
-  if(IOSMicrophone !== RESULTS.GRANTED || IOSMicrophone !== RESULTS.LIMITED) await request(PERMISSIONS.IOS.MICROPHONE);
+  const IOSMicrophone = Platform.OS === "ios" && await check(PERMISSIONS.IOS.MICROPHONE);
+  if(IOSMicrophone !== RESULTS.GRANTED) await request(PERMISSIONS.IOS.MICROPHONE);
 
 }
 
-export const openURL = async (url) => {
+export const openURL = async (url: string) => {
   await Linking.openURL(url);
 }
 
-export const cguLink = (language) => {
+export const cguLink = (language: string) => {
   let lang = "https://cdn.trenderapp.com/assets/legal/T&S.pdf"
   if(language === "fr") lang = "https://cdn2.trenderapp.com/assets/legal/CGU.pdf"
   return lang;
@@ -87,10 +111,10 @@ export const cguLink = (language) => {
  * @param {String} url 
  * @returns {Array<String>}
  */
-export const parseURL = (url) => {
+export const parseURL = (url: string) => {
     if(!url) return false;
 
-    let link;
+    let link = [""];
     if(url.startsWith("https://www.trenderapp.com")) link = url.split("https://www.trenderapp.com");
     else if(url.startsWith("https://trenderapp.com")) link = url.split("https://trenderapp.com");
     else if(url.startsWith("http://www.trenderapp.com")) link = url.split("http://www.trenderapp.com");
@@ -99,50 +123,50 @@ export const parseURL = (url) => {
     return link.slice(1);
 }
 
-export const NameValidator = (value) => {
+export const NameValidator = (value: string) => {
   return RegExpValidator(PATTERN_NAME, value);
 };
 
-export const DOBValidator = (value) => {
+export const DOBValidator = (value: string) => {
   return RegExpValidator(PATTERN_DOB, value);
 };
 
-export const EmailValidator = (value) => {
+export const EmailValidator = (value: string) => {
   return RegExpValidator(PATTERN_EMAIL, value);
 };
 
-export const PasswordValidator = (value) => {
+export const PasswordValidator = (value: string) => {
   return RegExpValidator(PATTERN_PASSWORD, value);
 };
 
-export const PhoneNumberValidator = (value) => {
+export const PhoneNumberValidator = (value: string) => {
   return RegExpValidator(PATTERN_PHONE, value);
 };
 
-export const SMSCodeValidator = (value) => {
+export const SMSCodeValidator = (value: string) => {
   return RegExpValidator(PATTERN_SMS_CODE, value);
 };
 
-export const CardNumberValidator = (value) => {
+export const CardNumberValidator = (value: string) => {
   return RegExpValidator(PATTERN_CARD_NUMBER, value);
 };
 
-export const ExpirationDateValidator = (value) => {
+export const ExpirationDateValidator = (value: string) => {
   return RegExpValidator(PATTERN_CARD_EXPIRE_DATE, value);
 };
 
-export const CvvValidator = (value) => {
+export const CvvValidator = (value: string) => {
   return RegExpValidator(PATTERN_CARD_CVV, value);
 };
 
-export const CardholderNameValidator = (value) => {
+export const CardholderNameValidator = (value: string) => {
   return RegExpValidator(PATTERN_FULLNAME, value);
 };
 
-export const StringValidator = (value) => {
+export const StringValidator = (value: string) => {
   return !!value && value.length > 0;
 };
 
-const RegExpValidator = (regexp, value) => {
+const RegExpValidator = (regexp: RegExp, value: string) => {
   return regexp.test(value);
 };

@@ -26,6 +26,13 @@
         "delete_all": "Tout supprimer",
         "next": "Suivant"
     },
+    "update": {
+        "update": "Mettre à jour",
+        "title": "Nouvelle mise à jour disponible",
+        "paragraph_1": "Il s'agit d'une mise à jour importante.",
+        "paragraph_2": "Pour éviter tout problème, veuillez mettre à jour l'application.",
+        "paragraph_3": "Si aucune mise à jour n'est disponible dans la boutique, merci de patienter 24h maximum et revérifier."
+    },
     "notification": {
         "no_new_followers": "Aucun nouvel abonné.",
         "no_trends_interactions": "Aucune interaction avec vos Trends."

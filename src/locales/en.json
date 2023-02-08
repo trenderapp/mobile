@@ -26,6 +26,13 @@
         "delete_all": "Delete all",
         "next": "Next"
     },
+    "update": {
+        "update": "Update",
+        "title": "New update available",
+        "paragraph_1": "This is an important update.",
+        "paragraph_2": "To prevent for crash, please update the app.",
+        "paragraph_3": "If none update is available in the store, please wait a maximum of 24h and recheck."
+    },
     "notification": {
         "no_new_followers": "No new followers.",
         "no_trends_interactions": "No interactions with your Trends."
