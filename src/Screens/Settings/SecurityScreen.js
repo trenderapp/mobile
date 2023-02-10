@@ -7,8 +7,8 @@ import SettingsContainer from '../../Components/Container/SettingsContainer';
 import { TextInput } from '../../Components/Elements/Input';
 import { axiosInstance, cguLink, openURL } from '../../Services';
 import { useNavigation } from "@react-navigation/native";
-import EncryptedStorage from 'react-native-encrypted-storage';
 import { HomeButtonSection } from '../../Components/Settings';
+import { clearStorage } from '../../Services/storage';
 
 function SecurityScreen() {
 
@@ -43,10 +43,8 @@ function SecurityScreen() {
         setLoading(false);
         if(response.error) return setError(t(`errors.${response.error.code}`));
 
-        EncryptedStorage.clear().then(() => {
-            return navigation.replace("LoginNavigator", { screen: "Login" })
-        })      
-        
+        clearStorage("user_info")
+        return navigation.replace("LoginNavigator", { screen: "Login" })
     }
     
     return (

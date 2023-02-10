@@ -1,5 +1,4 @@
 import React from "react";
-import EncryptedStorage from 'react-native-encrypted-storage';
 import { Appbar, Text } from "react-native-paper";
 import styles, { full_width } from "../../Style/style";
 
@@ -9,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import useClient from "./Client/useClient";
 import SafeBottomContainer from "./SafeBottomContainer";
+import { clearStorage } from "../../Services/storage";
 
 const SettingsContainer = ({ children, title, disconnect = false }) => {
     
@@ -28,13 +28,12 @@ const SettingsContainer = ({ children, title, disconnect = false }) => {
             text: t("commons.yes"),
             onPress: async () => {
               await client.client.user.logout();
-              EncryptedStorage.clear().then(() => {
-                client.setValue({
-                  ...client,
-                  state: "logout"
-                })
-                return navigation.replace("LoginNavigator", { screen: "Login" })
-              })     
+              clearStorage("user_info")
+              client.setValue({
+                ...client,
+                state: "logout"
+              })
+              return navigation.replace("LoginNavigator", { screen: "Login" })
             },
             style: "default"
           }

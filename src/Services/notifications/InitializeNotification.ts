@@ -1,14 +1,8 @@
-import EncryptedStorage from 'react-native-encrypted-storage';
 import messaging from "@react-native-firebase/messaging";
 import notifee, { AndroidImportance } from "@notifee/react-native";
 import { checkNotifications, requestNotifications, RESULTS } from 'react-native-permissions';
-import { Platform } from 'react-native';
-
-export const currentFcmToken = async () => {
-  const token = await EncryptedStorage.getItem("pushNotificationToken");
-  if (token) return token;
-  return;
-}
+import { getStorageInfo, setStorage, userStorageI } from "../storage";
+import { Platform } from "react-native";
 
 export const notificationChannels = async () => {
   // await notifee.deleteChannel("sound")
@@ -44,12 +38,15 @@ export const notificationChannels = async () => {
   ])
 }
 
-export const resetFcmToken = async () => {
+export const resetFcmToken = async (user_info: userStorageI) => {
   try {
+    if(Platform.OS === "ios") await messaging().registerDeviceForRemoteMessages()
     const fcmToken = await messaging().getToken();
     if (fcmToken) {
-      await EncryptedStorage.setItem("pushNotificationToken", fcmToken);
-
+      setStorage("user_info", JSON.stringify({
+        ...user_info,
+        fcm_token: fcmToken
+      }));
       return fcmToken
     }
   } catch (error) {
@@ -59,46 +56,25 @@ export const resetFcmToken = async () => {
 }
 
 export const initNotificationToken = async () => {
-  const token = await EncryptedStorage.getItem("pushNotificationToken");
-  if (!token || token === "null") {
-    const fcmToken = await resetFcmToken();
-    return fcmToken;
-  } else {
-    return;
-  }
+  const user_info = getStorageInfo("user_info") as userStorageI;  
+  if(user_info?.fcm_token) return;
+  const fcmToken = await resetFcmToken(user_info);
+  return fcmToken;
 }
 
-// Use on IOS permissions
 export async function requestNotificationPermission() {
-  let enabled = false;
-  if(Platform.OS === "ios") {
-    const authStatus = await messaging().requestPermission({
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      provisional: false,
-      sound: true,
-    });
-    enabled = authStatus === messaging.AuthorizationStatus.AUTHORIZED || authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-  } else if(Platform.OS === "android") {
-    let check = undefined;
-    const notification = await checkNotifications();
-    if(notification !== RESULTS.GRANTED || notification !== RESULTS.LIMITED) check = await requestNotifications(["alert", "badge", "criticalAlert", "providesAppSettings", "provisional", "sound"]);
-    enabled = check.status === RESULTS.GRANTED || check.status === RESULTS.LIMITED;
-  }
+  const notificationPermission = await checkNotifications();  
+  if(notificationPermission.status === RESULTS.GRANTED || notificationPermission.status === RESULTS.LIMITED) return await initNotificationToken();
 
-  if (enabled) {
-    const requested = await initNotificationToken();
-    if (!requested) return;
-    return requested;
-  }
+  const requestPermissions = await requestNotifications(["alert", "badge", "sound"]);
+  if(requestPermissions.status === "granted" || requestPermissions.status === "limited") return await initNotificationToken();
+
+  return;
 }
 
 export const notificationListener = async () => {
   // Assume a message-notification contains a "type" property in the data payload of the screen to open
   
-
   messaging().onNotificationOpenedApp(remoteMessage => {
     console.log('Notification caused app to open from background state:', remoteMessage.notification);
     // navigation.navigate(remoteMessage.data.type);

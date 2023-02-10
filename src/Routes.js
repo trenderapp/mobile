@@ -6,13 +6,14 @@ import notifee from "@notifee/react-native";
 import { Linking } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { webSocketRoutes } from 'trender-client';
+import messaging from "@react-native-firebase/messaging";
 
 import { BottomNavigation, LoginNavigator, SplashScreen } from './Navigator';
 import { PostStack, ProfileStack, SettingsStack } from './Navigator/Stacks';
 import { useClient, useWebSocket } from './Components/Container';
 import { DmGroupListContext, initDmGroup, modifyDmGroup } from './Context/DmGuildListContext';
 import { changeElementPlaceArray, parseURL } from './Services';
-// import { notificationListener, requestNotificationPermission } from './Services/notifications';
+import { requestNotificationPermission } from './Services/notifications';
 import VerificationCode from './Screens/Login/Verify/VerificationCode';
 import CreateStack from './Navigator/Stacks/CreateStack';
 import MessageStack from './Navigator/Stacks/MessageStack';
@@ -61,15 +62,18 @@ function Routes() {
       
     }, [])
 
-    /*const registerFCMToken = async () => {
+    const registerFCMToken = async () => {
         const fcmToken = await requestNotificationPermission();
         if(fcmToken) await client.pushNotification.register(fcmToken);
         return;
-    }*/
+    }
 
     useEffect(() => {
         if(state === "loged") {
-            // registerFCMToken()
+            registerFCMToken()
+            messaging().onTokenRefresh(async token => {
+                await client.pushNotification.register(token);
+            });
             getGuilds()
             getUnreads()
         }

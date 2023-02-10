@@ -1,46 +1,58 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from "react-i18next";
 import { TouchableOpacity, View } from 'react-native';
 import { SegmentedButtons, Text } from 'react-native-paper';
-import EncryptedStorage from 'react-native-encrypted-storage';
 import { useTheme } from '../../Components/Container';
 import SettingsContainer from '../../Components/Container/SettingsContainer';
 import { Avatar } from '../../Components/Member';
 import { cdnbaseurl } from '../../Services/constante';
 import { languageList } from '../../locales/i18n';
+import { getStorageInfo, setStorage, settingsStorageI } from '../../Services/storage';
 
 function LanguageThemeScreen() {
-
 
     const { t, i18n } = useTranslation();
     const { theme, setTheme, colors } = useTheme();
 
-    /**
-     * 
-     * @param {"theme" | "language"} type
-     * @param {String} txt
-     */
-    const changeStorage = (type, txt) => {
-        EncryptedStorage.getItem("mobile_storage").then(mobile_storage => {
-            const info = JSON.parse(mobile_storage);
-            switch (type) {
-                case "theme":
-                    EncryptedStorage.setItem("mobile_storage", JSON.stringify({
-                        theme: txt,
-                        language: info?.language
-                    }))
-                    break;
-                case "language":
-                    EncryptedStorage.setItem("mobile_storage", JSON.stringify({
-                        theme: info?.theme,
-                        language: txt
-                    }))
-                    break;
-                default:
-                    break;
-            }
-        })
+    const changeStorage = (type: "theme" | "language", txt: string) => {
+        const settings = getStorageInfo("settings") as settingsStorageI;
+
+        switch (type) {
+            case "theme":
+                setStorage("settings", JSON.stringify({
+                    theme: txt,
+                    locale: settings?.locale
+                }))
+                break;
+            case "language":
+                setStorage("settings", JSON.stringify({
+                    theme: settings?.theme,
+                    locale: txt
+                }))
+                break;
+            default:
+                break;
+        }
     }
+
+    const buttons = [
+            {
+                value: 'auto',
+                label: t("settings.auto"),
+            },
+            {
+                value: 'darkblue',
+                label: t("settings.dark_blue"),
+            },
+            {
+                value: 'white',
+                label: t("settings.white"),
+            },
+            {
+                value: 'dark',
+                label: t("settings.dark"),
+            },
+        ]
 
     return (
         <SettingsContainer title={t("settings.lang_and_theme")}>
@@ -48,28 +60,11 @@ function LanguageThemeScreen() {
                 <View style={{ justifyContent: "center", marginBottom: 10 }}>
                     <SegmentedButtons
                         value={theme}
-                        onValueChange={(v) => {
+                        onValueChange={(v: any) => {
                             setTheme(v)
                             changeStorage("theme", v)
                         }}
-                        buttons={[
-                        {
-                            value: 'auto',
-                            label: t("settings.auto"),
-                        },
-                        {
-                            value: 'darkblue',
-                            label: t("settings.dark_blue"),
-                        },
-                        {
-                            value: 'white',
-                            label: t("settings.white"),
-                        },
-                        {
-                            value: 'dark',
-                            label: t("settings.dark"),
-                        },
-                        ]}
+                        buttons={buttons}
                     />
                 </View>
                 <View>

@@ -33,6 +33,8 @@ export class userStoreSchema extends Realm.Object<MeInterface.myInformations> {
     user_id!: string;
     nickname!: string;
     avatar!: string;
+    session_id!: string;
+    fcm_token = "";
     token!: string;
     locale = "EN";
 

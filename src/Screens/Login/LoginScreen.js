@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import Client from "trender-client";
 import { View, ScrollView, SafeAreaView } from 'react-native';
 import { TextInput as PaperTextInput, Text } from 'react-native-paper';
-import EncryptedStorage from 'react-native-encrypted-storage';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import Loader from '../../Components/Loader';
@@ -15,6 +14,7 @@ import { LinkButtonText, NormalButton } from '../../Components/Elements/Buttons'
 import { Logo } from '../../Components/Elements/Assets';
 import { convertFirstCharacterToUppercase, deviceInfo } from '../../Services';
 import { requestNotificationPermission } from '../../Services/notifications';
+import { setStorage } from '../../Services/storage';
 
 const LoginScreen = ({ navigation }) => {
 
@@ -83,7 +83,7 @@ const onMessage = async (message) => {
 
   } else {
 
-    await EncryptedStorage.setItem("user_info", JSON.stringify(response.data));
+   setStorage("user_info", JSON.stringify(response.data));
     
     const new_client = new Client({
       token: response.data.token,

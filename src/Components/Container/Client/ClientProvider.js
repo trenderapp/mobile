@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Platform } from 'react-native';
-import EncryptedStorage from 'react-native-encrypted-storage';
 import Client from 'trender-client';
 import ClientContext from './ClientContext';
 import SplashScreen from 'react-native-splash-screen';
@@ -9,6 +8,7 @@ import useTheme from '../Theme/useTheme';
 import { apibaseurl, cdnbaseurl } from '../../../Services/constante';
 import { useTranslation } from 'react-i18next';
 import { check, PERMISSIONS, RESULTS, request } from 'react-native-permissions';
+import { clearStorage, initStorage } from '../../../Services/storage';
 
 function ClientProvider({ children }) {
     
@@ -25,13 +25,11 @@ function ClientProvider({ children }) {
 
     React.useEffect(() => {
         async function splash() {
-            const info = await EncryptedStorage.getItem("user_info");
-            const mobile_storage = await EncryptedStorage.getItem("mobile_storage");
+            const { settings, user_info } = await initStorage();
 
-            if(mobile_storage) {
-                const storage = JSON.parse(mobile_storage);
-                if(storage?.theme) setTheme(storage.theme);
-                if(storage?.language) i18n.changeLanguage(storage.language);
+            if(settings) {
+                if(settings?.theme) setTheme(settings.theme);
+                if(settings?.locale) i18n.changeLanguage(settings.locale);
             }
             
             SplashScreen.hide()
@@ -39,12 +37,13 @@ function ClientProvider({ children }) {
             if(Platform.OS === "ios") {
                 const trackPermission = await check(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY);
                 if(trackPermission === RESULTS.DENIED || trackPermission === RESULTS.LIMITED) await request(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY)
-            } 
+            }
 
-            if(!info) return setValue({ ...value, state: "logout" });
+            if(!user_info) return setValue({ ...value, state: "logout" });
+
+            console.log(user_info);
       
-            const user_token = JSON.parse(info)?.token;
-      
+            const user_token = user_info?.token;
             if(!user_token) return setValue({ ...value, state: "logout" });
 
             const client = new Client({
@@ -56,7 +55,7 @@ function ClientProvider({ children }) {
             const user = await client.informations();
 
             if(user.error) {
-                await EncryptedStorage.clear();
+                clearStorage("user_info");
                 return setValue({
                     ...value,
                     state: "logout"
