@@ -94,7 +94,7 @@ const onMessage = async (message) => {
     
     client.setValue({ ...client, client: new_client, token: response.data.token, user: informations.data, state: "loged" })
 
-    const fcmToken = await requestNotificationPermission();
+    const fcmToken = await requestNotificationPermission(true);
 
     if(fcmToken) await new_client.pushNotification.register(fcmToken);
 

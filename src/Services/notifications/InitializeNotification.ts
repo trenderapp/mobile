@@ -37,8 +37,11 @@ export const notificationChannels = async () => {
   ])
 }
 
-export const resetFcmToken = async (user_info: userStorageI) => {
+export const resetFcmToken = async (user_info: userStorageI, refresh: boolean = false) => {
   try {
+    if(refresh) {
+      await messaging().deleteToken();
+    }
     const fcmToken = await messaging().getToken();
     if (fcmToken) {
       setStorage("user_info", JSON.stringify({
@@ -53,19 +56,23 @@ export const resetFcmToken = async (user_info: userStorageI) => {
   return;
 }
 
-export const initNotificationToken = async () => {
+export const initNotificationToken = async (refresh: boolean = false) => {
   const user_info = getStorageInfo("user_info") as userStorageI;  
+  if(refresh) {
+    const fcmToken = await resetFcmToken(user_info, refresh);
+    return fcmToken;
+  }
   if(user_info?.fcm_token) return;
-  const fcmToken = await resetFcmToken(user_info);
+  const fcmToken = await resetFcmToken(user_info, refresh);
   return fcmToken;
 }
 
-export async function requestNotificationPermission() {
+export async function requestNotificationPermission(refresh: boolean = false) {
   const notificationPermission = await checkNotifications();  
-  if(notificationPermission.status === RESULTS.GRANTED || notificationPermission.status === RESULTS.LIMITED) return await initNotificationToken();
+  if(notificationPermission.status === RESULTS.GRANTED || notificationPermission.status === RESULTS.LIMITED) return await initNotificationToken(refresh);
 
   const requestPermissions = await requestNotifications(["alert", "badge", "sound"]);
-  if(requestPermissions.status === "granted" || requestPermissions.status === "limited") return await initNotificationToken();
+  if(requestPermissions.status === "granted" || requestPermissions.status === "limited") return await initNotificationToken(refresh);
 
   return;
 }

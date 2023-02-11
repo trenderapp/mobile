@@ -64,6 +64,7 @@ export const directMessageNotification = async (data) => {
         smallIcon: "ic_small_icon", // Not in backend
         color: "#23232e", // Not in backend
         channelId: "sound", // Not in backend
+        timestamp: Date.now()
       },
       ios: {
         foregroundPresentationOptions: {
