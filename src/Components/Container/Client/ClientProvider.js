@@ -40,8 +40,6 @@ function ClientProvider({ children }) {
             }
 
             if(!user_info) return setValue({ ...value, state: "logout" });
-
-            console.log(user_info);
       
             const user_token = user_info?.token;
             if(!user_token) return setValue({ ...value, state: "logout" });

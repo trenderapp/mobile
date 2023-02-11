@@ -2,7 +2,6 @@ import messaging from "@react-native-firebase/messaging";
 import notifee, { AndroidImportance } from "@notifee/react-native";
 import { checkNotifications, requestNotifications, RESULTS } from 'react-native-permissions';
 import { getStorageInfo, setStorage, userStorageI } from "../storage";
-import { Platform } from "react-native";
 
 export const notificationChannels = async () => {
   // await notifee.deleteChannel("sound")
@@ -40,7 +39,6 @@ export const notificationChannels = async () => {
 
 export const resetFcmToken = async (user_info: userStorageI) => {
   try {
-    if(Platform.OS === "ios") await messaging().registerDeviceForRemoteMessages()
     const fcmToken = await messaging().getToken();
     if (fcmToken) {
       setStorage("user_info", JSON.stringify({

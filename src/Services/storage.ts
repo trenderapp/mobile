@@ -29,7 +29,7 @@ type localeStorageKeysT = 'user_info' | 'settings';
 
 export const initStorage = async () => {
     let to_return: storageI = {};
-    const alreadyInit = localeStorage.getAllKeys().find(k => k === "user_info");
+    const alreadyInit = localeStorage.getAllKeys().find((k: string) => k === "user_info");
     const user_info_storage: any = await EncryptedStorage.getItem("user_info");    
 
     if(alreadyInit) {
@@ -42,12 +42,14 @@ export const initStorage = async () => {
     } else if(!alreadyInit && user_info_storage) {    
         const mobile_storage: any = await EncryptedStorage.getItem("mobile_storage");
     
-        if(user_info_storage) to_return.user_info = JSON.parse(user_info_storage);
-        if(mobile_storage) to_return.settings = JSON.parse(mobile_storage);
-    
-        localeStorage.set('user_info', user_info_storage);
-        localeStorage.set('settings', mobile_storage);
-    
+        if(user_info_storage) {
+            to_return.user_info = JSON.parse(user_info_storage);
+            localeStorage.set('user_info', user_info_storage);
+        }
+        if(mobile_storage) {
+            to_return.settings = JSON.parse(mobile_storage);
+            localeStorage.set('settings', mobile_storage);
+        }
         await EncryptedStorage.clear();
     }
 
