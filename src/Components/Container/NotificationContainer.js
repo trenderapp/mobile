@@ -5,11 +5,11 @@ import FastImage from 'react-native-fast-image';
 
 import { View, TouchableOpacity } from 'react-native';
 import { Appbar } from 'react-native-paper';
-import { useClient, useTheme } from '../../Components/Container';
+import { useClient, useTheme } from '.';
 import { Text } from 'react-native-paper';
 import styles, { full_width } from '../../Style/style';
 
-const NotificationContainer = ({ children, title }) => {
+const NotificationContainer = ({ children }) => {
     
     const { colors } = useTheme();
     const { client, user } = useClient();

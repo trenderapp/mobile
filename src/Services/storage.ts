@@ -4,7 +4,7 @@ import { MMKV } from 'react-native-mmkv'
 export const localeStorage = new MMKV()
 
 export interface settingsStorageI {
-    theme?: string,
+    theme?: "darkblue" | "auto" | "white" | "dark",
     locale?: string
 }
 

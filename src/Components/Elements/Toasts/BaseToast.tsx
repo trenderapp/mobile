@@ -1,8 +1,8 @@
 import React from "react";
-import { BaseToast } from 'react-native-toast-message';
+import { BaseToast, BaseToastProps } from 'react-native-toast-message';
 import { useTheme } from "../../Container";
 
-export default function Base(props) {
+export default function Base(props: BaseToastProps) {
     const { colors } = useTheme();
 
     return (

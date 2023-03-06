@@ -2,7 +2,9 @@ import React from "react";
 import { Text } from "react-native";
 import { useTheme } from "../../Container";
 
-function TextSuccess({ text }) {
+function TextSuccess({ text }: {
+    text: string
+}) {
 
     const { colors } = useTheme();
 

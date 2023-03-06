@@ -1,12 +1,30 @@
 import * as React from 'react';
-import Client from 'trender-client';
+import Client, { MeInterface } from 'trender-client';
 
-const ClientContext = React.createContext({
+
+export interface ClientContextI {
+    client: Client,
+    token: string,
+    user: MeInterface.myInformationInterface,
+    state: "loading" | "loged" | "logout",
+    setValue: () => {} | any
+}
+
+const ClientContext = React.createContext<ClientContextI>({
     client: new Client({
         token: ""
     }),
-    token: null,
-    user: null,
+    token: "",
+    user: {
+        avatar: "base1.png",
+        locale: "US",
+        session_id: "",
+        username: "...",
+        nickname: "...",
+        premium_type: 0,
+        token: "",
+        user_id: "00000000"
+    },
     state: "loading",
     setValue: () => {}
 });

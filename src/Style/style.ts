@@ -5,7 +5,6 @@ export const full_width = Dimensions.get("window").width;
 export const full_height = Dimensions.get("window").height;
 
 export const styles = StyleSheet.create({
-    full_width: full_width,
     editContent: {
         backgroundColor: "red",
         height: "100%",

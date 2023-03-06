@@ -7,7 +7,13 @@ import useTheme from "./Theme/useTheme";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 
-const SettingsContainer = ({ children, title, noScroll }) => {
+type SectionProps = React.FC<{
+    children: JSX.Element, 
+    title?: string, 
+    noScroll?: boolean
+}>
+
+const SettingsContainer: SectionProps = ({ children, title, noScroll }) => {
     
     const { colors } = useTheme();
     const { t } = useTranslation();

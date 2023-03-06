@@ -3,11 +3,7 @@ import { DarkBlueTheme } from './Themes';
 
 const ThemeContext = React.createContext({
     theme: "darkblue",
-    /**
-     * 
-     * @param {"auto" | "darkblue" | "white" | "dark"} type 
-     */
-    setTheme: (type) => {},
+    setTheme: (_type: "auto" | "darkblue" | "white" | "dark") => {},
     ...DarkBlueTheme
 });
 

@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Appbar } from "react-native-paper";
 import SearchBar from 'react-native-dynamic-search-bar';
 import { Pressable, View, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-
 
 import styles, { full_width } from "../../Style/style";
 import useTheme from "./Theme/useTheme";
