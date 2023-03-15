@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export const SinglePostContext = React.createContext(() => {});
+export const SinglePostContext = React.createContext();
 
 export const SinglePostContextProvider = ({ children, informations = {}}) => {
     

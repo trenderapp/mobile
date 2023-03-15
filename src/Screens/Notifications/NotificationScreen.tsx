@@ -5,7 +5,7 @@ import NotificationNavigator from './NotificationNavigator';
 
 function NotificationScreen() {
   return (
-    <NotificationContainer title={"Notifications"}>
+    <NotificationContainer>
       <NotificationNavigator />
     </NotificationContainer>
   );

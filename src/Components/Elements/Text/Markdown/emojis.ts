@@ -1,4 +1,6 @@
-export const emojies_defs = {
+export const emojies_defs: {
+  [x: string]: string;
+} = {
     "100": "💯",
     "1234": "🔢",
     grinning: "😀",

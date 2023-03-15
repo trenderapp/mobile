@@ -30,12 +30,12 @@ const HomeScreen = (navigation: NavigationContextI) => {
       setLoaderF(true)
       if(loaderF) return;
     }
-    const response = await client.post.fetch({ pagination_key: pagination_key });
+    const response = await client.post.fetch();
     if(refresh) setLoaderF(false)
     else setLoader(false)
-    if(!response?.data) return;
+    if(response.error || !response.data) return;
     dispatch(initMainTrends(response.data));
-    setPaginationKey(response?.pagination_key)
+    setPaginationKey(response?.pagination_key);
   }
   
   useEffect(() => {
@@ -51,9 +51,10 @@ const HomeScreen = (navigation: NavigationContextI) => {
     setLoader(true)
     if(loader) return;
     const response = await client.post.fetch({ pagination_key: pagination_key });
-    setLoaderF(false);
-    if(response.error || !response.data) return;
-    if(response.data.length < 1) return setLoader(false);
+    setLoader(false);    
+    if(response.error || !response.data) return;    
+    if(response.data.length < 1) return;
+    setPaginationKey(response?.pagination_key);
     dispatch(addMainTrends(response.data));
   }
 

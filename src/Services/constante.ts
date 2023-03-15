@@ -2,7 +2,7 @@ const dev_ip = "192.168.129.144";
 
 const link = typeof dev_ip !== "undefined" ? dev_ip : "api.trenderapp.com";
 const s = link === "api.trenderapp.com" ? "s" : "";
-const port = link === "api.trenderapp.com" ? "" : ":5000";
+const port = link === "api.trenderapp.com" ? "" : ":4001";
 
 export const apibaseurl = `http${s}://${link}${port}/api/v2`;
 export const cdnbaseurl = `https://cdn.trenderapp.com${dev_ip ? "/test" : ""}`;

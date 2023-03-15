@@ -1,8 +1,8 @@
-import * as React from 'react';
+import { useContext } from 'react';
 import ClientContext from './ClientContext';
 
 export default function useClient() {
-  const client = React.useContext(ClientContext);
+  const client = useContext(ClientContext);
 
   return client;
 }

@@ -4,7 +4,14 @@ import { TouchableOpacity, View } from "react-native";
 import { useTheme } from "../../Container";
 import svgList from "./SvgList";
 
-function SvgElement({ onPress = undefined, name, size = 33, margin, noColor }) {
+type SectionType = {
+    onPress?: () => {},
+    name: string,
+    size?: number,
+    margin?: number,
+    noColor?: boolean;
+}
+function SvgElement({ onPress = undefined, name, size = 33, margin, noColor }: SectionType) {
 
     const { colors } = useTheme();
     const [svg, setSvg] = useState({

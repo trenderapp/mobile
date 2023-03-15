@@ -7,13 +7,15 @@ import styles, { full_width } from "../../Style/style";
 import SvgElement from "../Elements/Svg";
 import FastImage from "react-native-fast-image";
 
-const DisplayNotifications = ({ info }) => {
+type notificationType = "likes" | "mentions" | "follows";
+
+const DisplayNotifications = ({ info }: any) => {
 
     const { client } = useClient();
     const { colors } = useTheme();
     const navigation = useNavigation();
 
-    const svgName = (type) => {
+    const svgName = (type: notificationType) => {
         switch (type) {
             case "likes":
                 return "heart-solid"
@@ -26,7 +28,7 @@ const DisplayNotifications = ({ info }) => {
         }
     }
 
-    const navigateScreen = (notification_type) => {
+    const navigateScreen = (notification_type: notificationType) => {
         if(!navigation) return;
         switch (notification_type) {
             case "follows":
@@ -68,7 +70,7 @@ const DisplayNotifications = ({ info }) => {
                 borderBottomColor: colors.bg_secondary,
                 borderBottomWidth: 1
             }}>
-                <View style={[styles.row, styles.align_left, {
+                <View style={[styles.row, {
                     justifyContent: "flex-start",
                     alignItems: "flex-start"
                 }]}>

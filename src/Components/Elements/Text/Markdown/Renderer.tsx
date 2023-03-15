@@ -6,6 +6,13 @@ import Br from "../Br";
 import { useNavigation, useTheme } from "../../../Container";
 import { openURL } from "../../../../Services";
 import { SinglePostContext } from "../../../Posts/PostContext";
+import { UserInterface } from "trender-client";
+
+type SectionProps = React.FC<{
+    content: string, 
+    noBr?: boolean, 
+    maxLine?: number,
+}>
 
 const RE_TWEMOJI = /:(\w+):/gi;
 
@@ -17,9 +24,10 @@ const RE_BR = /\n/g;
 export const RE_MENTIONS = /@[A-z0-9]{1,33}/gi;
 export const RE_LINKS = /(https?:\/\/[^\s]+)/gi;
 
-export default function Renderer({ content, noBr, maxLine }) {
+const Renderer: SectionProps = ({ content, noBr, maxLine }) => {
 
-    const { info } = useContext(SinglePostContext);
+    const ctx = useContext(SinglePostContext);
+    const info = ctx?.info;
 
     if (typeof content === "undefined") return null;
     if (content.length === 0) return null;
@@ -43,10 +51,10 @@ export default function Renderer({ content, noBr, maxLine }) {
         
                             if(info?.mentions.length < 1) return <Text key={idx}>{text} </Text>;
                 
-                            const find = info?.mentions.find(m => m.nickname === nickname);
+                            const find = info?.mentions.find((m: UserInterface.userInfo) => m.nickname === nickname);
                             if(!find) return <Text key={idx}>{text} </Text>;
         
-                            return <Text key={idx} onPress={() => navigation.push("ProfileStack" , {
+                            return <Text key={idx} onPress={() => navigation?.push("ProfileStack" , {
                                 screen: "ProfileScreen",
                                 params: {
                                   nickname: find.nickname
@@ -65,3 +73,5 @@ export default function Renderer({ content, noBr, maxLine }) {
         </Text>
     )
 }
+
+export default Renderer;

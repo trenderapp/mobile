@@ -6,6 +6,7 @@ import { Text } from 'react-native-paper';
 import { useClient, useTheme } from '../../Components/Container';
 import { useIsFocused } from '@react-navigation/native';
 import DisplayNotifications from '../../Components/Notifications/DisplayNotifications';
+import { NotificationInterface } from 'trender-client';
 
 const NoficationListScreen = () => {
 
@@ -14,7 +15,7 @@ const NoficationListScreen = () => {
   const { t } = useTranslation();
   const isFocused = useIsFocused();
   const [loading, setLoading] = useState(false);
-  const [list, setList] = useState([]);
+  const [list, setList] = useState<NotificationInterface.notificationFetchResponseSchema[]>([]);
 
   const notificationList = async () => {
     setLoading(true);
@@ -22,7 +23,8 @@ const NoficationListScreen = () => {
       skip: list.length
     });
     setLoading(false);
-    if (request.error) return Toast.show({ text1: t(`errors.${request.error.code}`) });
+    if(request.error) return Toast.show({ text1: t(`errors.${request.error.code}`) as string });
+    if(!request.data) return;
     if(request.data.length < 1) return;
     setList([...list, ...request.data]);
   }
@@ -31,7 +33,7 @@ const NoficationListScreen = () => {
     notificationList()
   }, [isFocused])
   
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }: { item: NotificationInterface.notificationFetchResponseSchema }) => (
     <DisplayNotifications info={item} />
   )
 

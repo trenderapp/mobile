@@ -1,7 +1,7 @@
 import { PostInterface } from "trender-client";
-import { ADD_CREATED_TRENDS, ADD_TRENDS, DELETE_TRENDS, INIT_TRENDS, RESET_TRENDS } from "./actionTypes";
+import { ADD_TRENDS, DELETE_TRENDS, INIT_TRENDS, RESET_TRENDS } from "./actionTypes";
 
-export const mainFeedReducer = (state: PostInterface.postResponseSchema[] = [], action: {
+export const exploreTopTrendsReducer = (state: PostInterface.postResponseSchema[] = [], action: {
     type: string,
     info: any
 }): PostInterface.postResponseSchema[] => {
@@ -12,8 +12,6 @@ export const mainFeedReducer = (state: PostInterface.postResponseSchema[] = [], 
         return action.info;
     case ADD_TRENDS:
         return [...state, ...action.info];
-    case ADD_CREATED_TRENDS:
-        return [action.info, ...state];
     case DELETE_TRENDS:
         return state.filter(p => p.post_id !== action.info);
     default:

@@ -21,7 +21,7 @@ function ExploreScreenNavigator() {
     { key: 'recentTrends', title: 'Last Trends' },
   ]);
 
-  const renderTabBar = (props) => (
+  const renderTabBar = (props: any) => (
     <TabBar
       {...props}
       scrollEnabled

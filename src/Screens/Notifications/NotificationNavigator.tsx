@@ -21,7 +21,7 @@ function NotificationNavigator() {
     { key: 'followScreen', title: 'Followers' },
   ]);
 
-  const renderTabBar = (props) => (
+  const renderTabBar = (props: any) => (
     <TabBar
       {...props}
       scrollEnabled
