@@ -51,6 +51,10 @@ function Postbottom() {
                     <Text>{info?.likes ?? 0}</Text>
                 </View>
                 <View style={styles.row}>
+                   <SvgElement margin={10} name='arrow-trender-up' size={22} />
+                    <Text>{info?.views ?? 0}</Text>
+                </View>
+                <View style={styles.row}>
                     <SvgElement onPress={onShare} margin={10} name='share' size={22} />
                 </View>
             </View>
