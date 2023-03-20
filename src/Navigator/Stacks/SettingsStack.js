@@ -8,6 +8,7 @@ import BlockedScreen from "../../Screens/Settings/BlockedScreen";
 import SecurityScreen from "../../Screens/Settings/SecurityScreen";
 import SessionScreen from "../../Screens/Settings/SessionScreen";
 import AffiliationScreen from "../../Screens/Settings/AffiliationScreen";
+import SubscriptionValidationScreen from "../../Screens/Settings/SubscriptionValidationScreen";
 import SubscriptionScreen from "../../Screens/Settings/SubscriptionScreen";
 
 const Stack = createStackNavigator();
@@ -42,6 +43,10 @@ const SettingsStack = ({ navigation }) => {
             headerShown: false
           }}/>
           <Stack.Screen name="SubscriptionScreen" component={SubscriptionScreen}  options={{
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, 
+            headerShown: false
+          }}/>
+          <Stack.Screen name="SubscriptionValidationScreen" component={SubscriptionValidationScreen}  options={{
             cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, 
             headerShown: false
           }}/>

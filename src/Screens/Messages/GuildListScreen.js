@@ -8,6 +8,7 @@ import FastImage from 'react-native-fast-image';
 import { useClient, useTheme } from '../../Components/Container';
 import GuildList from '../../Components/Messages/GuildList';
 import styles, { full_width } from '../../Style/style';
+import { Avatar } from '../../Components/Member';
 
 const GuildListScreen = () => {
 
@@ -25,7 +26,7 @@ const GuildListScreen = () => {
               nickname: user.nickname
             }
           })}>
-          <FastImage source={{ uri: `${client.user.avatar(user.user_id, user.avatar)}` }} style={[ styles.pdp33, { marginLeft: 5 } ]} />
+          <Avatar marginLeft={5} marginRight={5} url={client.user.avatar(user?.user_id, user?.avatar)} />
         </TouchableOpacity>
         <Text style={{ fontSize: 16, fontWeight:'700', marginLeft: 5 }}>{t("commons.messages")}</Text>
       </Appbar.Header>

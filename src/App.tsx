@@ -12,6 +12,7 @@ import { BaseToast } from './Components/Elements/Toasts';
 import Routes from './Routes';
 import { store } from './Redux';
 import { DmGroupListContextProvider } from './Context/DmGuildListContext';
+import { strip_public_key } from './Services/constante';
 
 const App = () => {
 
@@ -23,7 +24,7 @@ const App = () => {
 
   return (
     <StripeProvider
-      publishableKey="pk_test_51MgmhMIjDzZnrQfFgKX47Dcd9ICwXY6aZzcHZtCJxW9yaec14qfUbPT7pkZcjF6KdjFlpUw8PRnMnezySI9z9NSv00bbimfgiG"
+      publishableKey={strip_public_key}
      // urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
       // merchantIdentifier="merchant.com.{{YOUR_APP_NAME}}" // required for Apple Pay
     >

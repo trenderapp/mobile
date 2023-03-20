@@ -6,7 +6,7 @@ import { emojies_defs } from "../../Elements/Text/Markdown/emojis";
 import DisplayMember from "../../Member/DisplayMember";
 import { DisplayEmoji } from "../../Emojis";
 
-function TextAreaAutoComplete({ value, setValue, maxLength = 500 }) {
+function TextAreaAutoComplete({ value, setValue, maxLength = 512 }) {
 
     const [state, setState] = useState({ type: "none" });
     const [selection, setSelection] = useState({
@@ -154,6 +154,7 @@ function TextAreaAutoComplete({ value, setValue, maxLength = 500 }) {
             <TextInput
                 style={{
                     maxWidth: "100%",
+                    maxHeight: "95%",
                     color: colors.text_normal,
                 }}
                 multiline={true}

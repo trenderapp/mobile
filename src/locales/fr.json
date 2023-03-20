@@ -190,7 +190,8 @@
         "12002": "Impossible de fermer le message direct",
         "13000": "Impossible de trouver ce code",
         "13001": "Impossible d'utiliser ce code",
-    
+        "14000": "Identifiant de l'abonnement non trouvé",
+
         "verify_fields": "Verifier que tout les champs sont bien remplis",
         "sending_form": "Envoi du formulaire ...",
         "different_password": "Les mots de passe sont différents",

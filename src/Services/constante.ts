@@ -11,4 +11,4 @@ export const websocketurl = `ws${s}://${link}${port}`;
 export const captchasiteKey = "6c5b583c-f335-4af1-ba18-d6cf3c5814ca";
 export const posturl = `${websiteurl}/trends`;
 
-export const strip_public_key="pk_test_51MgmhMIjDzZnrQfFgKX47Dcd9ICwXY6aZzcHZtCJxW9yaec14qfUbPT7pkZcjF6KdjFlpUw8PRnMnezySI9z9NSv00bbimfgiG";s
+export const strip_public_key="pk_test_51MgmhMIjDzZnrQfFgKX47Dcd9ICwXY6aZzcHZtCJxW9yaec14qfUbPT7pkZcjF6KdjFlpUw8PRnMnezySI9z9NSv00bbimfgiG";

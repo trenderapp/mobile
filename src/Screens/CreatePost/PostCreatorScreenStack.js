@@ -6,7 +6,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import Toast from 'react-native-toast-message';
 import { ProgressBar, Text } from 'react-native-paper';
 
-import { useClient, PostCreatorContainer, useNavigation } from '../../Components/Container';
+import { useClient, PostCreatorContainer, useNavigation, useTheme } from '../../Components/Container';
 import SvgElement from '../../Components/Elements/Svg';
 import VideoPlayer from '../../Components/Posts/Views/Components/VideoPlayer';
 import Carroussel from '../../Components/Posts/Views/Components/Carroussel';
@@ -14,6 +14,8 @@ import { axiosInstance } from '../../Services';
 import TextAreaAutoComplete from '../../Components/Posts/Creator/TextAreaAutoComplete';
 import BottomButtonPostCreator from '../../Components/Posts/Creator/BottomButton';
 import { addMainCreatedTrends } from '../../Redux/mainFeed/action';
+import { premiumAdvantages } from '../../Services/premiumAdvantages';
+import { full_width } from '../../Style/style';
 
 const PostCreatorScreenStack = ({ route: { params }}) => {
 
@@ -24,10 +26,12 @@ const PostCreatorScreenStack = ({ route: { params }}) => {
     send: false,
     progress: 0
   });
+  const { colors } = useTheme();
   const { client, token, user } = useClient();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const advantages = premiumAdvantages(user?.premium_type ?? 0)
 
   useEffect(() => {
     if(Array.isArray(initFiles)) setFiles(initFiles);
@@ -36,7 +40,7 @@ const PostCreatorScreenStack = ({ route: { params }}) => {
 
   const sendInfo = async () => {
     if(!content && files.length < 1 ) return Toast.show({ text1: t(`errors.2001`) })
-    if (content && content.length > 500) return Toast.show({ text1: t(`errors.2001`) })
+    if (content && content.length > advantages.textLength()) return Toast.show({ text1: t(`errors.2001`) })
     if (sending.send) return Toast.show({ text1: t(`errors.sending_form`) })
 
     let data = { content: content ?? "" };
@@ -150,8 +154,16 @@ const PostCreatorScreenStack = ({ route: { params }}) => {
         }}>
           <TextAreaAutoComplete
             value={content}
+            maxLength={advantages.textLength()}
             setValue={(text) => SetContent(text)} />
-          <View>
+            
+          <Text style={{ bottom: 55, right: 5, position: "absolute" }}>{content.length} / {advantages.textLength()}</Text>
+          <View style={{
+            position: "absolute",
+            bottom: 0,
+            backgroundColor: colors.bg_third,
+            width: full_width
+          }}>
             {
               files.length > 0 && files[0]?.type.startsWith("video") && <SvgElement size={22} onPress={() => setFiles([])} name={"circle-close"} />
             }

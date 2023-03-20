@@ -1,72 +1,29 @@
-import React, { useEffect } from 'react';
-import Toast from 'react-native-toast-message';
-import { Button } from 'react-native-paper';
+import React from 'react';
+import { Button, Text, Card, List } from 'react-native-paper';
 import { useStripe } from '@stripe/stripe-react-native';
 import SettingsContainer from '../../Components/Container/SettingsContainer';
-import { axiosInstance } from '../../Services';
-import { useClient } from '../../Components/Container';
-import { Loader } from '../../Other';
+import { useClient, useNavigation, useTheme } from '../../Components/Container';
 import { useTranslation } from 'react-i18next';
+import { ScrollView, View } from 'react-native';
+import { full_width } from '../../Style/style';
+import NormalCard from '../../Components/Subscriptions/NormalCard';
+import StandardCard from '../../Components/Subscriptions/StandardCard';
+import PremiumCard from '../../Components/Subscriptions/PremiumCard';
+import EliteCard from '../../Components/Subscriptions/EliteCard';
 
 function SubscriptionScreen() {
 
     const { t } = useTranslation();
-    const { initPaymentSheet, presentPaymentSheet } = useStripe();
     const { user } = useClient();
-
-    const fetchPaymentSheetParams = async () => {
-        const request = await axiosInstance.post("/subscriptions", { subscription_id: "420224753865981954" }, {
-            headers: {
-                "trendertokenapi": user.token
-            }
-        })
-
-        const response = request.data;
-        if(response.data) {
-            const { paymentIntent, ephemeralKey, customer, publishableKey} = response.data;
-            return { paymentIntent, ephemeralKey, customer, publishableKey };
-        } else {
-            return Toast.show({ text1: t(`errors.${response.error.code}`) as string });
-        }
-    };
-
-    const initializePaymentSheet = async () => {
-        const request = await fetchPaymentSheetParams();
-        if(!request) return;
-        const { paymentIntent, ephemeralKey, customer } = request;
-    
-        const { error } = await initPaymentSheet({
-          merchantDisplayName: "Trender, Inc.",
-          customerId: customer,
-          customerEphemeralKeySecret: ephemeralKey,
-          paymentIntentClientSecret: paymentIntent,
-          allowsDelayedPaymentMethods: false,
-          defaultBillingDetails: {
-            name: user.username,
-          }
-        });
-
-        if(error) return console.log(error);
-      };
-
-    const openPaymentSheet = async () => {
-        const { error } = await presentPaymentSheet();
-
-        if (error) {
-            Toast.show({ text1: `Error : ${error.message}` });
-        } else {
-            Toast.show({ text1: `Success Your order is confirmed!` });
-        }
-    };
-
-    useEffect(() => {
-        initializePaymentSheet()
-    }, [])
-
 
     return (
         <SettingsContainer title={t("settings.subscriptions")}>
-            <Button onPress={openPaymentSheet}>Checkout</Button>
+            <ScrollView>
+                <EliteCard />
+                <PremiumCard />
+                <StandardCard />
+                <NormalCard />
+            </ScrollView>
         </SettingsContainer>
     )
 }

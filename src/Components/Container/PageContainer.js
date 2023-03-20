@@ -8,6 +8,7 @@ import useTheme from "./Theme/useTheme";
 import useClient from "./Client/useClient";
 import { useNavigation } from "@react-navigation/native";
 import FastImage from "react-native-fast-image";
+import { Avatar } from "../Member";
 
 const PageContainer = ({ children }) => {
     
@@ -24,7 +25,7 @@ const PageContainer = ({ children }) => {
                   nickname: user.nickname
                 }
               })}>
-                <FastImage source={{ uri: `${client.user.avatar(user?.user_id ?? "", user?.avatar ?? "")}` }} style={[ styles.pdp33, { marginLeft: 5, backgroundColor: colors.bg_secondary } ]} />
+                <Avatar marginLeft={5} marginRight={0} url={client.user.avatar(user?.user_id, user?.avatar)} />
               </TouchableOpacity>
               <View style={[styles.row, { justifyContent: "flex-end" }]}>
                   { /** <Appbar.Action color={colors.text_normal} icon="qrcode-scan" onPress={() => console.log("qrcode")} /> */ }

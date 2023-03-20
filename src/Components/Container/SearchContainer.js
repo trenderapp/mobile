@@ -9,6 +9,7 @@ import useTheme from "./Theme/useTheme";
 import { useTranslation } from "react-i18next";
 import useClient from "./Client/useClient";
 import FastImage from "react-native-fast-image";
+import { Avatar } from "../Member";
 
 const SearchContainer = ({ children }) => {
     
@@ -26,7 +27,7 @@ const SearchContainer = ({ children }) => {
                     nickname: user.nickname
                     }
                 })}>
-                    <FastImage source={{ uri: `${client.user.avatar(user.user_id, user.avatar)}` }} style={[ styles.pdp33, { marginLeft: 5 } ]} />
+                    <Avatar marginLeft={5} marginRight={0} url={client.user.avatar(user?.user_id, user?.avatar)} />
                 </TouchableOpacity>
                 <View>
                     <SearchBar
