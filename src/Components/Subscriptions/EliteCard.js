@@ -15,11 +15,11 @@ function EliteCard() {
             margin: 5
         }}>
             <Card.Content>
-                <Text variant="titleLarge">Standard subscription</Text>
+                <Text variant="titleLarge">Elite subscription</Text>
                 <Text variant="bodyMedium">9.99€</Text>
             </Card.Content>
             <Card.Content>
-                <List.Item title="Premium and Standard advantages" left={props => <List.Icon {...props} icon="adjust" />} />
+                <List.Item title="Premium and Standard advantages" left={props => <List.Icon {...props} icon="plus" />} />
                 <List.Item title="4096 caracters" left={props => <List.Icon {...props} icon="adjust" />} />
                 <List.Item title="200Mo to upload" left={props => <List.Icon {...props} icon="adjust" />} />
                 <List.Item title="Advanced statistics" left={props => <List.Icon {...props} icon="adjust" />} />

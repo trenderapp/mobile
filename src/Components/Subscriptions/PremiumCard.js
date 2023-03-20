@@ -15,7 +15,7 @@ function PremiumCard() {
             margin: 5
         }}>
             <Card.Content>
-                <Text variant="titleLarge">Standard subscription</Text>
+                <Text variant="titleLarge">Premium subscription</Text>
                 <Text variant="bodyMedium">5.99€</Text>
             </Card.Content>
             <Card.Content>
