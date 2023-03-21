@@ -13,15 +13,6 @@ function VideoPlayer({ uri, creator, thumbnail }) {
   const [muted, setMuted] = useState(false);
   const [full_screen, setFullScreen] = useState(false);
 
-  useEffect(() => {
-    if(!thumbnail) {
-    setPaused(false);
-    setTimeout(() => {
-      setPaused(true)
-    }, 500)
-    }
-  }, [])
-
   return (
     <>
       <Modal visible={full_screen} animationType="slide" >

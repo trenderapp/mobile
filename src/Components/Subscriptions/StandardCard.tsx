@@ -1,17 +1,51 @@
 import React, { useState } from 'react';
-import { Button, Text, Card, List, Dialog, Portal, RadioButton } from 'react-native-paper';
-import { useNavigation, useTheme } from '../../Components/Container';
+import { Button, Text, Card, List, Dialog, Portal, RadioButton, TextInput } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
+import Toast from 'react-native-toast-message';
+import { useClient, useTheme, useNavigation } from '../../Components/Container';
+import { axiosInstance, openURL } from '../../Services';
 
 function StandardCard() {
 
     const { t } = useTranslation();
+    const { user } = useClient();
     const { colors } = useTheme();
-    const navigation = useNavigation();
     const [subscriptionType, setSubscriptionType] = useState<"month" | "year">("year");
+    const navigation = useNavigation()
     const [visible, setVisible] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [coupon_id, setCouponID] = useState<string | undefined>()
 
     const hideDialog = () => setVisible(false);
+
+    const openPaymentPage = async () => {
+        if(loading) return;
+        setLoading(true)
+        const request = await axiosInstance.post("/subscriptions/checkout", {
+            subscription_id: subscriptionType === "month" ? "425692210537824263" : "425692211489931272",
+            coupon_id: coupon_id
+        }, {
+            headers: {
+                "trendertokenapi": user.token
+            }
+        })
+
+        const response = request.data;
+
+        if (response.data) {
+            hideDialog()
+            setLoading(false)
+            navigation?.push("SubscriptionValidationScreen", {
+                url: response.data.url,
+                subscription_id: subscriptionType === "month" ? "425692210537824263" : "425692211489931272"
+            })
+
+        } else {
+            hideDialog()
+            setLoading(false)
+            Toast.show({ text1: t(`errors.${response.error.code}`) as string });
+        }
+    }
 
     return (
         <Card style={{
@@ -19,7 +53,7 @@ function StandardCard() {
             margin: 5
         }}>
             <Portal>
-                <Dialog visible={visible} onDismiss={hideDialog}>
+                <Dialog visible={visible} onDismiss={loading ? undefined : hideDialog}>
                     <Dialog.Title>Make your choice</Dialog.Title>
                     <Dialog.Content>
                         <RadioButton.Item
@@ -34,16 +68,11 @@ function StandardCard() {
                             status={subscriptionType === 'month' ? 'checked' : 'unchecked'}
                             onPress={() => setSubscriptionType('month')}
                         />
+                        <TextInput mode='outlined' label="Promotion code" value={coupon_id} onChangeText={(t) => setCouponID(t.toLocaleUpperCase())} />
                     </Dialog.Content>
                     <Dialog.Actions>
-                        <Button uppercase={false} onPress={() => hideDialog()}>{t("commons.cancel")}</Button>
-                        <Button uppercase={false} onPress={() => {
-                            hideDialog()
-                            return navigation?.push("SubscriptionValidationScreen", {
-                                subscription_type: subscriptionType,
-                                subscription_id: subscriptionType === "month" ? "425692210537824263" : "425692211489931272"
-                            })
-                        }}>{t("commons.continue")}</Button>
+                        {loading ? false : <Button uppercase={false} onPress={() => hideDialog()}>{t("commons.cancel")}</Button>}
+                        <Button uppercase={false} loading={loading} onPress={() => openPaymentPage()}>{t("commons.continue")}</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
@@ -60,9 +89,17 @@ function StandardCard() {
                 <List.Item title="Show post views" left={props => <List.Icon {...props} icon="adjust" />} />
                 <List.Item title="No ads" left={props => <List.Icon {...props} icon="adjust" />} />
             </Card.Content>
-            <Card.Actions>
-                <Button onPress={() => setVisible(true)}>Subscribe</Button>
-            </Card.Actions>
+            {
+                user.premium_type === 1 ? (
+                    <Card.Actions>
+                        <Button>Current</Button>
+                    </Card.Actions>
+                ) : (
+                    <Card.Actions>
+                        <Button onPress={() => setVisible(true)}>Subscribe</Button>
+                    </Card.Actions>
+                )
+            }
         </Card>
     )
 }

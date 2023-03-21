@@ -9,11 +9,10 @@ import Carroussel from "./Components/Carroussel";
 import VideoPlayer from "./Components/VideoPlayer";
 import { useClient } from "../../Container";
 
-
 function PostNormal() {
     
     const { info }: { info: PostInterface.postResponseSchema} = useContext(SinglePostContext);
-    const { client } = useClient();
+    const { client } = useClient();  
     
     return (
         <View>
@@ -22,7 +21,7 @@ function PostNormal() {
                     <Markdown content={info.content} />
                 </View>
             {
-                !info?.type ?
+                info?.type ?
                     info.type === 1 ? 
                         <Carroussel pictures={info.attachments} creator={undefined} changeList={undefined} />
                             : info.type === 2 ?
