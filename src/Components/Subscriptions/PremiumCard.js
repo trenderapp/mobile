@@ -15,20 +15,18 @@ function PremiumCard() {
             margin: 5
         }}>
             <Card.Content>
-                <Text variant="titleLarge">Premium subscription</Text>
+                <Text variant="titleLarge">{t("subscription.subscription_type", { subscription_type: "Premium" })}</Text>
                 <Text variant="bodyMedium">5.99€</Text>
             </Card.Content>
             <Card.Content>
-                <List.Item title="Standard advantages" left={props => <List.Icon {...props} icon="adjust" />} />
-                <List.Item title="2048 caracters" left={props => <List.Icon {...props} icon="adjust" />} />
-                <List.Item title="100Mo to upload" left={props => <List.Icon {...props} icon="adjust" />} />
-                <List.Item title="No withdrawal fees" left={props => <List.Icon {...props} icon="adjust" />} />
-                <List.Item title="Partner project advantages" left={props => <List.Icon {...props} icon="adjust" />} />
-                <List.Item title="Show post views" left={props => <List.Icon {...props} icon="adjust" />} />
-                <List.Item title="No ads" left={props => <List.Icon {...props} icon="adjust" />} />
+                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.premium_1")} left={props => <List.Icon {...props} icon="plus" />} />
+                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.premium_2")} left={props => <List.Icon {...props} icon="adjust" />} />
+                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.premium_3")} left={props => <List.Icon {...props} icon="adjust" />} />
+                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.premium_4")} left={props => <List.Icon {...props} icon="adjust" />} />
+                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.premium_5")} left={props => <List.Icon {...props} icon="adjust" />} />
             </Card.Content>
             <Card.Actions>
-                <Button>Comming soon</Button>
+                <Button>{t("subscription.coming_soon")}</Button>
             </Card.Actions>
         </Card>
     )

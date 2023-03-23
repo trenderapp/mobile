@@ -14,13 +14,13 @@ function NormalCard() {
             margin: 5
         }}>
             <Card.Content>
-                <Text variant="titleLarge">Current subscription</Text>
-                <Text variant="bodyMedium">Free</Text>
+                <Text variant="titleLarge">{t("subscription.free_title")}</Text>
+                <Text variant="bodyMedium">0.00€</Text>
             </Card.Content>
             <Card.Content>
-                <List.Item title="512 caracters allowed" left={props => <List.Icon {...props} icon="adjust" />} />
-                <List.Item title="Maximum size of file to upload 25Mo" left={props => <List.Icon {...props} icon="adjust" />} />
-                <List.Item title="Ads" left={props => <List.Icon {...props} icon="adjust" />} />
+                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.free_1")} left={props => <List.Icon {...props} icon="adjust" />} />
+                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.free_2")} left={props => <List.Icon {...props} icon="adjust" />} />
+                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.free_3")} left={props => <List.Icon {...props} icon="adjust" />} />
             </Card.Content>
         </Card>
     )

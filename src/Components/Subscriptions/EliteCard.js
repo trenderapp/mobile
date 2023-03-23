@@ -15,21 +15,22 @@ function EliteCard() {
             margin: 5
         }}>
             <Card.Content>
-                <Text variant="titleLarge">Elite subscription</Text>
+                <Text variant="titleLarge">{t("subscription.subscription_type", { subscription_type: "Elite" })}</Text>
                 <Text variant="bodyMedium">9.99€</Text>
             </Card.Content>
             <Card.Content>
-                <List.Item title="Premium and Standard advantages" left={props => <List.Icon {...props} icon="plus" />} />
-                <List.Item title="4096 caracters" left={props => <List.Icon {...props} icon="adjust" />} />
-                <List.Item title="200Mo to upload" left={props => <List.Icon {...props} icon="adjust" />} />
-                <List.Item title="Advanced statistics" left={props => <List.Icon {...props} icon="adjust" />} />
-                <List.Item title="AI copyright protection" left={props => <List.Icon {...props} icon="adjust" />} />
-                <List.Item title="Upgrade trust factor" left={props => <List.Icon {...props} icon="adjust" />} />
-                <List.Item title="Peer to Peer private message" left={props => <List.Icon {...props} icon="adjust" />} />
-                <List.Item title="Creator advantages" left={props => <List.Icon {...props} icon="adjust" />} />
+                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.elite_1")} left={props => <List.Icon {...props} icon="plus" />} />
+                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.elite_2")} left={props => <List.Icon {...props} icon="adjust" />} />
+                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.elite_3")} left={props => <List.Icon {...props} icon="adjust" />} />
+                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.elite_4")} left={props => <List.Icon {...props} icon="adjust" />} />
+                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.elite_5")} left={props => <List.Icon {...props} icon="adjust" />} />
+                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.elite_6")} left={props => <List.Icon {...props} icon="adjust" />} />
+                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.elite_7")} left={props => <List.Icon {...props} icon="adjust" />} />
+                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.elite_8")} left={props => <List.Icon {...props} icon="adjust" />} />
+                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.elite_9")} left={props => <List.Icon {...props} icon="adjust" />} />
             </Card.Content>
             <Card.Actions>
-                <Button>Comming soon</Button>
+                <Button>{t("subscription.coming_soon")}</Button>
             </Card.Actions>
         </Card>
     )

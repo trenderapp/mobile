@@ -131,6 +131,49 @@
         "copy_message": "Copy the message",
         "report_message": "Report the message"
     },
+    "subscription": {
+        "make_your_choice": "Make you choice",
+        "subscription_type": "{{subscription_type}} subscription",
+        "price_type_year": "Year {{subscription_price}}",
+        "price_type_month": "Month {{subscription_price}}",
+        "coupon": "Coupon",
+        "checkout": "Checkout",
+        "current": "Current",
+        "subscribe": "Subscribe",
+        "dashboard": "Dashboard",
+        "coming_soon": "Coming Soon",
+        "year": "Year",
+        "month": "Month",
+
+        "free_title": "Free subscription",
+        "free_1": "512 caracters allowed",
+        "free_2": "Maximum size of file to upload 25Mo",
+        "free_3": "Ads",
+
+        "standard_1": "1024 caracters allowed",
+        "standard_2": "Upload files to a maximum of 50Mo",
+        "standard_3": "Annual acccount summary",
+        "standard_4": "Animated avatar and banner",
+        "standard_5": "NFT avatar and banner (coming soon)",
+        "standard_6": "Show post views",
+        "standard_7": "No ads",
+
+        "premium_1": "Standard advantages",
+        "premium_2": "2048 caracters",
+        "premium_3": "100Mo to upload",
+        "premium_4": "No withdrawal fees",
+        "premium_5": "Partner project advantages",
+
+        "elite_1": "Premium and Standard advantages",
+        "elite_2": "4096 caracters",
+        "elite_3": "200Mo to upload",
+        "elite_4": "Advanced statistics",
+        "elite_5": "AI copyright protection",
+        "elite_6": "Upgrade trust factor",
+        "elite_7": "Peer to Peer private message",
+        "elite_8": "Creator advantages",
+        "elite_9": "More in future"
+    },
     "errors": {    
         "0": "Invalid parameter",
         "1": "Invalid email or password",
@@ -192,6 +235,7 @@
         "13000": "Cannot find this code",
         "13001": "Cannot use this code",
         "14000": "Subscription ID not found",
+        "14001": "Coupon ID not found",
     
         "verify_fields": "Please verify than all fields are correctly filled",
         "sending_form": "Sending the form ...",

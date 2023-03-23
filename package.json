@@ -1,7 +1,7 @@
 {
   "name": "trender",
-  "version": "2.0.3",
-  "version_number": 60,
+  "version": "2.0.4",
+  "version_number": 61,
   "private": true,
   "repository": {
     "type": "git",
@@ -65,6 +65,7 @@
     "react-native-paper": "5.2.0",
     "react-native-permissions": "^3.6.1",
     "react-native-reanimated": "^2.10.0",
+    "react-native-restart": "0.0.24",
     "react-native-safe-area-context": "^4.3.3",
     "react-native-screens": "^3.17.0",
     "react-native-spinkit": "^1.5.1",

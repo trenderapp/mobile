@@ -9,7 +9,7 @@ export { default as ThemeContainer } from "./ThemeContainer";
 export { default as PageContainer } from "./PageContainer";
 export { default as SearchContainer } from "./SearchContainer";
 export { default as PostContainer } from "./PostContainer";
-export { default as SettingsContainer } from "./SearchContainer";
+export { default as SettingsContainer } from "./SettingsContainer";
 export { default as MessageContainer } from "./MessageContainer";
 export { default as NotificationContainer } from "./NotificationContainer";
 export { default as ProfileContainer } from "./ProfileContainer";
