@@ -1,7 +1,7 @@
 import React from "react";
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
-import SearchModal from "../../Components/Search/SearchModal";
+import SearchModal from "../../Components/Search/SearchModal.js";
 import ExploreScreen from "../../Screens/Explore/ExploreScreen";
 
 const Stack = createStackNavigator();

@@ -22,7 +22,7 @@ function BottomStack({ navigation }) {
         { key: 'home', focusedIcon: 'home', unfocusedIcon: "home-outline", title: t("commons.home"), badge: false },
         { key: 'search', focusedIcon: "magnify", title: t('commons.search'), badge: false },
         { key: 'notifications', focusedIcon: "bell", unfocusedIcon: "bell-outline", title: t('commons.notifications'), badge: false, labeled: false },
-        { key: 'messages', focusedIcon: "message-text", unfocusedIcon: "message-text-outline", title: t('commons.messages'), badge: false, labeled: false },
+        // { key: 'messages', focusedIcon: "message-text", unfocusedIcon: "message-text-outline", title: t('commons.messages'), badge: false, labeled: false },
     ]);
 
     const newBottom = (badge = false) => {
@@ -30,7 +30,7 @@ function BottomStack({ navigation }) {
             { key: 'home', focusedIcon: 'home', unfocusedIcon: "home-outline", title: t("commons.home"), badge: false },
             { key: 'search', focusedIcon: "magnify", title: t('commons.search'), badge: false },
             { key: 'notifications', focusedIcon: "bell", unfocusedIcon: "bell-outline", title: t('commons.notifications'), badge: false, labeled: false },
-            { key: 'messages', focusedIcon: "message-text", unfocusedIcon: "message-text-outline", title: t('commons.messages'), badge: badge, labeled: false },
+            // { key: 'messages', focusedIcon: "message-text", unfocusedIcon: "message-text-outline", title: t('commons.messages'), badge: badge, labeled: false },
         ])
     }
 

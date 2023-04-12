@@ -16,7 +16,11 @@ function HomeSettingsScreen() {
             <HomeButtonSection onPress={() => navigation?.push("BlockedScreen")} t={t("settings.blocked")} icon={undefined} />
             <HomeButtonSection onPress={() => navigation?.push("SessionScreen")} t={t("settings.sessions")} icon={undefined} />
             <HomeButtonSection onPress={() => navigation?.push("SecurityScreen")} t={t("settings.security")} icon={undefined} />
-            <HomeButtonSection onPress={() => navigation?.push("SubscriptionScreen")} t={t("settings.subscriptions")} icon={undefined} />
+           {
+            /**
+             *  <HomeButtonSection onPress={() => navigation?.push("SubscriptionScreen")} t={t("settings.subscriptions")} icon={undefined} />
+             */
+           }
         </SettingsContainer>
     )
 }

@@ -92,7 +92,7 @@ function ClientProvider({ children }) {
                     "inverseOnSurface": "rgba(244, 239, 244, 1)",
                     "inversePrimary": "rgba(208, 188, 255, 1)",
                     "inverseSurface": "rgba(49, 48, 51, 1)",
-                    "onBackground": "colors.text_normal",
+                    "onBackground": colors.text_normal,
                     "onError": "rgba(255, 255, 255, 1)",
                     "onErrorContainer": "rgba(65, 14, 11, 1)",
                     "onPrimary": "rgba(255, 255, 255, 1)",

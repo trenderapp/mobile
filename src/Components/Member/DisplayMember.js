@@ -14,7 +14,7 @@ function DisplayMember({ informations, onPress, full_width, noDescription, LeftC
 
     return (
         <View style={{ 
-                flex: 1, 
+                flex: 1,
                 width: full_width && styles.full_width,
                 padding: 10
             }}>

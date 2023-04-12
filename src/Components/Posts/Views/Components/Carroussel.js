@@ -12,7 +12,8 @@ function Carroussel({ pictures, creator, changeList }) {
     const [openModal, setOpen] = useState(false)
     const { client } = useClient();
     const { colors } = useTheme();
-    const { info } = useContext(SinglePostContext)
+    const postContext = useContext(SinglePostContext)
+    const info = postContext?.info;
 
     const change = ({ nativeEvent }) => {
         const slide = Math.ceil(nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width);

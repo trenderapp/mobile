@@ -24,7 +24,7 @@ function ExploreScreenNavigator() {
   const renderTabBar = (props: any) => (
     <TabBar
       {...props}
-      scrollEnabled
+      // scrollEnabled
       indicatorStyle={{
         backgroundColor: colors.bg_secondary
       }}
@@ -36,7 +36,7 @@ function ExploreScreenNavigator() {
         textTransform: "none"
       }}
       tabStyle={{
-        width: 'auto'
+        // width: 'auto'
       }}
     />
   );

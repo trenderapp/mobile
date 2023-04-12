@@ -9034,7 +9034,7 @@ tr46@~0.0.3:
   integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
 
 trender-client@../trender-client/dist:
-  version "2.0.3"
+  version "2.1.0"
   dependencies:
     axios "^0.27.2"
 

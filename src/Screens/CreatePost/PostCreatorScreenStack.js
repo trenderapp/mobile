@@ -161,7 +161,7 @@ const PostCreatorScreenStack = ({ route: { params }}) => {
           <View style={{
             position: "absolute",
             bottom: 0,
-            backgroundColor: colors.bg_third,
+            backgroundColor: colors.bg_secondary,
             width: full_width
           }}>
             {
