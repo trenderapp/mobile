@@ -7,29 +7,30 @@ import { Appbar } from "react-native-paper";
 import { full_width } from "../../Style/style";
 import { useClient, useTheme } from "../Container";
 import MemberList from "../Profile/MemberList";
+import { userInfo } from "trender-client/Managers/Interfaces/Search";
 
 function SearchModal() {
 
     const { colors } = useTheme();
     const [text, setText] = useState("");
+    const [pagination_key, setPaginationKey] = useState<string | undefined>(undefined);
     const { t } = useTranslation();
     const { client } = useClient();
-    const [users, setInfo] = useState([]);
+    const [users, setInfo] = useState<userInfo[] | undefined>(undefined);
     const [loader, setLoader] = useState(true);
     const navigation = useNavigation();
 
     useEffect(() => {
         async function getData() {
             setLoader(true)
-            const request = await client.user.search(text);
+            const response = await client.user.search(text, pagination_key);
             setLoader(false)
-            if (!request) return setInfo([])
-            if (request.error) return;
-
-            setInfo(request.data);
+            if(response.error || !response.data) return;
+            setInfo(response.data);
+            setPaginationKey(response?.pagination_key);
         }
 
-        if (text?.length > 0) getData();
+        if (text?.length > 1) getData();
     }, [text])
 
     return (
@@ -57,7 +58,7 @@ function SearchModal() {
                     onClearPress={() => setText("")}
                 />
             </Appbar.Header>
-            {users.length > 0 && <MemberList list={users} loader={loader} />}
+            {users && users.length > 0 && <MemberList list={users} loader={loader} onBottom={undefined} />}
         </View>
     )
 }
