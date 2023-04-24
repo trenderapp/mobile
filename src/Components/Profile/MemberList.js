@@ -16,6 +16,7 @@ function MemberList({ list, loader, onBottom }) {
 
         if (Math.ceil(mHeight + Y) >= cSize) return onBottom();
     };
+
     return (
         <View
             style={{

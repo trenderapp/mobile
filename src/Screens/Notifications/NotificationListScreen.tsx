@@ -16,16 +16,16 @@ const NoficationListScreen = () => {
   const isFocused = useIsFocused();
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState<NotificationInterface.notificationFetchResponseSchema[]>([]);
+  const [paginationKey, setPaginationKey] = useState<undefined | string>(undefined)
 
   const notificationList = async () => {
     setLoading(true);
-    const request = await client.notification.fetch({
-      skip: list.length
-    });
+    const request = await client.notification.fetch({ pagination_key: paginationKey });
     setLoading(false);
     if(request.error) return Toast.show({ text1: t(`errors.${request.error.code}`) as string });
     if(!request.data) return;
     if(request.data.length < 1) return;
+    setPaginationKey(request?.pagination_key);
     setList([...list, ...request.data]);
   }
 
