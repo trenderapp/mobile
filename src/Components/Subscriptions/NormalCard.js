@@ -20,7 +20,9 @@ function NormalCard() {
             <Card.Content>
                 <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.free_1")} left={props => <List.Icon {...props} icon="adjust" />} />
                 <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.free_2")} left={props => <List.Icon {...props} icon="adjust" />} />
-                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.free_3")} left={props => <List.Icon {...props} icon="adjust" />} />
+                {
+                 // <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.free_3")} left={props => <List.Icon {...props} icon="adjust" />} />
+                }
             </Card.Content>
         </Card>
     )

@@ -102,7 +102,9 @@ function StandardCard() {
                 <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.standard_4")} left={props => <List.Icon {...props} icon="adjust" />} />
                 <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.standard_5")} left={props => <List.Icon {...props} icon="adjust" />} />
                 <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.standard_6")} left={props => <List.Icon {...props} icon="adjust" />} />
-                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.standard_7")} left={props => <List.Icon {...props} icon="adjust" />} />
+                {
+                    // <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.standard_7")} left={props => <List.Icon {...props} icon="adjust" />} />
+                }
             </Card.Content>
             {
                 user.premium_type === 1 ? (

@@ -83,12 +83,9 @@ function BottomButtonPostCreator({ setFiles, addFiles, setCameraVisible }) {
 
     const HeaderFooterButton = () => (
         <View style={{
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-            alignItems: "flex-end",
             padding: 10
         }}>
-            { photos.selected && <Button icon="magnify-plus" mode="contained" onPress={() => {
+            { photos.selected && <Button icon="magnify-plus" mode="outlined" onPress={() => {
                 if(filter.assetType === "Videos") return addFiles("video");
                 else return addFiles("photo")
             }}>Other</Button> }
@@ -145,8 +142,7 @@ function BottomButtonPostCreator({ setFiles, addFiles, setCameraVisible }) {
                                 uri: item.node.image.uri
                             }} />
                             </Pressable>}
-                numColumns={3}
-                horizontal={false} />
+                horizontal={true} />
             }
         </View>
     )

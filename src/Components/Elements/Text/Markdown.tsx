@@ -12,7 +12,7 @@ const Markdown: SectionProps = ({ content, noBr, maxLine }) => {
     return (
         <Text numberOfLines={maxLine}>
             <Suspense fallback={content}>
-                <Renderer noBr={noBr} maxLine={maxLine} content={content} />
+                <Renderer noBr={noBr ? false : true} maxLine={maxLine} content={content} />
             </Suspense>
         </Text>
     );

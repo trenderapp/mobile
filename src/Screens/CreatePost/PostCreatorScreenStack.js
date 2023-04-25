@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { KeyboardAvoidingView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect, useDispatch } from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
 import Toast from 'react-native-toast-message';
@@ -15,9 +16,9 @@ import TextAreaAutoComplete from '../../Components/Posts/Creator/TextAreaAutoCom
 import BottomButtonPostCreator from '../../Components/Posts/Creator/BottomButton';
 import { addMainCreatedTrends } from '../../Redux/mainFeed/action';
 import { premiumAdvantages } from '../../Services/premiumAdvantages';
-import { full_width } from '../../Style/style';
+import { full_height, full_width } from '../../Style/style';
 
-const PostCreatorScreenStack = ({ route: { params }}) => {
+const PostCreatorScreenStack = ({ route: { params } }) => {
 
   const { attached_post_id, initFiles, initContent } = params;
   const [content, SetContent] = useState(initContent ?? "");
@@ -34,12 +35,12 @@ const PostCreatorScreenStack = ({ route: { params }}) => {
   const advantages = premiumAdvantages(user?.premium_type ?? 0)
 
   useEffect(() => {
-    if(Array.isArray(initFiles)) setFiles(initFiles);
+    if (Array.isArray(initFiles)) setFiles(initFiles);
     else setFiles([initFiles])
   }, [initFiles])
 
   const sendInfo = async () => {
-    if(!content && files.length < 1 ) return Toast.show({ text1: t(`errors.2001`) })
+    if (!content && files.length < 1) return Toast.show({ text1: t(`errors.2001`) })
     if (content && content.length > advantages.textLength()) return Toast.show({ text1: t(`errors.2001`) })
     if (sending.send) return Toast.show({ text1: t(`errors.sending_form`) })
 
@@ -81,7 +82,7 @@ const PostCreatorScreenStack = ({ route: { params }}) => {
       })
     }
 
-    if(response.data && !attached_post_id) dispatch(addMainCreatedTrends({ ...response?.data, from: { ...user } }));
+    if (response.data && !attached_post_id) dispatch(addMainCreatedTrends({ ...response?.data, from: { ...user } }));
 
     setSending({ send: false, progress: 0 })
     setFiles([])
@@ -145,39 +146,50 @@ const PostCreatorScreenStack = ({ route: { params }}) => {
   }
 
   return (
-      <PostCreatorContainer onSave={() => sendInfo()} changeVisibilty={() => navigation.goBack()} >
-        {sending.progress > 0 && <ProgressBar progress={sending.progress} />}
-        <KeyboardAvoidingView behavior={Platform.OS === "ios" && "padding"} style={{
+    <PostCreatorContainer onSave={() => sendInfo()} changeVisibilty={() => navigation.goBack()} >
+      {sending.progress > 0 && <ProgressBar progress={sending.progress} />}
+      <View
+        keyboardShouldPersistTaps="handled"
+        style={{
           flex: 1,
-          flexDirection: "column",
-          justifyContent: "space-between"
+          justifyContent: 'center',
+          alignContent: 'center',
         }}>
-          <TextAreaAutoComplete
-            value={content}
-            maxLength={advantages.textLength()}
-            setValue={(text) => SetContent(text)} />
-            
-          <Text style={{ bottom: 55, right: 5, position: "absolute" }}>{content.length} / {advantages.textLength()}</Text>
-          <View style={{
-            position: "absolute",
-            bottom: 0,
-            backgroundColor: colors.bg_secondary,
-            width: full_width
-          }}>
-            {
-              files.length > 0 && files[0]?.type.startsWith("video") && <SvgElement size={22} onPress={() => setFiles([])} name={"circle-close"} />
-            }
-            {
-              files.length > 0 ? files[0]?.type.startsWith("video") ? <VideoPlayer creator uri={files[0].uri} /> : files[0].type.startsWith("image") ? <Carroussel changeList={deleteImage} creator={files} /> : <Text>{files.length}</Text> : null
-            }
-            <BottomButtonPostCreator setFiles={(info) => setFiles([ ...files, info])} setCameraVisible={() => navigation.replace("CameraScreen", {
-              ...params,
-              initContent: content,
-              initFiles: files
-            })} addFiles={addFiles} />
+        <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }}>
+          <View style={{ 
+              flex: 1,
+              flexDirection: "column",
+              justifyContent: "space-between",
+              height: full_height - 85
+            }}>
+            <TextAreaAutoComplete
+              value={content}
+              maxLength={advantages.textLength()}
+              setValue={(text) => SetContent(text)} />
+
+            <Text style={{ bottom: 55, right: 5, position: "absolute" }}>{content.length} / {advantages.textLength()}</Text>
+            <View style={{
+              position: "absolute",
+              bottom: 0,
+              backgroundColor: colors.bg_secondary,
+              width: full_width
+            }}>
+              {
+                files.length > 0 && files[0]?.type.startsWith("video") && <SvgElement size={22} onPress={() => setFiles([])} name={"circle-close"} />
+              }
+              {
+                files.length > 0 ? files[0]?.type.startsWith("video") ? <VideoPlayer creator uri={files[0].uri} /> : files[0].type.startsWith("image") ? <Carroussel changeList={deleteImage} creator={files} /> : <Text>{files.length}</Text> : null
+              }
+              <BottomButtonPostCreator setFiles={(info) => setFiles([...files, info])} setCameraVisible={() => navigation.replace("CameraScreen", {
+                ...params,
+                initContent: content,
+                initFiles: files
+              })} addFiles={addFiles} />
+            </View>
           </View>
-        </KeyboardAvoidingView>
-      </PostCreatorContainer>
+        </KeyboardAwareScrollView>
+      </View>
+    </PostCreatorContainer>
   );
 };
 

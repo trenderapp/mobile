@@ -106,7 +106,7 @@ function ProfileComponent({ nickname, pined, informations, setInfo }){
                         </View>
                     </View>
                     <View style={{ paddingTop: 5 }}>
-                        <Markdown noBr content={informations?.user_info?.description ?? ""} />
+                        <Markdown content={informations?.user_info?.description ?? ""} />
                     </View>
                     <View style={{ paddingTop: 5 }}>
                         { informations?.user_info?.link ? <Text style={{ paddingBottom: 5, display: "flex", flexDirection: "row", alignItems: "center" }}><SvgElement size={16} name="link" /> <Markdown content={informations?.user_info?.link} /></Text> : null}
