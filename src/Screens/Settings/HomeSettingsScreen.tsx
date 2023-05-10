@@ -1,26 +1,24 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Text } from 'react-native-paper';
-import { useNavigation } from '../../Components/Container';
-import SettingsContainer from '../../Components/Container/SettingsContainer';
+import { SettingsContainer } from '../../Components/Container';
 import { HomeButtonSection } from '../../Components/Settings';
 import { Br } from '../../Components/Elements/Text';
 
-function HomeSettingsScreen() {
-
+function HomeSettingsScreen({ navigation }: any) {
+  
     const { t } = useTranslation();
-    const navigation = useNavigation()
-
+  
     return (
         <SettingsContainer disconnect={true} title={t("settings.settings")}>
             <Text variant='bodyLarge' style={{
                 textDecorationLine: "underline"
             }}>My account:</Text>
             {
-                <HomeButtonSection onPress={() => navigation?.push("SubscriptionScreen")} t={t("settings.subscriptions")} icon={undefined} />
+                // <HomeButtonSection onPress={() => navigation?.push("SubscriptionScreen")} t={t("settings.subscriptions")} icon={undefined} />
             }
             {  
-                //<HomeButtonSection onPress={() => navigation?.push("AffiliationScreen")} t={t("settings.affiliation")} icon={undefined} />
+                <HomeButtonSection onPress={() => navigation?.push("AffiliationScreen")} t={t("settings.affiliation")} icon={undefined} />
             }
             <Br />
             <Text variant='bodyLarge' style={{

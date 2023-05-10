@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { SearchContainer } from '../../Components/Container';
+import { ExploreContainer } from '../../Components/Container';
 import ExploreScreenNavigator from './ExploreNavigator';
 
 
 function ExploreScreen() {
   return (
-    <SearchContainer>
+    <ExploreContainer>
       <ExploreScreenNavigator />
-    </SearchContainer>
+    </ExploreContainer>
   );
 }
 

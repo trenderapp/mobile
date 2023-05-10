@@ -8,12 +8,9 @@ import DisplayPosts from '../../Components/Posts/DisplayPost';
 import { addMainTrends, initMainTrends } from '../../Redux/mainFeed/action';
 import { Loader } from '../../Other';
 import EmptyHome from '../../Components/Home/EmptyHome';
-import { getAppInfo } from '../../Services';
-import { NavigationContextI } from '../../Components/Container/Navigation/NavigationContext';
 import { RootState, useAppDispatch, useAppSelector } from '../../Redux';
 
-const FollowsTrends = (navigation: NavigationContextI) => {
-
+const FollowsTrends = () => {
   const { client } = useClient();
   const { colors } = useTheme();
   const posts = useAppSelector((state) => state.mainFeed);
@@ -21,7 +18,6 @@ const FollowsTrends = (navigation: NavigationContextI) => {
   const [pagination_key, setPaginationKey] = useState<string | undefined>(undefined);
   const [loader, setLoader] = useState(true);
   const [loaderF, setLoaderF] = useState(false);
-  const [updateRequire, setUpdateRequire] = useState(false);
 
   async function getData(refresh: boolean = false) {
     if(refresh) {
@@ -38,8 +34,6 @@ const FollowsTrends = (navigation: NavigationContextI) => {
   
   useEffect(() => {
     async function start() {
-      const update_require = await getAppInfo();
-      if(update_require) return setUpdateRequire(true);
       getData()
     }
     start()
@@ -71,7 +65,7 @@ const FollowsTrends = (navigation: NavigationContextI) => {
       keyExtractor={item => item.post_id}
       ListFooterComponent={loader ? <Loader /> : undefined}
       onScrollEndDrag={() => bottomHandler()}
-      ListEmptyComponent={<EmptyHome navigation={navigation} />}
+      ListEmptyComponent={<EmptyHome />}
       refreshControl={<RefreshControl refreshing={loaderF} progressBackgroundColor={colors.bg_primary} tintColor={colors.fa_primary} colors={[colors.fa_primary, colors.fa_secondary, colors.fa_third]} onRefresh={() => getData(true)} />}
     />
   );

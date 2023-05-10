@@ -9,9 +9,10 @@ type SectionType = {
     name: string,
     size?: number,
     margin?: number,
-    noColor?: boolean;
+    noColor?: boolean,
+    color?: string;
 }
-function SvgElement({ onPress = undefined, name, size = 33, margin, noColor }: SectionType) {
+function SvgElement({ onPress = undefined, name, size = 33, margin, noColor, color }: SectionType) {
 
     const { colors } = useTheme();
     const [svg, setSvg] = useState({
@@ -40,7 +41,7 @@ function SvgElement({ onPress = undefined, name, size = 33, margin, noColor }: S
                         borderRadius: 60 / 2
                     }} onPress={() => onPress()}>
                         <Svg width={size} height={size} viewBox={`0 0 ${svg.w} ${svg.h}`}>
-                            <G fill={noColor ? "white" : colors.fa_primary} fillRule="nonzero">
+                            <G fill={color ? color : noColor ? "white" : colors.fa_primary} fillRule="nonzero">
                                 {
                                     svg.d.map((path, index) =>
                                         <Path key={index} d={path} />

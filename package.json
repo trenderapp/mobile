@@ -1,6 +1,6 @@
 {
   "name": "trender",
-  "version": "2.0.9",
+  "version": "2.10.0",
   "version_number": 65,
   "private": true,
   "repository": {
@@ -32,6 +32,7 @@
     "@react-native-firebase/app": "^16.5.0",
     "@react-native-firebase/messaging": "^16.5.0",
     "@react-navigation/bottom-tabs": "^6.5.2",
+    "@react-navigation/drawer": "^6.6.2",
     "@react-navigation/elements": "^1.3.12",
     "@react-navigation/material-bottom-tabs": "^6.2.10",
     "@react-navigation/material-top-tabs": "^6.5.1",

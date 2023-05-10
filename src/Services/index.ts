@@ -5,6 +5,8 @@ import { PERMISSIONS, RESULTS, check, request } from "react-native-permissions";
 import DeviceInfo from 'react-native-device-info';
 import { formatDate } from "./dayjs";
 
+export * from "./navigationProps";
+
 export const PATTERN_NAME = /[a-z ,.'-]+/;
 export const PATTERN_DOB = /\d{1,2}\/\d{1,2}\/\d{4}/;
 export const PATTERN_EMAIL = /\S+@\S+\.\S+/;

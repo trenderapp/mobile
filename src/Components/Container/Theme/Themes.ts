@@ -25,7 +25,7 @@ export const DarkBlueTheme = {
         bg_secondary_rgba : "rgba(20, 20, 24, 1)"
     }
 }
-  
+
 export const WhiteTheme = {
     colors: {
         bg_primary: "#fafafa",
@@ -37,7 +37,7 @@ export const WhiteTheme = {
         text_link: "#00b0f4",
         text_muted: "#a6a9ad",
         badge_color: "#f04747",
-        fa_primary : "#FF6A00",
+        fa_primary : "#3B3B98",
         fa_secondary : "#D64800",
         fa_third : "#AD2200",
         warning_color: "#ea4646",

@@ -3,12 +3,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from 'react-i18next'
 import { BottomNavigation } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import { NavigationProvider, useTheme } from "../Components/Container";
 import { DmGroupListContext } from "../Context/DmGuildListContext";
 import HomeScreen from "../Screens/Home/HomeScreen";
 import GuildListScreen from "../Screens/Messages/GuildListScreen";
-import { NotificationScreen } from "../Screens/Notifications";
 import SearchStack from "./Stacks/SearchStack";
+import ExploreScreen from "../Screens/Explore/ExploreScreen";
+
 
 function BottomStack({ navigation }) {
 
@@ -21,7 +23,7 @@ function BottomStack({ navigation }) {
     const [routes, setRoutes] = useState([
         { key: 'home', focusedIcon: 'home', unfocusedIcon: "home-outline", title: t("commons.home"), badge: false },
         { key: 'search', focusedIcon: "magnify", title: t('commons.search'), badge: false },
-        { key: 'notifications', focusedIcon: "bell", unfocusedIcon: "bell-outline", title: t('commons.notifications'), badge: false, labeled: false },
+        { key: 'explore', focusedIcon: "earth", unfocusedIcon: "earth", title: t('commons.notifications'), badge: false, labeled: false },
         { key: 'messages', focusedIcon: "message-text", unfocusedIcon: "message-text-outline", title: t('commons.messages'), badge: false, labeled: false },
     ]);
 
@@ -29,7 +31,7 @@ function BottomStack({ navigation }) {
         setRoutes([
             { key: 'home', focusedIcon: 'home', unfocusedIcon: "home-outline", title: t("commons.home"), badge: false },
             { key: 'search', focusedIcon: "magnify", title: t('commons.search'), badge: false },
-            { key: 'notifications', focusedIcon: "bell", unfocusedIcon: "bell-outline", title: t('commons.notifications'), badge: false, labeled: false },
+            { key: 'explore', focusedIcon: "earth", unfocusedIcon: "earth", title: t('commons.notifications'), badge: false, labeled: false },
             { key: 'messages', focusedIcon: "message-text", unfocusedIcon: "message-text-outline", title: t('commons.messages'), badge: badge, labeled: false },
         ])
     }
@@ -45,7 +47,7 @@ function BottomStack({ navigation }) {
     const renderScene = BottomNavigation.SceneMap({
         home: HomeScreen,
         search: SearchStack,
-        notifications: NotificationScreen,
+        explore: ExploreScreen,
         messages: GuildListScreen
     });
 

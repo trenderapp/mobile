@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { PageContainer } from '../../Components/Container';
 import { getAppInfo } from '../../Services';
 import { useTranslation } from 'react-i18next';
 import UpdateDialog from './UpdateDialog';
 import HomeNavigator from './HomeNavigator';
+import { CustomHeader } from '../../Components/Container';
 
-const HomeScreen = () => {
+const HomeScreen = () => {  
 
   const { t } = useTranslation();
   const [updateRequire, setUpdateRequire] = useState(false);
@@ -20,10 +20,11 @@ const HomeScreen = () => {
 
 
   return (
-    <PageContainer>
+    <>
+      <CustomHeader isHome={true} />
       {updateRequire && <UpdateDialog t={t} />}
       <HomeNavigator />
-    </PageContainer>
+    </>
   );
 };
 

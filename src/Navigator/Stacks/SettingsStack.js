@@ -16,48 +16,21 @@ const Stack = createStackNavigator();
 
 const SettingsStack = ({ navigation }) => {
 
-    return (
-      <NavigationProvider value={navigation}>
-        <Stack.Navigator initialRouteName="HomeSettingsScreen">
-            <Stack.Screen name="HomeSettingsScreen" component={HomeSettingsScreen}  options={{
-            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, 
-            headerShown: false
-          }}/>
-            <Stack.Screen name="LanguageThemeScreen" component={LanguageThemeScreen}  options={{
-            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, 
-            headerShown: false
-          }}/>
-          <Stack.Screen name="BlockedScreen" component={BlockedScreen}  options={{
-            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, 
-            headerShown: false
-          }}/>
-          <Stack.Screen name="SecurityScreen" component={SecurityScreen}  options={{
-            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, 
-            headerShown: false
-          }}/>
-          <Stack.Screen name="SessionScreen" component={SessionScreen}  options={{
-            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, 
-            headerShown: false
-          }}/>
-          <Stack.Screen name="AffiliationScreen" component={AffiliationScreen}  options={{
-            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, 
-            headerShown: false
-          }}/>
-          <Stack.Screen name="SubscriptionScreen" component={SubscriptionScreen}  options={{
-            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, 
-            headerShown: false
-          }}/>
-          <Stack.Screen name="SubscriptionValidationScreen" component={SubscriptionValidationScreen}  options={{
-            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, 
-            headerShown: false
-          }}/>
-          <Stack.Screen name="SubscriptionDashboardScreen" component={SubscriptionDashboardScreen} options={{
-            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, 
-            headerShown: false
-          }}/>
-        </Stack.Navigator>
-      </NavigationProvider>
-    );
+  return (
+    <NavigationProvider value={navigation}>
+      <Stack.Navigator initialRouteName="HomeSettingsScreen" screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="HomeSettingsScreen" component={HomeSettingsScreen} options={{ cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS }} />
+        <Stack.Screen name="LanguageThemeScreen" component={LanguageThemeScreen} options={{ cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS }} />
+        <Stack.Screen name="BlockedScreen" component={BlockedScreen} options={{ cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS }} />
+        <Stack.Screen name="SecurityScreen" component={SecurityScreen} options={{ cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS }} />
+        <Stack.Screen name="SessionScreen" component={SessionScreen} options={{ cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS }} />
+        <Stack.Screen name="AffiliationScreen" component={AffiliationScreen} options={{ cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS }} />
+        <Stack.Screen name="SubscriptionScreen" component={SubscriptionScreen} options={{ cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS }} />
+        <Stack.Screen name="SubscriptionValidationScreen" component={SubscriptionValidationScreen} options={{ cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS }} />
+        <Stack.Screen name="SubscriptionDashboardScreen" component={SubscriptionDashboardScreen} options={{ cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS }} />
+      </Stack.Navigator>
+    </NavigationProvider>
+  );
 };
 
 export default SettingsStack;

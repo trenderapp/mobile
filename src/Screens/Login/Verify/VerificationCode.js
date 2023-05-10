@@ -30,7 +30,7 @@ function VerificationCode({ navigation, route }) {
     }, [])
 
     const nextButton = () => {
-        return response !== "..." && navigation.replace(`${state === "loged" ? "Bottom" : "LoginNavigator"}`)
+        return response !== "..." && navigation.replace(`${state === "loged" ? "DrawerNavigation" : "LoginNavigator"}`)
     }
 
 

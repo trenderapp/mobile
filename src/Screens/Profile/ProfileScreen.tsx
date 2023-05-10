@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { FlatList } from 'react-native';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { useIsFocused } from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
+
 import { useClient } from '../../Components/Container';
 import DisplayPosts from '../../Components/Posts/DisplayPost';
 import ProfileComponent from '../../Components/Profile/Edit/ProfileComponents';
@@ -10,24 +12,28 @@ import ProfileContainer from '../../Components/Container/ProfileContainer';
 import { Loader } from '../../Other';
 import { addProfileTrends, initProfileTrends } from '../../Redux/profileFeed/action';
 import { ProfileContext } from '../../Context/AppContext';
+import { RootState, useAppDispatch, useAppSelector } from '../../Redux';
+import { useTranslation } from 'react-i18next';
 
-function ProfileScreen({ route }) {
+function ProfileScreen({ route }: any) {
 
     const { nickname } = route.params;
     const { client } = useClient();
+    const { t } = useTranslation();
     const { profile, setProfile } = useContext(ProfileContext);
-    const posts = useSelector((state) => state.profileFeed);
-    const dispatch = useDispatch();
+    const posts = useAppSelector((state) => state.profileFeed);
+    const dispatch = useAppDispatch();
     const isFocused = useIsFocused();
-    const [pined, setPined] = useState(null);
-    const [error, setError] = useState(false);
+    const [pined, setPined] = useState<any>(null);
     const [loader, setLoader] = useState(true);
     const [loading, setLoading] = useState(true);
+    const [pagination_key, setPaginationKey] = useState<string | undefined>(undefined);
 
     useEffect(() => {
         async function getData() {
             dispatch(initProfileTrends([]))
 
+            // Get profile infomations
             const response_profile = await client.user.profile(nickname);
 
             if(response_profile.error) {
@@ -41,14 +47,16 @@ function ProfileScreen({ route }) {
             const response = await client.post.user.fetch(nickname);
 
             setLoader(false)
-            if(response.error) return setError(response.error.code);
+            if(response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string });
+            if(!response.data) return;
+            setPaginationKey(response.pagination_key);
             dispatch(initProfileTrends(response.data));
 
             if(response.data.length > 0) {
                 if(!response.data[0]?.from?.pined_post) return;
                 const pined_post = await client.post.getPinPost(response.data[0].from.pined_post);
 
-                if(pined_post.error) return setError(pined_post.error.code);
+                if(pined_post.error) return Toast.show({ text1: t(`errors.${pined_post.error.code}`) as string });
                 setPined({
                     from: response.data[0].from,
                     ...pined_post.data
@@ -62,9 +70,10 @@ function ProfileScreen({ route }) {
 
     const bottomHandler = async () => {
         if(!loader) return;
-        const response = await client.post.user.fetch(nickname, { skip: posts.length });
-        if(response.error) return setError(response.error.code);
-        if(response.data < 1) return setLoader(false);
+        const response = await client.post.user.fetch(nickname, { pagination_key: pagination_key });
+        if(response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string });
+        if(!response.data || response.data.length < 1) return setLoader(false);
+        setPaginationKey(response.pagination_key);
         dispatch(addProfileTrends(response.data));
     }
 
@@ -89,7 +98,7 @@ function ProfileScreen({ route }) {
     )
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: RootState) => {
     return {
       profileFeed: state.profileFeed,
     };

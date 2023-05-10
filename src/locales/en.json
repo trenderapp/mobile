@@ -11,6 +11,7 @@
         "cancel": "Cancel",
         "notifications": "Notifications",
         "messages": "Messages",
+        "explore": "Explore",
         "waiting": "Waiting",
         "accepted": "Accepted",
         "home": "Home",
@@ -24,7 +25,8 @@
         "continue": "Continue",
         "close": "Close",
         "delete_all": "Delete all",
-        "next": "Next"
+        "next": "Next",
+        "create": "Create"
     },
     "update": {
         "update": "Update",

@@ -13,7 +13,7 @@ type SectionProps = React.FC<{
     noScroll?: boolean
 }>
 
-const SettingsContainer: SectionProps = ({ children, title, noScroll }) => {
+const MessageContainer: SectionProps = ({ children, title, noScroll }) => {
     
     const { colors } = useTheme();
     const { t } = useTranslation();
@@ -30,4 +30,4 @@ const SettingsContainer: SectionProps = ({ children, title, noScroll }) => {
     )
 };
 
-export default SettingsContainer;
+export default MessageContainer;

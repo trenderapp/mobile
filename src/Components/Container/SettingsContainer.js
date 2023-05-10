@@ -1,57 +1,51 @@
 import React from "react";
-import { Appbar, Text } from "react-native-paper";
-import styles, { full_width } from "../../Style/style";
+import { Appbar } from "react-native-paper";
 
-import { Alert, View } from "react-native";
+import { Alert } from "react-native";
 import useTheme from "./Theme/useTheme";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import useClient from "./Client/useClient";
 import SafeBottomContainer from "./SafeBottomContainer";
 import { clearStorage } from "../../Services/storage";
+import CustomHeader from "./CustomHeader";
 
 const SettingsContainer = ({ children, title, disconnect = false }) => {
-    
-    const { colors } = useTheme();
-    const { t } = useTranslation();
-    const client = useClient();
 
-    const navigation = useNavigation()
+  const { colors } = useTheme();
+  const { t } = useTranslation();
+  const client = useClient();
 
-    const Disconnect = () => {
-        Alert.alert(t("settings.logout"), t("settings.sure_logout"), [
-          {
-            text: t("commons.no"),
-            style: "cancel"
-          },
-          {
-            text: t("commons.yes"),
-            onPress: async () => {
-              await client.client.user.logout();
-              clearStorage("user_info")
-              client.setValue({
-                ...client,
-                state: "logout"
-              })
-              return navigation.replace("LoginNavigator", { screen: "Login" })
-            },
-            style: "default"
-          }
-        ])
+  const navigation = useNavigation()
+
+  const Disconnect = () => {
+    Alert.alert(t("settings.logout"), t("settings.sure_logout"), [
+      {
+        text: t("commons.no"),
+        style: "cancel"
+      },
+      {
+        text: t("commons.yes"),
+        onPress: async () => {
+          await client.client.user.logout();
+          clearStorage("user_info")
+          client.setValue({
+            ...client,
+            state: "logout"
+          })
+          return navigation.replace("LoginNavigator", { screen: "Login" })
+        },
+        style: "default"
       }
-      
-    return (  
-        <SafeBottomContainer>
-            <Appbar.Header style={[styles.row, { width: full_width, backgroundColor: colors.bg_primary, justifyContent: "space-between" }]}>
-                <View style={styles.row}>
-                    <Appbar.BackAction onPress={() => navigation ? navigation.goBack() : null} />
-                    <Text>{title ? title : t("commons.settings")}</Text>
-                </View>
-                { disconnect && <Appbar.Action color={colors.text_normal} icon="exit-to-app" onPress={() => Disconnect()} /> }
-            </Appbar.Header>
-            { children }
-        </SafeBottomContainer>
-    )
+    ])
+  }
+
+  return (
+    <SafeBottomContainer>
+      <CustomHeader navigation={navigation} title={title} isHome={false} leftComponent={disconnect && <Appbar.Action color={colors.text_normal} icon="exit-to-app" onPress={() => Disconnect()} />} />
+      {children}
+    </SafeBottomContainer>
+  )
 };
 
 export default SettingsContainer;

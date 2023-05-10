@@ -7,7 +7,7 @@ export interface ClientContextI {
     token: string,
     user: MeInterface.myInformationInterface,
     state: "loading" | "loged" | "logout",
-    setValue: () => {} | any
+    setValue: (params: { [x: string]: any }) => {} | any
 }
 
 const ClientContext = React.createContext<ClientContextI>({

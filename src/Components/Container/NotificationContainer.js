@@ -1,13 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import FastImage from 'react-native-fast-image';
 
 import { View, TouchableOpacity } from 'react-native';
 import { Appbar } from 'react-native-paper';
 import { useClient, useTheme } from '.';
 import { Text } from 'react-native-paper';
-import styles, { full_width } from '../../Style/style';
+import { full_width } from '../../Style/style';
 import { Avatar } from '../Member';
 
 const NotificationContainer = ({ children }) => {

@@ -76,7 +76,7 @@ function SubscriptionValidationScreen({ route }) {
             })
             Toast.show({ text1: `Success Your order is confirmed!` });
             setTimeout(() => {
-                navigation.replace("Bottom")
+                navigation.replace("DrawerNavigation")
             }, 500)
         }
     };
