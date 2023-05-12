@@ -42,7 +42,7 @@ const SettingsContainer = ({ children, title, disconnect = false }) => {
 
   return (
     <SafeBottomContainer>
-      <CustomHeader navigation={navigation} title={title} isHome={false} leftComponent={disconnect && <Appbar.Action color={colors.text_normal} icon="exit-to-app" onPress={() => Disconnect()} />} />
+      <CustomHeader title={title} isHome={false} leftComponent={disconnect && <Appbar.Action color={colors.text_normal} icon="exit-to-app" onPress={() => Disconnect()} />} />
       {children}
     </SafeBottomContainer>
   )

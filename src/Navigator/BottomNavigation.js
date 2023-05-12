@@ -1,33 +1,33 @@
-import { useIsFocused } from "@react-navigation/native";
-import React, { useContext, useEffect, useState } from "react";
+// import { useIsFocused } from "@react-navigation/native";
+import React, { useState } from "react";
 import { useTranslation } from 'react-i18next'
 import { BottomNavigation } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { NavigationProvider, useTheme } from "../Components/Container";
-import { DmGroupListContext } from "../Context/DmGuildListContext";
+import { useTheme } from "../Components/Container";
+// import { DmGroupListContext } from "../Context/DmGuildListContext";
 import HomeScreen from "../Screens/Home/HomeScreen";
 import GuildListScreen from "../Screens/Messages/GuildListScreen";
 import SearchStack from "./Stacks/SearchStack";
 import ExploreScreen from "../Screens/Explore/ExploreScreen";
 
 
-function BottomStack({ navigation }) {
+function BottomStack() {
 
     const { t } = useTranslation('');
     const { colors } = useTheme();
-    const isFocused = useIsFocused();
+    // const isFocused = useIsFocused();
     const insets = useSafeAreaInsets();
     const [index, setIndex] = useState(0);
-    const { unreads, groups } = useContext(DmGroupListContext);
-    const [routes, setRoutes] = useState([
+    // const { unreads, groups } = useContext(DmGroupListContext);
+    const [routes] = useState([
         { key: 'home', focusedIcon: 'home', unfocusedIcon: "home-outline", title: t("commons.home"), badge: false },
         { key: 'search', focusedIcon: "magnify", title: t('commons.search'), badge: false },
         { key: 'explore', focusedIcon: "earth", unfocusedIcon: "earth", title: t('commons.notifications'), badge: false, labeled: false },
         { key: 'messages', focusedIcon: "message-text", unfocusedIcon: "message-text-outline", title: t('commons.messages'), badge: false, labeled: false },
     ]);
 
-    const newBottom = (badge = false) => {
+    /*const newBottom = (badge = false) => {
         setRoutes([
             { key: 'home', focusedIcon: 'home', unfocusedIcon: "home-outline", title: t("commons.home"), badge: false },
             { key: 'search', focusedIcon: "magnify", title: t('commons.search'), badge: false },
@@ -42,7 +42,7 @@ function BottomStack({ navigation }) {
                 newBottom(!unreads.some(u => u.message_id === g.last_message.message_id))
             }
         })
-    }, [unreads, groups, isFocused])
+    }, [unreads, groups, isFocused])*/
 
     const renderScene = BottomNavigation.SceneMap({
         home: HomeScreen,
@@ -59,20 +59,18 @@ function BottomStack({ navigation }) {
     }
 
     return (
-        <NavigationProvider value={navigation}>
-            <BottomNavigation
-                safeAreaInsets={{ bottom: insets.bottom }}
-                barStyle={{
-                    borderTopColor: colors.text_normal,
-                    borderTopWidth: 0.5
-                }}
-                labeled={false}
-                theme={theme}
-                navigationState={{ index, routes }}
-                onIndexChange={setIndex}
-                renderScene={renderScene}
-            />
-        </NavigationProvider>
+        <BottomNavigation
+            safeAreaInsets={{ bottom: insets.bottom }}
+            barStyle={{
+                borderTopColor: colors.text_normal,
+                borderTopWidth: 0.5
+            }}
+            labeled={false}
+            theme={theme}
+            navigationState={{ index, routes }}
+            onIndexChange={setIndex}
+            renderScene={renderScene}
+        />
     )
 }
 

@@ -16,6 +16,7 @@ export type RootStackParamList = {
             [x: string]: any;
         }
     };
+    NotificationScreen: undefined;
     PostStack: undefined;
     SettingsStack: undefined;
     MessagesStack: undefined;

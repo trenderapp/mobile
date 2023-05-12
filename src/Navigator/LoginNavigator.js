@@ -11,7 +11,7 @@ const Stack = createStackNavigator();
 function LoginNavigator() {
 
     return (
-        <Stack.Navigator headerShown={'none'} initialRouteName="Login">
+        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Login">
             <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
             <Stack.Screen name="RegisterEmailUsername" component={RegisterEmailUsername} options={{ headerShown: false }} />
             <Stack.Screen name="RegisterPassword" component={RegisterPassword} options={{ cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, headerShown: false }} />

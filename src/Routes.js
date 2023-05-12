@@ -9,14 +9,11 @@ import { webSocketRoutes } from 'trender-client';
 import messaging from "@react-native-firebase/messaging";
 
 import { LoginNavigator, SplashScreen } from './Navigator';
-import { PostStack, ProfileStack, SettingsStack } from './Navigator/Stacks';
 import { useClient, useWebSocket } from './Components/Container';
 import { DmGroupListContext, initDmGroup, modifyDmGroup } from './Context/DmGuildListContext';
 import { changeElementPlaceArray, parseURL } from './Services';
 import { requestNotificationPermission } from './Services/notifications';
 import VerificationCode from './Screens/Login/Verify/VerificationCode';
-import CreateStack from './Navigator/Stacks/CreateStack';
-import MessageStack from './Navigator/Stacks/MessageStack';
 
 import 'dayjs/locale/fr'
 import 'dayjs/locale/en'
@@ -33,11 +30,11 @@ function Routes() {
     const navigation = useNavigation();
     const [routes] = useState([
         { name: "DrawerNavigation", screen: DrawerNavigation},
-        { name: "ProfileStack", screen: ProfileStack},
+        /*{ name: "ProfileStack", screen: ProfileStack},
         { name: "CreateStack", screen: CreateStack},
         { name: "PostStack", screen: PostStack},
-        // { name: "SettingsStack", screen: SettingsStack},
-        { name: "MessagesStack", screen: MessageStack}
+        { name: "SettingsStack", screen: SettingsStack},
+        { name: "MessagesStack", screen: MessageStack}*/
     ])
 
     async function getGuilds() {

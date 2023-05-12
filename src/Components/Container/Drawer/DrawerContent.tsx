@@ -1,31 +1,21 @@
 import React from 'react';
 import { DrawerContentScrollView } from '@react-navigation/drawer';
-import {
-  Avatar as PaperAvatar,
-  Title,
-  Caption,
-  Drawer,
-} from 'react-native-paper';
+import { Avatar, Title, Caption, Drawer } from 'react-native-paper';
 import { View, StyleSheet } from 'react-native';
-import { useNavigation } from "@react-navigation/native";
 import useClient from '../Client/useClient';
 import useTheme from '../Theme/useTheme';
 import { useTranslation } from 'react-i18next';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../../Services';
 
-
-export default function DrawerContent(props: any) {
+export default function DrawerContent(navigation: any) {
 
   const { client, user } = useClient();
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList, 'DrawerNavigation'>>();
   const { colors } = useTheme();
   const { t } = useTranslation();
   
   return (
     <DrawerContentScrollView style={{ flex: 1, backgroundColor: colors.bg_secondary }}>
       <View style={{ paddingLeft: 5 }}>
-        <PaperAvatar.Image style={{ backgroundColor: colors.bg_primary }} source={{ uri: client.user.avatar(user?.user_id, user?.avatar) }} size={50} />
+        <Avatar.Image style={{ backgroundColor: colors.bg_primary }} source={{ uri: client.user.avatar(user?.user_id, user?.avatar) }} size={50} />
         <Title style={{ marginTop: 5, fontWeight: 'bold' }}>{user.username}</Title>
         <Caption style={styles.caption}>@{user.nickname}</Caption>
       </View>

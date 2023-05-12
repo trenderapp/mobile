@@ -1,7 +1,7 @@
 import React from "react";
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
-import SearchModal from "../../Components/Search/SearchModal";
+import SearchScreen from "../../Components/Search/SearchModal";
 
 const Stack = createStackNavigator();
 
@@ -9,7 +9,7 @@ const SearchStack = () => {
 
     return (
         <Stack.Navigator initialRouteName="SearchModal">
-          <Stack.Screen name="SearchModal" component={SearchModal} options={{
+          <Stack.Screen name="SearchModal" component={SearchScreen} options={{
             cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, 
             headerShown: false
           }} />
