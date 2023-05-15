@@ -25,9 +25,7 @@ const CreateGuildScreen = () => {
   const [loading, setLoader] = useState(false);
 
   const searchMember = async () => {
-    const request = await client.user.search(text, {
-        limit: 15
-    })
+    const request = await client.user.search(text)
     if(request.error) return Toast.show({ text1: t(`errors.${request.error.code}`)});
     setList(request.data);
   }
