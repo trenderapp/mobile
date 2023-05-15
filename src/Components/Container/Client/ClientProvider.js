@@ -42,6 +42,7 @@ function ClientProvider({ children }) {
             if(!user_info) return setValue({ ...value, state: "logout" });
       
             const user_token = user_info?.token;
+            
             if(!user_token) return setValue({ ...value, state: "logout" });
 
             const client = new Client({
@@ -51,7 +52,7 @@ function ClientProvider({ children }) {
             });
 
             const user = await client.informations();
-
+            
             if(user.error) {
                 clearStorage("user_info");
                 return setValue({

@@ -2,10 +2,12 @@ import React from "react";
 import { TouchableOpacity, View } from "react-native";
 import { Markdown } from "../Elements/Text";
 import { Username, Avatar } from "../Member";
-import { useClient, useTheme, useNavigation } from "../Container";
+import { useNavigation } from '@react-navigation/native';
+import { useClient, useTheme } from "../Container";
 import styles, { full_width } from "../../Style/style";
 import SvgElement from "../Elements/Svg";
 import FastImage from "react-native-fast-image";
+import { navigationProps } from "../../Services";
 
 type notificationType = "likes" | "mentions" | "follows";
 
@@ -13,7 +15,7 @@ const DisplayNotifications = ({ info }: any) => {
 
     const { client } = useClient();
     const { colors } = useTheme();
-    const navigation = useNavigation();
+    const navigation = useNavigation<navigationProps>();
 
     const svgName = (type: notificationType) => {
         switch (type) {
@@ -34,7 +36,7 @@ const DisplayNotifications = ({ info }: any) => {
             case "follows":
                 return navigation.navigate("ProfileStack", { screen: "ProfileScreen", params: { nickname: info.from.nickname }})
             case "likes":
-                return navigation.push("PostStack", { screen: "PostScreen", params: { post_id: info?.post.post_id }})
+                return navigation.navigate("PostStack", { screen: "PostScreen", params: { post_id: info?.post.post_id }})
             default:
                 return ""
         }

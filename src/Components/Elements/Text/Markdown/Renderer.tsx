@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 import { Text } from "react-native-paper";
+import { useNavigation } from '@react-navigation/native';
 
 import { emojies_defs } from "./emojis";
 import Br from "../Br";
-import { useNavigation, useTheme } from "../../../Container";
-import { openURL } from "../../../../Services";
+import { useTheme } from "../../../Container";
+import { navigationProps, openURL } from "../../../../Services";
 import { SinglePostContext } from "../../../Posts/PostContext";
 import { UserInterface } from "trender-client";
 
@@ -32,7 +33,7 @@ const Renderer: SectionProps = ({ content, noBr, maxLine }) => {
     if (typeof content === "undefined") return null;
     if (content.length === 0) return null;
 
-    const navigation = useNavigation();
+    const navigation = useNavigation<navigationProps>();
     const { colors } = useTheme();
 
     const enter = content.split("\n");
@@ -54,7 +55,7 @@ const Renderer: SectionProps = ({ content, noBr, maxLine }) => {
                             const find = info?.mentions.find((m: UserInterface.userInfo) => m.nickname === nickname);
                             if(!find) return <Text key={idx}>{text} </Text>;
         
-                            return <Text key={idx} onPress={() => navigation?.push("ProfileStack" , {
+                            return <Text key={idx} onPress={() => navigation?.navigate("ProfileStack" , {
                                 screen: "ProfileScreen",
                                 params: {
                                   nickname: find.nickname

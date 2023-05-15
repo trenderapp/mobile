@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { FlatList, View, KeyboardAvoidingView, Platform } from 'react-native';
+import { FlatList, View, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { Appbar, Button, Text } from 'react-native-paper';
 import { SafeBottomContainer, useClient, useTheme, useWebSocket } from '../../Components/Container';
@@ -109,13 +109,13 @@ const readMessage = (data) => {
       <SafeBottomContainer>
         <Appbar.Header style={{ width: full_width, backgroundColor: colors.bg_primary, flexDirection: "row" , alignContent: "center", borderBottomColor: colors.bg_secondary, borderBottomWidth: 0.5 }}>
           <Appbar.BackAction color={colors.text_normal} onPress={() => navigation ? navigation.goBack() : null} />
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <TouchableOpacity onPress={() => params.type === 0 && navigation.navigate('ProfileStack', { screen: "ProfileScreen", params: { nickname: params.users[0].nickname }}) } style={{ flexDirection: "row", alignItems: "center" }}>
             <Avatar url={client.user.avatar(params.users[0]?.user_id, params.users[0]?.avatar)} />
             <View>
               <Text numberOfLines={1} style={{ fontSize: 16, fontWeight:'700', marginLeft: 5 }}>{`${params.users.map(u => u.username).join(", ")}`}</Text>
               { params.type === 0 && <Text style={{ fontSize: 12, fontWeight:'700', marginLeft: 5 }}>{`@${params.users[0].nickname}`}</Text> }
             </View>
-          </View>
+          </TouchableOpacity>
         </Appbar.Header>
           <KeyboardAvoidingView behavior={Platform.OS === "ios" && "padding"} style={{ flex: 1 }}>
           <FlatList

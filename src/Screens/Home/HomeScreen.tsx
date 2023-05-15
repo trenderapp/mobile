@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { RootStackParamList, getAppInfo } from '../../Services';
+import { getAppInfo, navigationProps } from '../../Services';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from "@react-navigation/native";
-import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { Appbar } from 'react-native-paper';
 import { View } from 'react-native';
 
@@ -16,7 +15,7 @@ const HomeScreen = () => {
   const { t } = useTranslation();
   const [updateRequire, setUpdateRequire] = useState(false);
   const { colors } = useTheme()
-  const navigation = useNavigation<DrawerNavigationProp<RootStackParamList, 'DrawerNavigation'>>();
+  const navigation = useNavigation<navigationProps>();
 
   useEffect(() => {
     async function start() {

@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { TouchableHighlight, View } from "react-native";
 import { Text, Badge } from "react-native-paper";
+import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import { full_width } from "../../Style/style";
-import { useClient, useNavigation, useTheme } from "../Container";
+import { useClient, useTheme } from "../Container";
 import { Avatar } from "../Member";
 import { BottomModal, ModalSection } from "../../Other";
 import { useTranslation } from "react-i18next";

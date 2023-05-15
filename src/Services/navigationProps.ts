@@ -1,3 +1,5 @@
+import { DrawerNavigationProp } from "@react-navigation/drawer";
+
 export type RootStackParamList = {
     ProfileStack: {
         screen: string,
@@ -17,7 +19,12 @@ export type RootStackParamList = {
         }
     };
     NotificationScreen: undefined;
-    PostStack: undefined;
+    PostStack: {
+        screen?: string
+        params: {
+            post_id?: string
+        }
+    };
     SettingsStack: undefined;
     MessagesStack: undefined;
     RegisterVerificationCode: {
@@ -25,3 +32,5 @@ export type RootStackParamList = {
         [x: string]: any;
     };
 };
+
+export type navigationProps = DrawerNavigationProp<RootStackParamList, 'DrawerNavigation'>

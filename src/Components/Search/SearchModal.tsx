@@ -20,44 +20,45 @@ function SearchScreen() {
     useEffect(() => {
         async function getData() {
             setLoader(true)
-            const response = await client.user.search(text, {
-                pagination_key: pagination_key
-            });
+            const response = await client.user.search(text);
             setLoader(false)
             if (response.error || !response.data) return;
             setUsers(response.data);
             setPaginationKey(response?.pagination_key);
         }
-
+        
         if (text?.length < 1) setUsers(undefined)
         if (text?.length > 1) getData();
     }, [text])
+    
 
     return (
         <View style={{ flex: 1, backgroundColor: colors.bg_primary }}>
-            <CustomHeader isHome={true} leftComponent={<SearchBar
-                searchIconImageStyle={{
-                    tintColor: colors.text_normal
-                }}
-                clearIconImageStyle={{
-                    tintColor: colors.text_normal
-                }}
-                placeholderTextColor={colors.text_normal}
-                style={{
-                    backgroundColor: colors.bg_secondary,
-                    width: 350
-                }}
-                textInputStyle={{
-                    color: colors.text_normal
-                }}
-                placeholder={t("commons.search") + " ..."}
-                onChangeText={(txt) => setText(txt)}
-                value={text}
-                onClearPress={() => {
-                    setText(""),
-                        setUsers(undefined)
-                }}
-            />} />
+            <CustomHeader isHome={true}>
+                <SearchBar
+                    searchIconImageStyle={{
+                        tintColor: colors.text_normal
+                    }}
+                    clearIconImageStyle={{
+                        tintColor: colors.text_normal
+                    }}
+                    placeholderTextColor={colors.text_normal}
+                    style={{
+                        backgroundColor: colors.bg_secondary,
+                        width: 320
+                    }}
+                    textInputStyle={{
+                        color: colors.text_normal
+                    }}
+                    placeholder={t("commons.search") + " ..."}
+                    onChangeText={(txt) => setText(txt)}
+                    value={text}
+                    onClearPress={() => {
+                        setText(""),
+                            setUsers(undefined)
+                    }}
+                />
+            </CustomHeader>
             {users && users.length > 0 && <MemberList list={users} loader={loader} onBottom={undefined} />}
             {typeof users === "undefined" && <Text style={{ padding: 5 }}>{t("commons.nothing_display")}</Text>}
         </View>

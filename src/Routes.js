@@ -29,7 +29,7 @@ function Routes() {
     const DmGroupList = useContext(DmGroupListContext);
     const navigation = useNavigation();
     const [routes] = useState([
-        { name: "DrawerNavigation", screen: DrawerNavigation},
+        { name: "DrawerNavigation", screen: DrawerNavigation },
         /*{ name: "ProfileStack", screen: ProfileStack},
         { name: "CreateStack", screen: CreateStack},
         { name: "PostStack", screen: PostStack},
@@ -100,14 +100,15 @@ function Routes() {
             {state === "loading" ? <Stack.Screen name="Splash" component={SplashScreen} />
                 : state === "logout" ? <Stack.Screen name="LoginNavigator" component={LoginNavigator} />
                     : state === "loged" && (
-                        <Stack.Group>
+                        <>
                             {
                                 routes.map((r, index) => <Stack.Screen key={index} name={r.name} component={r.screen} options={{
                                     cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
                                 }} />)
                             }
-                        </Stack.Group>
+                        </>
                     )
+
             }
             <Stack.Screen name="RegisterVerificationCode" options={{ headerShown: false }} component={VerificationCode} />
         </Stack.Navigator>

@@ -1,25 +1,23 @@
 import { Appbar, Text } from 'react-native-paper';
 import { View, TouchableOpacity } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
-import { DrawerNavigationProp } from '@react-navigation/drawer';
 
 import useClient from "./Client/useClient";
-import useTheme from "./Theme/useTheme";
 import styles, { full_width } from '../../Style/style';
 import { Avatar } from '../Member';
-import { RootStackParamList } from '../../Services';
+import { navigationProps } from '../../Services';
 
 type SectionProps = React.FC<{
     isHome?: boolean,
     title?: JSX.Element | string,
-    leftComponent?: JSX.Element
+    leftComponent?: JSX.Element,
+    children?: JSX.Element
   }>
 
-const CustomHeader: SectionProps = ({ title, isHome, leftComponent }) => {
+const CustomHeader: SectionProps = ({ title, isHome, leftComponent, children }) => {
     
     const { client, user } = useClient();
-    const { colors } = useTheme();
-    const navigation = useNavigation<DrawerNavigationProp<RootStackParamList, 'DrawerNavigation'>>();
+    const navigation = useNavigation<navigationProps>();
     
     return (
         <Appbar.Header elevated style={{ width: full_width, flexDirection: "row", justifyContent: "space-between", paddingTop: 0 }}>
@@ -30,6 +28,7 @@ const CustomHeader: SectionProps = ({ title, isHome, leftComponent }) => {
                     </TouchableOpacity>)}
                     { title && <Text style={{ fontSize: 16, fontWeight:'700', marginLeft: 5 }}>{title}</Text> }
             </View>
+            { children && children }
             {
                 leftComponent ? leftComponent : (
                     <View style={[styles.row, { justifyContent: "flex-end" }]}>

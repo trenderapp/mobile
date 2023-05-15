@@ -89,6 +89,7 @@ const onMessage = async (message) => {
       token: response.data.token,
       apiurl: apibaseurl
     })
+    
 
     const informations = await new_client.informations();
     
@@ -99,7 +100,7 @@ const onMessage = async (message) => {
     if(fcmToken) await new_client.pushNotification.register(fcmToken);
 
     setTimeout(() => {
-      navigation.replace('Bottom');
+      navigation.replace('DrawerNavigation');
     }, 1000);
 }
 

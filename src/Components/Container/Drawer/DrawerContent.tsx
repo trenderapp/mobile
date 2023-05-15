@@ -15,9 +15,9 @@ export default function DrawerContent(navigation: any) {
   return (
     <DrawerContentScrollView style={{ flex: 1, backgroundColor: colors.bg_secondary }}>
       <View style={{ paddingLeft: 5 }}>
-        <Avatar.Image style={{ backgroundColor: colors.bg_primary }} source={{ uri: client.user.avatar(user?.user_id, user?.avatar) }} size={50} />
-        <Title style={{ marginTop: 5, fontWeight: 'bold' }}>{user.username}</Title>
-        <Caption style={styles.caption}>@{user.nickname}</Caption>
+        <Avatar.Image style={{ backgroundColor: colors.bg_primary }} source={{ uri: client.user.avatar(user?.user_id, user?.avatar) }} size={40} />
+        <Title style={{ marginTop: 5, fontWeight: 'bold' }}>{user?.username}</Title>
+        <Caption style={styles.caption}>@{user?.nickname}</Caption>
       </View>
       <View>
         <Drawer.Section style={styles.drawerSection}>
@@ -32,7 +32,7 @@ export default function DrawerContent(navigation: any) {
           <Drawer.Item icon="account" label={t("commons.profile")} onPress={() => navigation.navigate("ProfileStack", {
             screen: "ProfileScreen",
             params: {
-              nickname: user.nickname
+              nickname: user?.nickname
             }
           })} />
           <Drawer.Item icon="cog" label={t("commons.settings")} onPress={() => navigation.navigate("SettingsStack")} />

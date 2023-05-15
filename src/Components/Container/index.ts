@@ -6,7 +6,6 @@ export { default as useNavigation } from "./Navigation/useNavigation";
 export { default as NavigationProvider } from "./Navigation/NavigationProvider";
 export { default as useTheme } from "./Theme/useTheme";
 export { default as ThemeContainer } from "./ThemeContainer";
-export { default as PageContainer } from "./PageContainer";
 export { default as ExploreContainer } from "./ExploreContainer";
 export { default as PostContainer } from "./PostContainer";
 export { default as SettingsContainer } from "./SettingsContainer";
