@@ -1823,10 +1823,10 @@
   dependencies:
     "@sinonjs/commons" "^2.0.0"
 
-"@stripe/stripe-react-native@^0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@stripe/stripe-react-native/-/stripe-react-native-0.25.0.tgz#f82c1cb7149712e0eed3dd0309ccd1f8e998ad33"
-  integrity sha512-ZyOUzm1++cZqMWlkR4TKAgfWQ8gaxs1MOHd12fHTXufIUWCdGqSn5HLmZLsPof45O7wdwGROU06Od6D2ryspaQ==
+"@stripe/stripe-react-native@^0.27.2":
+  version "0.27.2"
+  resolved "https://registry.yarnpkg.com/@stripe/stripe-react-native/-/stripe-react-native-0.27.2.tgz#ad3ee207065f30c262df59fc6661472217815e55"
+  integrity sha512-3qCRWusQHYDrUXiNm8NzNHSRYz/AaSZ8lJnq4jbzvQqP5zCRwv5yZ4aZ1DUa4vS5dn+nFF15BQjvGK7kCggYPA==
 
 "@tsconfig/react-native@^2.0.3":
   version "2.0.3"
@@ -7859,10 +7859,10 @@ react-native-webview@^11.26.0:
     escape-string-regexp "2.0.0"
     invariant "2.2.4"
 
-react-native@0.70.6:
-  version "0.70.6"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.70.6.tgz#d692f8b51baffc28e1a8bc5190cdb779de937aa8"
-  integrity sha512-xtQdImPHnwgraEx3HIZFOF+D1hJ9bC5mfpIdUGoMHRws6OmvHAjmFpO6qfdnaQ29vwbmZRq7yf14sbury74R/w==
+react-native@0.70.9:
+  version "0.70.9"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.70.9.tgz#08a962b72cf2a922e4cd471049eb0b624079dba6"
+  integrity sha512-Z8K7BayzswIVdmDzF/VS6RG1mCkNJSCgA3NjrXl8YmadCDDuDbEIM5BE+Qiiz8UK5XzNsF9NxH/FVojty/1I4A==
   dependencies:
     "@jest/create-cache-key-function" "^27.0.1"
     "@react-native-community/cli" "9.3.2"
