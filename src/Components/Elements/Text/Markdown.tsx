@@ -10,7 +10,7 @@ type SectionProps = React.FC<{
 
 const Markdown: SectionProps = ({ content, noBr, maxLine }) => {
     return (
-        <Text numberOfLines={maxLine}>
+        <Text numberOfLines={maxLine ? maxLine + 1 : undefined}>
             <Suspense fallback={content}>
                 <Renderer noBr={noBr ? false : true} maxLine={maxLine} content={content} />
             </Suspense>

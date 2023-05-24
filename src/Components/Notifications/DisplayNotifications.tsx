@@ -72,16 +72,20 @@ const DisplayNotifications = ({ info }: any) => {
                 borderBottomColor: colors.bg_secondary,
                 borderBottomWidth: 1
             }}>
-                <View style={[styles.row, {
-                    justifyContent: "flex-start",
-                    alignItems: "flex-start"
-                }]}>
-                    <SvgElement size={16} name={svgName(info.notification_type)} />
-                    <Avatar size={33} url={client.user.avatar(info?.from?.user_id, info?.from?.avatar)} />
+                <View style={[styles.row, { justifyContent: "flex-start", alignItems: "flex-start" }]}>
+                    <View style={{ position: "relative" }}>
+                        <Avatar size={40} url={client.user.avatar(info?.from?.user_id, info?.from?.avatar)} />
+                        <View style={{ bottom: -5, right: 5, width: 20, height: 20, position: "absolute", backgroundColor: colors.badge_color, borderRadius: 60/2, flexDirection: "row",
+                            justifyContent: "center",
+                            alignItems: "center" }}>
+                            <SvgElement size={13} name={svgName(info.notification_type)} />
+                        </View>
+                    </View>
                     <Username user={info?.from} created_at={info?.created_at} />
                 </View>
-                <Markdown maxLine={1} content={info?.post?.content ?? ""} />
-                <DisplayAttachments />
+                <View style={{ paddingLeft: 5 }}>
+                    <Markdown maxLine={3} content={info?.post?.content ?? ""} />
+                </View>
             </View>
         </TouchableOpacity>
     )

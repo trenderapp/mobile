@@ -63,6 +63,11 @@ export const styles = StyleSheet.create({
         height: "100%",
         ...StyleSheet.absoluteFillObject,
     },
+    banner_image_drawer: {
+        width: "100%",
+        height: "100%",
+        ...StyleSheet.absoluteFillObject,
+    },
     pdp33: {
         width: 33,
         height: 33,

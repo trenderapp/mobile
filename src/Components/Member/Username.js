@@ -23,15 +23,10 @@ export default function Username({ user, created_at }) {
             <View>
                 <Text style={[{ maxWidth: "100%", overflow: "hidden" } ]}>{user?.username}{created_at && ` - ${dayjs(created_at).locale(i18n.language).fromNow(true).replace("une", "1").replace("un", "1")}`}</Text>
                 <View style={styles.row}>
-                    <Text style={[styles.text_muted, { color: colors.text_muted, marginRight: 5 }]}>@{user?.nickname}</Text>
-                    { user?.is_private && <SvgElement margin={5} size={18} name="lock" color={colors.text_normal} /> }
-                    { flags.has(userFlags.VERIFIED_USER) && <SvgElement margin={5} name="verified" size={18} /> }
+                    <Text style={[styles.text_muted, { color: colors.text_muted }]}>@{user?.nickname}</Text>
+                    { user?.is_private && <SvgElement margin={5} size={15} name="lock" color={colors.text_normal} /> }
+                    { flags.has(userFlags.VERIFIED_USER) && <SvgElement margin={5} name="verified" size={15} /> }
                 </View>
-            </View>
-            <View style={{
-                backgroundColor: colors.fa_primary,
-                width: "100%"
-            }}>
             </View>
         </View>
     )
