@@ -24,7 +24,7 @@ export default function DrawerContent(navigation: any) {
         }
       </View>
       <View style={{ paddingLeft: 5 }}>
-        <FastImage style={[globalStyles.pdp64, { marginTop: -30, backgroundColor: colors.bg_secondary }]} source={{ uri: `${client.user.avatar(user?.user_id, user?.avatar)}` }} />
+        <FastImage style={[globalStyles.pdp50, { marginTop: -30, backgroundColor: colors.bg_secondary }]} source={{ uri: `${client.user.avatar(user?.user_id, user?.avatar)}` }} />
         <Title style={{ marginTop: 5, fontWeight: 'bold' }}>{user?.username}</Title>
         <Caption style={styles.caption}>@{user?.nickname}</Caption>
       </View>

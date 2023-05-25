@@ -75,6 +75,13 @@ export const styles = StyleSheet.create({
         marginRight: 5,
         resizeMode: "cover"
     },
+    pdp50: {
+        width: 50,
+        height: 50,
+        borderRadius: 60 / 2,
+        marginRight: 5,
+        resizeMode: "cover"
+    },
     pdp64: {
         width: 64,
         height: 64,
