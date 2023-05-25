@@ -16,7 +16,7 @@ export default function DrawerContent(navigation: any) {
 
   return (
     <DrawerContentScrollView style={{ flex: 1, backgroundColor: colors.bg_secondary, marginTop: -5 }}>
-      <View style={{ height: 100 }}>
+      <View style={{ height: 90 }}>
         {
           user?.banner ?
             <FastImage style={[globalStyles.banner_image_drawer, { backgroundColor: colors.bg_secondary }]} source={{ uri: `${client.user.banner(user.user_id, user.banner)}` }} />
