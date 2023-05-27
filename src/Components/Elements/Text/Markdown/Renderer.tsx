@@ -10,8 +10,8 @@ import { SinglePostContext } from "../../../Posts/PostContext";
 import { UserInterface } from "trender-client";
 
 type SectionProps = React.FC<{
-    content: string, 
-    noBr?: boolean, 
+    content: string,
+    noBr?: boolean,
     maxLine?: number,
 }>
 
@@ -37,34 +37,39 @@ const Renderer: SectionProps = ({ content, noBr, maxLine }) => {
     const { colors } = useTheme();
 
     const enter = content.split("\n");
-    
+
     return (
         <Text numberOfLines={maxLine}>
             {
-                enter.map((text, idx) => 
+                enter.map((text, idx) =>
                     <Text key={idx}>{noBr && "\n"}{text.trim().split(" ").map((text, idx) => {
-                        
-                        if(RE_LINKS.test(text)) return <Text key={idx} onPress={() => openURL(text)} style={{ color: colors.text_link }}>{text} </Text>
-                        if(RE_HASHTAG.test(text)) return <Text key={idx} onPress={() => console.log(text.replace("#", ""))} style={{ color: colors.text_link }}>{text} </Text>
-                        if(RE_MENTIONS.test(text)) {
+
+                        if (RE_LINKS.test(text)) return <Text key={idx} onPress={() => openURL(text)} style={{ color: colors.text_link }}>{text} </Text>
+                        if (RE_HASHTAG.test(text)) return <Text key={idx} onPress={() => navigation?.navigate("PostStack", {
+                            screen: "PostScreenSearch",
+                            params: {
+                                query: text
+                            }
+                        })} style={{ color: colors.text_link }}>{text} </Text>
+                        if (RE_MENTIONS.test(text)) {
                             const nickname = text.replace(/@/g, "");
                             RE_MENTIONS.test(text)
-        
-                            if(info?.mentions.length < 1) return <Text key={idx}>{text} </Text>;
-                
+
+                            if (info?.mentions.length < 1) return <Text key={idx}>{text} </Text>;
+
                             const find = info?.mentions.find((m: UserInterface.userInfo) => m.nickname === nickname);
-                            if(!find) return <Text key={idx}>{text} </Text>;
-        
-                            return <Text key={idx} onPress={() => navigation?.navigate("ProfileStack" , {
+                            if (!find) return <Text key={idx}>{text} </Text>;
+
+                            return <Text key={idx} onPress={() => navigation?.navigate("ProfileStack", {
                                 screen: "ProfileScreen",
                                 params: {
-                                  nickname: find.nickname
+                                    nickname: find.nickname
                                 }
-                              })} style={{ color: colors.text_link }}>{find.username} </Text>; 
+                            })} style={{ color: colors.text_link }}>{find.username} </Text>;
                         }
-                        if(RE_TWEMOJI.test(text)) {                
+                        if (RE_TWEMOJI.test(text)) {
                             const sub = text.replace(/:/g, "")
-                            if(!sub) return <Text key={idx} >{text} </Text>
+                            if (!sub) return <Text key={idx} >{text} </Text>
                             return <Text key={idx} >{emojies_defs[sub]} </Text>
                         }
                         return <Text key={idx}>{text} </Text>

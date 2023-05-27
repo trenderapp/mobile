@@ -22,7 +22,8 @@ export type RootStackParamList = {
     PostStack: {
         screen?: string
         params: {
-            post_id?: string
+            post_id?: string,
+            query?: string;
         }
     };
     SettingsStack: undefined;

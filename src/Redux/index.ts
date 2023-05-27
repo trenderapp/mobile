@@ -7,6 +7,7 @@ import { mainFeedReducer } from './mainFeed';
 import { exploreRecentTrendsReducer } from './exploreRecentTrends';
 import { exploreTopTrendsReducer } from './exploreTopTrends';
 import { profileFeedReducer } from './profileFeed';
+import { postSearchReducer } from './PostSearch';
 import { commentFeedReducer } from './commentFeed';
 import { guildListReducer } from './guildList';
 import { guildMessagesReducer } from './guildMessages';
@@ -15,6 +16,7 @@ import { guildMessagesReducer } from './guildMessages';
 const rootReducer = combineReducers({
   // Associe chaque réducteur à une clé dans l'état de l'application
   mainFeed: mainFeedReducer,
+  postSearch: postSearchReducer,
   exploreRecentTrends: exploreRecentTrendsReducer,
   exploreTopTrends: exploreTopTrendsReducer,
   profileFeed: profileFeedReducer,
