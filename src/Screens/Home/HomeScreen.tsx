@@ -42,7 +42,7 @@ const HomeScreen = () => {
   }
   return (
     <>
-      <CustomHeader isHome={true} leftComponent={<CustomLeftComponent />} />
+      <CustomHeader title={t("commons.home") as string} isHome={true} leftComponent={<CustomLeftComponent />} />
       {updateRequire && <UpdateDialog t={t} />}
       <HomeNavigator />
     </>

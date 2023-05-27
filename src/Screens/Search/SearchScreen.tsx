@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import { View } from 'react-native';
 import { Text } from 'react-native-paper';
 import SearchBar from 'react-native-dynamic-search-bar';
-import { CustomHeader, useClient, useTheme } from "../Container";
-import MemberList from "../Profile/MemberList";
+import { CustomHeader, useClient, useTheme } from "../../Components/Container";
+import MemberList from "../../Components/Profile/MemberList";
 import { userInfo } from "trender-client/Managers/Interfaces/Search";
 
 function SearchScreen() {
@@ -54,12 +54,12 @@ function SearchScreen() {
                     onChangeText={(txt) => setText(txt)}
                     value={text}
                     onClearPress={() => {
-                        setText(""),
-                            setUsers(undefined)
+                        setText("")
+                        setUsers(undefined)
                     }}
                 />
             </CustomHeader>
-            {users && users.length > 0 && <MemberList list={users} loader={loader} onBottom={undefined} />}
+            {users && users.length > 0 && <MemberList noDescription={true} list={users} loader={loader} onBottom={undefined} />}
             {typeof users === "undefined" && <Text style={{ padding: 5 }}>{t("commons.nothing_display")}</Text>}
         </View>
     )

@@ -5,7 +5,7 @@ import { useTheme } from '../Container';
 import { UserInfo } from '../Member';
 import { full_width } from '../../Style/style';
 
-function MemberList({ list, loader, onBottom }) {
+function MemberList({ list, loader, onBottom, noDescription }) {
     const { colors } = useTheme();
 
     const onScroll = e => {
@@ -33,7 +33,7 @@ function MemberList({ list, loader, onBottom }) {
                     }}
                     ListEmptyComponent={<Loader />}
                     ListFooterComponent={loader && <Loader />}
-                    renderItem={({ item }) => <UserInfo full_width informations={item} />}
+                    renderItem={({ item }) => <UserInfo noDescription={noDescription} full_width informations={item} />}
                 />
             }
         </View>
