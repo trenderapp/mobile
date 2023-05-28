@@ -15,7 +15,17 @@ function SearchScreen() {
     const { t } = useTranslation();
     const { client } = useClient();
     const [users, setUsers] = useState<userInfo[] | undefined>(undefined);
+    const [bestUsers, setBestUsers] = useState<userInfo[] | undefined>(undefined);
     const [loader, setLoader] = useState(true);
+
+    async function getBestUsers() {
+        setLoader(true)
+        const response = await client.explore.bestUsers();
+        setLoader(false)
+        if (response.error || !response.data) return;
+        setBestUsers(response.data);
+        setPaginationKey(response?.pagination_key);
+    }
 
     useEffect(() => {
         async function getData() {
@@ -27,9 +37,16 @@ function SearchScreen() {
             setPaginationKey(response?.pagination_key);
         }
         
-        if (text?.length < 1) setUsers(undefined)
+        if (text?.length < 1) {
+            getBestUsers()
+            setUsers(undefined)
+        }
         if (text?.length > 1) getData();
     }, [text])
+
+    useEffect(() => {
+        getBestUsers()
+    }, [])
     
 
     return (
@@ -59,8 +76,7 @@ function SearchScreen() {
                     }}
                 />
             </CustomHeader>
-            {users && users.length > 0 && <MemberList noDescription={true} list={users} loader={loader} onBottom={undefined} />}
-            {typeof users === "undefined" && <Text style={{ padding: 5 }}>{t("commons.nothing_display")}</Text>}
+            {users && users.length > 0 ? <MemberList noDescription={true} list={users} loader={loader} onBottom={undefined} /> : <MemberList noDescription={true} list={bestUsers} loader={loader} onBottom={undefined} /> }
         </View>
     )
 }
