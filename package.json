@@ -83,7 +83,7 @@
     "realm": "11.0.0",
     "recyclerlistview": "^4.2.0",
     "redux": "^4.2.0",
-    "trender-client": "latest"
+    "trender-client": "2.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
