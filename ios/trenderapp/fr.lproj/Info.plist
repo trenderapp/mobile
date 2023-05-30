@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
+	<string>fr</string>
 	<key>CFBundleDisplayName</key>
 	<string>Trender</string>
 	<key>CFBundleExecutable</key>
@@ -36,17 +36,17 @@
 		</dict>
 	</dict>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>$(PRODUCT_NAME) utilise pour envoyer des medias en message privé ou les utiliser dans l&apos;applications</string>
+	<string>Trender utilise pour envoyer des medias en message privé ou les utiliser dans l&apos;applications</string>
 	<key>NSCameraUsageDescription</key>
-	<string>$(PRODUCT_NAME) utilise pour créer des postes ou scanner le QRCode de connexion</string>
+	<string>Trender utilise pour créer des postes ou scanner le QRCode de connexion</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2021-2022, Trender Inc., tout droit réservé.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>$(PRODUCT_NAME) accède au micro pour créer des vidéos ou des messages audio.</string>
+	<string>Trender accède au micro pour créer des vidéos ou des messages audio.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) utilise pour personnaliser son profile et créer des postes avec images.</string>
+	<string>Trender utilise pour personnaliser son profile et créer des postes avec images.</string>
 	<key>NSUserTrackingUsageDescription</key>
-	<string>$(PRODUCT_NAME) track ce que vous faites dans l&apos;applications pour améliorer votre expérience utlisateur.</string>
+	<string>Trender track ce que vous faites dans l&apos;applications pour afficher de meilleurs Trends et améliorer votre expérience utlisateur.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
