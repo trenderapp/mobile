@@ -42,7 +42,9 @@
     "explore": {
         "no_trends_selected_region": "No Trends in your country today. Create the first Trend of the day!",
         "no_trends_selected_region_all_time": "No Trends in your country. Create the first Trend of your country!",
-        "explore_the_top_trends": "Explore the best Trends of the day"
+        "explore_the_top_trends": "Explore the best Trends of the day",
+        "no_trends_world_region": "No Trends in the world today. Create the first Trend of the day!",
+        "no_trends_world_region_all_time": "No Trends in the world. Create the first Trend ever !"
     },
     "posts": {
         "create_post": "What's new?",

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { TopTrends } from "../../Components/Explore";
 
 function ExploreTopTrendsScreen() {
@@ -6,4 +6,4 @@ function ExploreTopTrendsScreen() {
     return <TopTrends />;
 }
 
-export default ExploreTopTrendsScreen;
+export default memo(ExploreTopTrendsScreen);

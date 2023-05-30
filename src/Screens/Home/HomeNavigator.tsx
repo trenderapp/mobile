@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { memo, useState } from 'react';
 import { useWindowDimensions } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { useTheme } from '../../Components/Container';
@@ -14,8 +14,8 @@ function HomeNavigator() {
   const layout = useWindowDimensions();
   const { colors } = useTheme();
 
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
     { key: 'followTrends', title: 'Follows' },
   ]);
 
@@ -51,4 +51,4 @@ function HomeNavigator() {
   return <FollowsTrends />
 }
 
-export default HomeNavigator;
+export default memo(HomeNavigator);

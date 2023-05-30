@@ -42,7 +42,9 @@
     "explore": {
         "no_trends_selected_region": "Aucune Trends dans ton pays aujourd'hui. Crée la première Trend de la journée !",
         "no_trends_selected_region_all_time": "Aucune Trend dans ton pays. Soit le premier de ton pays à créer une Trend !",
-        "explore_the_top_trends": "Explorer les meilleurs Trends de la journée"
+        "explore_the_top_trends": "Explorer les meilleurs Trends de la journée",
+        "no_trends_world_region": "Aucune Trends dans le monde aujourd'hui. Crée la première Trend de la journée !",
+        "no_trends_world_region_all_time": "Aucune Trend dans le monde. Soit le premier à créer une Trend !"
     },
     "posts": {
         "create_post": "Quoi de neuf ?",
@@ -192,7 +194,7 @@
         "100": "Un email de vérification a été envoyé",
         "200": "succès",
         "204": "Supprimé avec succès",
-        "404": "Cette racine n'existe pas",
+        "404": "Cette route API n'existe pas",
         "505": "Echec de l'upload",
         "1000": "Article inconnu",
         "1001": "Utilisateur inconnu",

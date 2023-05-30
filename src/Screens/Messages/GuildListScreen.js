@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import { FAB} from 'react-native-paper';
@@ -39,4 +39,4 @@ const GuildListScreen = () => {
   );
 };
 
-export default GuildListScreen;
+export default memo(GuildListScreen);

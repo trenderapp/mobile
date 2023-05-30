@@ -5,7 +5,9 @@ import { configureStore } from "@reduxjs/toolkit";
 // Importe les réducteurs à partir de différents fichiers
 import { mainFeedReducer } from './mainFeed';
 import { exploreRecentTrendsReducer } from './exploreRecentTrends';
+import { exploreWorldRecentTrendsReducer } from './exploreWorldRecentTrends';
 import { exploreTopTrendsReducer } from './exploreTopTrends';
+import { exploreTopWorldTrendsReducer } from './exploreTopWorldTrends';
 import { profileFeedReducer } from './profileFeed';
 import { postSearchReducer } from './PostSearch';
 import { commentFeedReducer } from './commentFeed';
@@ -18,7 +20,9 @@ const rootReducer = combineReducers({
   mainFeed: mainFeedReducer,
   postSearch: postSearchReducer,
   exploreRecentTrends: exploreRecentTrendsReducer,
+  exploreWorldRecentTrends: exploreWorldRecentTrendsReducer,
   exploreTopTrends: exploreTopTrendsReducer,
+  exploreTopWorldTrends: exploreTopWorldTrendsReducer,
   profileFeed: profileFeedReducer,
   commentFeed: commentFeedReducer,
   guildList: guildListReducer,

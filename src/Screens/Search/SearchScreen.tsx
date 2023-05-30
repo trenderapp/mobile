@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { View } from 'react-native';
-import { Text } from 'react-native-paper';
 import SearchBar from 'react-native-dynamic-search-bar';
 import { CustomHeader, useClient, useTheme } from "../../Components/Container";
 import MemberList from "../../Components/Profile/MemberList";
@@ -81,4 +80,4 @@ function SearchScreen() {
     )
 }
 
-export default SearchScreen;
+export default memo(SearchScreen);

@@ -1,30 +1,35 @@
 import * as React from 'react';
-import { useWindowDimensions } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { useTheme } from '../../Components/Container';
 import ExploreRecentTrendsScreen from './ExploreRecentTrendsScreen';
 import ExploreTopTrendsScreen from './ExploreTopTrendsScreen';
+import ExploreRecentWorldTrendsScreen from './ExploreRecentWorldTrendsScreen';
+import ExploreTopWorldTrendsScreen from './ExploreTopWorldTrendsScreen';
+import { full_width } from '../../Style/style';
 
 const renderScene = SceneMap({
   topTrends: ExploreTopTrendsScreen,
   recentTrends: ExploreRecentTrendsScreen,
+  recentWorldTrends: ExploreRecentWorldTrendsScreen,
+  topWorldTrends: ExploreTopWorldTrendsScreen
 });
 
 function ExploreScreenNavigator() {
 
-  const layout = useWindowDimensions();
   const { colors } = useTheme();
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: 'topTrends', title: 'Top of the day' },
     { key: 'recentTrends', title: 'Last Trends' },
+    { key: 'topWorldTrends', title: 'Top World Trends' },
+    { key: 'recentWorldTrends', title: 'Last World Trends' },
   ]);
 
   const renderTabBar = (props: any) => (
     <TabBar
       {...props}
-      // scrollEnabled
+      scrollEnabled
       indicatorStyle={{
         backgroundColor: colors.bg_secondary
       }}
@@ -36,7 +41,7 @@ function ExploreScreenNavigator() {
         textTransform: "none"
       }}
       tabStyle={{
-        // width: 'auto'
+        width: 'auto'
       }}
     />
   );
@@ -47,7 +52,7 @@ function ExploreScreenNavigator() {
       navigationState={{ index, routes }}
       renderScene={renderScene}
       onIndexChange={setIndex}
-      initialLayout={{ width: layout.width }}
+      initialLayout={{ width: full_width, height: 0 }}
     />
   );
 }
