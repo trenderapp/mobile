@@ -17,7 +17,7 @@ function PostVideo() {
         <View>
             <Postheader info={info.from} created_at={info.created_at} />
             <View style={{ padding: 5 }}><Markdown content={info.content} /></View>
-            <VideoPlayer uri={`${client.post.file(info.from.user_id, info.post_id, info.attachments[0]?.name)}`} />
+            <VideoPlayer attachments={info.attachments[0]} uri={`${client.post.file(info.from.user_id, info.post_id, info.attachments[0]?.name)}`} />
             <Postbottom info={info} />
         </View>
     )

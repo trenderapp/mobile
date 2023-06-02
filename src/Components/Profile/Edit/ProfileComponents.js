@@ -85,7 +85,7 @@ function ProfileComponent({ nickname, pined, informations, setInfo }){
                             alignItems: "center"
                         }}>
                             <SvgElement margin={15} onPress={() => setModalVisible(true)} size={22} name="ellipsis" />
-                            { informations.user_info.user_id !== user?.user_id && !informations?.is_private && <SvgElement margin={15} onPress={() => createDM()} size={22} name="envelope" /> }
+                            { informations.user_info.user_id !== user?.user_id && !informations?.allow_dm && <SvgElement margin={15} onPress={() => createDM()} size={22} name="envelope" /> }
                             { informations.user_info.user_id === user?.user_id && <FollowButton onPress={() => navigation.push("ProfileEditScreen", { info: informations.user_info })} text={t("profile.edit")}/>}
                             { informations.user_info.user_id !== user?.user_id && informations?.following && <FollowButton onPress={() => unfollow()} text={t("profile.unfollow")} /> }
                             { informations.user_info.user_id !== user?.user_id && !informations?.following && <FollowButton onPress={() => follow()} text={t("profile.follow")} /> }

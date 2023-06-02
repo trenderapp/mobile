@@ -220,7 +220,7 @@ function ProfileEditScreen({ route }) {
                                 />
                             </View>
                             <Button style={{ alignItems: "flex-start" }} onPress={() => setModif({ ...modif, is_private: !modif.is_private })} icon={modif.is_private ? "account-lock" : "account"}>{t("profile.account", { type: modif.is_private ? t("profile.private") : t("profile.public") })}</Button>
-                            <Button style={{ alignItems: "flex-start" }} onPress={() => setModif({ ...modif, allow_dm: !modif.allow_dm })} icon={modif.allow_dm ? "email-lock" : "email"} >{t("profile.private_messages")}</Button>
+                            <Button style={{ alignItems: "flex-start" }} onPress={() => setModif({ ...modif, allow_dm: !modif.allow_dm })} icon={modif.allow_dm ? "email" : "email-lock"} >{t("profile.private_messages")}</Button>
                         </View>
                     </View>
                 </KeyboardAwareScrollView>
