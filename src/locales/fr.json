@@ -26,7 +26,12 @@
         "close": "Fermer",
         "delete_all": "Tout supprimer",
         "next": "Suivant",
-        "create": "Créer"
+        "create": "Créer",
+
+        "top_of_day": "Top du jour",
+        "last_rends": "Dernière Trends",
+        "top_world_trends_day": "Top monde du jour",
+        "last_word_trends": "Dernière Trends monde"
     },
     "update": {
         "update": "Mettre à jour",
@@ -56,7 +61,8 @@
         "pined": "épinglé",
         "what_new": "Quoi de neuf ?",
         "discussion": "Discussion",
-        "copy_post_id": "Copier l'identifiant"
+        "copy_post_id": "Copier l'identifiant",
+        "explicit_content": "contenu explicite"
     },
     "login": {
         "already_account": "Tu as déjà un compte ?",
@@ -102,6 +108,7 @@
         "affiliation": "Affiliation",
         "affiliation_code": "Code affilié",
         "my_code": "Mon code",
+        "protect_nsfw": "Bloquer les contenus explicite",
     
         "dark_blue": "Bleu foncé",
         "dark": "Foncé",

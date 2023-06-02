@@ -26,7 +26,12 @@
         "close": "Close",
         "delete_all": "Delete all",
         "next": "Next",
-        "create": "Create"
+        "create": "Create",
+
+        "top_of_day": "Top of the day",
+        "last_rends": "Last Trends",
+        "top_world_trends_day": "Top World Day",
+        "last_word_trends": "Last World Trends"
     },
     "update": {
         "update": "Update",
@@ -56,7 +61,8 @@
         "pined": "pinned",
         "what_new": "What's new?",
         "discussion": "Discussion",
-        "copy_post_id": "Copy ID"
+        "copy_post_id": "Copy ID",
+        "explicit_content": "Explicit content"
     },
     "login": {
         "already_account": "Already have an account?",
@@ -102,6 +108,7 @@
         "affiliation": "Affiliation",
         "affiliation_code": "Affiliation code",
         "my_code": "My code",
+        "protect_nsfw": "Block explicit contents",
 
         "dark_blue": "Dark blue",
         "dark": "Dark",

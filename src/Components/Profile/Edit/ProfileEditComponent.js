@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import { useTranslation } from 'react-i18next';
 import Toast from 'react-native-toast-message';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -7,7 +6,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import { Pressable, ScrollView, View, SafeAreaView } from "react-native";
 import styles, { full_width }from "../../../Style/style";
 import { useNavigation } from "@react-navigation/native";
-import { Appbar, TextInput, ProgressBar } from "react-native-paper";
+import { Appbar, TextInput, ProgressBar, Button, IconButton } from "react-native-paper";
 import useTheme from "../../Container/Theme/useTheme";
 import { Text } from "react-native-paper";
 import { useClient } from "../../Container";
@@ -74,7 +73,7 @@ function ProfileEditScreen({ route }) {
         let data = {
             avatar: info.avatar === modif.avatar ? undefined : modif.avatar,
             banner: info.banner === modif.banner ? undefined : modif.banner,
-            private_messages: modif.private_messages,
+            allow_dm: modif.allow_dm,
             is_private: modif.is_private,
             link: modif?.link ?? "",
             description: modif.description ?  modif.description.substring(0, 120) : "",
@@ -85,7 +84,11 @@ function ProfileEditScreen({ route }) {
         if(data?.nickname?.length > 30 || data?.nickname?.length < 3 || data?.username?.length > 30 || data?.username?.length < 3 || data?.description?.length > 120) return Toast.show({
             text1: t(`errors.verify_fields`)
         })
-
+        
+        setSending({
+            send: true,
+            progress: 90
+        })
         if(data?.avatar) {
             if(typeof window !== "undefined") {
                 var formdata = new FormData();
@@ -161,10 +164,10 @@ function ProfileEditScreen({ route }) {
               <Appbar.BackAction onPress={() => navigation.goBack()} />  
               <Text style={styles.text_title}>{t("profile.edit")}</Text>
               <View style={[styles.row, { justifyContent: "flex-end" }]}>
-                  <Appbar.Action color={colors.text_normal} icon="content-save" onPress={() => send_info()} />
+                <IconButton icon="content-save" disabled={sending.send} onPress={() => send_info()} />
               </View>
             </Appbar.Header>
-            { sending.send && <ProgressBar progress={sending.progress} color={colors.fa_primary} /> }
+            { sending.send && <ProgressBar progress={sending.progress} color={colors.badge_color} /> }
             <ScrollView>
                 <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }}>
                     <View>
@@ -216,27 +219,8 @@ function ProfileEditScreen({ route }) {
                                     onChangeText={(text) => setModif({ ...modif, description: text })}
                                 />
                             </View>
-                            <View style={{
-                                    marginTop: 5,
-                                    marginLeft: 10,
-                                    marginRight: 10,
-                                    marginBottom: 5
-                            }}>
-                                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <SimpleLineIcons onPress={() => setModif({ ...modif, is_private: !modif.is_private })} size={24} name={modif.is_private ? "lock" : "lock-open"} color={colors.text_normal} />
-                                    <Text style={{ marginLeft: 10 }}>{t("profile.account", { type: modif.is_private ? t("profile.private") : t("profile.public") })}</Text>
-                                </View>
-                            </View>
-                            <View  style={{
-                                    marginTop: 5,
-                                    marginLeft: 10,
-                                    marginRight: 10,
-                            }}>
-                                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <SimpleLineIcons onPress={() => setModif({ ...modif, private_messages: !modif.private_messages })} size={24} name={modif.private_messages ? "lock" : "lock-open"} color={colors.text_normal} />
-                                    <Text style={{ marginLeft: 10 }}>{t("profile.private_messages")}</Text>
-                                </View>
-                            </View>
+                            <Button style={{ alignItems: "flex-start" }} onPress={() => setModif({ ...modif, is_private: !modif.is_private })} icon={modif.is_private ? "account-lock" : "account"}>{t("profile.account", { type: modif.is_private ? t("profile.private") : t("profile.public") })}</Button>
+                            <Button style={{ alignItems: "flex-start" }} onPress={() => setModif({ ...modif, allow_dm: !modif.allow_dm })} icon={modif.allow_dm ? "email-lock" : "email"} >{t("profile.private_messages")}</Button>
                         </View>
                     </View>
                 </KeyboardAwareScrollView>

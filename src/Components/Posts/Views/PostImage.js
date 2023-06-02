@@ -6,7 +6,6 @@ import Postbottom from "./Components/Postbottom";
 import Postheader from "./Components/Postheader";
 import Carroussel from "./Components/Carroussel";
 
-
 function PostImage() {
     
     const { info } = useContext(SinglePostContext);

@@ -6,6 +6,7 @@ import ExploreTopTrendsScreen from './ExploreTopTrendsScreen';
 import ExploreRecentWorldTrendsScreen from './ExploreRecentWorldTrendsScreen';
 import ExploreTopWorldTrendsScreen from './ExploreTopWorldTrendsScreen';
 import { full_width } from '../../Style/style';
+import { useTranslation } from 'react-i18next';
 
 const renderScene = SceneMap({
   topTrends: ExploreTopTrendsScreen,
@@ -17,13 +18,14 @@ const renderScene = SceneMap({
 function ExploreScreenNavigator() {
 
   const { colors } = useTheme();
+  const { t } = useTranslation();
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: 'topTrends', title: 'Top of the day' },
-    { key: 'recentTrends', title: 'Last Trends' },
-    { key: 'topWorldTrends', title: 'Top World Trends' },
-    { key: 'recentWorldTrends', title: 'Last World Trends' },
+    { key: 'topTrends', title: t("commons.top_of_day") },
+    { key: 'recentTrends', title: t("commons.last_rends") },
+    { key: 'topWorldTrends', title: t("commons.top_world_trends_day") },
+    { key: 'recentWorldTrends', title: t("commons.last_word_trends") },
   ]);
 
   const renderTabBar = (props: any) => (

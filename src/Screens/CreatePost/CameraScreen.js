@@ -1,16 +1,11 @@
 import * as React from 'react';
 import { useRef, useState, useMemo, useCallback, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { TouchableOpacity as PressableOpacity, Platform } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity as PressableOpacity, Platform  } from 'react-native';
+import { IconButton } from 'react-native-paper';
 import { PinchGestureHandler, TapGestureHandler } from 'react-native-gesture-handler';
-import {
-  sortFormats,
-  useCameraDevices
-} from 'react-native-vision-camera';
-import { Camera, frameRateIncluded } from 'react-native-vision-camera';
+import { Camera, frameRateIncluded, sortFormats, useCameraDevices } from 'react-native-vision-camera';
 import Reanimated, { Extrapolate, interpolate, useAnimatedGestureHandler, useAnimatedProps, useSharedValue } from 'react-native-reanimated';
 import { CaptureButton } from '../../Components/Camera/CaptureButton';
-import IonIcon from 'react-native-vector-icons/Ionicons';
 import { useIsFocused } from '@react-navigation/core';
 import { SCALE_FULL_ZOOM, MAX_ZOOM_FACTOR } from "../../Components/Camera/Constant";
 import { useIsForeground } from '../../Components/Camera/useIsForeground';
@@ -223,16 +218,8 @@ export function CameraScreen({ route: { params } }) {
         <SvgElement name={"chevron-left"} noColor size={24} onPress={() => navigation.replace("PostCreatorScreen", params)} />
       </View>
       <View style={styles.rightButtonRow}>
-        {supportsCameraFlipping && (
-          <PressableOpacity style={styles.button} onPress={onFlipCameraPressed} disabledOpacity={0.4}>
-            <IonIcon name="camera-reverse" color="white" size={24} />
-          </PressableOpacity>
-        )}
-        {supportsFlash && (
-          <PressableOpacity style={styles.button} onPress={onFlashPressed} disabledOpacity={0.4}>
-            <IonIcon name={flash === 'on' ? 'flash' : 'flash-off'} color="white" size={24} />
-          </PressableOpacity>
-        )}
+        {supportsCameraFlipping && <IconButton icon="camera-retake" onPress={onFlipCameraPressed} />}
+        {supportsFlash && <IconButton icon={flash === 'on' ? 'flash' : 'flash-off'} onPress={onFlashPressed} /> }
         {supports60Fps && (
           <PressableOpacity style={styles.button} onPress={() => setIs60Fps(!is60Fps)}>
             <Text style={styles.text}>

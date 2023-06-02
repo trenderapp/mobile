@@ -9,6 +9,8 @@ import { cdnbaseurl } from '../../Services/constante';
 import { languageList } from '../../locales/i18n';
 import { getStorageInfo, setStorage, settingsStorageI } from '../../Services/storage';
 
+// https://github.com/skb1129/react-native-change-icon/blob/master/example/android/app/src/main/AndroidManifest.xml
+
 function LanguageThemeScreen() {
 
     const { t, i18n } = useTranslation();
