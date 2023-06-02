@@ -24,7 +24,6 @@ const NoficationListScreen = () => {
     setLoading(false);
     if(request.error) return Toast.show({ text1: t(`errors.${request.error.code}`) as string });
     if(!request.data) return;
-    console.log(request.data);
     
     if(request.data.length < 1) return;
     setPaginationKey(request?.pagination_key);

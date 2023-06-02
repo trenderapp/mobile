@@ -23,7 +23,6 @@ function FollowScreen({ route }: any) {
             if(request.error) return Toast.show({ text1: t(`errors.${request.error.code}`) as string });
             if(!request.data) return;
             if(request.data.length < 1) return;
-            console.log(request);
             
             setPaginationKey(request?.pagination_key);
             setInfo(request.data)
@@ -47,7 +46,7 @@ function FollowScreen({ route }: any) {
 
     return (
         <ProfileContainer username={t(`profile.${type}`)}>
-            { !info ? <Text>{t("commons.nothing_display")}</Text> : <MemberList onBottom={() => bottomHandler()} loader={loader} list={info} /> }
+            { !info ? <Text>{t("commons.nothing_display")}</Text> : <MemberList noDescription={true} onBottom={() => bottomHandler()} loader={loader} list={info} /> }
         </ProfileContainer>
     )
 }
