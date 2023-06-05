@@ -1,42 +1,72 @@
 // import { useIsFocused } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from 'react-i18next'
 import { BottomNavigation } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { useTheme } from "../Components/Container";
+import { useClient, useTheme } from "../Components/Container";
 // import { DmGroupListContext } from "../Context/DmGuildListContext";
 import HomeScreen from "../Screens/Home/HomeScreen";
 import GuildListScreen from "../Screens/Messages/GuildListScreen";
 import SearchStack from "./Stacks/SearchStack";
 import ExploreScreen from "../Screens/Explore/ExploreScreen";
+import { useAppDispatch, useAppSelector } from "../Redux";
+import { initNotificationFeed } from "../Redux/NotificationFeed/action";
+import { connect } from "react-redux";
 
 
 function BottomStack() {
 
     const { t } = useTranslation('');
     const { colors } = useTheme();
+    const { client } = useClient();
+    const dispatch = useAppDispatch();
+    const notifications = useAppSelector((state) => state.notificationFeed);
     // const isFocused = useIsFocused();
     const insets = useSafeAreaInsets();
     const [index, setIndex] = useState(0);
     // const { unreads, groups } = useContext(DmGroupListContext);
-    const [routes] = useState([
+    const [routes, setRoutes] = useState([
         { key: 'home', focusedIcon: 'home', unfocusedIcon: "home-outline", title: t("commons.home"), badge: false },
         { key: 'search', focusedIcon: "account-multiple", title: t('commons.search'), badge: false },
         { key: 'explore', focusedIcon: "earth", unfocusedIcon: "earth", title: t('commons.notifications'), badge: false, labeled: false },
         { key: 'messages', focusedIcon: "message-text", unfocusedIcon: "message-text-outline", title: t('commons.messages'), badge: false, labeled: false },
     ]);
 
-    /*const newBottom = (badge = false) => {
+    const newBottom = ({
+        home_notification = false,
+        message_notification = false
+    }) => {
         setRoutes([
-            { key: 'home', focusedIcon: 'home', unfocusedIcon: "home-outline", title: t("commons.home"), badge: false },
+            { key: 'home', focusedIcon: 'home', unfocusedIcon: "home-outline", title: t("commons.home"), badge: home_notification },
             { key: 'search', focusedIcon: "magnify", title: t('commons.search'), badge: false },
             { key: 'explore', focusedIcon: "earth", unfocusedIcon: "earth", title: t('commons.notifications'), badge: false, labeled: false },
-            { key: 'messages', focusedIcon: "message-text", unfocusedIcon: "message-text-outline", title: t('commons.messages'), badge: badge, labeled: false },
+            { key: 'messages', focusedIcon: "message-text", unfocusedIcon: "message-text-outline", title: t('commons.messages'), badge: message_notification, labeled: false },
         ])
     }
 
+    const notificationList = async () => {
+        const request = await client.notification.fetch();
+        if(!request.data) return;
+        if(request.data.length < 1) return;
+        dispatch(initNotificationFeed(request.data));
+      }
+
     useEffect(() => {
+        notificationList()
+    }, [])
+
+    useEffect(() => {
+        const count = notifications.filter(n => n.readed === false || typeof n.readed === "undefined").length
+        if(count > 0) return newBottom({
+            home_notification: count
+        })
+        else return newBottom({
+            home_notification: false
+        })
+    }, [notifications])
+
+    /*useEffect(() => {
         groups.forEach((g) => {
             if(g.last_message) {
                 newBottom(!unreads.some(u => u.message_id === g.last_message.message_id))
@@ -74,4 +104,10 @@ function BottomStack() {
     )
 }
 
-export default BottomStack;
+const mapStateToProps = (state) => {
+    return {
+      notificationFeed: state.notificationFeed,
+    };
+  };
+  
+export default connect(mapStateToProps)(BottomStack);

@@ -6,7 +6,7 @@ dayjs.extend(isToday)
 dayjs.extend(LocalizedFormat)
 
 export class formatDate {
-    constructor (date) {
+    constructor(date) {
         this.current_date = date;
     }
 

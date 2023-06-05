@@ -13,6 +13,7 @@ import { postSearchReducer } from './PostSearch';
 import { commentFeedReducer } from './commentFeed';
 import { guildListReducer } from './guildList';
 import { guildMessagesReducer } from './guildMessages';
+import { notificationFeedReducer } from './NotificationFeed';
 
 // Combine les réducteurs en un seul objet de réducteur
 const rootReducer = combineReducers({
@@ -26,7 +27,8 @@ const rootReducer = combineReducers({
   profileFeed: profileFeedReducer,
   commentFeed: commentFeedReducer,
   guildList: guildListReducer,
-  guildMessages: guildMessagesReducer
+  guildMessages: guildMessagesReducer,
+  notificationFeed: notificationFeedReducer
 });
 
 // Crée le magasin Redux en utilisant le réducteur combiné
