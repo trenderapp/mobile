@@ -19,8 +19,8 @@ type createType = {
 
 type carrousselType = {
     pictures: attachments[],
-    creator: createType[],
-    changeList: (i: number) => any
+    creator?: createType[],
+    changeList?: (i: number) => any
 }
 
 function BlurImage({ img, info, setOpen, openModal }: {
@@ -76,9 +76,9 @@ export default function Carroussel({ pictures, creator, changeList }: carroussel
             <ScrollView onScroll={change} horizontal pagingEnabled showsHorizontalScrollIndicator={false} style={styles.media_image}>
                 {
                     creator ? creator.map((img: createType, i: number) =>
-                        <Pressable key={i} onPress={() => changeList(i)}>
+                        <Pressable key={i} onPress={() => changeList ? changeList(i) : undefined}>
                             <View style={{ position: "absolute", zIndex: 999 }}>
-                                <SvgElement onPress={() => changeList(i)} size={22} name={"circle-close"} />
+                                <SvgElement onPress={() => changeList ? changeList(i) : undefined} size={22} name={"circle-close"} />
                             </View>
                             <FastImage
                                 resizeMode={openModal ? "contain" : "cover"}

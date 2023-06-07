@@ -37,6 +37,8 @@ const DisplayNotifications = ({ info }: any) => {
                 return navigation.navigate("ProfileStack", { screen: "ProfileScreen", params: { nickname: info.from.nickname }})
             case "likes":
                 return navigation.navigate("PostStack", { screen: "PostScreen", params: { post_id: info?.post.post_id }})
+            case "mentions":
+                return navigation.navigate("PostStack", { screen: "PostScreen", params: { post_id: info?.post.post_id }})
             default:
                 return ""
         }

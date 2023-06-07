@@ -62,7 +62,8 @@
         "what_new": "What's new?",
         "discussion": "Discussion",
         "copy_post_id": "Copy ID",
-        "explicit_content": "Explicit content"
+        "explicit_content": "Explicit content",
+        "load_attached": "Load attached Trend"
     },
     "login": {
         "already_account": "Already have an account?",

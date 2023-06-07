@@ -3,7 +3,7 @@ import { getAppInfo, navigationProps } from '../../Services';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from "@react-navigation/native";
 import { Appbar, Text } from 'react-native-paper';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 
 import UpdateDialog from './UpdateDialog';
 import HomeNavigator from './HomeNavigator';
@@ -31,7 +31,7 @@ const HomeScreen = () => {
   const CustomLeftComponent = () => {
     return (
       <View style={[styles.row, { justifyContent: "flex-end" }]}>
-        <View style={{ position: "relative" }}>
+        <TouchableOpacity onPress={() => navigation.navigate("NotificationScreen")} style={{ position: "relative" }}>
           <Appbar.Action color={colors.text_normal} icon="bell" onPress={() => navigation.navigate("NotificationScreen")} />
           {notifications.filter(n => n.readed === false || typeof n.readed === "undefined").length > 0 && (
             <View style={{
@@ -41,10 +41,8 @@ const HomeScreen = () => {
             }}>
               <Text>{notifications.filter(n => n.readed === false || typeof n.readed === "undefined").length}</Text>
             </View>
-
           )}
-
-        </View>
+        </TouchableOpacity>
         <Appbar.Action color={colors.text_normal} icon="pencil" onPress={() => navigation.navigate("CreateStack", {
           screen: "PostCreatorScreen",
           params: {

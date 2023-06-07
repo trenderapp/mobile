@@ -25,7 +25,7 @@ function PostNormal() {
                     info.type === 1 ? 
                         <Carroussel pictures={info.attachments} creator={undefined} changeList={undefined} />
                             : info.type === 2 ?
-                                <VideoPlayer thumbnail={info.attachments[0]?.thumbnail ? client.post.file(info.from.user_id, info.post_id, info.attachments[0]?.thumbnail) : undefined} uri={client.post.file(info.from.user_id, info.post_id, info.attachments[0]?.name)} creator={undefined} /> 
+                                <VideoPlayer thumbnail={info.attachments[0]?.thumbnail ? client.post.file(info.from.user_id, info.post_id, info.attachments[0]?.thumbnail) : undefined} uri={client.post.file(info.from.user_id, info.post_id, info.attachments[0]?.name)} creator={undefined} attachments={undefined} /> 
                                 : null : null
             }
             <Postbottom />

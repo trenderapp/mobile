@@ -62,7 +62,8 @@
         "what_new": "Quoi de neuf ?",
         "discussion": "Discussion",
         "copy_post_id": "Copier l'identifiant",
-        "explicit_content": "contenu explicite"
+        "explicit_content": "contenu explicite",
+        "load_attached": "Charger la Trend originelle"
     },
     "login": {
         "already_account": "Tu as déjà un compte ?",
