@@ -539,7 +539,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = VU55U8U5HR;
 				ENABLE_BITCODE = NO;
@@ -550,7 +550,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 23.05.28;
+				MARKETING_VERSION = 23.06.07;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -559,7 +559,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.trenderapp;
 				PRODUCT_NAME = trenderapp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Distribution Trender Social";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Distribution 2024";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -577,7 +577,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = VU55U8U5HR;
 				ENABLE_BITCODE = NO;
@@ -588,7 +588,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 23.05.28;
+				MARKETING_VERSION = 23.06.07;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -597,7 +597,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.trenderapp;
 				PRODUCT_NAME = trenderapp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Distribution Trender Social";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Distribution 2024";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
