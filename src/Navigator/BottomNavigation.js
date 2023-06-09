@@ -28,7 +28,7 @@ function BottomStack() {
     // const { unreads, groups } = useContext(DmGroupListContext);
     const [routes, setRoutes] = useState([
         { key: 'home', focusedIcon: 'home', unfocusedIcon: "home-outline", title: t("commons.home"), badge: false },
-        { key: 'search', focusedIcon: "account-multiple", title: t('commons.search'), badge: false },
+        { key: 'users', focusedIcon: "account-multiple", title: t('commons.search'), badge: false },
         { key: 'explore', focusedIcon: "earth", unfocusedIcon: "earth", title: t('commons.notifications'), badge: false, labeled: false },
         { key: 'messages', focusedIcon: "message-text", unfocusedIcon: "message-text-outline", title: t('commons.messages'), badge: false, labeled: false },
     ]);
@@ -39,7 +39,7 @@ function BottomStack() {
     }) => {
         setRoutes([
             { key: 'home', focusedIcon: 'home', unfocusedIcon: "home-outline", title: t("commons.home"), badge: home_notification },
-            { key: 'search', focusedIcon: "magnify", title: t('commons.search'), badge: false },
+            { key: 'users', focusedIcon: "account-multiple", title: t('commons.search'), badge: false },
             { key: 'explore', focusedIcon: "earth", unfocusedIcon: "earth", title: t('commons.notifications'), badge: false, labeled: false },
             { key: 'messages', focusedIcon: "message-text", unfocusedIcon: "message-text-outline", title: t('commons.messages'), badge: message_notification, labeled: false },
         ])
@@ -76,7 +76,7 @@ function BottomStack() {
 
     const renderScene = BottomNavigation.SceneMap({
         home: HomeScreen,
-        search: SearchStack,
+        users: SearchStack,
         explore: ExploreScreen,
         messages: GuildListScreen
     });
