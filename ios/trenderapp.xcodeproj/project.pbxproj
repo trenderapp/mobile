@@ -471,9 +471,11 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = VU55U8U5HR;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -493,7 +495,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.trenderapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Distribution Trender Social";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Distribution;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/trenderapp.app/trenderapp";
 			};
 			name = Debug;
@@ -504,10 +507,12 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = VU55U8U5HR;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = "";
 				INFOPLIST_FILE = trenderappTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -523,7 +528,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.trenderapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Distribution Trender Social";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Distribution;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/trenderapp.app/trenderapp";
 			};
 			name = Release;
@@ -559,7 +565,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.trenderapp;
 				PRODUCT_NAME = trenderapp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Distribution 2024";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Distribution 2";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -597,7 +603,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.trenderapp;
 				PRODUCT_NAME = trenderapp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Distribution 2024";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Distribution 2";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
