@@ -8,7 +8,7 @@ import SvgElement from "../../../Elements/Svg";
 import { useTheme } from "../../../Container";
 import { useTranslation } from "react-i18next";
 
-function VideoPlayer({ uri, creator, thumbnail, attachments }) {
+function VideoPlayer({ uri, thumbnail, attachments }) {
 
   const videoPlayer = useRef(null);
   const [repeat] = useState(true);
@@ -74,7 +74,6 @@ function VideoPlayer({ uri, creator, thumbnail, attachments }) {
                   bottom: 0,
                   right: 0,
                 }}
-                onProgress={() => creator && setPaused(true)}
                 paused={paused}
                 repeat={repeat}
                 muted={muted}
@@ -84,37 +83,36 @@ function VideoPlayer({ uri, creator, thumbnail, attachments }) {
           )
         }
         {
-          creator ? null
-            : attachments?.nsfw ? null : (<>
-              <View
-                style={{
-                  position: 'absolute',
-                  top: 10,
-                  left: 10,
-                }} >
-                <SvgElement onPress={() => {
-                  setPaused(true)
-                  setFullScreen(true)
-                }} size={22} name={"full-screen"} />
-              </View>
-              <View
-                style={{
-                  position: 'absolute',
-                  bottom: 40,
-                  left: 10,
-                }} >
-                <SvgElement onPress={() => setPaused(!paused)} size={22} name={paused ? "play" : "pause"} />
-              </View>
-              <View
-                style={{
-                  position: 'absolute',
-                  bottom: 10,
-                  left: 10,
-                }} >
-                <SvgElement onPress={() => setMuted(!muted)} size={22} name={muted ? "sound-mute" : "sound"} />
-              </View>
-            </>
-            )
+          attachments?.nsfw ? null : (<>
+            <View
+              style={{
+                position: 'absolute',
+                top: 10,
+                left: 10,
+              }} >
+              <SvgElement onPress={() => {
+                setPaused(true)
+                setFullScreen(true)
+              }} size={22} name={"full-screen"} />
+            </View>
+            <View
+              style={{
+                position: 'absolute',
+                bottom: 40,
+                left: 10,
+              }} >
+              <SvgElement onPress={() => setPaused(!paused)} size={22} name={paused ? "play" : "pause"} />
+            </View>
+            <View
+              style={{
+                position: 'absolute',
+                bottom: 10,
+                left: 10,
+              }} >
+              <SvgElement onPress={() => setMuted(!muted)} size={22} name={muted ? "sound-mute" : "sound"} />
+            </View>
+          </>
+          )
         }
       </View>
     </>

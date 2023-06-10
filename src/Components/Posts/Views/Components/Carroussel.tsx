@@ -1,11 +1,9 @@
 import React, { useContext, useState } from "react";
 import { View, ScrollView, Pressable } from "react-native";
 import { IconButton, Text } from "react-native-paper";
-import FastImage from "react-native-fast-image";
 import ImageModal from 'react-native-image-modal';
 import styles, { full_width } from "../../../../Style/style";
 import { useClient, useTheme } from "../../../Container";
-import SvgElement from "../../../Elements/Svg";
 import { SinglePostContext } from "../../PostContext";
 import { attachments } from "trender-client/Managers/Interfaces/Global";
 import { useTranslation } from "react-i18next";
@@ -59,7 +57,7 @@ function BlurImage({ img, info, setOpen, openModal }: {
                 )
 }
 
-export default function Carroussel({ pictures, creator, changeList }: carrousselType) {
+export default function Carroussel({ pictures }: carrousselType) {
     const [Index, setIndex] = useState(0);
     const [openModal, setOpen] = useState(false)
     const { colors } = useTheme();
@@ -74,32 +72,11 @@ export default function Carroussel({ pictures, creator, changeList }: carroussel
     return (
         <View>
             <ScrollView onScroll={change} horizontal pagingEnabled showsHorizontalScrollIndicator={false} style={styles.media_image}>
-                {
-                    creator ? creator.map((img: createType, i: number) =>
-                        <Pressable key={i} onPress={() => changeList ? changeList(i) : undefined}>
-                            <View style={{ position: "absolute", zIndex: 999 }}>
-                                <SvgElement onPress={() => changeList ? changeList(i) : undefined} size={22} name={"circle-close"} />
-                            </View>
-                            <FastImage
-                                resizeMode={openModal ? "contain" : "cover"}
-                                style={styles.media_image}
-                                source={{ uri: img.uri }} />
-                        </Pressable>
-                    ) : pictures.map((img: attachments, i: number) => <BlurImage key={i} img={img} info={info} setOpen={setOpen} openModal={openModal} />)
-                }
+                { pictures.map((img: attachments, i: number) => <BlurImage key={i} img={img} info={info} setOpen={setOpen} openModal={openModal} />) }
             </ScrollView>
             <View style={styles.circleDiv}>
                 {
-                    !creator && pictures.length > 1 &&
-                    pictures.map((image, i) => (
-                        <View
-                            style={[styles.whiteCircle, {
-                                backgroundColor: colors.fa_primary,
-                                opacity: i === Index ? 1 : 0.25
-                            }]}
-                            key={i}
-                        />
-                    ))
+                    pictures.length > 1 && pictures.map((image, i) => <View style={[styles.whiteCircle, { backgroundColor: colors.fa_primary, opacity: i === Index ? 1 : 0.25 }]} key={i} />)
                 }
             </View>
         </View>

@@ -6,7 +6,7 @@ import { emojies_defs } from "../../Elements/Text/Markdown/emojis";
 import DisplayMember from "../../Member/DisplayMember";
 import { DisplayEmoji } from "../../Emojis";
 
-function TextAreaAutoComplete({ value, setValue, maxLength = 512 }) {
+function TextAreaAutoComplete({ value, setValue, maxLength, autoFocus }) {
 
     const [state, setState] = useState({ type: "none" });
     const [selection, setSelection] = useState({
@@ -157,6 +157,7 @@ function TextAreaAutoComplete({ value, setValue, maxLength = 512 }) {
                     maxHeight: "95%",
                     color: colors.text_normal,
                 }}
+                autoFocus={autoFocus ?? false}
                 multiline={true}
                 onChangeText={(t) => setValue(t)}
                 onSelectionChange={(ev) => {

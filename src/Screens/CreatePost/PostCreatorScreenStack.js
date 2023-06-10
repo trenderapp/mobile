@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { View } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { FlatList, View } from 'react-native';
 import { connect, useDispatch } from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
 import Toast from 'react-native-toast-message';
-import { ProgressBar, Text } from 'react-native-paper';
+import { ProgressBar } from 'react-native-paper';
 
 import { useClient, PostCreatorContainer, useNavigation, useTheme } from '../../Components/Container';
-import SvgElement from '../../Components/Elements/Svg';
-import VideoPlayer from '../../Components/Posts/Views/Components/VideoPlayer';
-import Carroussel from '../../Components/Posts/Views/Components/Carroussel';
 import { axiosInstance } from '../../Services';
 import TextAreaAutoComplete from '../../Components/Posts/Creator/TextAreaAutoComplete';
 import BottomButtonPostCreator from '../../Components/Posts/Creator/BottomButton';
 import { addMainCreatedTrends } from '../../Redux/mainFeed/action';
 import { premiumAdvantages } from '../../Services/premiumAdvantages';
-import { full_height, full_width } from '../../Style/style';
+import styles, { full_width } from '../../Style/style';
+import { Avatar, Username } from '../../Components/Member';
+import dayjs from 'dayjs';
+import CreatorVideoDisplay from '../../Components/Posts/Creator/CreatorVideoDisplay';
+import CreatorImageDisplay from '../../Components/Posts/Creator/CreatorImageDisplay';
 
 const PostCreatorScreenStack = ({ route: { params } }) => {
 
@@ -96,16 +96,14 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
   const addFiles = async (target) => {
     try {
       const res = await ImagePicker.openPicker({
-        maxFiles: target !== "photo" ? 1 : 8,
+        maxFiles: target !== "photo" ? 1 : 8 - files.length,
         multiple: target !== "photo" ? false : true,
         mediaType: target
       })
 
       if (target === "photo") {
-        if (res.length > 8) {
-          Toast.show({
-            text1: t(`errors.9002`)
-          })
+        if (res.length > 8 - files.length) {
+          Toast.show({ text1: t(`errors.9002`)})
           return;
         }
         const result = res.map((res) => {
@@ -117,7 +115,7 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
           }
         })
 
-        return setFiles(result);
+        return setFiles([...result, ...files]);
       } else {
         if (res.length > 1) {
           Toast.show({
@@ -132,7 +130,7 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
           uri: res.path
         }]
 
-        return setFiles(result);
+        return setFiles([...result]);
       }
     } catch (error) {
       return;
@@ -146,48 +144,37 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
   }
 
   return (
-    <PostCreatorContainer onSave={() => sendInfo()} changeVisibilty={() => navigation.goBack()} >
+    <PostCreatorContainer dontSend={content.length > advantages.textLength()} onSave={() => sendInfo()} changeVisibilty={() => navigation.goBack()} >
       {sending.progress > 0 && <ProgressBar progress={sending.progress} />}
-      <View
-        keyboardShouldPersistTaps="handled"
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignContent: 'center',
-        }}>
-        <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }}>
-          <View style={{ 
-              flex: 1,
-              flexDirection: "column",
-              justifyContent: "space-between",
-              height: full_height - 85
-            }}>
-            <TextAreaAutoComplete
-              value={content}
-              maxLength={advantages.textLength()}
-              setValue={(text) => SetContent(text)} />
-
-            <Text style={{ bottom: 55, right: 5, position: "absolute" }}>{content.length} / {advantages.textLength()}</Text>
-            <View style={{
-              position: "absolute",
-              bottom: 0,
-              backgroundColor: colors.bg_secondary,
-              width: full_width
-            }}>
-              {
-                files.length > 0 && files[0]?.type.startsWith("video") && <SvgElement size={22} onPress={() => setFiles([])} name={"circle-close"} />
-              }
-              {
-                files.length > 0 ? files[0]?.type.startsWith("video") ? <VideoPlayer creator uri={files[0].uri} /> : files[0].type.startsWith("image") ? <Carroussel changeList={deleteImage} creator={files} /> : <Text>{files.length}</Text> : null
-              }
-              <BottomButtonPostCreator setFiles={(info) => setFiles([...files, info])} setCameraVisible={() => navigation.replace("CameraScreen", {
-                ...params,
-                initContent: content,
-                initFiles: files
-              })} addFiles={addFiles} />
+      <View style={{ flex: 1 }} >
+        <View>
+          <View style={[styles.row, { width: full_width, padding: 10 }]}>
+            <Avatar size={45} url={client.user.avatar(user.user_id, user.avatar)} />
+            <View style={[styles.column, { justifyContent: "flex-start", alignItems: "flex-start" }]}>
+              <Username created_at={dayjs().format()} user={user} />
             </View>
           </View>
-        </KeyboardAwareScrollView>
+          <TextAreaAutoComplete autoFocus={true} value={content} setValue={(text) => SetContent(text)} />
+        </View>
+        <View style={{
+          position: "absolute",
+          bottom: 0,
+          width: full_width
+        }}>
+          <FlatList
+            horizontal={true}
+            data={files}
+            keyExtractor={(item, idx) => idx}
+            scrollsToTop={true}
+            renderItem={({ item, index }) => item?.type.startsWith("video") ? <CreatorVideoDisplay deleteImage={(i) => deleteImage(i)} index={index} uri={item.uri} /> : <CreatorImageDisplay deleteImage={(i) => deleteImage(i)} index={index} uri={item.uri} />}
+          />
+
+          <BottomButtonPostCreator content={content} maxLength={advantages.textLength()} setFiles={(info) => setFiles([...files, info])} setCameraVisible={() => navigation.replace("CameraScreen", {
+            ...params,
+            initContent: content,
+            initFiles: files
+          })} addFiles={addFiles} />
+        </View>
       </View>
     </PostCreatorContainer>
   );
