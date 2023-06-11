@@ -1,11 +1,17 @@
-import type { GlobalInterface } from "trender-client";
+import { userFlags } from "trender-client";
+import { premium_type } from "trender-client/Managers/Interfaces/Global";
+import UserPermissions from "trender-client/Permissions/UserPermissions";
 
 class premiumAdvantagesClass {
     
-    private type: GlobalInterface.premium_type;
+    private type: premium_type;
 
-    constructor(type: GlobalInterface.premium_type) {
-        this.type = type;
+    constructor(type: premium_type, flags: number) {
+        const perms = new UserPermissions(flags);
+        if(perms.has(userFlags.PREMIUM_USER)) this.type = 1
+        if(perms.has(userFlags.TRENDER_PARTNER) || perms.has(userFlags.PREMIUM_2_USER)) this.type = 2
+        if(perms.has(userFlags.TRENDER_EMPLOYEE) || perms.has(userFlags.PREMIUM_3_USER)) this.type = 3
+        else this.type = type;
     }
 
     textLength() {
@@ -24,6 +30,7 @@ class premiumAdvantagesClass {
         return 25;
     }
 
+
     animatedProfileFilesAllowed() {
         if(this.type === 0) return false;
         if(this.type === 1) return true;
@@ -41,11 +48,11 @@ class premiumAdvantagesClass {
     }
     
     showPostViews() {
-        if(this.type === 0) return false;
+        if(this.type === 0) return true;
         if(this.type === 1) return true;
         if(this.type === 2) return true;
         if(this.type === 3) return true;
-        return false;
+        return true;
     }
 
     withdrawCommissions() {
@@ -81,4 +88,4 @@ class premiumAdvantagesClass {
     }
 }
 
-export const premiumAdvantages = (type: GlobalInterface.premium_type) => new premiumAdvantagesClass(type);
+export const premiumAdvantages = (type: premium_type, flags: number) => new premiumAdvantagesClass(type, flags);

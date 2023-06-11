@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, View } from 'react-native';
+import { FlatList, View, ScrollView } from 'react-native';
 import { connect, useDispatch } from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
 import Toast from 'react-native-toast-message';
 import { ProgressBar } from 'react-native-paper';
+import dayjs from 'dayjs';
 
-import { useClient, PostCreatorContainer, useNavigation, useTheme } from '../../Components/Container';
+import { useClient, PostCreatorContainer, useNavigation } from '../../Components/Container';
 import { axiosInstance } from '../../Services';
 import TextAreaAutoComplete from '../../Components/Posts/Creator/TextAreaAutoComplete';
 import BottomButtonPostCreator from '../../Components/Posts/Creator/BottomButton';
@@ -14,7 +15,6 @@ import { addMainCreatedTrends } from '../../Redux/mainFeed/action';
 import { premiumAdvantages } from '../../Services/premiumAdvantages';
 import styles, { full_width } from '../../Style/style';
 import { Avatar, Username } from '../../Components/Member';
-import dayjs from 'dayjs';
 import CreatorVideoDisplay from '../../Components/Posts/Creator/CreatorVideoDisplay';
 import CreatorImageDisplay from '../../Components/Posts/Creator/CreatorImageDisplay';
 
@@ -27,12 +27,11 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
     send: false,
     progress: 0
   });
-  const { colors } = useTheme();
   const { client, token, user } = useClient();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const advantages = premiumAdvantages(user?.premium_type ?? 0)
+  const advantages = premiumAdvantages(user?.premium_type ?? 0, user.flags ?? 0)
 
   useEffect(() => {
     if (Array.isArray(initFiles)) setFiles(initFiles);
@@ -103,7 +102,7 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
 
       if (target === "photo") {
         if (res.length > 8 - files.length) {
-          Toast.show({ text1: t(`errors.9002`)})
+          Toast.show({ text1: t(`errors.9002`) })
           return;
         }
         const result = res.map((res) => {
@@ -147,17 +146,16 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
     <PostCreatorContainer dontSend={content.length > advantages.textLength()} onSave={() => sendInfo()} changeVisibilty={() => navigation.goBack()} >
       {sending.progress > 0 && <ProgressBar progress={sending.progress} />}
       <View style={{ flex: 1 }} >
-        <View>
+        <ScrollView>
           <View style={[styles.row, { width: full_width, padding: 10 }]}>
             <Avatar size={45} url={client.user.avatar(user.user_id, user.avatar)} />
             <View style={[styles.column, { justifyContent: "flex-start", alignItems: "flex-start" }]}>
               <Username created_at={dayjs().format()} user={user} />
             </View>
           </View>
-          <TextAreaAutoComplete autoFocus={true} value={content} setValue={(text) => SetContent(text)} />
-        </View>
+            <TextAreaAutoComplete autoFocus={true} value={content} setValue={(text) => SetContent(text)} />
+        </ScrollView>
         <View style={{
-          position: "absolute",
           bottom: 0,
           width: full_width
         }}>
@@ -168,7 +166,6 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
             scrollsToTop={true}
             renderItem={({ item, index }) => item?.type.startsWith("video") ? <CreatorVideoDisplay deleteImage={(i) => deleteImage(i)} index={index} uri={item.uri} /> : <CreatorImageDisplay deleteImage={(i) => deleteImage(i)} index={index} uri={item.uri} />}
           />
-
           <BottomButtonPostCreator content={content} maxLength={advantages.textLength()} setFiles={(info) => setFiles([...files, info])} setCameraVisible={() => navigation.replace("CameraScreen", {
             ...params,
             initContent: content,

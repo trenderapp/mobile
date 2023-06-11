@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, FlatList, Image, Pressable } from "react-native";
-import { IconButton, Text } from "react-native-paper";
+import { IconButton, Text, Button } from "react-native-paper";
+import { CameraRoll, AssetType, PhotoIdentifier } from "@react-native-camera-roll/camera-roll"
 
 import styles, { full_width } from "../../../Style/style";
 import { useTheme } from "../../Container";
-import { CameraRoll, AssetType, PhotoIdentifier } from "@react-native-camera-roll/camera-roll"
-import { Button } from "react-native-paper";
 
 type PropsType = {
     setFiles: (params: {
@@ -60,10 +59,6 @@ function BottomButtonPostCreator({ setFiles, addFiles, setCameraVisible, content
         })
     }
 
-    useEffect(() => {
-        getPhotos("Photos")
-    }, [])
-
     const onBottom = async (assetType: AssetType = "All") => {
         if (!photos.page_info.has_next_page) return;
         const gallery = await CameraRoll.getPhotos({
@@ -103,13 +98,13 @@ function BottomButtonPostCreator({ setFiles, addFiles, setCameraVisible, content
             icon: "folder-multiple-image",
             onPress: async () => await getPhotos("Photos"),
             text: "commons.images",
-            disable: filter.assetType === "Photos"
+            disable: photos.selected && filter.assetType === "Photos"
         },
         {
             icon: "video-box",
             onPress: async () => await getPhotos("Videos"),
             text: "commons.videos",
-            disable:  filter.assetType === "Videos"
+            disable: photos.selected && filter.assetType === "Videos"
         }
     ]
 
@@ -135,7 +130,7 @@ function BottomButtonPostCreator({ setFiles, addFiles, setCameraVisible, content
                 borderTopWidth: 1
             }}>
                 <View style={styles.row}>
-                    {buttons.map((b, idx) => <IconButton disabled={b.disable} key={idx} onPress={b.onPress} icon={b.icon} />)}
+                    {buttons.map((b, idx) => <IconButton iconColor={b.disable ? colors.fa_secondary : colors.fa_primary} key={idx} onPress={b.onPress} icon={b.icon} />)}
                 </View>
                 <Text style={{ marginRight: 10 }}>{content.length} / {maxLength}</Text>
             </View>
@@ -145,9 +140,7 @@ function BottomButtonPostCreator({ setFiles, addFiles, setCameraVisible, content
                     ListHeaderComponent={() => <HeaderFooterButton />}
                     ListFooterComponent={() => photos.edges.length > 20 ? <HeaderFooterButton /> : null}
                     style={{ maxHeight: full_width / 1.25 }}
-                    data={[
-                        ...photos.edges
-                    ]}
+                    data={photos.edges}
                     keyExtractor={(item, index) => `${item.node.type}${index}`}
                     renderItem={({ item }) => <Pressable onPress={() => setFiles(fileInfo(item))}>
                         <Image

@@ -22,6 +22,7 @@ const ClientContext = React.createContext<ClientContextI>({
         username: "...",
         nickname: "...",
         premium_type: 0,
+        flags: 0,
         token: "",
         user_id: "00000000"
     },

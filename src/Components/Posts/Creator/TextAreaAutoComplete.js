@@ -152,11 +152,6 @@ function TextAreaAutoComplete({ value, setValue, maxLength, autoFocus }) {
     return (
         <View>
             <TextInput
-                style={{
-                    maxWidth: "100%",
-                    maxHeight: "95%",
-                    color: colors.text_normal,
-                }}
                 autoFocus={autoFocus ?? false}
                 multiline={true}
                 onChangeText={(t) => setValue(t)}
