@@ -12,12 +12,12 @@ type SectionProps = {
 
 export default function DisplayAttachedPost({ attached_post }: SectionProps) {
 
-    const { client, user } = useClient();
+    const { client } = useClient();
     
     return (
         <View>
             <View style={[styles.row, { width: full_width, padding: 5 }]}>
-                <Avatar size={45} url={client.user.avatar(user.user_id, user.avatar)} />
+                <Avatar size={45} url={client.user.avatar(attached_post.from.user_id, attached_post.from.avatar)} />
                 <View style={[styles.column, { justifyContent: "flex-start", alignItems: "flex-start" }]}>
                     <Username created_at={attached_post.created_at} user={attached_post.from} />
                 </View>

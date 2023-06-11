@@ -12,7 +12,7 @@ type SectionProps = {
 
 export default function DisplaySharedPost({ shared_post }: SectionProps) {
 
-    const { client, user } = useClient();
+    const { client } = useClient();
 
     return (
         <>
