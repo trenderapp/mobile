@@ -7,7 +7,7 @@ import { useClient, useTheme } from "../../Container";
 import { Markdown } from "../../Elements/Text";
 import { Text } from "react-native-paper";
 import { Avatar } from "../../Member";
-import { SinglePostContextProvider } from "../../Posts/PostContext";
+import { SinglePostContextProvider } from "../../Posts/PostContext.js";
 import { useTranslation } from "react-i18next";
 import { BottomModal, ModalSection } from "../../../Other";
 import SvgElement from "../../Elements/Svg";

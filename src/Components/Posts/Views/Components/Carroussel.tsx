@@ -4,7 +4,7 @@ import { IconButton, Text } from "react-native-paper";
 import ImageModal from 'react-native-image-modal';
 import styles, { full_width } from "../../../../Style/style";
 import { useClient, useTheme } from "../../../Container";
-import { SinglePostContext } from "../../PostContext";
+import { SinglePostContext } from "../../PostContext.js";
 import { attachments } from "trender-client/Managers/Interfaces/Global";
 import { useTranslation } from "react-i18next";
 

@@ -1,0 +1,35 @@
+import { View } from "react-native";
+import { Avatar, Username } from "../../Member";
+import { useClient } from "../../Container";
+import styles, { full_width } from "../../../Style/style";
+import { PostInterface } from "trender-client";
+import { Markdown } from "../../Elements/Text";
+import { Divider } from "react-native-paper";
+
+type SectionProps = {
+    shared_post: PostInterface.postResponseSchema
+}
+
+export default function DisplaySharedPost({ shared_post }: SectionProps) {
+
+    const { client, user } = useClient();
+
+    return (
+        <>
+            <Divider bold={true} />
+            <View style={{
+                marginLeft: 40
+            }}>
+                <View style={[styles.row, { width: full_width, padding: 5 }]}>
+                    <Avatar size={45} url={client.user.avatar(user.user_id, user.avatar)} />
+                    <View style={[styles.column, { justifyContent: "flex-start", alignItems: "flex-start" }]}>
+                        <Username created_at={shared_post.created_at} user={shared_post.from} />
+                    </View>
+                </View>
+                <View style={{ padding: 5 }}>
+                    <Markdown content={shared_post.content} />
+                </View>
+            </View>
+        </>
+    )
+}

@@ -16,8 +16,8 @@ function SessionScreen() {
     const [selected, setSelected] = useState(0);
     const [password, setPassword] = useState("");
     const [showPass, setShowPass] = useState(true);
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
+    const [error] = useState("");
+    const [loading] = useState(false);
     const [all, setAll] = useState(false);
     const [info, setInfo] = useState([])
 

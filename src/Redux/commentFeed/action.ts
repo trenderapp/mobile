@@ -16,7 +16,7 @@ export const initCommentTrends = (info: PostInterface.postResponseSchema[]) => (
     info,
 });
 
-export const deleteCommentTrends = (info: PostInterface.postResponseSchema) => ({
+export const deleteCommentTrends = (info: string) => ({
     type: DELETE_TRENDS,
     info
 })

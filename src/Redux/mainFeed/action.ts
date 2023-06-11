@@ -21,7 +21,7 @@ export const initMainTrends = (info: PostInterface.postResponseSchema[]) => ({
     info,
 });
 
-export const deleteMainTrends = (info: PostInterface.postResponseSchema) => ({
+export const deleteMainTrends = (info: string) => ({
     type: DELETE_TRENDS,
     info
 })

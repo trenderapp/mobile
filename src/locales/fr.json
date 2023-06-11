@@ -63,7 +63,10 @@
         "discussion": "Discussion",
         "copy_post_id": "Copier l'identifiant",
         "explicit_content": "contenu explicite",
-        "load_attached": "Charger la Trend originelle"
+        "load_attached": "Charger la Trend originelle",
+        "share": "Partager",
+        "load_shared": "Charger la Trend partagée",
+        "deleted_post": "Cette Trend n'existe plus"
     },
     "login": {
         "already_account": "Tu as déjà un compte ?",
@@ -130,7 +133,7 @@
         "nickname": "Pseudo",
         "follow": "S'abonner",
         "unfollow": "Se désabonner",
-        "block": "Bloquer",
+        "block": "Bloquer l'utilisateur'",
         "private_messages": "Messages privés",
         "copy_user_id": "Copier l'identifiant"
     },

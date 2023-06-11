@@ -32,8 +32,8 @@ const CustomHeader: SectionProps = ({ title, isHome, leftComponent, children }) 
             {
                 leftComponent ? leftComponent : (
                     <View style={[styles.row, { justifyContent: "flex-end" }]}>
-                    { // <Appbar.Action color={colors.text_normal} icon="qrcode-scan" onPress={() => console.log("qrcode")} />
-                        // <Appbar.Action color={colors.text_normal} icon="bell" onPress={() => navigation.navigate("SettingsStack")} />
+                    { 
+                    // <Appbar.Action icon="qrcode-scan" /> 
                     }
  
                 </View>

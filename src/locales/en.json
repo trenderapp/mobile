@@ -63,7 +63,10 @@
         "discussion": "Discussion",
         "copy_post_id": "Copy ID",
         "explicit_content": "Explicit content",
-        "load_attached": "Load attached Trend"
+        "load_attached": "Load attached Trend",
+        "share": "Share",
+        "load_shared": "Load shared Trend",
+        "deleted_post": "This Trend doesn't exist"
     },
     "login": {
         "already_account": "Already have an account?",
@@ -130,7 +133,7 @@
         "nickname": "Nickname",
         "follow": "Follow",
         "unfollow": "Unfollow",
-        "block": "Block",
+        "block": "Block the User",
         "private_messages": "Private messages",
         "copy_user_id": "Copy ID"
     },

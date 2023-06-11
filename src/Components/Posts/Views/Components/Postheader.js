@@ -6,7 +6,7 @@ import { useClient } from "../../../Container";
 import SvgElement from "../../../Elements/Svg";
 import { Avatar, Username } from "../../../Member";
 import Owner from "./Menu/Owner";
-import { SinglePostContext } from "../../PostContext";
+import { SinglePostContext } from "../../PostContext.js";
 import User from "./Menu/User";
 
 function Postheader({ info, created_at }) { 

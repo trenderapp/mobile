@@ -1,7 +1,7 @@
 {
   "name": "trender",
   "version": "3.2.2",
-  "version_number": 78,
+  "version_number": 79,
   "private": true,
   "repository": {
     "type": "git",
@@ -83,7 +83,7 @@
     "realm": "11.0.0",
     "recyclerlistview": "^4.2.0",
     "redux": "^4.2.0",
-    "trender-client": "^3.0.3"
+    "trender-client": "^3.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

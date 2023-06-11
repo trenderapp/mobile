@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { View } from "react-native";
 import { Markdown } from "../../Elements/Text";
-import { SinglePostContext } from "../PostContext";
+import { SinglePostContext } from "../PostContext.js";
 import Postbottom from "./Components/Postbottom";
 import Postheader from "./Components/Postheader";
 import Carroussel from "./Components/Carroussel";

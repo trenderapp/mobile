@@ -1,10 +1,16 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { TouchableOpacity } from "react-native";
 import styles from "../Style/style";
 import { Divider } from "react-native-paper";
 import { useTheme } from "../Components/Container";
 
-function ModalSection({ onPress, noDivider , children }) {
+type SectionProps = {
+    noDivider?: boolean, 
+    onPress: () => any, 
+    children: ReactElement
+}
+
+function ModalSection({ onPress, noDivider , children }: SectionProps) {
 
     const { colors } = useTheme();
 

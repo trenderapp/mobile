@@ -6,7 +6,7 @@ import { emojies_defs } from "./emojis";
 import Br from "../Br";
 import { useTheme } from "../../../Container";
 import { navigationProps, openURL } from "../../../../Services";
-import { SinglePostContext } from "../../../Posts/PostContext";
+import { SinglePostContext } from "../../../Posts/PostContext.js";
 import { UserInterface } from "trender-client";
 
 type SectionProps = React.FC<{

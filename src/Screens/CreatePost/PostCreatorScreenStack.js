@@ -17,10 +17,12 @@ import styles, { full_width } from '../../Style/style';
 import { Avatar, Username } from '../../Components/Member';
 import CreatorVideoDisplay from '../../Components/Posts/Creator/CreatorVideoDisplay';
 import CreatorImageDisplay from '../../Components/Posts/Creator/CreatorImageDisplay';
+import DisplayAttachedPost from '../../Components/Posts/Creator/DisplayAttachedPost';
+import DisplaySharedPost from '../../Components/Posts/Creator/DisplaySharedPost';
 
 const PostCreatorScreenStack = ({ route: { params } }) => {
 
-  const { attached_post_id, initFiles, initContent } = params;
+  const { attached_post, shared_post, initFiles, initContent } = params;
   const [content, SetContent] = useState(initContent ?? "");
   const [files, setFiles] = useState([]);
   const [sending, setSending] = useState({
@@ -72,16 +74,14 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
       data = { ...data, ...req_data.data }
     }
 
-    const response = await client.post.create({ ...data, attached_post_id: attached_post_id });
+    const response = await client.post.create({ ...data, attached_post_id: attached_post?.post_id, shared_post_id: shared_post?.post_id });
 
     if (!response.data) {
       setSending({ send: false, progress: 0 })
-      return Toast.show({
-        text1: t(`errors.${response.error.code}`)
-      })
+      return Toast.show({ text1: t(`errors.${response.error.code}`)})
     }
 
-    if (response.data && !attached_post_id) dispatch(addMainCreatedTrends({ ...response?.data, from: { ...user } }));
+    if (response.data) dispatch(addMainCreatedTrends({ ...response?.data, from: { ...user } }));
 
     setSending({ send: false, progress: 0 })
     setFiles([])
@@ -145,15 +145,17 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
   return (
     <PostCreatorContainer dontSend={content.length > advantages.textLength()} onSave={() => sendInfo()} changeVisibilty={() => navigation.goBack()} >
       {sending.progress > 0 && <ProgressBar progress={sending.progress} />}
-      <View style={{ flex: 1 }} >
+      <View style={{ flex: 1 }}>
         <ScrollView>
+          { attached_post && <DisplayAttachedPost attached_post={attached_post} /> }
           <View style={[styles.row, { width: full_width, padding: 10 }]}>
             <Avatar size={45} url={client.user.avatar(user.user_id, user.avatar)} />
             <View style={[styles.column, { justifyContent: "flex-start", alignItems: "flex-start" }]}>
               <Username created_at={dayjs().format()} user={user} />
             </View>
           </View>
-            <TextAreaAutoComplete autoFocus={true} value={content} setValue={(text) => SetContent(text)} />
+          <TextAreaAutoComplete autoFocus={true} value={content} setValue={(text) => SetContent(text)} />
+          { shared_post && <DisplaySharedPost shared_post={shared_post} /> }
         </ScrollView>
         <View style={{
           bottom: 0,

@@ -106,6 +106,7 @@ function ClientProvider({ children }) {
                     "onTertiary": "rgba(255, 255, 255, 1)",
                     "onTertiaryContainer": "rgba(49, 17, 29, 1)",
                     "outline": "rgba(121, 116, 126, 1)",
+                    "outlineVariant": colors.bg_secondary,
                     "primary": colors.fa_primary,
                     "primaryContainer": "rgba(234, 221, 255, 1)",
                     "secondary": "rgba(98, 91, 113, 1)",

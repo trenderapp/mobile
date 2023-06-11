@@ -8,8 +8,8 @@ import styles, { full_width } from "../../Style/style";
 import SvgElement from "../Elements/Svg";
 import FastImage from "react-native-fast-image";
 import { navigationProps } from "../../Services";
-
-type notificationType = "likes" | "mentions" | "follows";
+import { notificationTypeInterface } from "trender-client/Managers/Interfaces/Global";
+import { IconButton } from "react-native-paper";
 
 const DisplayNotifications = ({ info }: any) => {
 
@@ -17,20 +17,22 @@ const DisplayNotifications = ({ info }: any) => {
     const { colors } = useTheme();
     const navigation = useNavigation<navigationProps>();
 
-    const svgName = (type: notificationType) => {
+    const svgName = (type: notificationTypeInterface) => {
         switch (type) {
             case "likes":
-                return "heart-solid"
+                return "heart"
             case "mentions":
                 return "comment"
+            case "shares":
+                return "share"
             case "follows":
-                return "add-user"
+                return "account-plus"
             default:
                 return ""
         }
     }
 
-    const navigateScreen = (notification_type: notificationType) => {
+    const navigateScreen = (notification_type: notificationTypeInterface) => {
         if(!navigation) return;
         switch (notification_type) {
             case "follows":
@@ -38,6 +40,8 @@ const DisplayNotifications = ({ info }: any) => {
             case "likes":
                 return navigation.navigate("PostStack", { screen: "PostScreen", params: { post_id: info?.post.post_id }})
             case "mentions":
+                return navigation.navigate("PostStack", { screen: "PostScreen", params: { post_id: info?.post.post_id }})
+            case "shares":
                 return navigation.navigate("PostStack", { screen: "PostScreen", params: { post_id: info?.post.post_id }})
             default:
                 return ""
@@ -80,7 +84,7 @@ const DisplayNotifications = ({ info }: any) => {
                         <View style={{ bottom: -5, right: 5, width: 20, height: 20, position: "absolute", backgroundColor: colors.badge_color, borderRadius: 60/2, flexDirection: "row",
                             justifyContent: "center",
                             alignItems: "center" }}>
-                            <SvgElement size={13} name={svgName(info.notification_type)} />
+                            <IconButton icon={svgName(info.notification_type)} size={13}/>
                         </View>
                     </View>
                     <Username user={info?.from} created_at={info?.created_at} />

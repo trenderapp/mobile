@@ -16,7 +16,7 @@ export const initProfileTrends = (info: PostInterface.postResponseSchema[]) => (
     info,
 });
 
-export const deleteProfileTrends = (info: PostInterface.postResponseSchema) => ({
+export const deleteProfileTrends = (info: string) => ({
     type: DELETE_TRENDS,
     info
 })
