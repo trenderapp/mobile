@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
 import { Text } from "react-native-paper";
-import { useNavigation } from '@react-navigation/native';
 
 import { emojies_defs } from "./emojis";
 import Br from "../Br";
-import { useTheme } from "../../../Container";
-import { navigationProps, openURL } from "../../../../Services";
+import { useTheme, useNavigation } from "../../../Container";
+import { openURL } from "../../../../Services";
 import { SinglePostContext } from "../../../Posts/PostContext.js";
 import { UserInterface } from "trender-client";
 
@@ -33,7 +32,7 @@ const Renderer: SectionProps = ({ content, noBr, maxLine }) => {
     if (typeof content === "undefined") return null;
     if (content.length === 0) return null;
 
-    const navigation = useNavigation<navigationProps>();
+    const navigation = useNavigation();
     const { colors } = useTheme();
 
     const enter = content.split("\n");
@@ -45,7 +44,7 @@ const Renderer: SectionProps = ({ content, noBr, maxLine }) => {
                     <Text key={idx}>{noBr && "\n"}{text.trim().split(" ").map((text, idx) => {
 
                         if (RE_LINKS.test(text)) return <Text key={idx} onPress={() => openURL(text)} style={{ color: colors.text_link }}>{text} </Text>
-                        if (RE_HASHTAG.test(text)) return <Text key={idx} onPress={() => navigation?.navigate("PostStack", {
+                        if (RE_HASHTAG.test(text)) return <Text key={idx} onPress={() => navigation?.push("PostStack", {
                             screen: "PostScreenSearch",
                             params: {
                                 query: text
@@ -60,7 +59,7 @@ const Renderer: SectionProps = ({ content, noBr, maxLine }) => {
                             const find = info?.mentions.find((m: UserInterface.userInfo) => m.nickname === nickname);
                             if (!find) return <Text key={idx}>{text} </Text>;
 
-                            return <Text key={idx} onPress={() => navigation?.navigate("ProfileStack", {
+                            return <Text key={idx} onPress={() => navigation?.push("ProfileStack", {
                                 screen: "ProfileScreen",
                                 params: {
                                     nickname: find.nickname

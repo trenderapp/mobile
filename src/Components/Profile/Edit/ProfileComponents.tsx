@@ -4,6 +4,8 @@ import { userFlags } from "trender-client";
 import dayjs from "dayjs";
 import { useTranslation } from 'react-i18next'
 import Toast from 'react-native-toast-message';
+import FastImage from "react-native-fast-image";
+import { postResponseSchema } from "trender-client/Managers/Interfaces/Post";
 
 import styles from "../../../Style/style";
 import { UserBadges } from "../../Member";
@@ -12,46 +14,45 @@ import { Markdown } from "../../Elements/Text";
 import { FollowButton } from "../../Elements/Buttons";
 import DisplayPosts from "../../Posts/DisplayPost";
 import SvgElement from "../../Elements/Svg";
-import { Text } from "react-native-paper";
+import { Divider, Text } from "react-native-paper";
 import { addDmGroup, DmGroupListContext } from "../../../Context/DmGuildListContext";
 import ProfileUserModal from "./Modal/User";
 import ProfileOwnerModal from "./Modal/Owner";
-import FastImage from "react-native-fast-image";
+import { profileInformationsInterface } from "trender-client/Managers/Interfaces/User";
 
-function ProfileComponent({ nickname, pined, informations, setInfo }){
+type SectionProps = { 
+    nickname: string, 
+    pined: postResponseSchema, 
+    informations: profileInformationsInterface, 
+    setInfo: any
+}
+
+function ProfileComponent({ nickname, pined, informations, setInfo }: SectionProps){
 
     const { t, i18n } = useTranslation('');
     const { colors } = useTheme();
     const { client, user } = useClient();
     const navigation = useNavigation();
     const { dispatch } = useContext(DmGroupListContext);
-    const [modalVisible, setModalVisible] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);    
     
     const follow = async () => {
         const response = await client.user.follow.create(informations.user_info.user_id);
-        if(response.error) return Toast.show({
-            text1: t(`errors.${response.error.code}`)
-        })
+        if(response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string })
         setInfo({ ...informations, following: true })
-        Toast.show({
-            text1: t("commons.success")
-        })
+        Toast.show({ text1: t("commons.success") as string })
     }
 
     const unfollow = async () => {
         const response = await client.user.follow.delete(informations.user_info.user_id);
-        if(response.error) return Toast.show({
-            text1: t(`errors.${response.error.code}`)
-        })
+        if(response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string })
         setInfo({ ...informations, following: false })
-        Toast.show({
-            text1: t("commons.success")
-        })
+        Toast.show({ text1: t("commons.success") as string })
     }
 
     const createDM = async () => {
         const response = await client.guild.create([informations.user_info.user_id]);
-        if(response.error) return Toast.show({ text1: t(`errors.${response.error.code}`)});
+        if(response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string});
         dispatch(addDmGroup([response.data]));
     
         setTimeout(() => {
@@ -85,7 +86,7 @@ function ProfileComponent({ nickname, pined, informations, setInfo }){
                             alignItems: "center"
                         }}>
                             <SvgElement margin={15} onPress={() => setModalVisible(true)} size={22} name="ellipsis" />
-                            { informations.user_info.user_id !== user?.user_id && !informations?.allow_dm && <SvgElement margin={15} onPress={() => createDM()} size={22} name="envelope" /> }
+                            { informations.user_info.user_id !== user?.user_id && informations.user_info.allow_dm && <SvgElement margin={15} onPress={() => createDM()} size={22} name="envelope" /> }
                             { informations.user_info.user_id === user?.user_id && <FollowButton onPress={() => navigation.push("ProfileEditScreen", { info: informations.user_info })} text={t("profile.edit")}/>}
                             { informations.user_info.user_id !== user?.user_id && informations?.following && <FollowButton onPress={() => unfollow()} text={t("profile.unfollow")} /> }
                             { informations.user_info.user_id !== user?.user_id && !informations?.following && <FollowButton onPress={() => follow()} text={t("profile.follow")} /> }
@@ -95,10 +96,10 @@ function ProfileComponent({ nickname, pined, informations, setInfo }){
                         <Text>{informations.user_info.username}</Text>
                         <View style={styles.row}>
                             { informations.user_info.certified && <SvgElement size={18} name="verified" color={colors.text_normal} /> }
-                            { client.user.flags(informations.user_info.flags).has(userFlags.TRENDER_EMPLOYEE) && <UserBadges url={client.user.badge("TRENDER_EMPLOYEE")} /> }
-                            { client.user.flags(informations.user_info.flags).has(userFlags.EARLY_SUPPORTER) && <UserBadges url={client.user.badge("EARLY_SUPPORTER")} /> }
-                            { client.user.flags(informations.user_info.flags).has(userFlags.TRENDER_PARTNER) && <UserBadges url={client.user.badge("TRENDER_PARTNER")} /> }
-                            { client.user.flags(informations.user_info.premium_type).has(userFlags.TRENDER_PARTNER) && <UserBadges url={client.user.badge("PREMIUM_1")} /> }
+                            { client.user.flags(informations.user_info.flags.toString()).has(userFlags.TRENDER_EMPLOYEE) && <UserBadges url={client.user.badge("TRENDER_EMPLOYEE")} /> }
+                            { client.user.flags(informations.user_info.flags.toString()).has(userFlags.EARLY_SUPPORTER) && <UserBadges url={client.user.badge("EARLY_SUPPORTER")} /> }
+                            { client.user.flags(informations.user_info.flags.toString()).has(userFlags.TRENDER_PARTNER) && <UserBadges url={client.user.badge("TRENDER_PARTNER")} /> }
+                            { client.user.flags(informations.user_info.premium_type.toString()).has(userFlags.TRENDER_PARTNER) && <UserBadges url={client.user.badge("PREMIUM_1")} /> }
                         </View>
                         <View style={styles.row}>
                             { informations.user_info.is_private && <SvgElement size={18} name="lock" color={colors.text_normal} /> }
@@ -132,7 +133,8 @@ function ProfileComponent({ nickname, pined, informations, setInfo }){
                     </View>
                 </View>
             </View>
-            { pined && <DisplayPosts pined={pined} informations={pined} /> }
+            <Divider bold horizontalInset />
+            { pined && <DisplayPosts pined={true} informations={pined} /> }
         </View>
     )
 };

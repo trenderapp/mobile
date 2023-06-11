@@ -4,17 +4,15 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 import ProfileEditScreen from "../../Components/Profile/Edit/ProfileEditComponent";
 import ProfileScreen from "../../Screens/Profile/ProfileScreen";
 import FollowScreen from "../../Screens/Profile/FollowScreen";
-import { NavigationProvider } from "../../Components/Container";
 import { ProfileContextProvider } from "../../Context/AppContext";
 
 const Stack = createStackNavigator();
 
-const ProfileStack = ({ navigation }) => {
+const ProfileStack = () => {
 
   const [profile, setProfile] = useState(undefined);
 
   return (
-    <NavigationProvider value={navigation}>
       <ProfileContextProvider value={{ profile, setProfile }}>
         <Stack.Navigator initialRouteName="ProfileScreen">
           <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={{
@@ -31,7 +29,6 @@ const ProfileStack = ({ navigation }) => {
           }} />
         </Stack.Navigator>
       </ProfileContextProvider>
-    </NavigationProvider>
   );
 };
 

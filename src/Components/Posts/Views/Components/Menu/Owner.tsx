@@ -101,7 +101,10 @@ function Owner({ modalVisible, setModalVisible, pined, post_id }: SectionProps) 
                 <Divider bold theme={{ colors: { outlineVariant: colors.bg_primary } }} />
                 <Button uppercase onPress={() => copyPostID()} icon="content-copy">{t("posts.copy_post_id")}</Button>
                 <Divider bold theme={{ colors: { outlineVariant: colors.bg_primary } }} />
-                <Button uppercase onPress={() => setVisible(true)} icon="trash-can-outline">{t("posts.delete")}</Button>
+                <Button uppercase onPress={() => {
+                    setVisible(true)
+                    setModalVisible(false)
+                }} icon="trash-can-outline">{t("posts.delete")}</Button>
                 <Divider bold theme={{ colors: { outlineVariant: colors.bg_primary } }} />
                 { pined && pined === post_id && <Button uppercase onPress={() => unPinPost()} icon="pin-off-outline">{t("posts.unpin")}</Button> }
                 { !pined || pined !== post_id ? <Button uppercase onPress={() => pinPost()} icon="pin-outline">{t("posts.pin")}</Button> : null }

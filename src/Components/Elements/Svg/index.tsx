@@ -5,7 +5,7 @@ import { useTheme } from "../../Container";
 import svgList from "./SvgList";
 
 type SectionType = {
-    onPress?: () => {},
+    onPress?: () => any,
     name: string,
     size?: number,
     margin?: number,

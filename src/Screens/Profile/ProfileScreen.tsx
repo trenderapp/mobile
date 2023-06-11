@@ -1,7 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, memo, useCallback } from 'react';
 import { FlatList } from 'react-native';
-import { connect } from 'react-redux';
-import { useIsFocused } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 
 import { useClient } from '../../Components/Container';
@@ -10,10 +8,9 @@ import ProfileComponent from '../../Components/Profile/Edit/ProfileComponents';
 import ProfileNotFound from '../../Components/Profile/Edit/ProfileNotFound';
 import ProfileContainer from '../../Components/Container/ProfileContainer';
 import { Loader } from '../../Other';
-import { addProfileTrends, initProfileTrends } from '../../Redux/profileFeed/action';
 import { ProfileContext } from '../../Context/AppContext';
-import { RootState, useAppDispatch, useAppSelector } from '../../Redux';
 import { useTranslation } from 'react-i18next';
+import { PostInterface } from 'trender-client';
 
 function ProfileScreen({ route }: any) {
 
@@ -21,92 +18,85 @@ function ProfileScreen({ route }: any) {
     const { client } = useClient();
     const { t } = useTranslation();
     const { profile, setProfile } = useContext(ProfileContext);
-    const posts = useAppSelector((state) => state.profileFeed);
-    const dispatch = useAppDispatch();
-    const isFocused = useIsFocused();
+    const [posts, setPosts] = useState<PostInterface.postInterface[] | undefined>(undefined)
     const [pined, setPined] = useState<any>(null);
     const [loader, setLoader] = useState(true);
     const [loading, setLoading] = useState(true);
     const [pagination_key, setPaginationKey] = useState<string | undefined>(undefined);
 
-    useEffect(() => {
-        async function getData() {
-            dispatch(initProfileTrends([]))
+    const getData = async () => {
+        setPosts(undefined)
 
-            // Get profile infomations
-            const response_profile = await client.user.profile(nickname);
+        // Get profile infomations
+        const response_profile = await client.user.profile(nickname);
 
-            if(response_profile.error) {
-                setLoading(false)
-                setLoader(false)
-                return setProfile(response_profile.error);
-            }
-            setProfile(response_profile.data);
+        if (response_profile.error) {
             setLoading(false)
-
-            const response = await client.post.user.fetch(nickname);
-
             setLoader(false)
-            if(response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string });
-            if(!response.data) return;
-            setPaginationKey(response.pagination_key);
-            dispatch(initProfileTrends(response.data));
-
-            if(response.data.length > 0) {
-                if(!response.data[0]?.from?.pined_post) return;
-                const pined_post = await client.post.getPinPost(response.data[0].from.pined_post);
-
-                if(pined_post.error) return Toast.show({ text1: t(`errors.${pined_post.error.code}`) as string });
-                setPined({
-                    from: response.data[0].from,
-                    ...pined_post.data
-                })
-            }
+            return setProfile(response_profile.error);
         }
-        if(profile?.nickname && nickname === profile.nickname) return;
-        getData()
-        
-    }, [nickname, isFocused])
+        setProfile(response_profile.data);
+        setLoading(false)
 
-    const bottomHandler = async () => {
-        if(!loader) return;
-        const response = await client.post.user.fetch(nickname, { pagination_key: pagination_key });
-        if(response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string });
-        if(!response.data || response.data.length < 1) return setLoader(false);
+        const response = await client.post.user.fetch(nickname);
+
+        setLoader(false)
+        if (response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string });
+        if (!response.data) return;
         setPaginationKey(response.pagination_key);
-        dispatch(addProfileTrends(response.data));
+        setPosts(response.data);
+
+        if (response.data.length > 0) {
+            if (!response.data[0]?.from?.pined_post) return;
+            const pined_post = await client.post.getPinPost(response.data[0].from.pined_post);
+            
+            if (pined_post.error) return Toast.show({ text1: t(`errors.${pined_post.error.code}`) as string });
+            setPined({
+                from: response.data[0].from,
+                ...pined_post.data
+            })
+        }
     }
 
-    return(
+    useEffect(() => {        
+        if (profile?.nickname && nickname === profile.nickname) return;
+        getData()
+    }, [nickname])
+
+    const bottomHandler = async () => {
+        if (!loader) return;
+        const response = await client.post.user.fetch(nickname, { pagination_key: pagination_key });
+        if (response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string });
+        if (!response.data || response.data.length < 1) return setLoader(false);
+        setPaginationKey(response.pagination_key);
+        if(!posts) return;
+        setPosts([...posts, ...response.data])
+    }
+
+    const renderItem = useCallback(({ item }: { item: PostInterface.postResponseSchema }) => (
+        <DisplayPosts informations={item} />
+    ), [])
+
+    return (
         <ProfileContainer username={profile?.user_info?.username}>
-        {
-            !loading ? 
-                <FlatList
-                    onEndReached={() => bottomHandler()} 
-                    ListHeaderComponent={profile ? profile?.code ? 
-                        <ProfileNotFound error={profile} nickname={nickname} /> 
-                            : <ProfileComponent setInfo={setProfile} pined={pined} informations={profile} nickname={nickname} /> 
-                                : <Loader />}
-                    data={posts}
-                    renderItem={({ item, index }) => <DisplayPosts key={index} informations={item} />} 
-                    keyExtractor={item => item.post_id} /> : <Loader />
-        }
-        {
-            !loading && loader && <Loader />
-        }
+            {
+                !loading ?
+                    <FlatList
+                        onEndReached={() => bottomHandler()}
+                        ListHeaderComponent={profile ? profile?.code ?
+                            <ProfileNotFound error={profile} nickname={nickname} />
+                            : <ProfileComponent setInfo={setProfile} pined={pined} informations={profile} nickname={nickname} />
+                            : <Loader />}
+                        data={posts}
+                        renderItem={renderItem}
+                        keyExtractor={item => item.post_id} /> : <Loader />
+            }
+            {
+                !loading && loader && <Loader />
+            }
         </ProfileContainer>
     )
 }
 
-const mapStateToProps = (state: RootState) => {
-    return {
-      profileFeed: state.profileFeed,
-    };
-};
-  
-const mapDispatchToProps = {
-    addProfileTrends,
-    initProfileTrends
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);
+export default memo(ProfileScreen);

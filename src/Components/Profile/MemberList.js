@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View, FlatList } from 'react-native';
 import { Loader } from '../../Other';
 import { useTheme } from '../Container';
@@ -17,6 +17,10 @@ function MemberList({ list, loader, onBottom, noDescription }) {
         if (Math.ceil(mHeight + Y) >= cSize) return onBottom();
     };
 
+    const renderItem = useCallback(({ item }) => (
+        <UserInfo noDescription={noDescription} full_width informations={item} />
+    ), [])
+
     return (
         <View
             style={{
@@ -33,7 +37,7 @@ function MemberList({ list, loader, onBottom, noDescription }) {
                     }}
                     ListEmptyComponent={<Loader />}
                     ListFooterComponent={loader && <Loader />}
-                    renderItem={({ item }) => <UserInfo noDescription={noDescription} full_width informations={item} />}
+                    renderItem={renderItem}
                 />
             }
         </View>

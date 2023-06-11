@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
-import { NavigationProvider } from "../../Components/Container";
 import HomeSettingsScreen from "../../Screens/Settings/HomeSettingsScreen";
 import LanguageThemeScreen from "../../Screens/Settings/LanguageThemeScreen";
 import BlockedScreen from "../../Screens/Settings/BlockedScreen";

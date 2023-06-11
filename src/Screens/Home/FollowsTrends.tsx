@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { connect } from 'react-redux';
 import { FlatList, RefreshControl } from 'react-native';
 import { PostInterface } from 'trender-client';
@@ -50,9 +50,9 @@ const FollowsTrends = () => {
     dispatch(addMainTrends(response.data));
   }
 
-  const renderItem = ({ item }: { item: PostInterface.postResponseSchema }) => (
+  const renderItem = useCallback(({ item }: { item: PostInterface.postResponseSchema }) => (
     <DisplayPosts comments={false} informations={item} pined={undefined} is_comment={undefined} />
-  )
+  ), [])
 
   const memoizedValue = useMemo(() => renderItem, [posts]);
 

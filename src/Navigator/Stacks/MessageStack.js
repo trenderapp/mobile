@@ -4,14 +4,12 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 import CreateGuildScreen from "../../Screens/Messages/CreateGuildScreen";
 import MessageScreen from "../../Screens/Messages/MessageScreen";
 import { DmMessagesListContextProvider } from "../../Context/DmMessages";
-import { NavigationProvider } from "../../Components/Container";
 
 const Stack = createStackNavigator();
 
-const MessageStack = ({ navigation }) => {
+const MessageStack = () => {
 
     return (
-      <NavigationProvider value={navigation}>
         <DmMessagesListContextProvider>
           <Stack.Navigator initialRouteName="MessageScreen">
             <Stack.Screen name="MessageScreen" component={MessageScreen} options={{
@@ -24,7 +22,6 @@ const MessageStack = ({ navigation }) => {
             }} />
           </Stack.Navigator>
         </DmMessagesListContextProvider>
-      </NavigationProvider>
     );
 };
 
