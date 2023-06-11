@@ -21,7 +21,7 @@ export default function DisplaySharedPost({ shared_post }: SectionProps) {
                 marginLeft: 40
             }}>
                 <View style={[styles.row, { width: full_width, padding: 5 }]}>
-                    <Avatar size={45} url={client.user.avatar(user.user_id, user.avatar)} />
+                    <Avatar size={45} url={client.user.avatar(shared_post.from.user_id, shared_post.from.avatar)} />
                     <View style={[styles.column, { justifyContent: "flex-start", alignItems: "flex-start" }]}>
                         <Username created_at={shared_post.created_at} user={shared_post.from} />
                     </View>
