@@ -1,4 +1,3 @@
-import EncryptedStorage from 'react-native-encrypted-storage';
 import { MMKV } from 'react-native-mmkv'
 
 export const localeStorage = new MMKV()
@@ -29,8 +28,7 @@ type localeStorageKeysT = 'user_info' | 'settings';
 
 export const initStorage = async () => {
     let to_return: storageI = {};
-    const alreadyInit = localeStorage.getAllKeys().find((k: string) => k === "user_info");
-    const user_info_storage: any = await EncryptedStorage.getItem("user_info");    
+    const alreadyInit = localeStorage.getAllKeys().find((k: string) => k === "user_info");  
 
     if(alreadyInit) {
         const user_info_storage = localeStorage.getString("user_info");
@@ -39,18 +37,6 @@ export const initStorage = async () => {
         if(user_info_storage) to_return.user_info = JSON.parse(user_info_storage);
         if(settings_storage) to_return.settings = JSON.parse(settings_storage);
 
-    } else if(!alreadyInit && user_info_storage) {    
-        const mobile_storage: any = await EncryptedStorage.getItem("mobile_storage");
-    
-        if(user_info_storage) {
-            to_return.user_info = JSON.parse(user_info_storage);
-            localeStorage.set('user_info', user_info_storage);
-        }
-        if(mobile_storage) {
-            to_return.settings = JSON.parse(mobile_storage);
-            localeStorage.set('settings', mobile_storage);
-        }
-        await EncryptedStorage.clear();
     }
 
     return to_return;
