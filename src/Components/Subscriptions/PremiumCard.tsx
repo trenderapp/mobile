@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import { Button, Text, Card, List, Dialog, Portal, RadioButton } from 'react-native-paper';
+import { useClient, useNavigation, useTheme } from '../Container';
 import { useTranslation } from 'react-i18next';
-import Toast from 'react-native-toast-message';
-import { useClient, useTheme, useNavigation } from '../../Components/Container';
-import { axiosInstance } from '../../Services';
 import { Isubscription, subscriptionInterval } from '../../Screens/Settings/interfaces/subscriptions';
 
 type sectionProps = {
     subs?: Isubscription[]
 }
 
-function StandardCard({ subs }: sectionProps) {
+function PremiumCard({ subs }: sectionProps) {
 
     const { t } = useTranslation();
     const { user } = useClient();
@@ -22,34 +20,6 @@ function StandardCard({ subs }: sectionProps) {
 
     const hideDialog = () => setVisible(false);
 
-    const openPaymentPage = async () => {
-        if(!subs || loading) return;
-        setLoading(true)
-        const request = await axiosInstance.post("/subscriptions/checkout", {
-            subscription_id: subs.find(s => s.interval === subscriptionType)?.subscription_id,
-        }, {
-            headers: {
-                "trendertokenapi": user.token
-            }
-        })
-
-        const response = request.data;
-
-        if (response.data) {
-            hideDialog()
-            setLoading(false)
-            navigation?.push("SubscriptionValidationScreen", {
-                url: response.data.url,
-                subscription_id: subs.find(s => s.interval === subscriptionType)?.subscription_id
-            })
-
-        } else {
-            hideDialog()
-            setLoading(false)
-            Toast.show({ text1: t(`errors.${response.error.code}`) as string });
-        }
-    }
-
     const openCheckOutPage = async () => {
         if(!subs) return;
         const find_sub = subs.find(s => s.interval === subscriptionType);
@@ -58,7 +28,7 @@ function StandardCard({ subs }: sectionProps) {
         hideDialog()
         setLoading(false)
         navigation?.push("SubscriptionValidationScreen", {
-            title: t("subscription.standard"),
+            title: t("subscription.premium"),
             subscription: find_sub
         })
     }
@@ -96,35 +66,29 @@ function StandardCard({ subs }: sectionProps) {
                 </Dialog>
             </Portal>
             <Card.Content>
-                <Text variant="titleLarge">{t("subscription.subscription_type", { subscription_type: t("subscription.standard") })}</Text>
+                <Text variant="titleLarge">{t("subscription.subscription_type", { subscription_type: t("subscription.premium") })}</Text>
                 { subs ? subs?.filter(s => s.interval === "month").map((s, idx) => <Text key={idx} variant="bodyMedium">{t(`subscription.price_type_${s.interval}`, { subscription_price: `${(s.price / 100).toFixed(2)}`})}</Text>) : null }
             </Card.Content>
             <Card.Content>
-                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.standard_1")} left={props => <List.Icon {...props} icon="adjust" />} />
-                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.standard_2")} left={props => <List.Icon {...props} icon="adjust" />} />
-                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.standard_3")} left={props => <List.Icon {...props} icon="adjust" />} />
-                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.standard_4")} left={props => <List.Icon {...props} icon="adjust" />} />
-                {
-                    // <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.standard_5")} left={props => <List.Icon {...props} icon="adjust" />} />
-                }
-                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.standard_6")} left={props => <List.Icon {...props} icon="adjust" />} />
-                {
-                    // <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.standard_7")} left={props => <List.Icon {...props} icon="adjust" />} />
-                }
+                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.premium_1")} left={props => <List.Icon {...props} icon="plus" />} />
+                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.premium_2")} left={props => <List.Icon {...props} icon="adjust" />} />
+                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.premium_3")} left={props => <List.Icon {...props} icon="adjust" />} />
+                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.premium_4")} left={props => <List.Icon {...props} icon="adjust" />} />
+                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.premium_5")} left={props => <List.Icon {...props} icon="adjust" />} />
             </Card.Content>
             {
-                user.premium_type === 1 ? (
+                user.premium_type === 2 ? (
                     <Card.Actions>
                         <Button>{t("subscription.current")}</Button>
                     </Card.Actions>
                 ) : (
                     <Card.Actions>
-                        {subs && subs[0].active ? <Button onPress={() => setVisible(true)}>{t("subscription.subscribe")}</Button> : <Button>{t("subscription.coming_soon")}</Button>}
-                    </Card.Actions>
+                    {subs && subs[0].active ? <Button onPress={() => setVisible(true)}>{t("subscription.subscribe")}</Button> : <Button>{t("subscription.coming_soon")}</Button>}
+                </Card.Actions>
                 )
             }
         </Card>
     )
 }
 
-export default StandardCard;
+export default PremiumCard;

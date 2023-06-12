@@ -147,10 +147,13 @@
         "report_message": "Report the message"
     },
     "subscription": {
+        "recap": "Recap",
+        "price": "Price",
+        "subscription": "Subscription",
         "make_your_choice": "Make your choice",
         "subscription_type": "{{subscription_type}} subscription",
-        "price_type_year": "Year {{subscription_price}}",
-        "price_type_month": "Month {{subscription_price}}",
+        "price_type_year": "Year {{subscription_price}} $",
+        "price_type_month": "Month {{subscription_price}} $",
         "coupon": "Coupon",
         "checkout": "Checkout",
         "current": "Current",
@@ -159,10 +162,13 @@
         "coming_soon": "Coming Soon",
         "year": "Year",
         "month": "Month",
+        "elite": "Elite",
+        "standard": "Standard",
+        "premium": "Premium",
     
         "free_title": "Free subscription",
         "free_1": "512 characters allowed",
-        "free_2": "Maximum file size for upload: 25MB",
+        "free_2": "Upload files up to 25MB",
         "free_3": "Ads",
     
         "standard_1": "1024 characters allowed",

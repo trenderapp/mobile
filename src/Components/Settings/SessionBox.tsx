@@ -5,13 +5,20 @@ import { useTheme } from "../Container";
 import { Text } from "react-native-paper";
 import SvgElement from "../Elements/Svg";
 import { View } from "react-native";
+import { SessionInterface } from "trender-client";
 
-function SessionBox({ item, session_id, self, onPress }) {
+type sectionProps = { 
+    item: SessionInterface.fetchSessionsResponseSchema, 
+    session_id: string, 
+    onPress: () => any
+}
+
+function SessionBox({ item, session_id, onPress }: sectionProps) {
 
     const { colors } = useTheme();
     const { i18n } = useTranslation();
 
-    const deviceIcon = (name) => {
+    const deviceIcon = (name: string) => {
 
         if(name.match(/android/gi)) {
             return "android-icon"
@@ -22,14 +29,14 @@ function SessionBox({ item, session_id, self, onPress }) {
         } else if(name.match(/chrome/gi)) {
             return "google-chrome"
         } else {
-            return "fesses"
+            return "..."
         }
     }
     
     return (
         <View style={{ flexDirection: "row", alignItems: "center", padding: 10, justifyContent: "space-between" }}>
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", borderColor: colors.text_normal, borderWidth: 1, padding: 5, borderRadius: 60 / 2 }}>
-                <SvgElement noColor size={22} name={deviceIcon(item.device_name)} />
+                <SvgElement noColor size={22} name={deviceIcon(item?.device_name ?? "")} />
             </View>
             <View style={{ flexDirection: "column", alignItems: "flex-start", padding: 5, paddingLeft: 10, justifyContent: "flex-start", width: `80%` }}>
                 <Text style={{ flex: 1, flexWrap: 'wrap' }} >{`${item.device_name}`}</Text>

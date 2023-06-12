@@ -59,7 +59,7 @@ const FollowsTrends = () => {
   return (
     <FlatList
       removeClippedSubviews={true}
-      initialNumToRender={15}
+      initialNumToRender={20}
       data={posts}
       renderItem={memoizedValue}
       keyExtractor={item => item.post_id}

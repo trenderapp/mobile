@@ -18,45 +18,6 @@ export const PATTERN_CARD_EXPIRE_DATE = /\d{2}\/\d{2}/;
 export const PATTERN_CARD_CVV = /\d{3}/;
 export const PATTERN_FULLNAME = /^$|^[a-zA-ZčČćĆđĐšŠžŽ-]+ [a-zA-ZčČćĆđĐšŠžŽ-]+$/;
 
-export const subscriptionsList = {
-  "425691606356721665": {
-      title: "Elite",
-      sub_type: "month",
-      premium_type: 3,
-      price: "9.99€"
-  },
-  "425691606373498882": {
-      title: "Elite",
-      sub_type: "year",
-      premium_type: 3,
-      price: "99.99€"
-  },
-  "425691979834327044": {
-      title: "Premium",
-      sub_type: "month",
-      premium_type: 2,
-      price: "5.99€"
-  },
-  "425691980887097349": {
-      title: "Premium",
-      sub_type: "year",
-      premium_type: 2,
-      price: "59.99€"
-  },
-  "425692210537824263": {
-      title: "Standard",
-      sub_type: "month",
-      premium_type: 1,
-      price: "2.99€"
-  },
-  "425692211489931272": {
-      title: "Standard",
-      sub_type: "year",
-      premium_type: 1,
-      price: "29.99€"
-  },
-}
-
 export const convertFirstCharacterToUppercase = (stringToConvert: string) => {
   var firstCharacter = stringToConvert.substring(0, 1);
   var restString = stringToConvert.substring(1);

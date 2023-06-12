@@ -147,10 +147,13 @@
         "report_message": "Signaler le message"
     },
     "subscription": {
+        "recap": "Récapitulatif",
+        "price": "Prix",
+        "subscription": "Abonnement",
         "make_your_choice": "Fait ton choix",
         "subscription_type": "Abonnement {{subscription_type}}",
-        "price_type_year": "Année {{subscription_price}}",
-        "price_type_month": "Mois {{subscription_price}}",
+        "price_type_year": "Année {{subscription_price}} €",
+        "price_type_month": "Mois {{subscription_price}} €",
         "coupon": "Coupon",
         "checkout": "Payer",
         "current": "Actuel",
@@ -159,6 +162,9 @@
         "coming_soon": "Bientôt disponible",
         "year": "Année",
         "month": "Mois",
+        "elite": "Elite",
+        "standard": "Standard",
+        "premium": "Premium",
 
         "free_title": "Abonnement gratuit",
         "free_1": "512 caractères autorisé",
@@ -175,13 +181,13 @@
 
         "premium_1": "Avantages Standard",
         "premium_2": "2048 caractères",
-        "premium_3": "100Mo de limite",
+        "premium_3": "Taille maximum des fichiers 100Mo de limite",
         "premium_4": "Pas de frais de retrait",
         "premium_5": "Avantages dans les projets partenaires",
 
         "elite_1": "Avantages Premium et Standard",
         "elite_2": "4096 caractères",
-        "elite_3": "200Mo de limite",
+        "elite_3": "Taille maximum des fichiers 200Mo de limite",
         "elite_4": "Statistiques avancées",
         "elite_5": "IA pour la protecton des droits d'auteurs",
         "elite_6": "Améliorer le facteur de confiance",

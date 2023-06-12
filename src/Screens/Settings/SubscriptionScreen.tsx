@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Text, Card, Portal, Dialog } from 'react-native-paper';
 import SettingsContainer from '../../Components/Container/SettingsContainer';
 import { useClient, useNavigation, useTheme } from '../../Components/Container';
@@ -10,6 +10,7 @@ import StandardCard from '../../Components/Subscriptions/StandardCard';
 import PremiumCard from '../../Components/Subscriptions/PremiumCard';
 import EliteCard from '../../Components/Subscriptions/EliteCard';
 import { axiosInstance } from '../../Services';
+import { Isubscription } from "./interfaces/subscriptions";
 
 function SubscriptionScreen() {
 
@@ -19,6 +20,7 @@ function SubscriptionScreen() {
     const { colors } = useTheme();
     const [loading, setLoading] = useState<boolean>(false);
     const [visible, setVisible] = useState<boolean>(false);
+    const [subscriptions, setSubscriptions] = useState<Isubscription[] | undefined>(undefined)
 
     const hideDialog = () => setVisible(false);
 
@@ -47,6 +49,20 @@ function SubscriptionScreen() {
         }
     }
 
+    const getSubscriptions = async () => {
+        const request = await axiosInstance.get("/subscriptions", {
+            headers: {
+                "trendertokenapi": user.token
+            }
+        })
+        const response = request.data;
+        if (response.data) return setSubscriptions(response.data)
+    }
+
+    useEffect(() => {
+        getSubscriptions()
+    }, [])
+
     return (
         <SettingsContainer title={t("settings.subscriptions")}>
             <ScrollView>
@@ -74,9 +90,9 @@ function SubscriptionScreen() {
                         <Button onPress={() => openDashboardPage()}>{t("subscription.dashboard")}</Button>
                     </Card.Actions>
                 </Card>
-                <StandardCard />
-                <EliteCard />
-                <PremiumCard />
+                <StandardCard subs={subscriptions ? subscriptions.filter(s => s.premium_type === 1) : undefined} />
+                <PremiumCard subs={subscriptions ? subscriptions.filter(s => s.premium_type === 2) : undefined} />
+                <EliteCard subs={subscriptions ? subscriptions.filter(s => s.premium_type === 3) : undefined} />
                 <NormalCard />
             </ScrollView>
         </SettingsContainer>
