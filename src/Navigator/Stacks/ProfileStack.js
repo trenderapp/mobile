@@ -4,6 +4,7 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 import ProfileEditScreen from "../../Components/Profile/Edit/ProfileEditComponent";
 import ProfileScreen from "../../Screens/Profile/ProfileScreen";
 import FollowScreen from "../../Screens/Profile/FollowScreen";
+import CustomSubscriptionValidationScreen from "../../Screens/Profile/CustomSubscriptionValidationScreen";
 import { ProfileContextProvider } from "../../Context/AppContext";
 
 const Stack = createStackNavigator();
@@ -24,6 +25,10 @@ const ProfileStack = () => {
             headerShown: false
           }} />
           <Stack.Screen name="ProfileFollower" component={FollowScreen} options={{
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+            headerShown: false
+          }} />
+          <Stack.Screen name="CustomSubscriptionValidationScreen" component={CustomSubscriptionValidationScreen} options={{
             cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
             headerShown: false
           }} />

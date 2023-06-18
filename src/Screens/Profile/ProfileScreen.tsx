@@ -4,7 +4,7 @@ import Toast from 'react-native-toast-message';
 
 import { useClient } from '../../Components/Container';
 import DisplayPosts from '../../Components/Posts/DisplayPost';
-import ProfileComponent from '../../Components/Profile/Edit/ProfileComponents';
+import ProfileComponent from '../../Components/Profile/ProfileComponents';
 import ProfileNotFound from '../../Components/Profile/Edit/ProfileNotFound';
 import ProfileContainer from '../../Components/Container/ProfileContainer';
 import { Loader } from '../../Other';
@@ -27,35 +27,34 @@ function ProfileScreen({ route }: any) {
     const getData = async () => {
         setPosts(undefined)
 
-        // Get profile infomations
-        const response_profile = await client.user.profile(nickname);
-
-        if (response_profile.error) {
-            setLoading(false)
-            setLoader(false)
-            return setProfile(response_profile.error);
-        }
-        setProfile(response_profile.data);
-        setLoading(false)
-
-        const response = await client.post.user.fetch(nickname);
-
-        setLoader(false)
-        if (response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string });
-        if (!response.data) return;
-        setPaginationKey(response.pagination_key);
-        setPosts(response.data);
-
-        if (response.data.length > 0) {
-            if (!response.data[0]?.from?.pined_post) return;
-            const pined_post = await client.post.getPinPost(response.data[0].from.pined_post);
-            
-            if (pined_post.error) return Toast.show({ text1: t(`errors.${pined_post.error.code}`) as string });
-            setPined({
-                from: response.data[0].from,
-                ...pined_post.data
+        await Promise.all([
+            client.user.profile(nickname).then(async response_profile => {
+                if (response_profile.error) {
+                    setLoading(false)
+                    setLoader(false)
+                    return setProfile(response_profile.error);
+                }
+                setProfile(response_profile.data);
+                setLoading(false)
+        
+                if(response_profile.data?.pined_post) {
+                    const pined_post = await client.post.getPinPost(response_profile.data.pined_post);
+        
+                    if (pined_post.error) return Toast.show({ text1: t(`errors.${pined_post.error.code}`) as string });
+                    setPined({
+                        from: response_profile.data,
+                        ...pined_post.data
+                    })
+                }
+            }),
+            client.post.user.fetch(nickname).then(response => {
+                if (response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string });
+                if (!response.data) return;
+                setPaginationKey(response.pagination_key);
+                setLoader(false);
+                setPosts(response.data);
             })
-        }
+        ])
     }
 
     useEffect(() => {        
@@ -78,7 +77,7 @@ function ProfileScreen({ route }: any) {
     ), [])
 
     return (
-        <ProfileContainer username={profile?.user_info?.username}>
+        <ProfileContainer username={profile?.username}>
             {
                 !loading ?
                     <FlatList

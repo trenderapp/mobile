@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from 'react-i18next';
 import { axiosInstance, navigationProps } from '../../Services';
 import { useClient, SettingsContainer, useNavigation as useAppNavigation, useTheme } from '../../Components/Container';
-import { Isubscription } from './interfaces/subscriptions';
+import { SubscriptionInterface } from 'trender-client';
 
 function SubscriptionValidationScreen({ route }: any) {
 
@@ -17,7 +17,7 @@ function SubscriptionValidationScreen({ route }: any) {
     const client = useClient();
     const { colors } = useTheme();
     const [loading, setLoading] = useState(true);
-    const { subscription, title }: { subscription: Isubscription; title: string } = route.params;
+    const { subscription, title }: { subscription: SubscriptionInterface.getSubscriptionsResponseInterface; title: string } = route.params;
 
     const fetchPaymentSheetParams = async (subscription_id: string, coupon_id?: string) => {
         const request = await axiosInstance.post(`/subscriptions/${subscription_id}/checkout`, { coupon_id: coupon_id }, {
@@ -38,7 +38,10 @@ function SubscriptionValidationScreen({ route }: any) {
                 const { paymentIntent, ephemeralKey, customer, publishableKey } = response.data;
                 return { paymentIntent, ephemeralKey, customer, publishableKey };
             }
-        } else return Toast.show({ text1: t(`errors.${response.error.code}`) as string });
+        } else {
+            Toast.show({ text1: t(`errors.${response.error.code}`) as string });
+            return;
+        }
     };
 
     const initializePaymentSheet = async (subscription_id: string) => {
@@ -98,7 +101,7 @@ function SubscriptionValidationScreen({ route }: any) {
                 </Card.Content>
                 <Card.Actions>
                     <Button onPress={() => navigation.goBack()}>{t("commons.cancel")}</Button>
-                    <Button mode='elevated' theme={{ colors: { elevation: { level1: colors.good_color } } }} loading={loading} onPress={() => openPaymentSheet ()}>{t("subscription.checkout")}</Button>
+                    <Button mode='elevated' theme={{ colors: { elevation: { level1: colors.good_color } } }} loading={loading} onPress={() => openPaymentSheet()}>{t("subscription.checkout")}</Button>
                 </Card.Actions>
             </Card>
         </SettingsContainer>

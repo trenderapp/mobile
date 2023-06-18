@@ -27,6 +27,8 @@
         "delete_all": "Delete all",
         "next": "Next",
         "create": "Create",
+        "active": "Active",
+        "inactive": "Inactive",
 
         "top_of_day": "Top of the day",
         "last_rends": "Last Trends",
@@ -92,6 +94,7 @@
         "my_account": "My Account",
         "connexions": "Connections",
         "subscriptions": "Subscriptions",
+        "custom_subscriptions": "Custom Subscriptions",
         "subscriptions_checkout": "Subscriptions Checkout",
         "screen": "Screen",
         "blocked": "Blocked Account",

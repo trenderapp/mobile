@@ -10,30 +10,26 @@ import StandardCard from '../../Components/Subscriptions/StandardCard';
 import PremiumCard from '../../Components/Subscriptions/PremiumCard';
 import EliteCard from '../../Components/Subscriptions/EliteCard';
 import { axiosInstance } from '../../Services';
-import { Isubscription } from "./interfaces/subscriptions";
+import { SubscriptionInterface } from 'trender-client';
 
 function SubscriptionScreen() {
 
     const navigation = useNavigation()
     const { t } = useTranslation();
-    const { user } = useClient();
+    const { client, user } = useClient();
     const { colors } = useTheme();
     const [loading, setLoading] = useState<boolean>(false);
     const [visible, setVisible] = useState<boolean>(false);
-    const [subscriptions, setSubscriptions] = useState<Isubscription[] | undefined>(undefined)
+    const [subscriptions, setSubscriptions] = useState<SubscriptionInterface.getSubscriptionsResponseInterface[]| undefined>(undefined)
 
     const hideDialog = () => setVisible(false);
 
     const openDashboardPage = async () => {
         if (loading) return;
         setLoading(true)
-        const request = await axiosInstance.get("/subscriptions/dashboard", {
-            headers: {
-                "trendertokenapi": user.token
-            }
-        })
+        const request = await client.subscription.dashboard(user.user_id);
 
-        const response = request.data;
+        const response = request;
 
         if (response.data) {
             hideDialog()
@@ -45,18 +41,14 @@ function SubscriptionScreen() {
         } else {
             hideDialog()
             setLoading(false)
-            Toast.show({ text1: t(`errors.${response.error.code}`) as string });
+            Toast.show({ text1: t(`errors.${request?.error?.code}`) as string });
         }
     }
 
     const getSubscriptions = async () => {
-        const request = await axiosInstance.get("/subscriptions", {
-            headers: {
-                "trendertokenapi": user.token
-            }
-        })
+        const request = await client.subscription.fetch();
         const response = request.data;
-        if (response.data) return setSubscriptions(response.data)
+        if (response) return setSubscriptions(response)
     }
 
     useEffect(() => {

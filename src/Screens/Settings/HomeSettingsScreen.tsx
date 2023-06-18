@@ -16,6 +16,7 @@ function HomeSettingsScreen() {
                 textDecorationLine: "underline"
             }}>My account:</Text>
             <HomeButtonSection onPress={() => navigation?.push("SubscriptionScreen")} t={t("settings.subscriptions")} icon={undefined} />
+            <HomeButtonSection onPress={() => navigation?.push("CustomSubscriptionScreen")} t={t("settings.custom_subscriptions")} icon={undefined} />
             <HomeButtonSection onPress={() => navigation.push("AffiliationScreen")} t={t("settings.affiliation")} icon={undefined} />
             <HomeButtonSection onPress={() => navigation.push("SessionScreen")} t={t("settings.sessions")} icon={undefined} />
             <Br />

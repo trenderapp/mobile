@@ -74,13 +74,6 @@ function Owner({ modalVisible, setModalVisible, pined, post_id }: SectionProps) 
         setModalVisible(false)
     }
 
-    const onShare = async () => {
-        await Share.share({
-            message: `${posturl}/${info.post_id}`,
-            url: `${posturl}/${info.post_id}`
-        });
-    }
-
 
     return (
         <>
@@ -97,8 +90,6 @@ function Owner({ modalVisible, setModalVisible, pined, post_id }: SectionProps) 
                 </Dialog>
             </Portal>
             <BottomModal onSwipeComplete={() => setModalVisible(false)} isVisible={modalVisible}>
-                <Button uppercase onPress={() => onShare()} icon="share-variant-outline">{t("posts.share")}</Button>
-                <Divider bold theme={{ colors: { outlineVariant: colors.bg_primary } }} />
                 <Button uppercase onPress={() => copyPostID()} icon="content-copy">{t("posts.copy_post_id")}</Button>
                 <Divider bold theme={{ colors: { outlineVariant: colors.bg_primary } }} />
                 <Button uppercase onPress={() => {

@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 import Toast from 'react-native-toast-message';
 import { useClient, useTheme, useNavigation } from '../../Components/Container';
 import { axiosInstance } from '../../Services';
-import { Isubscription, subscriptionInterval } from '../../Screens/Settings/interfaces/subscriptions';
+import { SubscriptionInterface } from 'trender-client';
 
 type sectionProps = {
-    subs?: Isubscription[]
+    subs?: SubscriptionInterface.getSubscriptionsResponseInterface[]
 }
 
 function StandardCard({ subs }: sectionProps) {
@@ -15,7 +15,7 @@ function StandardCard({ subs }: sectionProps) {
     const { t } = useTranslation();
     const { user } = useClient();
     const { colors } = useTheme();
-    const [subscriptionType, setSubscriptionType] = useState<subscriptionInterval>("year");
+    const [subscriptionType, setSubscriptionType] = useState<SubscriptionInterface.intervalType>("year");
     const navigation = useNavigation()
     const [visible, setVisible] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);

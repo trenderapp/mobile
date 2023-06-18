@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Button, Text, Card, List, Dialog, Portal, RadioButton } from 'react-native-paper';
 import { useClient, useNavigation, useTheme } from '../Container';
 import { useTranslation } from 'react-i18next';
-import { Isubscription, subscriptionInterval } from '../../Screens/Settings/interfaces/subscriptions';
+import { SubscriptionInterface } from 'trender-client';
 
 type sectionProps = {
-    subs?: Isubscription[]
+    subs?: SubscriptionInterface.getSubscriptionsResponseInterface[]
 }
 
 function PremiumCard({ subs }: sectionProps) {
@@ -13,7 +13,7 @@ function PremiumCard({ subs }: sectionProps) {
     const { t } = useTranslation();
     const { user } = useClient();
     const { colors } = useTheme();
-    const [subscriptionType, setSubscriptionType] = useState<subscriptionInterval>("year");
+    const [subscriptionType, setSubscriptionType] = useState<SubscriptionInterface.intervalType>("year");
     const navigation = useNavigation()
     const [visible, setVisible] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);

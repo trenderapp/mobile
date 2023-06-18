@@ -1,15 +1,12 @@
 import React, { useContext } from "react";
-import { Share } from "react-native";
 import { useTranslation } from "react-i18next";
 import Toast from 'react-native-toast-message';
 import Clipboard from "@react-native-clipboard/clipboard";
 
-import { BottomModal, ModalSection } from "../../../../../Other";
+import { BottomModal } from "../../../../../Other";
 import { useClient, useTheme } from "../../../../Container";
-import SvgElement from "../../../../Elements/Svg";
-import { Button, Divider, Text } from "react-native-paper";
+import { Button, Divider } from "react-native-paper";
 import { SinglePostContext } from "../../../PostContext.js";
-import { posturl } from "../../../../../Services/constante";
 
 type SectionProps = {
     modalVisible: boolean, 
@@ -43,17 +40,8 @@ function User({ modalVisible, setModalVisible }: SectionProps) {
         setModalVisible(false)
     }
 
-    const onShare = async () => {
-        await Share.share({
-            message: `${posturl}/${info.post_id}`,
-            url: `${posturl}/${info.post_id}`
-        });
-    }
-
     return (
         <BottomModal onSwipeComplete={() => setModalVisible(false)} isVisible={modalVisible}>
-            <Button uppercase onPress={() => onShare()} icon="share-variant-outline">{t("posts.share")}</Button>
-            <Divider bold theme={{ colors: { outlineVariant: colors.bg_primary } }} />
             <Button uppercase onPress={() => copyPostID()} icon="content-copy">{t("posts.copy_post_id")}</Button>
             <Divider bold theme={{ colors: { outlineVariant: colors.bg_primary } }} />
             <Button uppercase onPress={() => report()} icon="shield-alert-outline">{t("commons.report")}</Button>

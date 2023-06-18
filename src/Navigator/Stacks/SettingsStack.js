@@ -10,6 +10,7 @@ import AffiliationScreen from "../../Screens/Settings/AffiliationScreen";
 import SubscriptionValidationScreen from "../../Screens/Settings/SubscriptionValidationScreen";
 import SubscriptionScreen from "../../Screens/Settings/SubscriptionScreen";
 import SubscriptionDashboardScreen from "../../Screens/Settings/SubscriptionDashboardScreen";
+import CustomSubscriptionScreen from "../../Screens/Settings/CustomSubscriptionScreen";
 
 const Stack = createStackNavigator();
 
@@ -23,6 +24,7 @@ const SettingsStack = () => {
     { name: "SecurityScreen", screen: SecurityScreen },
     { name: "SessionScreen", screen: SessionScreen },
     { name: "SubscriptionScreen", screen: SubscriptionScreen },
+    { name: "CustomSubscriptionScreen", screen: CustomSubscriptionScreen },
     { name: "SubscriptionValidationScreen", screen: SubscriptionValidationScreen },
     { name: "SubscriptionDashboardScreen", screen: SubscriptionDashboardScreen }
   ])
