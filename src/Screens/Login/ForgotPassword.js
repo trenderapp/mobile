@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { useNavigation } from "@react-navigation/native"
 import { apibaseurl } from "../../Services/constante";
-import { useTheme } from "../../Components/Container";
+import { CustomHeader, useTheme } from "../../Components/Container";
 import { NormalButton } from "../../Components/Elements/Buttons";
 import { TextInput } from "../../Components/Elements/Input";
 import { Text } from "react-native-paper";
@@ -23,6 +24,7 @@ function ForgotPassword() {
         response: ""
     });
     const [loading, setLoading] = useState(false);
+    const navigation = useNavigation();
 
     const handleSubmit = async () => {
  
@@ -41,7 +43,7 @@ function ForgotPassword() {
           } else {
       
               setLoading(false)
-              navigation.replace('RegisterVerification', {
+              navigation.navigate('RegisterVerification', {
                 email: email
               });
           }
@@ -52,6 +54,7 @@ function ForgotPassword() {
             ...styles.mainBody,
             backgroundColor: colors.bg_primary
           }}>
+            <CustomHeader title={"Forgot Password"} />
             <Loader loading={loading} />
             <KeyboardAwareScrollView style={{ marginTop: 30 }} resetScrollToCoords={{ x: 0, y: 0 }}>
                 <View>

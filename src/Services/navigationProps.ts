@@ -1,4 +1,6 @@
 import { DrawerNavigationProp } from "@react-navigation/drawer";
+import { loginRoutesNames } from "../Navigator/LoginNavigator";
+
 
 export type RootStackParamList = {
     ProfileStack: {
@@ -10,7 +12,9 @@ export type RootStackParamList = {
     };
     DrawerNavigation: undefined;
     Splash: undefined;
-    LoginNavigator: undefined;
+    LoginNavigator?: {
+        screen: loginRoutesNames 
+    };
     CreateStack: {
         screen: string,
         params: {
@@ -30,6 +34,14 @@ export type RootStackParamList = {
     MessagesStack: undefined;
     RegisterVerificationCode: {
         code: string[] | false;
+        [x: string]: any;
+    };
+    ChangePassword: {
+        code: string[] | false;
+        [x: string]: any;
+    };
+    WebViewScreen: {
+        url: string;
         [x: string]: any;
     };
 };

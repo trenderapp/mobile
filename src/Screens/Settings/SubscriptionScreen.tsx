@@ -9,7 +9,6 @@ import NormalCard from '../../Components/Subscriptions/NormalCard';
 import StandardCard from '../../Components/Subscriptions/StandardCard';
 import PremiumCard from '../../Components/Subscriptions/PremiumCard';
 import EliteCard from '../../Components/Subscriptions/EliteCard';
-import { axiosInstance } from '../../Services';
 import { SubscriptionInterface } from 'trender-client';
 
 function SubscriptionScreen() {
@@ -46,7 +45,7 @@ function SubscriptionScreen() {
     }
 
     const getSubscriptions = async () => {
-        const request = await client.subscription.fetch();
+        const request = await client.subscription.fetch();        
         const response = request.data;
         if (response) return setSubscriptions(response)
     }

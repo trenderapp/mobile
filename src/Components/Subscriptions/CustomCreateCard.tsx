@@ -1,10 +1,12 @@
 import React from 'react';
 import { Button, Card, TextInput, Text, Divider } from 'react-native-paper';
 import { View } from 'react-native';
+import Toast from 'react-native-toast-message';
+import { useNavigation } from "@react-navigation/native";
 import SelectDropdown from 'react-native-select-dropdown'
 import { getUserSubscriptionResponseInterface } from "trender-client/Managers/Interfaces/CustomSubscription";
-import { subscriptionCurrencyArray } from "../../Services";
-import { useTheme } from "../Container";
+import { navigationProps, subscriptionCurrencyArray } from "../../Services";
+import { useClient, useTheme } from "../Container";
 import { useTranslation } from 'react-i18next';
 
 
@@ -23,12 +25,23 @@ const CustomSubscriptionCreateCard = ({ subscription,setCurrency, setPrice, inpu
 
     const { colors } = useTheme();
     const { t } = useTranslation();
+    const { client } = useClient();
+    const navigation = useNavigation<navigationProps>();
+    
+    const openDashboard = async () => {
+        const request = await client.subscription.custom.dashboard();
+        if(request.error) return Toast.show({ text1: t(`errors.${request.error.code}`) as string });
+        navigation.navigate("WebViewScreen", {
+            url: request.data?.url ?? ""
+        });
+    }
 
     return (
         <Card style={{
             backgroundColor: colors.bg_secondary,
             margin: 5
         }}>
+            <Button mode='contained-tonal' onPress={() => openDashboard()}>Dashboard</Button>
             <Card.Content>
                 <Text>Create to my account :</Text>
                 <View style={{

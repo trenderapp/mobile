@@ -18,6 +18,8 @@ import VerificationCode from './Screens/Login/Verify/VerificationCode';
 import 'dayjs/locale/fr'
 import 'dayjs/locale/en'
 import DrawerNavigation from './Components/Container/DrawerNavigation';
+import ChangePassword from './Screens/Login/ChangePassword';
+import WebViewScreen from './Screens/Other/WebViewScreen';
 
 const Stack = createStackNavigator();
 
@@ -30,6 +32,16 @@ function Routes() {
     const navigation = useNavigation();
     const [routes] = useState([
         { name: "DrawerNavigation", screen: DrawerNavigation },
+        /*{ name: "ProfileStack", screen: ProfileStack},
+        { name: "CreateStack", screen: CreateStack},
+        { name: "PostStack", screen: PostStack},
+        { name: "SettingsStack", screen: SettingsStack},
+        { name: "MessagesStack", screen: MessageStack}*/
+    ])
+    const [allRoutes] = useState([
+        { name: "RegisterVerificationCode", screen: VerificationCode },
+        { name: "ChangePassword", screen: ChangePassword },
+        { name: "WebViewScreen", screen: WebViewScreen },
         /*{ name: "ProfileStack", screen: ProfileStack},
         { name: "CreateStack", screen: CreateStack},
         { name: "PostStack", screen: PostStack},
@@ -59,14 +71,23 @@ function Routes() {
             if (!initialUrl) return;
 
             const [param] = parseURL(initialUrl);
-            if (param.startsWith("/register/verify")) return navigation.navigate("RegisterVerificationCode", {
-                code: param.split("/register/verify").slice(1)[0].replace("/", "")
-            });
+
+            if(param.startsWith("/register/verify")) {
+                return navigation.navigate("RegisterVerificationCode", {
+                    code: param.split("/register/verify").slice(1)[0].replace("/", "")
+                });
+            } else  if(param.startsWith("/recovery/password")) {
+                return navigation.navigate("ChangePassword", {
+                    code: param.split("/recovery/password").slice(1)[0].replace("/", "")
+                });
+            } else {
+                return;
+            }
         };
 
         getUrlAsync();
 
-    }, [])
+    }, [Linking])
 
     const registerFCMToken = async () => {
         const fcmToken = await requestNotificationPermission();
@@ -110,7 +131,11 @@ function Routes() {
                     )
 
             }
-            <Stack.Screen name="RegisterVerificationCode" options={{ headerShown: false }} component={VerificationCode} />
+            {
+                allRoutes.map((r, index) => <Stack.Screen key={index} name={r.name} component={r.screen} options={{
+                    cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
+                }} />)
+            }
         </Stack.Navigator>
     )
 }

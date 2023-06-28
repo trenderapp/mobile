@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Toast from 'react-native-toast-message';
 import { FlatList } from 'react-native';
-import { Button, Card, TextInput, Text, Divider } from 'react-native-paper';
+import { useNavigation } from "@react-navigation/native";
+import { Button, Card, Text } from 'react-native-paper';
+import dayjs from 'dayjs';
 
 import SettingsContainer from '../../Components/Container/SettingsContainer';
 import { useClient, useTheme } from '../../Components/Container';
@@ -10,6 +12,7 @@ import { Loader } from '../../Other';
 import { getUserActiveSubscriptionInterface, getUserSubscriptionResponseInterface } from 'trender-client/Managers/Interfaces/CustomSubscription';
 import { currencyType } from 'trender-client/Managers/Interfaces/Subscription';
 import CustomSubscriptionCreateCard from '../../Components/Subscriptions/CustomCreateCard';
+import { messageFormatDate, navigationProps } from '../../Services';
 
 const convertToFloat = (inputValue: string) => {
     // Supprime les espaces vides en début et fin de chaîne
@@ -30,6 +33,7 @@ function Customsubscriptioncreen() {
 
     const { t } = useTranslation();
     const { user, client } = useClient();
+    const navigation = useNavigation<navigationProps>();
     const { colors } = useTheme();
     const [loading, setLoading] = useState<boolean>(false);
     const [subscription, setsubscription] = useState<getUserSubscriptionResponseInterface | undefined>(undefined)
@@ -39,6 +43,15 @@ function Customsubscriptioncreen() {
         symbol: "$",
         name: "usd"
     })
+    const [active, setCustomActive] = useState<boolean>(false);
+
+    const linkConnectAccount = async () => {
+        const request = await client.subscription.custom.register();
+        if(request.error) return Toast.show({ text1: t(`errors.${request.error.code}`) as string });
+        navigation.navigate("WebViewScreen", {
+            url: request.data.url
+        });
+    }
 
     const setActive = () => {
         if (!subscription) return;
@@ -74,6 +87,10 @@ function Customsubscriptioncreen() {
     }
 
     const getsubscription = async () => {
+        const request_active = await client.subscription.custom.isActive();        
+        if(request_active.data?.active) setCustomActive(request_active.data.active);
+        if(!request_active.data?.active) return;
+
         const request = await client.subscription.custom.fetch(user.user_id);
         if (request.error || !request.data) return setsubscription({
             active: false,
@@ -96,8 +113,7 @@ function Customsubscriptioncreen() {
         const request = await client.subscription.custom.list();
         if (request.error || !request.data) return;
         const response = request.data;
-
-        setSubscriptions(response)
+        setSubscriptions(response);
     }
 
     useEffect(() => {
@@ -106,30 +122,33 @@ function Customsubscriptioncreen() {
     }, [])
 
     return (
-        <SettingsContainer title={t("settings.custom_subscription")}>
+        <SettingsContainer title={t("settings.custom_subscriptions")}>
             {
-                subscription ? <CustomSubscriptionCreateCard
-                    subscription={subscription}
-                    currency={currency}
-                    inputPrice={inputPrice}
-                    loading={loading}
-                    sendInformations={sendInformations}
-                    setActive={setActive}
-                    setCurrency={setCurrency}
-                    setPrice={setPrice}
-                /> : <Loader />
+                subscription ? !active ? <Button onPress={() => linkConnectAccount()} mode='contained-tonal'>Activate Custom Subscription</Button> : <CustomSubscriptionCreateCard
+                subscription={subscription}
+                currency={currency}
+                inputPrice={inputPrice}
+                loading={loading}
+                sendInformations={sendInformations}
+                setActive={setActive}
+                setCurrency={setCurrency}
+                setPrice={setPrice}
+            /> : <Loader />
             }
             <FlatList
                 data={subscriptions}
                 keyExtractor={(item) => item.subscription_info.subscription_id}
                 ListEmptyComponent={<Text>You didn't subscribe to an account</Text>}
+                ListHeaderComponent={<Text variant='titleMedium'>My subscriptions :</Text>}
                 renderItem={({ item }) => (
                     <Card style={{
                         backgroundColor: colors.bg_secondary,
                         margin: 5
                     }}>
                         <Card.Content>
-                            <Text>{item.from.username}</Text>
+                            <Text>To : {item.from.username}</Text>
+                            <Text>Next renew : {item.active ? messageFormatDate(dayjs(item.last_renew).add(1, "month").format()).fullDate() : "-"}</Text>
+                            <Text>Price : {item?.price ?? 0}</Text>
                         </Card.Content>
                         <Card.Actions>
                             <Button>{t("commons.cancel")}</Button>

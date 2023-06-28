@@ -5,10 +5,11 @@ import { NavigationProvider } from "../Components/Container";
 import { BottomNavigation } from ".";
 import { PostStack, ProfileStack, CreateStack, MessageStack, SettingsStack } from "./Stacks";
 import { NotificationScreen } from "../Screens/Notifications";
+import { NavigationContextI } from "../Components/Container/Navigation/NavigationContext";
 
 const Stack = createStackNavigator();
 
-export default function MainNavigation({ navigation }) {
+export default function MainNavigation({ navigation }: { navigation: NavigationContextI }) {
 
   const [routes] = useState([
     { name: "BottomNavigation", screen: BottomNavigation },

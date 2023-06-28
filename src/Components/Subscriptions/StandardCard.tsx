@@ -22,34 +22,6 @@ function StandardCard({ subs }: sectionProps) {
 
     const hideDialog = () => setVisible(false);
 
-    const openPaymentPage = async () => {
-        if(!subs || loading) return;
-        setLoading(true)
-        const request = await axiosInstance.post("/subscriptions/checkout", {
-            subscription_id: subs.find(s => s.interval === subscriptionType)?.subscription_id,
-        }, {
-            headers: {
-                "trendertokenapi": user.token
-            }
-        })
-
-        const response = request.data;
-
-        if (response.data) {
-            hideDialog()
-            setLoading(false)
-            navigation?.push("SubscriptionValidationScreen", {
-                url: response.data.url,
-                subscription_id: subs.find(s => s.interval === subscriptionType)?.subscription_id
-            })
-
-        } else {
-            hideDialog()
-            setLoading(false)
-            Toast.show({ text1: t(`errors.${response.error.code}`) as string });
-        }
-    }
-
     const openCheckOutPage = async () => {
         if(!subs) return;
         const find_sub = subs.find(s => s.interval === subscriptionType);
