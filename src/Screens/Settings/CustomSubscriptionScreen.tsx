@@ -12,7 +12,8 @@ import { Loader } from '../../Other';
 import { getUserActiveSubscriptionInterface, getUserSubscriptionResponseInterface } from 'trender-client/Managers/Interfaces/CustomSubscription';
 import { currencyType } from 'trender-client/Managers/Interfaces/Subscription';
 import CustomSubscriptionCreateCard from '../../Components/Subscriptions/CustomCreateCard';
-import { messageFormatDate, navigationProps } from '../../Services';
+import { messageFormatDate, navigationProps, subscriptionCurrencyArray } from '../../Services';
+import { UserInfo } from '../../Components/Member';
 
 const convertToFloat = (inputValue: string) => {
     // Supprime les espaces vides en début et fin de chaîne
@@ -49,7 +50,7 @@ function Customsubscriptioncreen() {
         const request = await client.subscription.custom.register();
         if(request.error) return Toast.show({ text1: t(`errors.${request.error.code}`) as string });
         navigation.navigate("WebViewScreen", {
-            url: request.data.url
+            url: request?.data?.url ?? ""
         });
     }
 
@@ -116,6 +117,12 @@ function Customsubscriptioncreen() {
         setSubscriptions(response);
     }
 
+    const cancelSubscription = async (target_id: string) => {
+        await client.subscription.custom.cancel(target_id);
+        Toast.show({ text1: t(`commons.success`) as string });        
+        setSubscriptions(subscriptions?.filter(s => s.subscription_info.subscription_id !== target_id))
+    }
+
     useEffect(() => {
         getsubscription()
         getsubscriptions()
@@ -146,12 +153,12 @@ function Customsubscriptioncreen() {
                         margin: 5
                     }}>
                         <Card.Content>
-                            <Text>To : {item.from.username}</Text>
+                            <UserInfo informations={item.from} onPress={undefined} full_width={undefined} noDescription={true} LeftComponent={undefined} />
                             <Text>Next renew : {item.active ? messageFormatDate(dayjs(item.last_renew).add(1, "month").format()).fullDate() : "-"}</Text>
-                            <Text>Price : {item?.price ?? 0}</Text>
+                            <Text>Price : {item.subscription_info.price} {subscriptionCurrencyArray.find(s => s.name === item.subscription_info.currency)?.symbol} /month</Text>
                         </Card.Content>
                         <Card.Actions>
-                            <Button>{t("commons.cancel")}</Button>
+                            <Button mode='elevated' theme={{ colors: { elevation: { level1: colors.warning_color } } }} onPress={() => cancelSubscription(item.subscription_info.subscription_id)}>{t("commons.cancel")}</Button>
                         </Card.Actions>
                     </Card>
                 )}
