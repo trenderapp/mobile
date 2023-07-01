@@ -27,6 +27,7 @@ function PostScreenSearch({ route }: any) {
     }
 
     useEffect(() => {
+        dispatch(initPostSearch([]));
         getData()
     }, [query])
     

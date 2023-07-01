@@ -120,7 +120,9 @@ function BottomButtonPostCreator({ setFiles, addFiles, setCameraVisible, content
     )
     return (
         <View style={{
-            backgroundColor: colors.bg_secondary
+            backgroundColor: colors.bg_secondary,
+            margin: -5,
+            marginRight: 5
         }}>
             <View style={{
                 flexDirection: "row",

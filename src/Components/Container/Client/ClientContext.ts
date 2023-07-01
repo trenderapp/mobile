@@ -24,7 +24,8 @@ const ClientContext = React.createContext<ClientContextI>({
         premium_type: 0,
         flags: 0,
         token: "",
-        user_id: "00000000"
+        user_id: "00000000",
+        payout_enabled: false
     },
     state: "loading",
     setValue: () => {}

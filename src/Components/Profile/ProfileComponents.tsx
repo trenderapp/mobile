@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { View, TouchableOpacity } from "react-native";
-import { Divider, Text, IconButton, Button } from "react-native-paper";
+import { Divider, Text, IconButton, Button, Tooltip } from "react-native-paper";
 import { userFlags } from "trender-client";
 import dayjs from "dayjs";
 import { useTranslation } from 'react-i18next'
@@ -84,6 +84,7 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
                             flexDirection: "row",
                             alignItems: "center"
                         }}>
+                            { informations.follow_back && <Tooltip title="Follow Back"><IconButton icon="account-sync" /></Tooltip> }
                             <SvgElement margin={15} onPress={() => setModalVisible(true)} size={22} name="ellipsis" />
                             {informations.user_id !== user?.user_id && informations.allow_dm && <IconButton onPress={() => createDM()} size={22} icon="email" />}
                             {informations.user_id !== user?.user_id && informations.custom_subscription && (
@@ -136,7 +137,6 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
                                 <Text><Text style={{ fontWeight: "900" }}>{informations.subscribers}</Text> {t("profile.subscribers").toLocaleLowerCase()}</Text>
                             </TouchableOpacity>
                             </View>
-                            { informations.follow_back && <Text> Follow you</Text> }
                         </View>
                     </View>
                 </View>

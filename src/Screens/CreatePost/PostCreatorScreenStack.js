@@ -4,10 +4,10 @@ import { FlatList, View, ScrollView } from 'react-native';
 import { connect, useDispatch } from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
 import Toast from 'react-native-toast-message';
-import { ProgressBar } from 'react-native-paper';
+import { ProgressBar, Button, Chip } from 'react-native-paper';
 import dayjs from 'dayjs';
 
-import { useClient, PostCreatorContainer, useNavigation } from '../../Components/Container';
+import { useClient, PostCreatorContainer, useNavigation, useTheme } from '../../Components/Container';
 import { axiosInstance } from '../../Services';
 import TextAreaAutoComplete from '../../Components/Posts/Creator/TextAreaAutoComplete';
 import BottomButtonPostCreator from '../../Components/Posts/Creator/BottomButton';
@@ -24,12 +24,16 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
 
   const { attached_post, shared_post, initFiles, initContent } = params;
   const [content, SetContent] = useState(initContent ?? "");
+  const [options, setOptions] = useState({
+    paid: false
+  })
   const [files, setFiles] = useState([]);
   const [sending, setSending] = useState({
     send: false,
     progress: 0
   });
   const { client, token, user } = useClient();
+  const { colors } = useTheme();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -47,7 +51,10 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
     if (content && content.length > advantages.textLength()) return Toast.show({ text1: t(`errors.2001`) })
     if (sending.send) return Toast.show({ text1: t(`errors.sending_form`) })
 
-    let data = { content: content ?? "" };
+    let data = { 
+      content: content ?? "", 
+      ...options 
+    };
 
     if (files.length > 0) {
       var formdata = new FormData();
@@ -153,7 +160,7 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
           <View style={[styles.row, { width: full_width, padding: 10 }]}>
             <Avatar size={45} url={client.user.avatar(user.user_id, user.avatar)} />
             <View style={[styles.column, { justifyContent: "flex-start", alignItems: "flex-start" }]}>
-              <Username created_at={dayjs().format()} user={user} />
+              <Username created_at={dayjs().format()} user={user} lefComponent={user.payout_enabled && <Chip onPress={() => setOptions({ ...options, paid: !options.paid })} icon={`cash${options.paid ? "" : "-remove"}`} theme={{ colors: { secondaryContainer: colors[options.paid ? "warning_color" : "good_color"] } }}>{options.paid ? "Paying" : "Free"}</Chip>} />
             </View>
           </View>
           <TextAreaAutoComplete autoFocus={true} value={content} setValue={(text) => SetContent(text)} />

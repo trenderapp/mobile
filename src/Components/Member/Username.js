@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 
 dayjs.extend(relativeTime)
 
-export default function Username({ user, created_at }) {
+export default function Username({ user, created_at, lefComponent }) {
 
     const { colors } = useTheme();
     const flags = new UserPermissions(user?.flags);
@@ -26,6 +26,7 @@ export default function Username({ user, created_at }) {
                     <Text style={[styles.text_muted, { color: colors.text_muted }]}>@{user?.nickname}</Text>
                     { user?.is_private && <SvgElement margin={5} size={15} name="lock" color={colors.text_normal} /> }
                     { flags.has(userFlags.VERIFIED_USER) && <SvgElement margin={5} name="verified" size={15} /> }
+                    { lefComponent && lefComponent }
                 </View>
             </View>
         </View>

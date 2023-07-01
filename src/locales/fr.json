@@ -67,7 +67,8 @@
         "explicit_content": "contenu explicite",
         "load_attached": "Charger la Trend originelle",
         "share": "Partager",
-        "load_shared": "Charger la Trend partagée",
+        "hidden": "Trend caché. Appuyer pour afficher",
+        "unavailable": "Indisponible",
         "deleted_post": "Cette Trend n'existe plus"
     },
     "login": {

@@ -67,7 +67,8 @@
         "explicit_content": "Explicit content",
         "load_attached": "Load attached Trend",
         "share": "Share",
-        "load_shared": "Load shared Trend",
+        "hidden": "Hidden Trend. Press to show more",
+        "unavailable": "Unavailable",
         "deleted_post": "This Trend doesn't exist"
     },
     "login": {

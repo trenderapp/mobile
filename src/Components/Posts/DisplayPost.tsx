@@ -36,9 +36,7 @@ const DisplayPosts: SectionProps = ({
     const { client } = useClient();
     const navigation = useNavigation();
     const [attached_post, setAttachedPost] = useState<PostInterface.postResponseSchema | undefined | false>(undefined);
-    const [shared_post, setSharedPost] = useState<PostInterface.postResponseSchema | undefined | false>(undefined);
     const [commentLoad, setCommentLoad] = useState(false);
-    const [shareLoad, setShareLoad] = useState(false);
 
     const loadAttachedPosts = async (post_id: string) => {
         setCommentLoad(true);
@@ -48,17 +46,8 @@ const DisplayPosts: SectionProps = ({
         return setAttachedPost(response.data);
     };
 
-    const loadSharedPosts = async (post_id: string) => {
-        setShareLoad(true);
-        const response = await client.post.fetchOne(post_id);
-        setShareLoad(false);
-        if (response.error || !response.data) return setSharedPost(false);
-        return setSharedPost(response.data);
-    };
-
     useEffect(() => {
         if (informations.attached_post_id && comments) loadAttachedPosts(informations.attached_post_id);
-        if (informations.shared_post_id && !is_share) loadSharedPosts(informations.shared_post_id);
     }, [informations]);
 
     return (
@@ -91,12 +80,14 @@ const DisplayPosts: SectionProps = ({
             </TouchableOpacity>
             {informations.shared_post_id && !is_share && (
                 <View style={{ marginLeft: 40, borderColor: colors.bg_secondary, borderWidth: 1, borderRadius: 8, padding: 10 }}>
-                    {shared_post ? (
-                        <DisplayPosts is_share={true} informations={shared_post} />
-                    ) : typeof shared_post === "boolean" && (
-                        <Button>{t("posts.deleted_post")}</Button>
-                    )}
-                    {shareLoad && <Loader />}
+                    {informations.shared_post && informations.shared_user ? (
+                        <DisplayPosts is_share={true} informations={{
+                            from: informations.shared_user,
+                            ...informations.shared_post as any
+                        }} />
+                        ) : typeof informations.shared_user === "object" ? <Button onPress={() => navigation?.push("PostStack", { screen: "PostScreen", params: { post_id: informations.shared_post_id } })}>{t("posts.hidden")}</Button>
+                            : <Button>{t("posts.unavailable")}</Button>
+                    }
                 </View>
             )}
             {!is_share && (

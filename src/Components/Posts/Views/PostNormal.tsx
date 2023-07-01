@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { View } from "react-native";
+import { Button } from "react-native-paper";
 import { PostInterface } from "trender-client";
 import { Markdown } from "../../Elements/Text";
 import { SinglePostContext } from "../PostContext.js";
@@ -19,13 +20,15 @@ type PostNormalContext = {
 function PostNormal() {
     
     const { info }: PostNormalContext = useContext(SinglePostContext);
-    const { client } = useClient();    
+    const { client } = useClient();
 
     return (
         <View>
             <Postheader info={info.from} created_at={info.created_at} />
                 <View style={{ padding: 5 }}>
-                    <Markdown content={info.content} />
+                    {
+                        info.display_not_allowed ? <Button onPress={() => {}}>Subscribe to {info.from.username} to display</Button> : <Markdown content={info.content} />
+                    }
                 </View>
             {
                 info?.type ?
