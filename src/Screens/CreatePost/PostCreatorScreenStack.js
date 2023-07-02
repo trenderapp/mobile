@@ -160,7 +160,7 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
           <View style={[styles.row, { width: full_width, padding: 10 }]}>
             <Avatar size={45} url={client.user.avatar(user.user_id, user.avatar)} />
             <View style={[styles.column, { justifyContent: "flex-start", alignItems: "flex-start" }]}>
-              <Username created_at={dayjs().format()} user={user} lefComponent={user.payout_enabled && <Chip onPress={() => setOptions({ ...options, paid: !options.paid })} icon={`cash${options.paid ? "" : "-remove"}`} theme={{ colors: { secondaryContainer: colors[options.paid ? "warning_color" : "good_color"] } }}>{options.paid ? "Paying" : "Free"}</Chip>} />
+              <Username created_at={dayjs().format()} user={user} lefComponent={user.payout_enabled && <Chip textStyle={{ fontSize: 10 }} onPress={() => setOptions({ ...options, paid: !options.paid })} icon={`cash${options.paid ? "" : "-remove"}`} theme={{ colors: { secondaryContainer: colors[options.paid ? "warning_color" : "good_color"] } }}>{options.paid ? "Paying" : "Free"}</Chip>} />
             </View>
           </View>
           <TextAreaAutoComplete autoFocus={true} value={content} setValue={(text) => SetContent(text)} />

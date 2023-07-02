@@ -1,8 +1,9 @@
 import React, { useContext, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { View, TouchableOpacity} from "react-native";
+import { Chip } from "react-native-paper";
 import styles from "../../../../Style/style";
-import { useClient } from "../../../Container";
+import { useClient, useTheme } from "../../../Container";
 import SvgElement from "../../../Elements/Svg";
 import { Avatar, Username } from "../../../Member";
 import Owner from "./Menu/Owner";
@@ -13,6 +14,7 @@ function Postheader({ info, created_at }) {
     
     const [showModal, setShowModal] = useState(false);
     const { client, user } = useClient();
+    const { colors } = useTheme();
     const navigation = useNavigation();
     const post = useContext(SinglePostContext);
 
@@ -35,7 +37,7 @@ function Postheader({ info, created_at }) {
                     alignItems: "flex-start"
                 } ]}>
                     <Avatar size={40} url={client.user.avatar(info?.user_id, info?.avatar)} />
-                    <Username user={info} created_at={created_at} />
+                    <Username user={info} created_at={created_at} lefComponent={post.info.paid && <Chip textStyle={{ fontSize: 10 }} theme={{ colors: { secondaryContainer: colors.off_color }}}>Premium</Chip>} />
                 </View>
             </TouchableOpacity>
             <SvgElement onPress={() => setShowModal(true)} size={22} name="ellipsis" />

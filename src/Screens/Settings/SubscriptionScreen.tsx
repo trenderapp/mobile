@@ -19,7 +19,7 @@ function SubscriptionScreen() {
     const { colors } = useTheme();
     const [loading, setLoading] = useState<boolean>(false);
     const [visible, setVisible] = useState<boolean>(false);
-    const [subscriptions, setSubscriptions] = useState<SubscriptionInterface.getSubscriptionsResponseInterface[]| undefined>(undefined)
+    const [subscriptions, setSubscriptions] = useState<SubscriptionInterface.getSubscriptionsResponseInterface[]| undefined>(undefined);
 
     const hideDialog = () => setVisible(false);
 
@@ -78,7 +78,7 @@ function SubscriptionScreen() {
                         <Text variant="bodyMedium">{user.premium_type === 0 ? "Free" : user.premium_type === 1 ? "Standard" : user.premium_type === 2 ? "Premium" : user.premium_type === 3 ? "Elite" : "Custom"}</Text>
                     </Card.Content>
                     <Card.Actions>
-                        <Button onPress={() => openDashboardPage()}>{t("subscription.dashboard")}</Button>
+                        <Button loading={loading} focusable={!loading} onPress={() => openDashboardPage()}>{t("subscription.dashboard")}</Button>
                     </Card.Actions>
                 </Card>
                 <StandardCard subs={subscriptions ? subscriptions.filter(s => s.premium_type === 1) : undefined} />

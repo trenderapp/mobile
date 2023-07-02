@@ -37,6 +37,7 @@ function Customsubscriptioncreen() {
     const navigation = useNavigation<navigationProps>();
     const { colors } = useTheme();
     const [loading, setLoading] = useState<boolean>(false);
+    const [loadingActivation, setLoadingActivation] = useState<boolean>(false);
     const [subscription, setsubscription] = useState<getUserSubscriptionResponseInterface | undefined>(undefined)
     const [subscriptions, setSubscriptions] = useState<getUserActiveSubscriptionInterface[]>()
     const [inputPrice, setInputPrice] = useState('0');
@@ -47,8 +48,10 @@ function Customsubscriptioncreen() {
     const [active, setCustomActive] = useState<boolean>(false);
 
     const linkConnectAccount = async () => {
+        setLoadingActivation(true)
         const request = await client.subscription.custom.register();
         if(request.error) return Toast.show({ text1: t(`errors.${request.error.code}`) as string });
+        setLoadingActivation(false)
         navigation.navigate("WebViewScreen", {
             url: request?.data?.url ?? ""
         });
@@ -131,7 +134,7 @@ function Customsubscriptioncreen() {
     return (
         <SettingsContainer title={t("settings.custom_subscriptions")}>
             {
-                !active ? <Button onPress={() => linkConnectAccount()} mode='contained-tonal'>{t("subscription.custom_activate")}</Button> : subscription ? <CustomSubscriptionCreateCard
+                !active ? <Button loading={loadingActivation} focusable={!loadingActivation} onPress={() => linkConnectAccount()} mode='contained-tonal'>{t("subscription.custom_activate")}</Button> : subscription ? <CustomSubscriptionCreateCard
                 subscription={subscription}
                 currency={currency}
                 inputPrice={inputPrice}
