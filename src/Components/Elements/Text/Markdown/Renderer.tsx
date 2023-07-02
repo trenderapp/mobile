@@ -38,7 +38,7 @@ const Renderer: SectionProps = ({ content, noBr, maxLine }) => {
     const enter = content.split("\n");
 
     return (
-        <Text numberOfLines={maxLine}>
+        <Text>
             {
                 enter.map((text, idx) =>
                     <Text key={idx}>{noBr && "\n"}{text.trim().split(" ").map((text, idx) => {

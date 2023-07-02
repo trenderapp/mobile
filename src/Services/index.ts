@@ -119,6 +119,12 @@ export const cguLink = (language: string) => {
   return lang;
 }
 
+export const cgvLink = (language: string) => {
+  let lang = "https://cdn.trenderapp.com/assets/legal/TOS.pdf"
+  if(language === "fr") lang = "https://cdn2.trenderapp.com/assets/legal/CGV.pdf"
+  return lang;
+}
+
 /**
  * 
  * @param {String} url 

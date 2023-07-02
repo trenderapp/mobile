@@ -76,7 +76,7 @@ const DisplayPosts: SectionProps = ({
                     </View>
                 )}
 
-                <PostNormal />
+                <PostNormal maxLines={comments ? undefined : 5} />
             </TouchableOpacity>
             {informations.shared_post_id && !is_share && (
                 <View style={{ marginLeft: 40, borderColor: colors.bg_secondary, borderWidth: 1, borderRadius: 8, padding: 10 }}>

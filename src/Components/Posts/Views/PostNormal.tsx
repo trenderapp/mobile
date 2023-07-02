@@ -14,10 +14,10 @@ type PostNormalContext = {
         is_comment?: boolean;
         is_share?: boolean;
         no_bottom?: boolean;
-    }
+    },
 }
 
-function PostNormal() {
+function PostNormal({ maxLines }: { maxLines?: number }) {
     
     const { info }: PostNormalContext = useContext(SinglePostContext);
     const { client } = useClient();
@@ -27,7 +27,7 @@ function PostNormal() {
             <Postheader info={info.from} created_at={info.created_at} />
                 <View style={{ padding: 5 }}>
                     {
-                        info.display_not_allowed ? <Button onPress={() => {}}>Subscribe to {info.from.username} to display</Button> : <Markdown content={info.content} />
+                        info.display_not_allowed ? <Button onPress={() => {}}>Subscribe to {info.from.username} to display</Button> : <Markdown maxLine={maxLines} content={info.content} />
                     }
                 </View>
             {

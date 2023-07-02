@@ -5,7 +5,7 @@ import { Text, Button, Dialog, Paragraph, Portal, TextInput as PaperTextInput } 
 import { useClient, useTheme } from '../../Components/Container';
 import SettingsContainer from '../../Components/Container/SettingsContainer';
 import { TextInput } from '../../Components/Elements/Input';
-import { axiosInstance, cguLink, openURL } from '../../Services';
+import { axiosInstance, cguLink, cgvLink, openURL } from '../../Services';
 import { useNavigation } from "@react-navigation/native";
 import { HomeButtonSection } from '../../Components/Settings';
 import { clearStorage } from '../../Services/storage';
@@ -65,6 +65,7 @@ function SecurityScreen() {
         <SettingsContainer title={t("settings.security")}>
             <Button style={{ alignItems: "flex-start", marginLeft: 5 }} onPress={() => changeNSFW()} loading={loading} icon={client.user.nsfw_filter ? "lock" : "lock-open-variant"} >{t("settings.protect_nsfw")}</Button>
             <HomeButtonSection onPress={() => openURL(cguLink(i18n.language))} t={t("settings.t_and_s")} />
+            <HomeButtonSection onPress={() => openURL(cgvLink(i18n.language))} t={t("settings.t_of_s")} />
             <Portal>
                 <Dialog visible={visible} onDismiss={hideDialog}>
                     <Dialog.Title>{t("settings.delete_account")}</Dialog.Title>

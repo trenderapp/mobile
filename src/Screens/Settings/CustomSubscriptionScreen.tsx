@@ -88,7 +88,7 @@ function Customsubscriptioncreen() {
     }
 
     const getsubscription = async () => {
-        const request_active = await client.subscription.custom.isActive();        
+        const request_active = await client.subscription.custom.isActive();
         if(request_active.data?.active) setCustomActive(request_active.data.active);
         if(!request_active.data?.active) return;
 
@@ -131,7 +131,7 @@ function Customsubscriptioncreen() {
     return (
         <SettingsContainer title={t("settings.custom_subscriptions")}>
             {
-                subscription ? !active ? <Button onPress={() => linkConnectAccount()} mode='contained-tonal'>Activate Custom Subscription</Button> : <CustomSubscriptionCreateCard
+                !active ? <Button onPress={() => linkConnectAccount()} mode='contained-tonal'>{t("subscription.custom_activate")}</Button> : subscription ? <CustomSubscriptionCreateCard
                 subscription={subscription}
                 currency={currency}
                 inputPrice={inputPrice}

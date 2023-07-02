@@ -63,9 +63,9 @@ function SubscriptionScreen() {
                 }}>
                     <Portal>
                         <Dialog visible={visible} onDismiss={hideDialog}>
-                            <Dialog.Title>Cancel your subscription ?</Dialog.Title>
+                            <Dialog.Title>{t("subscription.cancel")}</Dialog.Title>
                             <Dialog.Content>
-                                <Text>Your subscription will end at the end of period</Text>
+                                <Text>{t("subscription.will_end")}</Text>
                             </Dialog.Content>
                             <Dialog.Actions>
                                 <Button uppercase={false} onPress={() => hideDialog()}>{t("commons.cancel")}</Button>
@@ -74,7 +74,7 @@ function SubscriptionScreen() {
                         </Dialog>
                     </Portal>
                     <Card.Content>
-                        <Text variant="titleLarge">Current subscription</Text>
+                        <Text variant="titleLarge">{t("subscription.current")}</Text>
                         <Text variant="bodyMedium">{user.premium_type === 0 ? "Free" : user.premium_type === 1 ? "Standard" : user.premium_type === 2 ? "Premium" : user.premium_type === 3 ? "Elite" : "Custom"}</Text>
                     </Card.Content>
                     <Card.Actions>
