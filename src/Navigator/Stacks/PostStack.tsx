@@ -3,6 +3,7 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 
 import PostScreen from "../../Screens/Posts/PostScreen";
 import PostScreenSearch from "../../Screens/Posts/PostScreenSearch";
+import PostScreenShares from "../../Screens/Posts/PostScreenShares";
 
 const Stack = createStackNavigator();
 
@@ -10,7 +11,8 @@ const PostStack = () => {
 
   const [routes] = useState([
     { name: "PostScreen", screen: PostScreen },
-    { name: "PostScreenSearch", screen: PostScreenSearch }
+    { name: "PostScreenSearch", screen: PostScreenSearch },
+    { name: "PostScreenShares", screen: PostScreenShares }
   ])
 
   return (

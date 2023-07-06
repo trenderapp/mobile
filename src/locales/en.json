@@ -69,7 +69,8 @@
         "share": "Share",
         "hidden": "Hidden Trend. Press to show more",
         "unavailable": "Unavailable",
-        "deleted_post": "This Trend doesn't exist"
+        "deleted_post": "This Trend doesn't exist",
+        "shares": "Shares"
     },
     "login": {
         "already_account": "Already have an account?",
@@ -116,6 +117,7 @@
         "sure_logout": "Are you sure you want to logout?",
         "affiliation": "Affiliation",
         "affiliation_code": "Affiliation code",
+        "affiliate_use_code": "Users affiliate to me : {{number}}",
         "my_code": "My code",
         "protect_nsfw": "Block explicit contents",
 

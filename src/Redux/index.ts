@@ -14,12 +14,14 @@ import { commentFeedReducer } from './commentFeed';
 import { guildListReducer } from './guildList';
 import { guildMessagesReducer } from './guildMessages';
 import { notificationFeedReducer } from './NotificationFeed';
+import { postSharesReducer } from './PostShares';
 
 // Combine les réducteurs en un seul objet de réducteur
 const rootReducer = combineReducers({
   // Associe chaque réducteur à une clé dans l'état de l'application
   mainFeed: mainFeedReducer,
   postSearch: postSearchReducer,
+  postShares: postSharesReducer,
   exploreRecentTrends: exploreRecentTrendsReducer,
   exploreWorldRecentTrends: exploreWorldRecentTrendsReducer,
   exploreTopTrends: exploreTopTrendsReducer,

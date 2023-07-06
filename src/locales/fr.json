@@ -69,7 +69,8 @@
         "share": "Partager",
         "hidden": "Trend caché. Appuyer pour afficher",
         "unavailable": "Indisponible",
-        "deleted_post": "Cette Trend n'existe plus"
+        "deleted_post": "Cette Trend n'existe plus",
+        "shares": "Partages"
     },
     "login": {
         "already_account": "Tu as déjà un compte ?",
@@ -116,6 +117,7 @@
         "sure_logout": "Êtes-vous sûr de vouloir vous déconnecter ?",
         "affiliation": "Affiliation",
         "affiliation_code": "Code affilié",
+        "affiliate_use_code": "Utilisateurs affiliés à moi : {{number}}",
         "my_code": "Mon code",
         "protect_nsfw": "Bloquer les contenus explicite",
     

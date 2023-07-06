@@ -4,7 +4,7 @@ import { Share, View } from 'react-native';
 import styles from "../../../../../Style/style";
 import LikeButton from "./LikeButton";
 import { SinglePostContext } from "../../../PostContext.js";
-import { IconButton, Text, Tooltip } from "react-native-paper";
+import { IconButton, Text } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationContextI } from "../../../../Container/Navigation/NavigationContext";
 import { postResponseSchema } from "trender-client/Managers/Interfaces/Post";
@@ -46,7 +46,12 @@ function Postbottom() {
                             initContent: ""
                         }
                     }) as any} icon="share" />
-                    <Text>{info?.shares ?? 0}</Text>
+                    <Text onPress={() => navigation?.navigate("PostStack", {
+                        screen: "PostScreenShares",
+                        params: {
+                            post_id: info.post_id
+                        }
+                    })}>{info?.shares ?? 0}</Text>
                 </View>
                 <View style={styles.row}>
                     <LikeButton />

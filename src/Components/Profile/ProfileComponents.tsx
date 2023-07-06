@@ -100,14 +100,16 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
                     <View style={{ paddingTop: 5 }}>
                         <Text>{informations.username}</Text>
                         <View style={styles.row}>
+                            {informations.is_private && <SvgElement size={18} name="lock" color={colors.text_normal} />}
                             {informations.certified && <SvgElement size={18} name="verified" color={colors.text_normal} />}
                             {client.user.flags(informations.flags.toString()).has(userFlags.TRENDER_EMPLOYEE) && <UserBadges url={client.user.badge("TRENDER_EMPLOYEE")} />}
                             {client.user.flags(informations.flags.toString()).has(userFlags.EARLY_SUPPORTER) && <UserBadges url={client.user.badge("EARLY_SUPPORTER")} />}
                             {client.user.flags(informations.flags.toString()).has(userFlags.TRENDER_PARTNER) && <UserBadges url={client.user.badge("TRENDER_PARTNER")} />}
-                            {client.user.flags(informations.premium_type.toString()).has(userFlags.TRENDER_PARTNER) && <UserBadges url={client.user.badge("PREMIUM_1")} />}
+                            {client.user.flags(informations.flags.toString()).has(userFlags.PREMIUM_USER) && <UserBadges url={client.user.badge("SUB_1")} />}
+                            {client.user.flags(informations.flags.toString()).has(userFlags.PREMIUM_2_USER) && <UserBadges url={client.user.badge("SUB_2")} />}
+                            {client.user.flags(informations.flags.toString()).has(userFlags.PREMIUM_3_USER) && <UserBadges url={client.user.badge("SUB_3")} />}
                         </View>
                         <View style={styles.row}>
-                            {informations.is_private && <SvgElement size={18} name="lock" color={colors.text_normal} />}
                             <Text>@{informations.nickname}</Text>
                         </View>
                     </View>

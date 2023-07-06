@@ -106,6 +106,10 @@ function Customsubscriptioncreen() {
         });
         const response = request.data;
 
+        setCurrency({
+            name: response.currency,
+            symbol: subscriptionCurrencyArray.find(c => c.name === response.currency)?.symbol ?? "$"
+        })
         setInputPrice((response.price / 100).toFixed(2))
         setsubscription({
             ...response,

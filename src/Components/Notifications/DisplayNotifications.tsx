@@ -5,7 +5,6 @@ import { Username, Avatar } from "../Member";
 import { useNavigation } from '@react-navigation/native';
 import { useClient, useTheme } from "../Container";
 import styles, { full_width } from "../../Style/style";
-import SvgElement from "../Elements/Svg";
 import FastImage from "react-native-fast-image";
 import { navigationProps } from "../../Services";
 import { notificationTypeInterface } from "trender-client/Managers/Interfaces/Global";
@@ -22,11 +21,13 @@ const DisplayNotifications = ({ info }: any) => {
             case "likes":
                 return "heart"
             case "mentions":
-                return "comment"
+                return "at"
             case "shares":
                 return "share"
             case "follows":
                 return "account-plus"
+            case "comments":
+                return "comment"
             default:
                 return ""
         }
@@ -87,7 +88,7 @@ const DisplayNotifications = ({ info }: any) => {
                             <IconButton icon={svgName(info.notification_type)} size={13}/>
                         </View>
                     </View>
-                    <Username user={info?.from} created_at={info?.created_at} />
+                    <Username user={info?.from} created_at={info?.created_at} lefComponent={undefined} />
                 </View>
                 <View style={{ paddingLeft: 5 }}>
                     <Markdown maxLine={3} content={info?.post?.content ?? ""} />
