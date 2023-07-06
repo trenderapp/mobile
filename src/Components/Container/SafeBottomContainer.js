@@ -19,7 +19,7 @@ function SafeBottomContainer({ children , safeAreaInsets }) {
                 backgroundColor: colors.bg_primary,
                 marginBottom: insets.bottom,
                 marginHorizontal: Math.max(insets.left, insets.right),
-                padding: 0
+                padding: 5
             }}>
             { children }
         </View>

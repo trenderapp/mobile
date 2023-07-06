@@ -162,6 +162,9 @@ function TextAreaAutoComplete({ value, setValue, maxLength, autoFocus }) {
                 value={value}
                 maxLength={maxLength}
                 placeholderTextColor={colors.text_normal}
+                style={{
+                    color: colors.text_normal
+                }}
                 placeholder={t("posts.what_new")}
             />
             {state.type === "user" &&

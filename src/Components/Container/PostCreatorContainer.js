@@ -11,7 +11,7 @@ const PostCreatorContainer = ({ children, changeVisibilty, onSave, dontSend }) =
 
   return (
     <SafeBottomContainer>
-      <Appbar.Header style={{ width: full_width, backgroundColor: colors.bg_primary, flexDirection: "row", justifyContent: "space-between" }}>
+      <Appbar.Header style={{ width: full_width, backgroundColor: colors.bg_primary, flexDirection: "row", justifyContent: "space-between", borderBottomColor: colors.bg_secondary, borderBottomWidth: 1 }}>
         <Appbar.BackAction onPress={() => changeVisibilty()} />
         <View style={[styles.row, { justifyContent: "flex-end" }]}>
           <Appbar.Action disabled={dontSend} color={colors.text_normal} icon="send" onPress={() => onSave()} />

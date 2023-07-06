@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, View, ScrollView } from 'react-native';
+import { FlatList, View, ScrollView , Platform, KeyboardAvoidingView } from 'react-native';
 import { connect, useDispatch } from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
 import Toast from 'react-native-toast-message';
-import { ProgressBar, Button, Chip } from 'react-native-paper';
+import { ProgressBar, Chip } from 'react-native-paper';
 import dayjs from 'dayjs';
 
 import { useClient, PostCreatorContainer, useNavigation, useTheme } from '../../Components/Container';
@@ -151,10 +151,30 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
     setFiles(array);
   }
 
+  const BottomItems = () => (
+    <View style={{
+      bottom: 0,
+      marginLeft: -5,
+      width: full_width
+    }}>
+      <FlatList
+        horizontal={true}
+        data={files}
+        keyExtractor={(item, idx) => idx}
+        scrollsToTop={true}
+        renderItem={({ item, index }) => item?.type.startsWith("video") ? <CreatorVideoDisplay deleteImage={(i) => deleteImage(i)} index={index} uri={item.uri} /> : <CreatorImageDisplay deleteImage={(i) => deleteImage(i)} index={index} uri={item.uri} />}
+      />
+      <BottomButtonPostCreator content={content} maxLength={advantages.textLength()} setFiles={(info) => setFiles([...files, info])} setCameraVisible={() => navigation.replace("CameraScreen", {
+        ...params,
+        initContent: content,
+        initFiles: files
+      })} addFiles={addFiles} />
+    </View>
+  )
   return (
     <PostCreatorContainer dontSend={content.length > advantages.textLength()} onSave={() => sendInfo()} changeVisibilty={() => navigation.goBack()} >
       {sending.progress > 0 && <ProgressBar progress={sending.progress} />}
-      <View style={{ flex: 1 }}>
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <ScrollView>
           { attached_post && <DisplayAttachedPost attached_post={attached_post} /> }
           <View style={[styles.row, { width: full_width, padding: 10 }]}>
@@ -166,24 +186,8 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
           <TextAreaAutoComplete autoFocus={true} value={content} setValue={(text) => SetContent(text)} />
           { shared_post && <DisplaySharedPost shared_post={shared_post} /> }
         </ScrollView>
-        <View style={{
-          bottom: 0,
-          width: full_width
-        }}>
-          <FlatList
-            horizontal={true}
-            data={files}
-            keyExtractor={(item, idx) => idx}
-            scrollsToTop={true}
-            renderItem={({ item, index }) => item?.type.startsWith("video") ? <CreatorVideoDisplay deleteImage={(i) => deleteImage(i)} index={index} uri={item.uri} /> : <CreatorImageDisplay deleteImage={(i) => deleteImage(i)} index={index} uri={item.uri} />}
-          />
-          <BottomButtonPostCreator content={content} maxLength={advantages.textLength()} setFiles={(info) => setFiles([...files, info])} setCameraVisible={() => navigation.replace("CameraScreen", {
-            ...params,
-            initContent: content,
-            initFiles: files
-          })} addFiles={addFiles} />
-        </View>
-      </View>
+        <BottomItems />
+      </KeyboardAvoidingView>
     </PostCreatorContainer>
   );
 };
