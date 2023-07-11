@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, FlatList, Image, Pressable } from "react-native";
+import { View, FlatList, Image, Pressable, Platform } from "react-native";
 import { IconButton, Text, Button } from "react-native-paper";
 import { CameraRoll, AssetType, PhotoIdentifier } from "@react-native-camera-roll/camera-roll"
 
@@ -120,7 +120,8 @@ function BottomButtonPostCreator({ setFiles, addFiles, setCameraVisible, content
     )
     return (
         <View style={{
-            backgroundColor: colors.bg_secondary
+            backgroundColor: colors.bg_secondary,
+            marginBottom: Platform.OS === "android" ? -5 : 0
         }}>
             <View style={{
                 flexDirection: "row",

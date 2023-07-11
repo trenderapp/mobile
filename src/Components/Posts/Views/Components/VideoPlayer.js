@@ -56,13 +56,12 @@ function VideoPlayer({ uri, thumbnail, attachments }) {
               <Text>{t("posts.explicit_content")}</Text>
             </Pressable>
           ) : (
-            <Pressable onPress={() => setPaused(!paused)} style={{
+            <Pressable onPress={() => setFullScreen(true)} style={{
               width: full_width,
               height: 250
             }}>
               <Video
                 poster={thumbnail}
-                onEnd={() => setPaused(true)}
                 source={{
                   uri: uri
                 }}
@@ -74,7 +73,7 @@ function VideoPlayer({ uri, thumbnail, attachments }) {
                   bottom: 0,
                   right: 0,
                 }}
-                paused={paused}
+                paused={true}
                 repeat={repeat}
                 muted={muted}
                 ref={(ref) => (videoPlayer.current = ref)}
@@ -84,33 +83,28 @@ function VideoPlayer({ uri, thumbnail, attachments }) {
         }
         {
           attachments?.nsfw ? null : (<>
-            <View
-              style={{
-                position: 'absolute',
-                top: 10,
-                left: 10,
-              }} >
-              <SvgElement onPress={() => {
-                setPaused(true)
-                setFullScreen(true)
-              }} size={22} name={"full-screen"} />
-            </View>
-            <View
-              style={{
-                position: 'absolute',
-                bottom: 40,
-                left: 10,
-              }} >
-              <SvgElement onPress={() => setPaused(!paused)} size={22} name={paused ? "play" : "pause"} />
-            </View>
-            <View
-              style={{
-                position: 'absolute',
-                bottom: 10,
-                left: 10,
-              }} >
-              <SvgElement onPress={() => setMuted(!muted)} size={22} name={muted ? "sound-mute" : "sound"} />
-            </View>
+
+            <IconButton style={{
+              position: 'absolute',
+              top: 10,
+            }} icon="fullscreen" onPress={() => setFullScreen(true)} />
+
+            <IconButton style={{
+              position: 'absolute',
+              top: 40
+            }} onPress={() => {}} icon={paused ? "play-circle" : "play-circle"} />
+            {
+              /**
+               *             
+
+            <IconButton style={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+            }} onPress={() => setMuted(!muted)} icon={muted ? "volume-variant-off" : "volume-high"} />
+               */
+            }
+
           </>
           )
         }

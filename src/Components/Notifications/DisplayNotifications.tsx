@@ -42,6 +42,8 @@ const DisplayNotifications = ({ info }: any) => {
                 return navigation.navigate("PostStack", { screen: "PostScreen", params: { post_id: info?.post.post_id }})
             case "mentions":
                 return navigation.navigate("PostStack", { screen: "PostScreen", params: { post_id: info?.post.post_id }})
+            case "comments":
+                return navigation.navigate("PostStack", { screen: "PostScreen", params: { post_id: info?.post.post_id }})
             case "shares":
                 return navigation.navigate("PostStack", { screen: "PostScreen", params: { post_id: info?.post.post_id }})
             default:
