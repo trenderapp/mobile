@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { View } from "react-native";
-import { Button } from "react-native-paper";
+import { Button, Text } from "react-native-paper";
 import { PostInterface } from "trender-client";
 import { Markdown } from "../../Elements/Text";
 import { SinglePostContext } from "../PostContext.js";
@@ -44,7 +44,9 @@ function PostNormal({ maxLines }: { maxLines?: number }) {
                     info.type === 1 ? 
                         <Carroussel pictures={info.attachments} creator={undefined} changeList={undefined} />
                             : info.type === 2 ?
-                                <VideoPlayer thumbnail={info.attachments[0]?.thumbnail ? client.post.file(info.from.user_id, info.post_id, info.attachments[0]?.thumbnail) : undefined} uri={client.post.file(info.from.user_id, info.post_id, info.attachments[0]?.name)} attachments={undefined} /> 
+                                <VideoPlayer
+                                    thumbnail={info.attachments[0]?.thumbnail ? client.post.file(info.from.user_id, info.post_id, info.attachments[0]?.thumbnail) : undefined} 
+                                        uri={client.post.file(info.from.user_id, info.post_id, encodeURIComponent(info.attachments[0]?.name))} attachments={undefined} /> 
                                 : null : null
             }
         </View>

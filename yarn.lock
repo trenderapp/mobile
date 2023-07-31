@@ -5961,7 +5961,7 @@ lodash.throttle@^4.1.1:
   resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
   integrity sha512-wIkUCfVKpVsWo3JSZlc+8MB5it+2AN5W8J7YVMST30UrvcQNZ1Okbj+rbVniijTWE6FGYy4XJq/rHkas8qJMLQ==
 
-lodash@^4.16.4, lodash@^4.17.21, lodash@^4.17.4, lodash@^4.6.1:
+lodash@^4.17.21, lodash@^4.17.4, lodash@^4.6.1:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -7704,13 +7704,6 @@ react-native-toast-message@^2.1.5:
     prop-types "^15.7.2"
     yargs "^16.1.1"
 
-react-native-video-controls@^2.8.1:
-  version "2.8.1"
-  resolved "https://registry.yarnpkg.com/react-native-video-controls/-/react-native-video-controls-2.8.1.tgz#30ae707d8d218fed34bba3fc027b3943c5f438d9"
-  integrity sha512-dBmrE3TAKaR1gYMfbukjAM6Xo8OMZyRrxPzZtnaUgWcvGo11PQwzaI/j8HPD5fLgO+rlweP2pDpEJyIBsJvJkw==
-  dependencies:
-    lodash "^4.16.4"
-
 react-native-video@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/react-native-video/-/react-native-video-5.2.1.tgz#a17e856759d7e17eee9cbd9df0d05ba22e88d457"
@@ -8894,10 +8887,10 @@ tr46@~0.0.3:
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
   integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
 
-trender-client@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/trender-client/-/trender-client-4.1.1.tgz#0200c3825f6ee8bbd58d81490c0e44e1cb541042"
-  integrity sha512-bOCPsOtSHgY1gN4heBpRoqkE56Qj8aWm3wCESKVYplRlw9sNLaxtlHrtoEiTCtIN2TQl3qqAuQetngwWQo00ZA==
+trender-client@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/trender-client/-/trender-client-4.2.0.tgz#c19935332e4ec7e004cd1dd9740a6409c0fca484"
+  integrity sha512-sO7sndBBY0et7q4O1UhB2qRBGG6xA1m23FhQ+8yy2ssNZQnaysDeNGAK4XIsrsO6G9L+wNOVEjkMh0W4tB0YVQ==
   dependencies:
     axios "^0.27.2"
 

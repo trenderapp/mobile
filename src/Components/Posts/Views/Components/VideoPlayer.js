@@ -2,39 +2,36 @@ import React, { useRef, useState } from "react";
 import { Modal, Pressable, View } from "react-native";
 import { IconButton, Text } from "react-native-paper";
 import Video from 'react-native-video';
-import VideoControls from "react-native-video-controls";
 import { full_height, full_width } from "../../../../Style/style";
-import SvgElement from "../../../Elements/Svg";
 import { useTheme } from "../../../Container";
 import { useTranslation } from "react-i18next";
+import RenderVideoScreen from "./Video/RenderVideoScreen";
 
 function VideoPlayer({ uri, thumbnail, attachments }) {
 
   const videoPlayer = useRef(null);
   const [repeat] = useState(true);
   const [paused, setPaused] = useState(true);
-  const [muted, setMuted] = useState(false);
-  const [full_screen, setFullScreen] = useState(false);
+  const [muted] = useState(false);
+  const [visible, setVisible] = useState(false);
   const { colors } = useTheme();
   const { t } = useTranslation();
 
   return (
     <>
-      <Modal visible={full_screen} animationType="slide" >
-        {
-          <VideoControls
-            source={{
-              uri: uri
-            }}
-            style={{
-              width: full_width,
-              height: full_height
-            }}
-            onBack={() => setFullScreen(false)}
-            tapAnywhereToPause={false}
-            disableFullscreen
-          />
-        }
+      <Modal visible={visible} animationType="slide" >
+        <RenderVideoScreen
+          source={{
+            uri: uri
+          }}
+          style={{
+            width: full_width,
+            height: full_height
+          }}
+          onBack={() => setVisible(false)}
+          tapAnywhereToPause={false}
+          disableFullscreen
+        />
       </Modal>
 
       <View style={{
@@ -56,7 +53,7 @@ function VideoPlayer({ uri, thumbnail, attachments }) {
               <Text>{t("posts.explicit_content")}</Text>
             </Pressable>
           ) : (
-            <Pressable onPress={() => setFullScreen(true)} style={{
+            <Pressable onPress={() => setVisible(true)} style={{
               width: full_width,
               height: 250
             }}>
@@ -73,7 +70,7 @@ function VideoPlayer({ uri, thumbnail, attachments }) {
                   bottom: 0,
                   right: 0,
                 }}
-                paused={true}
+                paused={paused}
                 repeat={repeat}
                 muted={muted}
                 ref={(ref) => (videoPlayer.current = ref)}
@@ -83,16 +80,15 @@ function VideoPlayer({ uri, thumbnail, attachments }) {
         }
         {
           attachments?.nsfw ? null : (<>
-
             <IconButton style={{
               position: 'absolute',
               top: 10,
-            }} icon="fullscreen" onPress={() => setFullScreen(true)} />
+            }} icon="fullscreen" onPress={() => setVisible(true)} />
 
             <IconButton style={{
               position: 'absolute',
               top: 40
-            }} onPress={() => {}} icon={paused ? "play-circle" : "play-circle"} />
+            }} onPress={() => setPaused(!paused)} icon={paused ? "play-circle" : "pause-circle"} />
             {
               /**
                *             
