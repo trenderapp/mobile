@@ -12,7 +12,7 @@ import { IconButton } from "react-native-paper";
 
 const DisplayNotifications = ({ info }: any) => {
 
-    const { client } = useClient();
+    const { client, token } = useClient();
     const { colors } = useTheme();
     const navigation = useNavigation<navigationProps>();
 
@@ -93,7 +93,7 @@ const DisplayNotifications = ({ info }: any) => {
                     <Username user={info?.from} created_at={info?.created_at} lefComponent={undefined} />
                 </View>
                 <View style={{ paddingLeft: 5 }}>
-                    <Markdown maxLine={3} content={info?.post?.content ?? ""} />
+                    <Markdown token={token} maxLine={3} content={info?.post?.content ?? ""} />
                 </View>
             </View>
         </TouchableOpacity>

@@ -1,24 +1,52 @@
-import React, { Suspense, lazy } from "react";
-import { Text } from "react-native-paper";
+import React, { Suspense, lazy, useState } from "react";
+import { Divider, Text } from "react-native-paper";
+import { translateText } from "../../../Services";
 const Renderer = lazy(() => import("./Markdown/Renderer"));
 
 type SectionProps = React.FC<{
     content: string,
     noBr?: boolean,
     maxLine?: number,
+    translate?: string,
+    token: string
 }>
 
-const Markdown: SectionProps = ({ content, noBr, maxLine }) => {
+const Markdown: SectionProps = ({ content, noBr, maxLine, translate, token }) => {
+
+    const [newText, setNewText] = useState<undefined | string>(undefined);
+
+    const setTranslation = async (to: string) => {
+        const txt = await translateText(token, {
+            content: content,
+            to: to
+        });
+        return setNewText(txt);
+    }
     return (
         <>
-            <Text numberOfLines={maxLine ? maxLine + 1 : undefined}>
+            <Text style={{ fontSize: 15, }} onPress={undefined} selectable={true} numberOfLines={maxLine ? maxLine + 1 : undefined}>
                 <Suspense fallback={content}>
                     <Renderer noBr={noBr ? false : true} maxLine={maxLine} content={content} />
                 </Suspense>
-
             </Text>
             {
                 content.split("\n").length > 5 && maxLine && <Text style={{ color: "#00B0F4" }}>See more</Text>
+            }
+            {
+                !maxLine && !newText && translate && <Text onPress={() => setTranslation(translate)} style={{ color: "#00B0F4" }}>Translate</Text>
+            }
+            {
+                newText && (
+                    <>
+                        <Text onPress={() => setNewText(undefined)} style={{ color: "#00B0F4" }}>Translated with <Text>Google</Text></Text>
+                        <Divider bold horizontalInset />
+                        <Text style={{ fontSize: 15 }} onPress={undefined} selectable={true}>
+                            <Suspense fallback={content}>
+                                <Renderer noBr={noBr ? false : true} content={newText} />
+                            </Suspense>
+                        </Text>
+                    </>
+                )
             }
         </>
 

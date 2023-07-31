@@ -23,7 +23,6 @@ export const languages = {
 
 export const languageList = Object.values(languages)
 
-
 const languageDetector = {
     type: 'languageDetector',
     async: true,

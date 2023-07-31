@@ -43,7 +43,7 @@ const Renderer: SectionProps = ({ content, noBr, maxLine }) => {
                 enter.map((text, idx) =>
                     <Text key={idx}>{noBr && "\n"}{text.trim().split(" ").map((text, idx) => {
 
-                        if (RE_LINKS.test(text)) return <Text key={idx} onPress={() => openURL(text)} style={{ color: colors.text_link }}>{text} </Text>
+                        if (RE_LINKS.test(text)) return <Text key={idx} onPress={() => openURL(text)} style={{ color: colors.text_link }}>{text.length > 50 ? `${text.substring(0, 45)}...` : text} </Text>
                         if (RE_HASHTAG.test(text)) return <Text key={idx} onPress={() => navigation?.push("PostStack", {
                             screen: "PostScreenSearch",
                             params: {

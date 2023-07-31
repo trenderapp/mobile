@@ -12,7 +12,7 @@ type SectionProps = {
 
 export default function DisplaySharedPost({ shared_post }: SectionProps) {
 
-    const { client } = useClient();
+    const { client, token } = useClient();
 
     return (
         <>
@@ -23,11 +23,11 @@ export default function DisplaySharedPost({ shared_post }: SectionProps) {
                 <View style={[styles.row, { width: full_width, padding: 5 }]}>
                     <Avatar size={45} url={client.user.avatar(shared_post.from.user_id, shared_post.from.avatar)} />
                     <View style={[styles.column, { justifyContent: "flex-start", alignItems: "flex-start" }]}>
-                        <Username created_at={shared_post.created_at} user={shared_post.from} />
+                        <Username created_at={shared_post.created_at} user={shared_post.from} lefComponent={undefined} />
                     </View>
                 </View>
                 <View style={{ padding: 5 }}>
-                    <Markdown content={shared_post.content} />
+                    <Markdown content={shared_post.content} token={token} />
                 </View>
             </View>
         </>

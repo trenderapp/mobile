@@ -18,6 +18,7 @@ import { addDmGroup, DmGroupListContext } from "../../Context/DmGuildListContext
 import ProfileUserModal from "./Edit/Modal/User";
 import ProfileOwnerModal from "./Edit/Modal/Owner";
 import { profileInformationsInterface } from "trender-client/Managers/Interfaces/User";
+import { openURL } from "../../Services";
 
 type SectionProps = {
     nickname: string,
@@ -114,10 +115,10 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
                         </View>
                     </View>
                     <View style={{ paddingTop: 5 }}>
-                        <Markdown content={informations?.description ?? ""} />
+                        <Markdown token={user.token} content={informations?.description ?? ""} />
                     </View>
-                    <View style={{ paddingTop: 5 }}>
-                        {informations?.link ? <Text style={{ paddingBottom: 5, display: "flex", flexDirection: "row", alignItems: "center" }}><SvgElement size={16} name="link" /> <Markdown content={informations?.link} /></Text> : null}
+                    <View >
+                        {typeof informations.link === "string" ? <Button style={{ marginLeft: -5 }} contentStyle={{ marginLeft: -30 }} onPress={() => openURL(informations?.link ?? "")} icon="link-variant"><Text style={{ color: colors.text_link }}>{ informations.link.length > 50 ? `${ informations.link.substring(0, 45)}...` : informations.link}</Text></Button> : null}
                         <Text>{t("profile.joined")} : {dayjs(informations.created_at).locale(i18n.language).format("MMMM YYYY")}</Text>
                         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
 

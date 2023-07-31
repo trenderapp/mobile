@@ -14,7 +14,7 @@ import SvgElement from "../../Elements/Svg";
 
 function MessageBox({ info }) {
 
-    const { client } = useClient();
+    const { client, token } = useClient();
     const { colors } = useTheme();
     const { t } = useTranslation();
     const [modalVisible, setModalVisible] = useState(false);
@@ -64,7 +64,7 @@ function MessageBox({ info }) {
                         marginBottom: 2
                     }}>
                         <Text style={{ fontWeight:'600', color: /*info.from?.accent_color ?? */ colors.text_normal }}>{info.from.username}</Text>
-                        <Markdown content={info.content} />
+                        <Markdown token={token} content={info.content} />
                     </View>
                     <Text style={{
                             fontSize: 12,

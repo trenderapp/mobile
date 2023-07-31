@@ -27,7 +27,7 @@ function FakeMessageBox({ content }) {
                 marginBottom: 2
             }}>
                 <Text style={{ fontWeight:'700' }}>{user.username}</Text>
-                <Markdown content={content} />
+                <Markdown token={user.token} content={content} />
             </View>
             <Text style={{
                     fontSize: 12,

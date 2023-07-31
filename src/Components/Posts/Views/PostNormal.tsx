@@ -8,6 +8,7 @@ import Postheader from "./Components/Postheader";
 import Carroussel from "./Components/Carroussel";
 import VideoPlayer from "./Components/VideoPlayer";
 import { useClient } from "../../Container";
+import { useTranslation } from "react-i18next";
 
 type PostNormalContext = {
     info: PostInterface.postResponseSchema & {
@@ -20,14 +21,22 @@ type PostNormalContext = {
 function PostNormal({ maxLines }: { maxLines?: number }) {
     
     const { info }: PostNormalContext = useContext(SinglePostContext);
-    const { client } = useClient();
+    const { client, token } = useClient();
+    const { i18n } = useTranslation();
+
+    const enableTranslation = (text_lang: string) => {
+        if(text_lang === i18n.language) return undefined;
+       return i18n.language;
+    }
 
     return (
         <View>
             <Postheader info={info.from} created_at={info.created_at} />
                 <View style={{ padding: 5 }}>
                     {
-                        info.display_not_allowed ? <Button onPress={() => {}}>Subscribe to {info.from.username} to display</Button> : <Markdown maxLine={maxLines} content={info.content} />
+                        info.display_not_allowed ? 
+                            <Button onPress={() => {}}>Subscribe to {info.from.username} to display</Button> 
+                            : <Markdown translate={info.content_language ? enableTranslation(info.content_language) : undefined} token={token} maxLine={maxLines} content={info.content} />
                     }
                 </View>
             {

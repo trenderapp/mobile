@@ -9,7 +9,7 @@ import { Markdown } from "../Elements/Text";
 
 function DisplayMember({ informations, onPress, full_width, noDescription, LeftComponent }) {
 
-    const { client } = useClient();
+    const { client, token } = useClient();
     const navigation = useNavigation();
 
     return (
@@ -31,7 +31,7 @@ function DisplayMember({ informations, onPress, full_width, noDescription, LeftC
                     alignItems: "flex-start"
                 } ]}>
                     <Username user={informations} />
-                    { !noDescription && informations?.description ? <Markdown maxLine={1} content={informations.description} /> : null  }
+                    { !noDescription && informations?.description ? <Markdown token={token} maxLine={1} content={informations.description} /> : null  }
                 </View>
                 { LeftComponent && LeftComponent }
             </TouchableOpacity>

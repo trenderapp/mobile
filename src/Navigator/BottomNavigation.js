@@ -1,11 +1,11 @@
 // import { useIsFocused } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from 'react-i18next'
 import { BottomNavigation } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useClient, useTheme } from "../Components/Container";
-// import { DmGroupListContext } from "../Context/DmGuildListContext";
+import { DmGroupListContext } from "../Context/DmGuildListContext";
 import HomeScreen from "../Screens/Home/HomeScreen";
 import GuildListScreen from "../Screens/Messages/GuildListScreen";
 import SearchStack from "./Stacks/SearchStack";
@@ -25,7 +25,7 @@ function BottomStack() {
     // const isFocused = useIsFocused();
     const insets = useSafeAreaInsets();
     const [index, setIndex] = useState(0);
-    // const { unreads, groups } = useContext(DmGroupListContext);
+    const { unreads, groups } = useContext(DmGroupListContext);
     const [routes, setRoutes] = useState([
         { key: 'home', focusedIcon: 'home', unfocusedIcon: "home-outline", title: t("commons.home"), badge: false },
         { key: 'users', focusedIcon: "account-multiple", title: t('commons.search'), badge: false },
@@ -52,27 +52,27 @@ function BottomStack() {
         dispatch(initNotificationFeed(request.data));
       }
 
+    const countNotifications = () => notifications.filter(n => n.readed === false || typeof n.readed === "undefined").length;
+    const countUnreadsDM = () => {
+        let i = 0;
+        groups.forEach((g) => {
+            if(g.last_message) {
+                if(!unreads.some(u => u.message_id === g.last_message.message_id)) i++
+            }
+        })
+
+        return i;
+    }
     useEffect(() => {
         notificationList()
     }, [])
 
     useEffect(() => {
-        const count = notifications.filter(n => n.readed === false || typeof n.readed === "undefined").length
-        if(count > 0) return newBottom({
-            home_notification: count
-        })
-        else return newBottom({
-            home_notification: false
+        newBottom({
+            home_notification: countNotifications() > 0 ? countNotifications() : false,
+            message_notification: countUnreadsDM() > 0 ? false : false
         })
     }, [notifications])
-
-    /*useEffect(() => {
-        groups.forEach((g) => {
-            if(g.last_message) {
-                newBottom(!unreads.some(u => u.message_id === g.last_message.message_id))
-            }
-        })
-    }, [unreads, groups, isFocused])*/
 
     const renderScene = BottomNavigation.SceneMap({
         home: HomeScreen,

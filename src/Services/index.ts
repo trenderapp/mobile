@@ -54,6 +54,15 @@ export const changeElementPlaceArray = (arr: Array<any>, toIndex: number, fromIn
   return arr;
 }
 
+export const translateText = async (user_token: string, options: { content: string, to: string}) => {
+  const request = await axiosInstance.post("/translate", options, {
+    headers: {
+      "trendertokenapi": user_token
+    }
+  });  
+  return request.data.data as string;
+}
+
 export const deviceInfo = async () => {
   
   return {
