@@ -1,7 +1,7 @@
 {
   "name": "trender",
-  "version": "4.2.0",
-  "version_number": 88,
+  "version": "4.2.2",
+  "version_number": 89,
   "private": true,
   "repository": {
     "type": "git",
@@ -73,13 +73,14 @@
     "react-native-tab-view": "^3.3.4",
     "react-native-toast-message": "^2.1.5",
     "react-native-vector-icons": "^9.2.0",
-    "react-native-video": "^5.2.1",
+    "react-native-video": "^6.0.0-alpha.6",
+    "react-native-video-controls": "^2.8.1",
     "react-native-vision-camera": "^2.14.1",
     "react-native-webview": "^11.26.0",
     "react-redux": "^8.0.5",
     "realm": "11.0.0",
     "redux": "^4.2.0",
-    "trender-client": "^4.2.0"
+    "trender-client": "^4.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -90,6 +91,7 @@
     "@types/jest": "^29.2.5",
     "@types/react": "^18.0.26",
     "@types/react-native": "^0.70.8",
+    "@types/react-native-video": "^5.0.15",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.3.1",
     "babel-plugin-transform-remove-console": "^6.9.4",

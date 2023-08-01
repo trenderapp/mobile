@@ -36,7 +36,7 @@ function TopTrends() {
         setRefreshing(false);
         if (response.error || !response.data) return;
         dispatch(initExploreTopTrends(response.data));
-        setPaginationKey(response.pagination_key);
+        if(response.pagination_key) setPaginationKey(response.pagination_key);
     };
 
     useEffect(() => {
@@ -50,7 +50,7 @@ function TopTrends() {
         setLoader(false);
         if (response.error || !response.data) return;
         if (response.data.length < 1) return;
-        setPaginationKey(response.pagination_key);
+        if(response.pagination_key) setPaginationKey(response.pagination_key);
         dispatch(addExploreTopTrends(response.data));
     };
 

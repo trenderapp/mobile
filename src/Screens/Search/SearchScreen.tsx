@@ -23,7 +23,7 @@ function SearchScreen() {
         setLoader(false)
         if (response.error || !response.data) return;
         setBestUsers(response.data);
-        setPaginationKey(response?.pagination_key);
+        if(response.pagination_key) setPaginationKey(response.pagination_key);
     }
 
     useEffect(() => {
@@ -33,7 +33,7 @@ function SearchScreen() {
             setLoader(false)
             if (response.error || !response.data) return;
             setUsers(response.data);
-            setPaginationKey(response?.pagination_key);
+            if(response.pagination_key) setPaginationKey(response.pagination_key);
         }
         
         if (text?.length < 1) {

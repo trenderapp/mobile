@@ -17,14 +17,13 @@ function FollowScreen({ route }: any) {
 
     async function getData() {
         setLoader(true);
-        const request = type !== "subscriptions" ? await client.user.follow.followers(nickname) : await client.user.follow.follows(nickname);
+        const response = type !== "subscriptions" ? await client.user.follow.followers(nickname) : await client.user.follow.follows(nickname);
         setLoader(false)
-        if(request.error) return Toast.show({ text1: t(`errors.${request.error.code}`) as string });
-        if(!request.data) return;
-        if(request.data.length < 1) return;
-        
-        setPaginationKey(request?.pagination_key);
-        setInfo(request.data)
+        if(response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string });
+        if(!response.data) return;
+        if(response.data.length < 1) return;
+        if(response.pagination_key) setPaginationKey(response.pagination_key);
+        setInfo(response.data);
         
     }
 
@@ -34,13 +33,13 @@ function FollowScreen({ route }: any) {
 
     const bottomHandler = async () => {
         setLoader(true)
-        const request = type !== "subscriptions" ? await client.user.follow.followers(nickname, { pagination_key: paginationKey }) : await client.user.follow.follows(nickname, { pagination_key: paginationKey })
+        const response = type !== "subscriptions" ? await client.user.follow.followers(nickname, { pagination_key: paginationKey }) : await client.user.follow.follows(nickname, { pagination_key: paginationKey })
         setLoader(false)
-        if(request.error) return Toast.show({ text1: t(`errors.${request.error.code}`) as string });
-        if(!request.data) return;
-        if(request.data.length < 1) return;
-        setPaginationKey(request?.pagination_key);
-        setInfo(info.concat(request.data));
+        if(response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string });
+        if(!response.data) return;
+        if(response.data.length < 1) return;
+        if(response.pagination_key) setPaginationKey(response.pagination_key);
+        setInfo(info.concat(response.data));
     }
 
 

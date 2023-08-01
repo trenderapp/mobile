@@ -18,15 +18,25 @@ function ProfileScreen({ route }: any) {
     const { client } = useClient();
     const { t } = useTranslation();
     const { profile, setProfile } = useContext(ProfileContext);
-    const [posts, setPosts] = useState<PostInterface.postInterface[] | undefined>(undefined)
+    const [posts, setPosts] = useState<PostInterface.postInterface[]>([])
     const [pined, setPined] = useState<any>(null);
-    const [loader, setLoader] = useState(true);
+    const [loader, setLoader] = useState(false);
     const [loading, setLoading] = useState(true);
     const [pagination_key, setPaginationKey] = useState<string | undefined>(undefined);
 
-    const getData = async () => {
-        setPosts(undefined)
+    const getPosts = async () => {
+        if (loader) return;
+        setLoader(true);
+        const response = await client.post.user.fetch(nickname, { pagination_key: pagination_key });
+        setLoader(false);
+        if (response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string });
+        if (!response.data) return;
+        if(response.pagination_key) setPaginationKey(response.pagination_key);
+        setPosts([...posts, ...response.data]);
+    }
 
+    const getData = async () => {
+        setPosts([])
         await Promise.all([
             client.user.profile(nickname).then(async response_profile => {
                 if (response_profile.error) {
@@ -47,30 +57,14 @@ function ProfileScreen({ route }: any) {
                     })
                 }
             }),
-            client.post.user.fetch(nickname).then(response => {
-                if (response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string });
-                if (!response.data) return;
-                setPaginationKey(response.pagination_key);
-                setLoader(false);
-                setPosts(response.data);
-            })
+            getPosts()
         ])
     }
 
-    useEffect(() => {        
+    useEffect(() => {
         if (profile?.nickname && nickname === profile.nickname) return;
         getData()
     }, [nickname])
-
-    const bottomHandler = async () => {
-        if (!loader) return;
-        const response = await client.post.user.fetch(nickname, { pagination_key: pagination_key });
-        if (response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string });
-        if (!response.data || response.data.length < 1) return setLoader(false);
-        setPaginationKey(response.pagination_key);
-        if(!posts) return;
-        setPosts([...posts, ...response.data])
-    }
 
     const renderItem = useCallback(({ item }: { item: PostInterface.postResponseSchema }) => (
         <DisplayPosts informations={item} />
@@ -81,17 +75,16 @@ function ProfileScreen({ route }: any) {
             {
                 !loading ?
                     <FlatList
-                        onEndReached={() => bottomHandler()}
+                        onScrollEndDrag={() => getPosts()}
                         ListHeaderComponent={profile ? profile?.code ?
                             <ProfileNotFound error={profile} nickname={nickname} />
                             : <ProfileComponent setInfo={setProfile} pined={pined} informations={profile} nickname={nickname} />
                             : <Loader />}
                         data={posts}
                         renderItem={renderItem}
-                        keyExtractor={item => item.post_id} /> : <Loader />
-            }
-            {
-                !loading && loader && <Loader />
+                        keyExtractor={item => item.post_id} 
+                        ListFooterComponent={!loading && loader && <Loader /> || undefined}
+                        /> : <Loader />
             }
         </ProfileContainer>
     )

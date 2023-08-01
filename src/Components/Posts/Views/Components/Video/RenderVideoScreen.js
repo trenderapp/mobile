@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import padStart from 'lodash/padStart';
 import { IconButton } from 'react-native-paper';
+import { Loader } from '../../../../../Other';
 
 export default class RenderVideoScreen extends Component {
   static defaultProps = {
@@ -1105,22 +1106,7 @@ export default class RenderVideoScreen extends Component {
     if (this.state.loading) {
       return (
         <View style={styles.loader.container}>
-          <Animated.Image
-            source={require('./assets/img/loader-icon.png')}
-            style={[
-              styles.loader.icon,
-              {
-                transform: [
-                  {
-                    rotate: this.animations.loader.rotate.interpolate({
-                      inputRange: [0, 360],
-                      outputRange: ['0deg', '360deg'],
-                    }),
-                  },
-                ],
-              },
-            ]}
-          />
+          <Loader />
         </View>
       );
     }

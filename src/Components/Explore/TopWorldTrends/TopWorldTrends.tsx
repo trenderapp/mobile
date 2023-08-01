@@ -30,7 +30,7 @@ function TopWorldTrends() {
         setLoader(false);
         setRefreshing(false);
         if (response.error || !response.data) return;
-        setPaginationKey(response.pagination_key);
+        if(response.pagination_key) setPaginationKey(response.pagination_key);
         dispatch(initExploreTopTrends(response.data));
     };
 
@@ -45,7 +45,7 @@ function TopWorldTrends() {
         setLoader(false);
         if (response.error || !response.data) return;
         if (response.data.length < 1) return;
-        setPaginationKey(response.pagination_key);
+        if(response.pagination_key) setPaginationKey(response.pagination_key);
         dispatch(addExploreTopTrends(response.data));
     };
 

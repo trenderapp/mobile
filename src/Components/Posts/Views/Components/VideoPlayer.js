@@ -5,7 +5,7 @@ import Video from 'react-native-video';
 import { full_height, full_width } from "../../../../Style/style";
 import { useTheme } from "../../../Container";
 import { useTranslation } from "react-i18next";
-import RenderVideoScreen from "./Video/RenderVideoScreen";
+import RenderVideoScreen from "react-native-video-controls";
 
 function VideoPlayer({ uri, thumbnail, attachments }) {
 
@@ -17,6 +17,12 @@ function VideoPlayer({ uri, thumbnail, attachments }) {
   const { colors } = useTheme();
   const { t } = useTranslation();
 
+  const setFullScren = () => {
+    setPaused(true);
+    setVisible(true);
+    return;
+  }
+  
   return (
     <>
       <Modal visible={visible} animationType="slide" >
@@ -53,7 +59,7 @@ function VideoPlayer({ uri, thumbnail, attachments }) {
               <Text>{t("posts.explicit_content")}</Text>
             </Pressable>
           ) : (
-            <Pressable onPress={() => setVisible(true)} style={{
+            <Pressable onPress={() => setFullScren()} style={{
               width: full_width,
               height: 250
             }}>
@@ -83,7 +89,7 @@ function VideoPlayer({ uri, thumbnail, attachments }) {
             <IconButton style={{
               position: 'absolute',
               top: 10,
-            }} icon="fullscreen" onPress={() => setVisible(true)} />
+            }} icon="fullscreen" onPress={() => setFullScren()} />
 
             <IconButton style={{
               position: 'absolute',

@@ -85,11 +85,11 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
                             flexDirection: "row",
                             alignItems: "center"
                         }}>
-                            { informations.follow_back && <Tooltip title="Follow Back"><IconButton icon="account-sync" /></Tooltip> }
-                            <SvgElement margin={15} onPress={() => setModalVisible(true)} size={22} name="ellipsis" />
-                            {informations.user_id !== user?.user_id && informations.allow_dm && <IconButton onPress={() => createDM()} size={22} icon="email" />}
+                            { informations.follow_back && <Tooltip title="Follow Back"><IconButton style={{ margin: 0 }} icon="account-sync" /></Tooltip> }
+                            <IconButton style={{ margin: 0 }} onPress={() => setModalVisible(true)} icon="dots-horizontal" />
+                            {informations.user_id !== user?.user_id && informations.allow_dm && <IconButton style={{ margin: 0 }} onPress={() => createDM()} icon="email" />}
                             {informations.user_id !== user?.user_id && informations.custom_subscription && (
-                                <IconButton iconColor={informations.pay_custom_subscription ? colors.good_color : undefined} onPress={() => informations.pay_custom_subscription ? undefined :navigation.push("CustomSubscriptionValidationScreen", {
+                                <IconButton style={{ margin: 0 }} iconColor={informations.pay_custom_subscription ? colors.good_color : undefined} onPress={() => informations.pay_custom_subscription ? undefined :navigation.push("CustomSubscriptionValidationScreen", {
                                     subscription_id: informations.custom_subscription,
                                     informations: informations
                                 })} icon="account-cash" />
@@ -114,14 +114,11 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
                             <Text>@{informations.nickname}</Text>
                         </View>
                     </View>
-                    <View style={{ paddingTop: 5 }}>
-                        <Markdown token={user.token} content={informations?.description ?? ""} />
-                    </View>
+                    <Markdown token={user.token} content={informations?.description ?? ""} />
                     <View >
-                        {typeof informations.link === "string" ? <Button style={{ marginLeft: -5 }} contentStyle={{ marginLeft: -30 }} onPress={() => openURL(informations?.link ?? "")} icon="link-variant"><Text style={{ color: colors.text_link }}>{ informations.link.length > 50 ? `${ informations.link.substring(0, 45)}...` : informations.link}</Text></Button> : null}
+                        {typeof informations.link === "string" ? <Button style={{ marginLeft: -5 }} contentStyle={{ justifyContent: "flex-start", marginLeft: -5 }} onPress={() => openURL(informations?.link ?? "")} icon="link-variant"><Text style={{ color: colors.text_link }}>{ informations.link.length > 50 ? `${ informations.link.substring(0, 45)}...` : informations.link}</Text></Button> : null}
                         <Text>{t("profile.joined")} : {dayjs(informations.created_at).locale(i18n.language).format("MMMM YYYY")}</Text>
                         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-
                             <View style={{ flexDirection: "row" }}>
                                 <TouchableOpacity onPress={() => {
                                 navigation.push('ProfileFollower', {

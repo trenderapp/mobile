@@ -32,7 +32,7 @@ function RecentWorldTrends() {
         setLoader(false);
         setRefreshing(false);
         if (response.error || !response.data) return;
-        setPaginationKey(response.pagination_key);
+        if(response.pagination_key) setPaginationKey(response.pagination_key);
         dispatch(initExploreRecentTrends(response.data));
     };
 
@@ -47,7 +47,7 @@ function RecentWorldTrends() {
         setLoader(false);
         if (response.error || !response.data) return;
         if (response.data.length < 1) return;
-        setPaginationKey(response.pagination_key);
+        if(response.pagination_key) setPaginationKey(response.pagination_key);
         dispatch(addExploreRecentTrends(response.data));
     };
 

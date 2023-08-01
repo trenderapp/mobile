@@ -29,7 +29,7 @@ const FollowsTrends = () => {
     else setLoader(false)
     if(response.error || !response.data) return;
     dispatch(initMainTrends(response.data));
-    setPaginationKey(response?.pagination_key);
+    if(response.pagination_key) setPaginationKey(response.pagination_key);
   }
   
   useEffect(() => {
@@ -46,7 +46,7 @@ const FollowsTrends = () => {
     setLoader(false);    
     if(response.error || !response.data) return;    
     if(response.data.length < 1) return;
-    setPaginationKey(response?.pagination_key);
+    if(response.pagination_key) setPaginationKey(response.pagination_key);
     dispatch(addMainTrends(response.data));
   }
 

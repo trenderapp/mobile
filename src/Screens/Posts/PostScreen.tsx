@@ -28,8 +28,8 @@ function PostScreen({ route }: any) {
         const response = await client.post.comments(post_id);
         setLoader(false)
         if(response.error || !response.data) return;
-        if(response.data.length < 1) return;
-        setPaginationKey(response?.pagination_key);
+        if(response.data.length < 1) return;        
+        if(response.pagination_key) setPaginationKey(response.pagination_key);
         dispatch(initCommentTrends(response.data));
     }
 
@@ -43,7 +43,7 @@ function PostScreen({ route }: any) {
         const response = await client.post.comments(post_id, { pagination_key: pagination_key });
         if(response.error || !response.data) return;
         if(response.data.length < 1) return;
-        setPaginationKey(response?.pagination_key);
+        if(response.pagination_key) setPaginationKey(response.pagination_key);
         // dispatch(addCommentTrends(response.data));
         setLoader(false)
     }

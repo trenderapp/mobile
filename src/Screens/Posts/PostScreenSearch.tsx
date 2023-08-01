@@ -22,7 +22,7 @@ function PostScreenSearch({ route }: any) {
         setLoader(false)
         if(response.error || !response.data) return;
         if(response.data.length < 1) return;        
-        setPaginationKey(response?.pagination_key);
+        if(response.pagination_key) setPaginationKey(response.pagination_key);
         dispatch(initPostSearch(response.data));
     }
 
@@ -37,7 +37,7 @@ function PostScreenSearch({ route }: any) {
         const response = await client.post.search({ query:query, pagination_key: pagination_key });
         if(response.error || !response.data) return;
         if(response.data.length < 1) return;
-        setPaginationKey(response?.pagination_key);
+        if(response.pagination_key) setPaginationKey(response.pagination_key);
         dispatch(addPostSearch(response.data));
         setLoader(false)
     }

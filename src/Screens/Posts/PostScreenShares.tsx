@@ -25,7 +25,7 @@ function PostScreenShares({ route }: any) {
         setLoader(false)
         if(response.error || !response.data) return;
         if(response.data.length < 1) return;        
-        setPaginationKey(response?.pagination_key);
+        if(response.pagination_key) setPaginationKey(response.pagination_key);
         dispatch(initPostShares(response.data));
     }
 
@@ -40,7 +40,7 @@ function PostScreenShares({ route }: any) {
         const response = await client.post.shares(post_id, { pagination_key: pagination_key });
         if(response.error || !response.data) return;
         if(response.data.length < 1) return;
-        setPaginationKey(response?.pagination_key);
+        if(response.pagination_key) setPaginationKey(response.pagination_key);
         dispatch(addPostShares(response.data));
         setLoader(false)
     }
