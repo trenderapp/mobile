@@ -24,9 +24,9 @@ function PostNormal({ maxLines }: { maxLines?: number }) {
     const { client, token } = useClient();
     const { i18n } = useTranslation();
 
-    const enableTranslation = (text_lang: string) => {
-        if(text_lang === i18n.language) return undefined;
-       return i18n.language;
+    const enableTranslation = (text_lang: string) => {        
+        if(i18n.language.startsWith(text_lang.toLocaleLowerCase())) return undefined;
+        return i18n.language;
     }
 
     return (
