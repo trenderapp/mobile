@@ -21,7 +21,8 @@ const Markdown: SectionProps = ({ content, noBr, maxLine, translate, token }) =>
             to: to
         });
         return setNewText(txt);
-    }
+    }  
+
     return (
         <>
             <Text style={{ fontSize: 15, }} onPress={undefined} selectable={true} numberOfLines={maxLine ? maxLine + 1 : undefined}>
@@ -30,7 +31,11 @@ const Markdown: SectionProps = ({ content, noBr, maxLine, translate, token }) =>
                 </Suspense>
             </Text>
             {
-                content.split("\n").length > 5 && maxLine && <Text style={{ color: "#00B0F4" }}>See more</Text>
+                maxLine ? 
+                    content.split("\n").length > 5 
+                        ? <Text style={{ color: "#00B0F4" }}>See more</Text>
+                            : content.length > 180 ? <Text style={{ color: "#00B0F4" }}>See more</Text>
+                                : null : null
             }
             {
                 !maxLine && !newText && translate && <Text onPress={() => setTranslation(translate)} style={{ color: "#00B0F4" }}>Translate</Text>

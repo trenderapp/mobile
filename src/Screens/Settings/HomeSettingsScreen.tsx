@@ -1,15 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Text } from 'react-native-paper';
+import Toast from 'react-native-toast-message';
+import Clipboard from "@react-native-clipboard/clipboard";
 import { SettingsContainer, useNavigation } from '../../Components/Container';
 import { HomeButtonSection } from '../../Components/Settings';
 import { Br } from '../../Components/Elements/Text';
+import { deviceInfo } from '../../Services';
 
 function HomeSettingsScreen() {
   
     const { t } = useTranslation();
-    const navigation = useNavigation()
+    const navigation = useNavigation();
+    const [appInfo, setAppInfo] = useState<any>(undefined);
+
+    const getInfo = async () => {
+      setAppInfo(await deviceInfo())
+    }
   
+    useEffect(() => {
+      getInfo()
+    }, [])
+  
+    const copyText = (text: string) => {
+        Clipboard.setString(text);
+        Toast.show({ text1: t(`commons.success`) as string});
+    }
+
     return (
         <SettingsContainer disconnect={true} title={t("settings.settings")}>
             <Text variant='bodyLarge' style={{
@@ -26,6 +43,7 @@ function HomeSettingsScreen() {
                 textDecorationLine: "underline"
             }}>My App:</Text>
             <HomeButtonSection onPress={() => navigation.push("LanguageThemeScreen")} t={t("settings.lang_and_theme")} icon={undefined} />
+            { appInfo && <HomeButtonSection onPress={() => copyText(`App version : ${appInfo.version} (${appInfo.build_number})`)} t={`App version : ${appInfo.version} (${appInfo.build_number})`} icon={"content-copy"} /> }
             <Br />
             <Text variant='bodyLarge' style={{
                 textDecorationLine: "underline"

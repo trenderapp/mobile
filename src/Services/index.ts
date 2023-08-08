@@ -70,7 +70,10 @@ export const deviceInfo = async () => {
     device_id: DeviceInfo.getDeviceId(),
     base_os: Platform.OS,
     device_brand: DeviceInfo.getModel(),
-    system_version: DeviceInfo.getSystemVersion()
+    system_version: DeviceInfo.getSystemVersion(),
+    build_number: DeviceInfo.getBuildNumber(),
+    bundle_id: DeviceInfo.getBundleId(),
+    version: DeviceInfo.getVersion()
   }
 }
 

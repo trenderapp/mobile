@@ -32,7 +32,7 @@ function PostNormal({ maxLines }: { maxLines?: number }) {
     return (
         <View>
             <Postheader info={info.from} created_at={info.created_at} />
-                <View style={{ padding: 5 }}>
+                <View style={{ padding: 5, paddingTop: 0 }}>
                     {
                         info.display_not_allowed ? 
                             <Button onPress={() => {}}>Subscribe to {info.from.username} to display</Button> 

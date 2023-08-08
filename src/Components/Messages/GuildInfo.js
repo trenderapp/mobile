@@ -1,16 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { TouchableHighlight, View } from "react-native";
 import { Text, Badge } from "react-native-paper";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
+import Clipboard from "@react-native-clipboard/clipboard";
+import { useTranslation } from "react-i18next";
 import { full_width } from "../../Style/style";
 import { useClient, useTheme } from "../Container";
 import { Avatar } from "../Member";
 import { BottomModal, ModalSection } from "../../Other";
-import { useTranslation } from "react-i18next";
 import { deleteDmGroup, DmGroupListContext } from "../../Context/DmGuildListContext";
-import Clipboard from "@react-native-clipboard/clipboard";
-import { useIsFocused } from "@react-navigation/native";
 import { MultipleAvatar } from "../Guilds";
 import SvgElement from "../Elements/Svg";
 
