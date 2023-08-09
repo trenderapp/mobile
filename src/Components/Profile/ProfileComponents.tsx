@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { View, TouchableOpacity } from "react-native";
-import { Divider, Text, IconButton, Button, Tooltip } from "react-native-paper";
+import { Divider, Text, IconButton, Button, Tooltip, Portal, Modal } from "react-native-paper";
 import { userFlags } from "trender-client";
 import dayjs from "dayjs";
 import { useTranslation } from 'react-i18next'
@@ -8,7 +8,7 @@ import Toast from 'react-native-toast-message';
 import FastImage from "react-native-fast-image";
 import { postResponseSchema } from "trender-client/Managers/Interfaces/Post";
 
-import styles from "../../Style/style";
+import styles, { full_height } from "../../Style/style";
 import { UserBadges } from "../Member";
 import { useClient, useNavigation, useTheme } from "../Container";
 import { Markdown } from "../Elements/Text";
@@ -18,7 +18,8 @@ import { addDmGroup, DmGroupListContext } from "../../Context/DmGuildListContext
 import ProfileUserModal from "./Edit/Modal/User";
 import ProfileOwnerModal from "./Edit/Modal/Owner";
 import { profileInformationsInterface } from "trender-client/Managers/Interfaces/User";
-import { openURL } from "../../Services";
+import { openURL, subscriptionCurrencyArray } from "../../Services";
+import { getUserSubscriptionResponseInterface } from "trender-client/Managers/Interfaces/CustomSubscription";
 
 type SectionProps = {
     nickname: string,
@@ -35,6 +36,18 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
     const navigation = useNavigation();
     const { dispatch } = useContext(DmGroupListContext);
     const [modalVisible, setModalVisible] = useState(false);
+    const [visible, setVisible] = React.useState(false);
+    const [subscriptionPrice, setSubscriptionPrice] = useState<getUserSubscriptionResponseInterface>({
+        active: true,
+        currency: "eur",
+        price: 0,
+        subscription_id: "0000000",
+        user_id: "0000000",
+        user_price: 0
+    })
+
+    const showModal = () => setVisible(true);
+    const hideModal = () => setVisible(false);
 
     const follow = async () => {
         const response = await client.user.follow.create(informations.user_id);
@@ -62,9 +75,37 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
             })
         }, 500)
     }
+    
+    const getSubscriptions = async () => {
+        const response = await client.subscription.custom.fetch(informations.user_id);        
+        if (response.error || !response.data) return;
+        return setSubscriptionPrice({
+            ...response.data,
+            price: parseFloat((response.data.user_price / 100).toFixed(2))
+        })
+    }
 
     return (
         <View style={{ borderBottomColor: colors.bg_secondary, borderBottomWidth: 1 }}>
+            <Portal>
+                <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={{
+                    backgroundColor: colors.bg_primary,
+                    padding: 20,
+                    flexDirection: "column",
+                    justifyContent: "space-evenly",
+                    height: full_height / 2
+                }}>
+                    <Text>Support your favorite creator and access to exclusive content for : <Text style={{ fontWeight: "bold" }}>{`${subscriptionPrice.price}${subscriptionCurrencyArray.find(f => f.name)?.symbol ?? "$"} /month`}</Text></Text>
+                    <Button
+                        loading={subscriptionPrice.price <= 0}
+                        disabled={subscriptionPrice.price <= 0}
+                        mode="contained"
+                        onPress={() => informations.pay_custom_subscription ? undefined : navigation.push("CustomSubscriptionValidationScreen", {
+                            subscription_id: informations.custom_subscription,
+                            informations: informations
+                        })}>Subscribe</Button>
+                </Modal>
+            </Portal>
             {informations.user_id !== user?.user_id && <ProfileUserModal setInfo={setInfo} modalVisible={modalVisible} setModalVisible={setModalVisible} informations={informations} />}
             {informations.user_id === user?.user_id && <ProfileOwnerModal modalVisible={modalVisible} setModalVisible={setModalVisible} informations={informations} />}
             <View>
@@ -85,14 +126,14 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
                             flexDirection: "row",
                             alignItems: "center"
                         }}>
-                            { informations.follow_back && <Tooltip title="Follow Back"><IconButton style={{ margin: 0 }} icon="account-sync" /></Tooltip> }
+                            {informations.follow_back && <Tooltip title="Follow Back"><IconButton style={{ margin: 0 }} icon="account-sync" /></Tooltip>}
                             <IconButton style={{ margin: 0 }} onPress={() => setModalVisible(true)} icon="dots-horizontal" />
                             {informations.user_id !== user?.user_id && informations.allow_dm && <IconButton style={{ margin: 0 }} onPress={() => createDM()} icon="email" />}
                             {informations.user_id !== user?.user_id && informations.custom_subscription && (
-                                <IconButton style={{ margin: 0 }} iconColor={informations.pay_custom_subscription ? colors.good_color : undefined} onPress={() => informations.pay_custom_subscription ? undefined :navigation.push("CustomSubscriptionValidationScreen", {
-                                    subscription_id: informations.custom_subscription,
-                                    informations: informations
-                                })} icon="account-cash" />
+                                <IconButton style={{ margin: 0 }} iconColor={informations.pay_custom_subscription ? colors.good_color : undefined} onPress={() => {
+                                    getSubscriptions();
+                                    showModal();
+                                }} icon="account-cash" />
                             )}
                             {informations.user_id === user?.user_id && <Button mode="contained-tonal" onPress={() => navigation.push("ProfileEditScreen", { info: informations })}>{t("profile.edit")}</Button>}
                             {informations.user_id !== user?.user_id && <Button mode="contained-tonal" onPress={() => informations.followed ? unfollow() : follow()}>{t(`profile.${informations.followed ? "unfollow" : "follow"}`)}</Button>}
@@ -116,26 +157,26 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
                     </View>
                     <Markdown token={user.token} content={informations?.description ?? ""} />
                     <View >
-                        {typeof informations.link === "string" ? <Button style={{ marginLeft: -5 }} contentStyle={{ justifyContent: "flex-start", marginLeft: -5 }} onPress={() => openURL(informations?.link ?? "")} icon="link-variant"><Text style={{ color: colors.text_link }}>{ informations.link.length > 50 ? `${ informations.link.substring(0, 45)}...` : informations.link}</Text></Button> : null}
+                        {typeof informations.link === "string" ? <Button style={{ marginLeft: -5 }} contentStyle={{ justifyContent: "flex-start", marginLeft: -5 }} onPress={() => openURL(informations?.link ?? "")} icon="link-variant"><Text style={{ color: colors.text_link }}>{informations.link.length > 50 ? `${informations.link.substring(0, 45)}...` : informations.link}</Text></Button> : null}
                         <Text>{t("profile.joined")} : {dayjs(informations.created_at).locale(i18n.language).format("MMMM YYYY")}</Text>
                         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                             <View style={{ flexDirection: "row" }}>
                                 <TouchableOpacity onPress={() => {
-                                navigation.push('ProfileFollower', {
-                                    type: "subscriptions",
-                                    nickname: nickname
-                                })
-                            }}>
-                                <Text style={{ marginRight: 5 }}><Text style={{ fontWeight: "900" }}>{informations.subscriptions}</Text> {t("profile.subscriptions").toLocaleLowerCase()}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => {
-                                navigation.push('ProfileFollower', {
-                                    type: "subscribers",
-                                    nickname: nickname
-                                })
-                            }}>
-                                <Text><Text style={{ fontWeight: "900" }}>{informations.subscribers}</Text> {t("profile.subscribers").toLocaleLowerCase()}</Text>
-                            </TouchableOpacity>
+                                    navigation.push('ProfileFollower', {
+                                        type: "subscriptions",
+                                        nickname: nickname
+                                    })
+                                }}>
+                                    <Text style={{ marginRight: 5 }}><Text style={{ fontWeight: "900" }}>{informations.subscriptions}</Text> {t("profile.subscriptions").toLocaleLowerCase()}</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => {
+                                    navigation.push('ProfileFollower', {
+                                        type: "subscribers",
+                                        nickname: nickname
+                                    })
+                                }}>
+                                    <Text><Text style={{ fontWeight: "900" }}>{informations.subscribers}</Text> {t("profile.subscribers").toLocaleLowerCase()}</Text>
+                                </TouchableOpacity>
                             </View>
                         </View>
                     </View>

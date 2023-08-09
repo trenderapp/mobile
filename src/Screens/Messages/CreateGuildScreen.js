@@ -1,16 +1,16 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
 import { View, FlatList } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { Appbar, Button, Chip, Divider, Text } from 'react-native-paper';
-import SearchBar from 'react-native-dynamic-search-bar';
+
 import { useClient, useTheme } from '../../Components/Container';
 import styles, { full_width } from '../../Style/style';
 import DisplayMember from '../../Components/Member/DisplayMember';
 import { Avatar } from '../../Components/Member';
 import { addDmGroup, DmGroupListContext } from '../../Context/DmGuildListContext';
+import { SearchBar } from '../../Components/Elements/Input';
 
 const CreateGuildScreen = () => {
 
@@ -85,20 +85,10 @@ const CreateGuildScreen = () => {
             }} />
             <SearchBar
                 accessible={true}
-                searchIconImageStyle={{
-                    tintColor: colors.text_normal
-                }}
-                clearIconImageStyle={{
-                    tintColor: colors.text_normal
-                }}
-                placeholderTextColor={colors.text_normal}
                 style={{
                     backgroundColor: colors.bg_secondary,
                     width: full_width - 10,
                     margin: 5
-                }}
-                textInputStyle={{
-                    color: colors.text_normal
                 }}
                 placeholder={t("commons.search") + " ..."}
                 onChangeText={(txt) => setText(txt)}

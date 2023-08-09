@@ -1,10 +1,10 @@
 import React, { memo, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { View } from 'react-native';
-import SearchBar from 'react-native-dynamic-search-bar';
 import { CustomHeader, useClient, useTheme } from "../../Components/Container";
 import MemberList from "../../Components/Profile/MemberList";
 import { userInfo } from "trender-client/Managers/Interfaces/Search";
+import { SearchBar } from "../../Components/Elements/Input";
 
 function SearchScreen() {
 
@@ -52,19 +52,9 @@ function SearchScreen() {
         <View style={{ flex: 1, backgroundColor: colors.bg_primary }}>
             <CustomHeader isHome={true}>
                 <SearchBar
-                    searchIconImageStyle={{
-                        tintColor: colors.text_normal
-                    }}
-                    clearIconImageStyle={{
-                        tintColor: colors.text_normal
-                    }}
-                    placeholderTextColor={colors.text_normal}
+                    onSearchPress={() => getBestUsers()}
                     style={{
-                        backgroundColor: colors.bg_secondary,
                         width: 320
-                    }}
-                    textInputStyle={{
-                        color: colors.text_normal
                     }}
                     placeholder={t("commons.search") + " ..."}
                     onChangeText={(txt) => setText(txt)}
