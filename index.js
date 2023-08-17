@@ -3,7 +3,6 @@ import { AppRegistry } from 'react-native';
 import messaging from "@react-native-firebase/messaging";
 import notifee, { EventType } from "@notifee/react-native";
 import { notificationChannels } from './src/Services/notifications';
-import { adminNotification, directMessageNotification } from './src/Services/notifications/notificationMessage';
 
 import App from './src/App';
 import { name as appName } from './app.json';
@@ -12,8 +11,7 @@ import { getStorageInfo } from './src/Services/storage';
 messaging().setBackgroundMessageHandler(async remoteMessage => {
     if (!remoteMessage?.data?.notifee) return console.log(!remoteMessage?.data?.notifee);
     const data = JSON.parse(remoteMessage.data.notifee);
-    if (data.type === "message") await directMessageNotification(data);
-    else if (data.type === "admin") await adminNotification(data);
+    notifee.displayNotification(data);
 });
   
 notifee.onBackgroundEvent(async ({ type, detail }) => {

@@ -1,6 +1,6 @@
 import notifee, { AndroidStyle } from "@notifee/react-native";
 
-export const directMessageNotification = async (data) => {
+export const directMessageNotification = async (data: any) => {
 
     notifee.displayNotification({
       title: data?.title ?? "New direct message",
@@ -44,29 +44,6 @@ export const directMessageNotification = async (data) => {
       },
       ios: {
         categoryId: "message",
-        foregroundPresentationOptions: {
-          badge: true,
-          sound: true,
-          banner: true,
-          list: true,
-        },
-        sound: "notification.wav"
-      }
-    })
-  }
-
-  export const adminNotification = async (data) => {
-
-    notifee.displayNotification({
-      title: "New admin message",
-      body: data.content,
-      android: {
-        smallIcon: "ic_small_icon", // Not in backend
-        color: "#23232e", // Not in backend
-        channelId: "sound", // Not in backend
-        timestamp: Date.now()
-      },
-      ios: {
         foregroundPresentationOptions: {
           badge: true,
           sound: true,
