@@ -95,7 +95,7 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
                     justifyContent: "space-evenly",
                     height: full_height / 2
                 }}>
-                    <Text>Support your favorite creator and access to exclusive content for : <Text style={{ fontWeight: "bold" }}>{`${subscriptionPrice.price}${subscriptionCurrencyArray.find(f => f.name)?.symbol ?? "$"} /month`}</Text></Text>
+                    <Text>{t("profile.support_creator")} : <Text style={{ fontWeight: "bold" }}>{`${subscriptionPrice.price}${subscriptionCurrencyArray.find(f => f.name)?.symbol ?? "$"} /month`}</Text></Text>
                     <Button
                         loading={subscriptionPrice.price <= 0}
                         disabled={subscriptionPrice.price <= 0}
@@ -103,7 +103,7 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
                         onPress={() => informations.pay_custom_subscription ? undefined : navigation.push("CustomSubscriptionValidationScreen", {
                             subscription_id: informations.custom_subscription,
                             informations: informations
-                        })}>Subscribe</Button>
+                        })}>{t("subscription.subscribe")}</Button>
                 </Modal>
             </Portal>
             {informations.user_id !== user?.user_id && <ProfileUserModal setInfo={setInfo} modalVisible={modalVisible} setModalVisible={setModalVisible} informations={informations} />}

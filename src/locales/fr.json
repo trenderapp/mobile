@@ -29,6 +29,9 @@
         "create": "Créer",
         "active": "Actif",
         "inactive": "Inactif",
+        "see_more": "Afficher plus",
+        "translate": "Traduire",
+        "translated_with": "Traduit avec",
 
         "top_of_day": "Top du jour",
         "last_rends": "Dernière Trends",
@@ -94,6 +97,8 @@
     "settings": {
         "settings": "Paramètres",
         "my_account": "Mon compte",
+        "my_app": "Mon application",
+        "my_security": "Securité",
         "connexions": "Connexions",
         "subscriptions": "Abonnements",
         "custom_subscriptions": "Abonnements personnalisés",
@@ -120,6 +125,7 @@
         "affiliate_use_code": "Utilisateurs affiliés à moi : {{number}}",
         "my_code": "Mon code",
         "protect_nsfw": "Bloquer les contenus explicite",
+        "app_version": "Version de l'application",
     
         "dark_blue": "Bleu foncé",
         "dark": "Foncé",
@@ -142,7 +148,8 @@
         "unfollow": "Se désabonner",
         "block": "Bloquer l'utilisateur",
         "private_messages": "Messages privés",
-        "copy_user_id": "Copier l'identifiant"
+        "copy_user_id": "Copier l'identifiant",
+        "support_creator": "Soutenez votre créateur préféré et accédez à du contenu exclusif pour"
     },
     "messages": {
         "create_guild": "Créer un groupe",
@@ -154,6 +161,8 @@
         "report_message": "Signaler le message"
     },
     "subscription": {
+        "my_subscriptions": "Mes abonnements",
+        "no_subscriptions": "Vous n'avez aucun abonnement actif",
         "recap": "Récapitulatif",
         "price": "Prix",
         "subscription": "Abonnement",

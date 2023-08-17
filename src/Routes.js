@@ -61,30 +61,29 @@ function Routes() {
         DmGroupList.setUnreads(request.data);
     }
 
+    const getUrlAsync = async () => {
+        // Get the deep link used to open the app   
+        const initialUrl = await Linking.getInitialURL();
+        if (!initialUrl) return;
+
+        const [param] = parseURL(initialUrl);
+
+        if (param.startsWith("/register/verify")) {
+            return navigation.navigate("RegisterVerificationCode", {
+                code: param.split("/register/verify").slice(1)[0].replace("/", "")
+            });
+        } else if (param.startsWith("/recovery/password")) {
+            return navigation.navigate("ChangePassword", {
+                code: param.split("/recovery/password").slice(1)[0].replace("/", "")
+            });
+        } else {
+            return;
+        }
+    };
+
     useEffect(() => {
         dayjs.locale(i18n.language);
-
         notifee.setBadgeCount(0);
-        const getUrlAsync = async () => {
-            // Get the deep link used to open the app
-            const initialUrl = await Linking.getInitialURL();
-            if (!initialUrl) return;
-
-            const [param] = parseURL(initialUrl);
-
-            if(param.startsWith("/register/verify")) {
-                return navigation.navigate("RegisterVerificationCode", {
-                    code: param.split("/register/verify").slice(1)[0].replace("/", "")
-                });
-            } else  if(param.startsWith("/recovery/password")) {
-                return navigation.navigate("ChangePassword", {
-                    code: param.split("/recovery/password").slice(1)[0].replace("/", "")
-                });
-            } else {
-                return;
-            }
-        };
-
         getUrlAsync();
 
     }, [Linking])
@@ -129,7 +128,6 @@ function Routes() {
                             }
                         </>
                     )
-
             }
             {
                 allRoutes.map((r, index) => <Stack.Screen key={index} name={r.name} component={r.screen} options={{

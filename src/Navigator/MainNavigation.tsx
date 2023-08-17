@@ -1,5 +1,6 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
+import notifee from "@notifee/react-native";
 
 import { NavigationProvider } from "../Components/Container";
 import { BottomNavigation } from ".";
@@ -20,6 +21,26 @@ export default function MainNavigation({ navigation }: { navigation: NavigationC
     { name: "MessagesStack", screen: MessageStack },
     { name: "NotificationScreen", screen: NotificationScreen }
   ])
+
+
+  async function bootstrap() {
+    const initialNotification = await notifee.getInitialNotification();
+
+    if (initialNotification && navigation) {
+      const pressActionID = initialNotification.pressAction.id;
+      const post_id = initialNotification.notification.data ? initialNotification.notification.data.post_id : undefined;
+      if (pressActionID === "display-post" && typeof post_id === "string") return navigation.navigate("PostStack", {
+        screen: "PostScreen",
+        params: {
+          post_id: post_id
+        }
+      })
+    }
+  }
+
+  useEffect(() => {
+    bootstrap()
+  }, [])
 
   return (
     <NavigationProvider value={navigation}>

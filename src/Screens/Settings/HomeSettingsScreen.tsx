@@ -31,7 +31,7 @@ function HomeSettingsScreen() {
         <SettingsContainer disconnect={true} title={t("settings.settings")}>
             <Text variant='bodyLarge' style={{
                 textDecorationLine: "underline"
-            }}>My account:</Text>
+            }}>{t("settings.my_account")}:</Text>
 
             <HomeButtonSection onPress={() => navigation?.push("SubscriptionScreen")} t={t("settings.subscriptions")} icon={undefined} />
             <HomeButtonSection onPress={() => navigation?.push("CustomSubscriptionScreen")} t={t("settings.custom_subscriptions")} icon={undefined} />
@@ -41,13 +41,13 @@ function HomeSettingsScreen() {
             <Br />
             <Text variant='bodyLarge' style={{
                 textDecorationLine: "underline"
-            }}>My App:</Text>
+            }}>{t("settings.my_app")}:</Text>
             <HomeButtonSection onPress={() => navigation.push("LanguageThemeScreen")} t={t("settings.lang_and_theme")} icon={undefined} />
-            { appInfo && <HomeButtonSection onPress={() => copyText(`App version : ${appInfo.version} (${appInfo.build_number})`)} t={`App version : ${appInfo.version} (${appInfo.build_number})`} icon={"content-copy"} /> }
+            { appInfo && <HomeButtonSection onPress={() => copyText(`App version : ${appInfo.version} (${appInfo.build_number})`)} t={`${t("settings.app_version")} : ${appInfo.version} (${appInfo.build_number})`} icon={"content-copy"} /> }
             <Br />
             <Text variant='bodyLarge' style={{
                 textDecorationLine: "underline"
-            }}>Security :</Text>
+            }}>{t("settings.my_security")}:</Text>
             <HomeButtonSection onPress={() => navigation.push("BlockedScreen")} t={t("settings.blocked")} icon={undefined} />
             <HomeButtonSection onPress={() => navigation.push("SecurityScreen")} t={t("settings.security")} icon={undefined} />
         </SettingsContainer>

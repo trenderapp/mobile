@@ -29,6 +29,9 @@
         "create": "Create",
         "active": "Active",
         "inactive": "Inactive",
+        "see_more": "Display more",
+        "translate": "Translate",
+        "translated_with": "Translated with",
 
         "top_of_day": "Top of the day",
         "last_rends": "Last Trends",
@@ -94,6 +97,8 @@
     "settings": {
         "settings": "Settings",
         "my_account": "My Account",
+        "my_app": "My app",
+        "my_security": "Security",
         "connexions": "Connections",
         "subscriptions": "Subscriptions",
         "custom_subscriptions": "Custom Subscriptions",
@@ -120,6 +125,7 @@
         "affiliate_use_code": "Users affiliate to me : {{number}}",
         "my_code": "My code",
         "protect_nsfw": "Block explicit contents",
+        "app_version": "App version",
 
         "dark_blue": "Dark blue",
         "dark": "Dark",
@@ -142,7 +148,8 @@
         "unfollow": "Unfollow",
         "block": "Block the User",
         "private_messages": "Private messages",
-        "copy_user_id": "Copy ID"
+        "copy_user_id": "Copy ID",
+        "support_creator": "Support your favorite creator and access to exclusive content for"
     },
     "messages": {
         "create_guild": "Create a group",
@@ -154,6 +161,8 @@
         "report_message": "Report the message"
     },
     "subscription": {
+        "my_subscriptions": "My subscriptions :",
+        "no_subscriptions": "You didn't subscribe to an account",
         "recap": "Recap",
         "price": "Price",
         "subscription": "Subscription",

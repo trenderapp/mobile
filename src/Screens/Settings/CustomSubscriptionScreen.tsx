@@ -152,8 +152,8 @@ function Customsubscriptioncreen() {
             <FlatList
                 data={subscriptions}
                 keyExtractor={(item) => item.subscription_info.subscription_id}
-                ListEmptyComponent={<Text>You didn't subscribe to an account</Text>}
-                ListHeaderComponent={<Text variant='titleMedium'>My subscriptions :</Text>}
+                ListEmptyComponent={<Text>{t("subscription.no_subscriptions")}</Text>}
+                ListHeaderComponent={<Text variant='titleMedium'>{t("subscription.my_subscriptions")}</Text>}
                 renderItem={({ item }) => (
                     <Card style={{
                         backgroundColor: colors.bg_secondary,
