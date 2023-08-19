@@ -29,13 +29,13 @@ const Markdown: SectionProps = ({ content, noBr, maxLine, translate, token }) =>
         <>
             <Text style={{ fontSize: 15, }} onPress={undefined} selectable={true} numberOfLines={maxLine ? maxLine + 1 : undefined}>
                 <Suspense fallback={content}>
-                    <Renderer noBr={noBr ? false : true} maxLine={maxLine} content={maxLine ? `${content.slice(0, 180)}` : content} />
+                    <Renderer noBr={noBr ? false : true} maxLine={maxLine} content={maxLine ? `${content.slice(0, 150)}` : content} />
                 </Suspense>
                 {
                     maxLine ?
                         content.split("\n").length > 5
                             ? <Text style={{ color: "#00B0F4" }}>{t("commons.see_more")}</Text>
-                            : content.length > 180 ? <Text style={{ color: "#00B0F4" }}>{t("commons.see_more")}</Text>
+                            : content.length > 150 ? <Text style={{ color: "#00B0F4" }}>{t("commons.see_more")}</Text>
                                 : null : null
                 }
             </Text>
