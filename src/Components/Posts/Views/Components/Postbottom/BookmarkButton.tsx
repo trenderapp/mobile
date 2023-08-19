@@ -5,28 +5,28 @@ import { useClient, useTheme } from "../../../../Container";
 import { IconButton } from "react-native-paper";
 import { SinglePostContext } from "../../../PostContext.js";
 
-function LikeButton() {
+function BookmarkButton() {
 
     const { client } = useClient();
     const { t } = useTranslation('');
     const { info, setInfo } = useContext(SinglePostContext);
     const { colors } = useTheme();
 
-    const createLike = async () => {
-        const response = await client.post.like(info.post_id);
+    const createBookmark = async () => {
+        const response = await client.post.save(info.post_id);
         if(response.error) return  Toast.show({ text1: t(`errors.${response.error.code}`) as string })
-        setInfo({ ...info, likes: info?.likes > 0 ? info?.likes + 1 : 1, liked: true})
+        setInfo({ ...info, bookmarks: info?.bookmarkes > 0 ? info?.bookmarkes + 1 : 1, bookmarked: true})
     }
 
-    const deleteLike = async () => {
-        const response = await client.post.unlike(info.post_id);
+    const deleteBookmark = async () => {
+        const response = await client.post.unSave(info.post_id);
         if(response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string })
-        setInfo({ ...info, likes: info?.likes > 0 ? info?.likes - 1 : 0, liked: false})
+        setInfo({ ...info, bookmarks: info?.bookmarkes > 0 ? info?.bookmarkes - 1 : 0, bookmarked: false})
     }
 
     return (
-        <IconButton onPress={() => info?.liked ? deleteLike() : createLike()} icon={`${info?.liked ? "heart" : "heart-outline"}`} iconColor={info?.liked ? colors.badge_color : undefined} />
+        <IconButton onPress={() => info?.bookmarked ? deleteBookmark() : createBookmark()} icon={info.bookmarked ? "bookmark" : "bookmark-outline"} iconColor={info?.bookmarked ? colors.good_color : undefined} />
     )
 }
 
-export default LikeButton;
+export default BookmarkButton;

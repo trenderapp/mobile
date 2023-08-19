@@ -45,11 +45,12 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
   }, [initFiles])
 
   const sendInfo = async () => {
+    if (sending.send) return Toast.show({ text1: t(`errors.sending_form`) })
     if(!content) {
       if(files.length < 1 && !shared_post) return Toast.show({ text1: t(`errors.2001`) })
     }
     if (content && content.length > advantages.textLength()) return Toast.show({ text1: t(`errors.2001`) })
-    if (sending.send) return Toast.show({ text1: t(`errors.sending_form`) })
+    setSending({ send: true, progress: 0 })
 
     let data = { 
       content: content ?? "", 
@@ -89,10 +90,7 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
       setSending({ send: false, progress: 0 })
       return Toast.show({ text1: t(`errors.${response.error.code}`)})
     }
-
-    if (response.data) dispatch(addMainCreatedTrends({ ...response?.data, from: { ...user } }));
-
-    setSending({ send: false, progress: 0 })
+    if(response.data) dispatch(addMainCreatedTrends({ ...response?.data, from: { ...user } }));
     setFiles([])
     SetContent("")
     Toast.show({

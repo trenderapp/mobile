@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Share, View } from 'react-native';
+import { View } from 'react-native';
 
 import styles from "../../../../../Style/style";
 import LikeButton from "./LikeButton";
@@ -8,19 +8,14 @@ import { IconButton, Text } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationContextI } from "../../../../Container/Navigation/NavigationContext";
 import { postResponseSchema } from "trender-client/Managers/Interfaces/Post";
-import { posturl } from "../../../../../Services/constante";
+import BookmarkButton from "./BookmarkButton";
 
 function Postbottom() {
 
     const { info } = useContext<{ info: postResponseSchema }>(SinglePostContext);
     const navigation = useNavigation<NavigationContextI>();
 
-    const onShare = async () => {
-        await Share.share({
-            message: `${posturl}/${info.post_id}`,
-            url: `${posturl}/${info.post_id}`
-        });
-    }
+
 
     return (
         <View>
@@ -58,10 +53,13 @@ function Postbottom() {
                     <Text>{info?.likes ?? 0}</Text>
                 </View>
                 <View style={styles.row}>
+                    <BookmarkButton />
+                    <Text>{info?.bookmarks ?? 0}</Text>
+                </View>
+                <View style={styles.row}>
                     <IconButton onLongPress={() => {}} icon="eye" />
                     <Text>{info?.views ?? 1}</Text>
                 </View>
-                <IconButton onPress={() => onShare()} icon="share-variant" />
             </View>
         </View>
     )

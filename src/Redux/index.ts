@@ -15,6 +15,7 @@ import { guildListReducer } from './guildList';
 import { guildMessagesReducer } from './guildMessages';
 import { notificationFeedReducer } from './NotificationFeed';
 import { postSharesReducer } from './PostShares';
+import { postBookmarksReducer } from './Bookmarks';
 
 // Combine les réducteurs en un seul objet de réducteur
 const rootReducer = combineReducers({
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   mainFeed: mainFeedReducer,
   postSearch: postSearchReducer,
   postShares: postSharesReducer,
+  postBookmarks: postBookmarksReducer,
   exploreRecentTrends: exploreRecentTrendsReducer,
   exploreWorldRecentTrends: exploreWorldRecentTrendsReducer,
   exploreTopTrends: exploreTopTrendsReducer,

@@ -2,19 +2,17 @@ import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Toast from 'react-native-toast-message';
 import { useDispatch } from 'react-redux';
+import { Share } from 'react-native';
 import Clipboard from "@react-native-clipboard/clipboard";
-import { Button, Dialog, Divider, Portal, Text } from "react-native-paper";
+import { Button, Dialog, Divider, Portal } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
-import { BottomModal, ModalSection } from "../../../../../Other";
-import styles from "../../../../../Style/style";
+import { BottomModal } from "../../../../../Other";
 import { useClient, useTheme } from "../../../../Container";
-import SvgElement from "../../../../Elements/Svg";
 import { deleteProfileTrends } from "../../../../../Redux/profileFeed/action";
 import { deleteMainTrends } from "../../../../../Redux/mainFeed/action";
 import { deleteCommentTrends } from "../../../../../Redux/commentFeed/action";
 import { SinglePostContext } from "../../../PostContext.js";
-import { Share, View } from "react-native";
 import { posturl } from "../../../../../Services/constante";
 
 type SectionProps = {
@@ -74,6 +72,13 @@ function Owner({ modalVisible, setModalVisible, pined, post_id }: SectionProps) 
         setModalVisible(false)
     }
 
+    const onShare = async () => {
+        await Share.share({
+            message: `${posturl}/${info.post_id}`,
+            url: `${posturl}/${info.post_id}`
+        });
+    }
+
 
     return (
         <>
@@ -90,6 +95,8 @@ function Owner({ modalVisible, setModalVisible, pined, post_id }: SectionProps) 
                 </Dialog>
             </Portal>
             <BottomModal onSwipeComplete={() => setModalVisible(false)} isVisible={modalVisible}>
+                <Button uppercase onPress={() => onShare()} icon="share-variant">{t("posts.share")}</Button>
+                <Divider bold theme={{ colors: { outlineVariant: colors.bg_primary } }} />
                 <Button uppercase onPress={() => copyPostID()} icon="content-copy">{t("posts.copy_post_id")}</Button>
                 <Divider bold theme={{ colors: { outlineVariant: colors.bg_primary } }} />
                 <Button uppercase onPress={() => {

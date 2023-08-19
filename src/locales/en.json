@@ -73,7 +73,10 @@
         "hidden": "Hidden Trend. Press to show more",
         "unavailable": "Unavailable",
         "deleted_post": "This Trend doesn't exist",
-        "shares": "Shares"
+        "shares": "Shares",
+
+        "bookmark": "Bookmark",
+        "bookmarks": "Bookmarks"
     },
     "login": {
         "already_account": "Already have an account?",

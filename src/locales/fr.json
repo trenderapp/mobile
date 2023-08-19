@@ -73,7 +73,10 @@
         "hidden": "Trend caché. Appuyer pour afficher",
         "unavailable": "Indisponible",
         "deleted_post": "Cette Trend n'existe plus",
-        "shares": "Partages"
+        "shares": "Partages",
+
+        "bookmark": "Signet",
+        "bookmarks": "Signets"
     },
     "login": {
         "already_account": "Tu as déjà un compte ?",

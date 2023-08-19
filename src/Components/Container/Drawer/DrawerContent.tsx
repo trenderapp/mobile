@@ -44,6 +44,12 @@ export default function DrawerContent(navigation: any) {
               nickname: user?.nickname
             }
           })} />
+          <Drawer.Item icon="bookmark" label={t("posts.bookmarks")} onPress={() => navigation.navigate("PostStack", {
+            screen: "Bookmarks",
+            params: {
+              target_id: user?.user_id
+            }
+          })} />
           <Drawer.Item icon="cog" label={t("commons.settings")} onPress={() => navigation.navigate("SettingsStack")} />
         </Drawer.Section>
       </View>
