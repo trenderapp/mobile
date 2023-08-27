@@ -42,7 +42,7 @@ function GuildInfo({ info }) {
 
     return (
         <>
-            <BottomModal onSwipeComplete={() => setModalVisible(false)} isVisible={modalVisible}>
+            <BottomModal onSwipeComplete={() => setModalVisible(false)} dismiss={() => setModalVisible(false)} isVisible={modalVisible}>
                 <ModalSection onPress={() => copyText(info?.guild_id)}>
                     <SvgElement name="copy" margin={5} size={22} /> 
                     <Text>{t("messages.copy_id")}</Text>

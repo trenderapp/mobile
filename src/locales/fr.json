@@ -56,6 +56,18 @@
         "no_trends_world_region": "Aucune Trends dans le monde aujourd'hui. Crée la première Trend de la journée !",
         "no_trends_world_region_all_time": "Aucune Trend dans le monde. Soit le premier à créer une Trend !"
     },
+    "badges": {
+        "TRENDER_EMPLOYEE": "Employé Trender",
+        "TRENDER_PARTNER": "Trender Partenaire",
+        "VERIFIED_USER": "Utilisateur vérifié",
+        "EARLY_SUPPORTER": "Inscrit avant l'heure",
+        "CERTIFIED_MODERATOR": "Modérateur certifié",
+        "PREMIUM_USER": "Abonné Standard",
+        "PREMIUM_2_USER": "Abonné Premium",
+        "PREMIUM_3_USER": "Abonné Elite",
+        "CERTIFIED_USER": "Utilisateur certifié",
+        "PRIVATE_USER": "Utilisateur privé"
+    },
     "posts": {
         "create_post": "Quoi de neuf ?",
         "publish": "Publier",

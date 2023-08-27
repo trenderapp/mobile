@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { View } from 'react-native';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 import Modal from 'react-native-modal';
 import { useTheme } from '../Components/Container';
 
-const BottomModal = props => {
+type SectionProps = PropsWithChildren<{
+  isVisible?: boolean;
+  dismiss?: () => void;
+  scrollView?: boolean;
+  onSwipeComplete?: () => void;
+}>
+
+const BottomModal = (props: SectionProps) => {
   const {children, isVisible, dismiss, scrollView} = props;
   
   const { colors } = useTheme();

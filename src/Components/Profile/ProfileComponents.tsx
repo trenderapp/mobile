@@ -20,6 +20,8 @@ import ProfileOwnerModal from "./Edit/Modal/Owner";
 import { profileInformationsInterface } from "trender-client/Managers/Interfaces/User";
 import { openURL, subscriptionCurrencyArray } from "../../Services";
 import { getUserSubscriptionResponseInterface } from "trender-client/Managers/Interfaces/CustomSubscription";
+import { BottomModal } from "../../Other";
+import BadgeModal from "../../Other/BadgeModal";
 
 type SectionProps = {
     nickname: string,
@@ -36,7 +38,8 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
     const navigation = useNavigation();
     const { dispatch } = useContext(DmGroupListContext);
     const [modalVisible, setModalVisible] = useState(false);
-    const [visible, setVisible] = React.useState(false);
+    const [visible, setVisible] = useState(false);
+    const [badgeInfoVisible, setBadgeInfoVisible] = useState(false);
     const [subscriptionPrice, setSubscriptionPrice] = useState<getUserSubscriptionResponseInterface>({
         active: true,
         currency: "eur",
@@ -75,9 +78,9 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
             })
         }, 500)
     }
-    
+
     const getSubscriptions = async () => {
-        const response = await client.subscription.custom.fetch(informations.user_id);        
+        const response = await client.subscription.custom.fetch(informations.user_id);
         if (response.error || !response.data) return;
         return setSubscriptionPrice({
             ...response.data,
@@ -85,27 +88,32 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
         })
     }
 
+    const SubscriptionModal = () => (
+        <Portal>
+            <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={{
+                backgroundColor: colors.bg_primary,
+                padding: 20,
+                flexDirection: "column",
+                justifyContent: "space-evenly",
+                height: full_height / 2
+            }}>
+                <Text>{t("profile.support_creator")} : <Text style={{ fontWeight: "bold" }}>{`${subscriptionPrice.price}${subscriptionCurrencyArray.find(f => f.name)?.symbol ?? "$"} /month`}</Text></Text>
+                <Button
+                    loading={subscriptionPrice.price <= 0}
+                    disabled={subscriptionPrice.price <= 0}
+                    mode="contained"
+                    onPress={() => informations.pay_custom_subscription ? undefined : navigation.push("CustomSubscriptionValidationScreen", {
+                        subscription_id: informations.custom_subscription,
+                        informations: informations
+                    })}>{t("subscription.subscribe")}</Button>
+            </Modal>
+        </Portal>
+    )
+
     return (
         <View style={{ borderBottomColor: colors.bg_secondary, borderBottomWidth: 1 }}>
-            <Portal>
-                <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={{
-                    backgroundColor: colors.bg_primary,
-                    padding: 20,
-                    flexDirection: "column",
-                    justifyContent: "space-evenly",
-                    height: full_height / 2
-                }}>
-                    <Text>{t("profile.support_creator")} : <Text style={{ fontWeight: "bold" }}>{`${subscriptionPrice.price}${subscriptionCurrencyArray.find(f => f.name)?.symbol ?? "$"} /month`}</Text></Text>
-                    <Button
-                        loading={subscriptionPrice.price <= 0}
-                        disabled={subscriptionPrice.price <= 0}
-                        mode="contained"
-                        onPress={() => informations.pay_custom_subscription ? undefined : navigation.push("CustomSubscriptionValidationScreen", {
-                            subscription_id: informations.custom_subscription,
-                            informations: informations
-                        })}>{t("subscription.subscribe")}</Button>
-                </Modal>
-            </Portal>
+            <SubscriptionModal />
+            <BadgeModal badgeInfoVisible={badgeInfoVisible} setBadgeInfoVisible={() => setBadgeInfoVisible(false)} />
             {informations.user_id !== user?.user_id && <ProfileUserModal setInfo={setInfo} modalVisible={modalVisible} setModalVisible={setModalVisible} informations={informations} />}
             {informations.user_id === user?.user_id && <ProfileOwnerModal modalVisible={modalVisible} setModalVisible={setModalVisible} informations={informations} />}
             <View>
@@ -142,14 +150,14 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
                     <View style={{ paddingTop: 5 }}>
                         <Text>{informations.username}</Text>
                         <View style={styles.row}>
-                            {informations.is_private && <SvgElement size={18} name="lock" color={colors.text_normal} />}
-                            {informations.certified && <SvgElement size={18} name="verified" color={colors.text_normal} />}
-                            {client.user.flags(informations.flags.toString()).has(userFlags.TRENDER_EMPLOYEE) && <UserBadges url={client.user.badge("TRENDER_EMPLOYEE")} />}
-                            {client.user.flags(informations.flags.toString()).has(userFlags.EARLY_SUPPORTER) && <UserBadges url={client.user.badge("EARLY_SUPPORTER")} />}
-                            {client.user.flags(informations.flags.toString()).has(userFlags.TRENDER_PARTNER) && <UserBadges url={client.user.badge("TRENDER_PARTNER")} />}
-                            {client.user.flags(informations.flags.toString()).has(userFlags.PREMIUM_USER) && <UserBadges url={client.user.badge("SUB_1")} />}
-                            {client.user.flags(informations.flags.toString()).has(userFlags.PREMIUM_2_USER) && <UserBadges url={client.user.badge("SUB_2")} />}
-                            {client.user.flags(informations.flags.toString()).has(userFlags.PREMIUM_3_USER) && <UserBadges url={client.user.badge("SUB_3")} />}
+                            {informations.is_private && <SvgElement onPress={() => setBadgeInfoVisible(true)} size={18} name="lock" color={colors.text_normal} />}
+                            {informations.certified && <SvgElement onPress={() => setBadgeInfoVisible(true)} size={18} name="verified" color={colors.text_normal} />}
+                            {client.user.flags(informations.flags.toString()).has(userFlags.TRENDER_EMPLOYEE) && <UserBadges onPress={() => setBadgeInfoVisible(true)} url={client.user.badge("TRENDER_EMPLOYEE")} />}
+                            {client.user.flags(informations.flags.toString()).has(userFlags.EARLY_SUPPORTER) && <UserBadges onPress={() => setBadgeInfoVisible(true)} url={client.user.badge("EARLY_SUPPORTER")} />}
+                            {client.user.flags(informations.flags.toString()).has(userFlags.TRENDER_PARTNER) && <UserBadges onPress={() => setBadgeInfoVisible(true)} url={client.user.badge("TRENDER_PARTNER")} />}
+                            {client.user.flags(informations.flags.toString()).has(userFlags.PREMIUM_USER) && <UserBadges onPress={() => setBadgeInfoVisible(true)} url={client.user.badge("SUB_1")} />}
+                            {client.user.flags(informations.flags.toString()).has(userFlags.PREMIUM_2_USER) && <UserBadges onPress={() => setBadgeInfoVisible(true)} url={client.user.badge("SUB_2")} />}
+                            {client.user.flags(informations.flags.toString()).has(userFlags.PREMIUM_3_USER) && <UserBadges onPress={() => setBadgeInfoVisible(true)} url={client.user.badge("SUB_3")} />}
                         </View>
                         <View style={styles.row}>
                             <Text>@{informations.nickname}</Text>

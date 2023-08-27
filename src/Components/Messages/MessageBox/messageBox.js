@@ -32,7 +32,7 @@ function MessageBox({ info }) {
 
     return (
         <SinglePostContextProvider informations={info}>
-            <BottomModal onSwipeComplete={() => setModalVisible(false)} isVisible={modalVisible}>
+            <BottomModal onSwipeComplete={() => setModalVisible(false)} dismiss={() => setModalVisible(false)} isVisible={modalVisible}>
                 <ModalSection onPress={() => copyText(info.message_id)}>  
                     <SvgElement name="copy" margin={5} size={22} />
                     <Text>{t("messages.copy_id")}</Text>

@@ -46,7 +46,7 @@ function ProfileUserModal({ modalVisible, setModalVisible, informations, setInfo
 
 
     return (
-        <BottomModal onSwipeComplete={() => setModalVisible(false)} isVisible={modalVisible}>
+        <BottomModal onSwipeComplete={() => setModalVisible(false)} dismiss={() => setModalVisible(false)} isVisible={modalVisible}>
             <Button uppercase onPress={() => copyUserID()} icon="content-copy">{t("profile.copy_user_id")}</Button>
             <Divider bold theme={{ colors: { outlineVariant: colors.bg_primary } }} />
             <Button uppercase onPress={() => report()} icon="shield-alert-outline">{t("commons.report")}</Button>

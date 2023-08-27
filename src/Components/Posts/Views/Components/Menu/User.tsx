@@ -50,7 +50,7 @@ function User({ modalVisible, setModalVisible }: SectionProps) {
     }
 
     return (
-        <BottomModal onSwipeComplete={() => setModalVisible(false)} isVisible={modalVisible}>
+        <BottomModal onSwipeComplete={() => setModalVisible(false)} dismiss={() => setModalVisible(false)} isVisible={modalVisible}>
             <Button uppercase onPress={() => onShare()} icon="share-variant">{t("posts.share")}</Button>
             <Divider bold theme={{ colors: { outlineVariant: colors.bg_primary } }} />
             <Button uppercase onPress={() => copyPostID()} icon="content-copy">{t("posts.copy_post_id")}</Button>

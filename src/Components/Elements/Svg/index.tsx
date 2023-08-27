@@ -11,8 +11,9 @@ type SectionType = {
     margin?: number,
     noColor?: boolean,
     color?: string;
+    padding?: number;
 }
-function SvgElement({ onPress = undefined, name, size = 33, margin, noColor, color }: SectionType) {
+function SvgElement({ onPress = undefined, name, size = 33, margin, noColor, color, padding }: SectionType) {
 
     const { colors } = useTheme();
     const [svg, setSvg] = useState({
@@ -37,7 +38,7 @@ function SvgElement({ onPress = undefined, name, size = 33, margin, noColor, col
                         flexDirection: "row",
                         justifyContent: "center",
                         alignItems: "center",
-                        padding: 5,
+                        padding: padding ? padding : 5,
                         borderRadius: 60 / 2
                     }} onPress={() => onPress()}>
                         <Svg width={size} height={size} viewBox={`0 0 ${svg.w} ${svg.h}`}>
@@ -55,7 +56,7 @@ function SvgElement({ onPress = undefined, name, size = 33, margin, noColor, col
                         flexDirection: "row",
                         justifyContent: "center",
                         alignItems: "center",
-                        padding: 5,
+                        padding: padding ? padding : 5,
                         borderRadius: 60 / 2
                     }}>
                         <Svg width={size} height={size} viewBox={`0 0 ${svg.w} ${svg.h}`}>

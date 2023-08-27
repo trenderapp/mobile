@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { View, TouchableOpacity} from "react-native";
-import { Chip } from "react-native-paper";
+import { Chip, IconButton } from "react-native-paper";
 import styles from "../../../../Style/style";
 import { useClient, useTheme } from "../../../Container";
 import SvgElement from "../../../Elements/Svg";
@@ -37,7 +37,7 @@ function Postheader({ info, created_at }) {
                     alignItems: "flex-start"
                 } ]}>
                     <Avatar size={40} url={client.user.avatar(info?.user_id, info?.avatar)} />
-                    <Username user={info} created_at={created_at} lefComponent={post.info.paid && <Chip textStyle={{ fontSize: 10 }} theme={{ colors: { secondaryContainer: colors.off_color }}}>Premium</Chip>} />
+                    <Username user={info} created_at={created_at} />
                 </View>
             </TouchableOpacity>
             <SvgElement onPress={() => setShowModal(true)} size={22} name="ellipsis" />

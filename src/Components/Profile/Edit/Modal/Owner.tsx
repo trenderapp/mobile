@@ -26,7 +26,7 @@ function ProfileOwnerModal({ modalVisible, setModalVisible, informations }: Sect
 
 
     return (
-        <BottomModal onSwipeComplete={() => setModalVisible(false)} isVisible={modalVisible}>
+        <BottomModal onSwipeComplete={() => setModalVisible(false)} dismiss={() => setModalVisible(false)} isVisible={modalVisible}>
             <Button uppercase onPress={() => copyUserID()} icon="content-copy">{t("profile.copy_user_id")}</Button>
             <Divider bold theme={{ colors: { outlineVariant: colors.bg_primary } }} />
             <Button uppercase textColor={colors.warning_color} onPress={() => setModalVisible(false)} icon="keyboard-return">{t("commons.cancel")}</Button>
