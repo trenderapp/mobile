@@ -20,7 +20,6 @@ import ProfileOwnerModal from "./Edit/Modal/Owner";
 import { profileInformationsInterface } from "trender-client/Managers/Interfaces/User";
 import { openURL, subscriptionCurrencyArray } from "../../Services";
 import { getUserSubscriptionResponseInterface } from "trender-client/Managers/Interfaces/CustomSubscription";
-import { BottomModal } from "../../Other";
 import BadgeModal from "../../Other/BadgeModal";
 
 type SectionProps = {
@@ -88,6 +87,14 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
         })
     }
 
+    const subscriptionPress = () => {
+        hideModal()
+        navigation.push("CustomSubscriptionValidationScreen", {
+            subscription_id: informations.custom_subscription,
+            informations: informations
+        })
+    }
+
     const SubscriptionModal = () => (
         <Portal>
             <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={{
@@ -102,10 +109,7 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
                     loading={subscriptionPrice.price <= 0}
                     disabled={subscriptionPrice.price <= 0}
                     mode="contained"
-                    onPress={() => informations.pay_custom_subscription ? undefined : navigation.push("CustomSubscriptionValidationScreen", {
-                        subscription_id: informations.custom_subscription,
-                        informations: informations
-                    })}>{t("subscription.subscribe")}</Button>
+                    onPress={() => informations.pay_custom_subscription ? undefined : subscriptionPress()}>{t("subscription.subscribe")}</Button>
             </Modal>
         </Portal>
     )

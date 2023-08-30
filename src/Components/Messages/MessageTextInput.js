@@ -215,12 +215,12 @@ function MessageTextInput({ value, setValue, onSubmit, channel_id, onAttachment,
                     }}
                     onEndEditing={() => {
                         setEditing(false);
-                        sendMessage({
+                        /*sendMessage({
                             code: webSocketRoutes.STOP_TYPING,
                             data: {
                                 channel_id: channel_id
                             }
-                        })
+                        })*/
                     }}
                     onBlur={() => Keyboard.dismiss()}
                     multiline={true}
@@ -228,7 +228,7 @@ function MessageTextInput({ value, setValue, onSubmit, channel_id, onAttachment,
                     value={value}
                     onChangeText={(t) => {
                         setValue(t)
-                        if(editing === false) {
+                        /*if(editing === false) {
                             setEditing(true)
                             sendMessage({
                                 code: webSocketRoutes.START_TYPING,
@@ -236,7 +236,7 @@ function MessageTextInput({ value, setValue, onSubmit, channel_id, onAttachment,
                                     channel_id: channel_id
                                 }
                             })
-                        }
+                        }*/
                     }}
                     onSelectionChange={(ev) => {
                         setSelection(ev.nativeEvent.selection)

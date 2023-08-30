@@ -33,10 +33,10 @@
         "translate": "Traduire",
         "translated_with": "Traduit avec",
 
-        "top_of_day": "Top du jour",
+        "top_of_day": "Tendances",
         "last_rends": "Dernière Trends",
-        "top_world_trends_day": "Top monde du jour",
-        "last_word_trends": "Dernière Trends monde"
+        "top_world_trends_day": "Tendances mondial",
+        "last_word_trends": "Dernière Trends mondial"
     },
     "update": {
         "update": "Mettre à jour",
