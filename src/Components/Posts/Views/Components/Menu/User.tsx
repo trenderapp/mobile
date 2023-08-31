@@ -12,7 +12,7 @@ import { posturl } from "../../../../../Services/constante";
 
 type SectionProps = {
     modalVisible: boolean, 
-    setModalVisible: (bool: boolean) => any
+    setModalVisible: () => any
 }
 
 function User({ modalVisible, setModalVisible }: SectionProps) {
@@ -26,20 +26,20 @@ function User({ modalVisible, setModalVisible }: SectionProps) {
         const response = await client.user.block.create(info.from.user_id);
         if(response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string })
         Toast.show({ text1: t("commons.success") as string })
-        setModalVisible(false)
+        setModalVisible()
     }
 
     const report = async () => {
         const response = await client.post.report(info.post_id, 1);
         if(response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string })
         Toast.show({ text1: t("commons.success") as string })
-        setModalVisible(false)
+        setModalVisible()
     }
 
     const copyPostID = () => {
         Clipboard.setString(info.post_id);
         Toast.show({ text1: t("commons.success") as string })
-        setModalVisible(false)
+        setModalVisible()
     }
 
     const onShare = async () => {
@@ -50,7 +50,7 @@ function User({ modalVisible, setModalVisible }: SectionProps) {
     }
 
     return (
-        <BottomModal onSwipeComplete={() => setModalVisible(false)} dismiss={() => setModalVisible(false)} isVisible={modalVisible}>
+        <BottomModal onSwipeComplete={() => setModalVisible()} dismiss={() => setModalVisible()} isVisible={modalVisible}>
             <Button uppercase onPress={() => onShare()} icon="share-variant">{t("posts.share")}</Button>
             <Divider bold theme={{ colors: { outlineVariant: colors.bg_primary } }} />
             <Button uppercase onPress={() => copyPostID()} icon="content-copy">{t("posts.copy_post_id")}</Button>
@@ -59,7 +59,7 @@ function User({ modalVisible, setModalVisible }: SectionProps) {
             <Divider bold theme={{ colors: { outlineVariant: colors.bg_primary } }} />
             <Button uppercase onPress={() => block()} icon="block-helper">{t("profile.block")}</Button>
             <Divider bold theme={{ colors: { outlineVariant: colors.bg_primary } }} />
-            <Button uppercase textColor={colors.warning_color} onPress={() => setModalVisible(false)} icon="keyboard-return">{t("commons.cancel")}</Button>
+            <Button uppercase textColor={colors.warning_color} onPress={() => setModalVisible()} icon="keyboard-return">{t("commons.cancel")}</Button>
         </BottomModal>
     )
 }
