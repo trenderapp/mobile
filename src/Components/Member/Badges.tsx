@@ -3,17 +3,18 @@ import { Image, Pressable } from "react-native";
 
 type SectionProps = {
     url: string;
-    onPress?: () => void
+    onPress?: () => void,
+    size?: number
 }
 
-function UserBadges({ url, onPress }: SectionProps) {
+function UserBadges({ url, onPress, size = 20 }: SectionProps) {
     return <Pressable onPress={onPress}>
         <Image style={{
             marginRight: 6
         }} source={{
             uri: url,
-            height: 20,
-            width: 20
+            height: size,
+            width: size
         }} />
     </Pressable>
 }

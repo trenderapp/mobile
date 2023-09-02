@@ -94,7 +94,8 @@ export const styles = StyleSheet.create({
     },
     column: {
         flex: 1,
-        flexDirection: "column"
+        flexDirection: "column",
+        alignItems: 'center'
     },
     Icon: {
         marginRight: 5,

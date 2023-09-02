@@ -7,8 +7,9 @@ import { useTranslation } from 'react-i18next'
 import Toast from 'react-native-toast-message';
 import FastImage from "react-native-fast-image";
 import { postResponseSchema } from "trender-client/Managers/Interfaces/Post";
+import { useNavigation as useNativeNavigation } from "@react-navigation/native";
 
-import styles, { full_height } from "../../Style/style";
+import styles, { full_height, full_width } from "../../Style/style";
 import { UserBadges } from "../Member";
 import { useClient, useNavigation, useTheme } from "../Container";
 import { Markdown } from "../Elements/Text";
@@ -18,7 +19,7 @@ import { addDmGroup, DmGroupListContext } from "../../Context/DmGuildListContext
 import ProfileUserModal from "./Edit/Modal/User";
 import ProfileOwnerModal from "./Edit/Modal/Owner";
 import { profileInformationsInterface } from "trender-client/Managers/Interfaces/User";
-import { openURL, subscriptionCurrencyArray } from "../../Services";
+import { navigationProps, openURL, subscriptionCurrencyArray } from "../../Services";
 import { getUserSubscriptionResponseInterface } from "trender-client/Managers/Interfaces/CustomSubscription";
 import BadgeModal from "../../Other/BadgeModal";
 
@@ -34,6 +35,7 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
     const { t, i18n } = useTranslation('');
     const { colors } = useTheme();
     const { client, user } = useClient();
+    const naviteNavigation = useNativeNavigation<navigationProps>();
     const navigation = useNavigation();
     const { dispatch } = useContext(DmGroupListContext);
     const [modalVisible, setModalVisible] = useState(false);
@@ -114,81 +116,112 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
         </Portal>
     )
 
-    return (
-        <View style={{ borderBottomColor: colors.bg_secondary, borderBottomWidth: 1 }}>
+    const ProfileHeader = () => (
+        <View style={[styles.row, { justifyContent: "space-between", position: "absolute", zIndex: 99, width: full_width }]}>
+            {naviteNavigation.canGoBack() && <IconButton mode="contained-tonal" icon="arrow-left" onPress={() => naviteNavigation.goBack()} />}
+            {informations.user_id === user?.user_id && <Tooltip title={t(`profile.edit`)}><IconButton mode="contained-tonal" icon="account-edit" style={{ margin: 0 }} onPress={() => navigation.push("ProfileEditScreen", { info: informations })} /></Tooltip>}
+            <IconButton mode="contained-tonal" style={{ marginRight: 5 }} onPress={() => setModalVisible(true)} icon="dots-horizontal" />    
+        </View>
+    )
+
+    const AllModals = () => (
+        <>
             <SubscriptionModal />
             <BadgeModal badgeInfoVisible={badgeInfoVisible} setBadgeInfoVisible={() => setBadgeInfoVisible(false)} />
             {informations.user_id !== user?.user_id && <ProfileUserModal setInfo={setInfo} modalVisible={modalVisible} setModalVisible={setModalVisible} informations={informations} />}
             {informations.user_id === user?.user_id && <ProfileOwnerModal modalVisible={modalVisible} setModalVisible={setModalVisible} informations={informations} />}
-            <View>
-                <View style={{ height: 100 }}>
-                    {
-                        informations?.banner ? <FastImage style={[
-                            styles.banner_image, { backgroundColor: colors.bg_secondary }
-                        ]} source={{ uri: `${client.user.banner(informations.user_id, informations.banner)}` }} /> : <View style={[styles.banner_image, { backgroundColor: informations.accent_color }]} />
-                    }
+        </>
+    )
+
+    const ProfileBanner = () => (
+        <View style={{ height: 150 }}>
+            <ProfileHeader />
+            {
+                informations?.banner ? <FastImage style={[styles.banner_image, { backgroundColor: colors.bg_secondary }]} source={{ uri: `${client.user.banner(informations.user_id, informations.banner)}` }} /> : <View style={[styles.banner_image, { backgroundColor: informations.accent_color }]} />
+            }
+        </View>
+    )
+
+    const ProfilePictures = () => (
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+            <View style={{ paddingTop: 5 }}>
+                <Text style={{ maxWidth: 250, marginTop: 10 }} variant="titleLarge">{informations.username}</Text>
+                <Text style={{ color: colors.text_muted, marginBottom: 20 }}>@{nickname ?? "..."}</Text>
+                <View style={styles.row}>
+                    {client.user.flags(informations.flags.toString()).has(userFlags.TRENDER_EMPLOYEE) && <UserBadges size={24} onPress={() => setBadgeInfoVisible(true)} url={client.user.badge("TRENDER_EMPLOYEE")} />}
+                    {client.user.flags(informations.flags.toString()).has(userFlags.EARLY_SUPPORTER) && <UserBadges size={24} onPress={() => setBadgeInfoVisible(true)} url={client.user.badge("EARLY_SUPPORTER")} />}
+                    {client.user.flags(informations.flags.toString()).has(userFlags.TRENDER_PARTNER) && <UserBadges size={24} onPress={() => setBadgeInfoVisible(true)} url={client.user.badge("TRENDER_PARTNER")} />}
+                    {client.user.flags(informations.flags.toString()).has(userFlags.PREMIUM_USER) && <UserBadges size={24} onPress={() => setBadgeInfoVisible(true)} url={client.user.badge("SUB_1")} />}
+                    {client.user.flags(informations.flags.toString()).has(userFlags.PREMIUM_2_USER) && <UserBadges size={24} onPress={() => setBadgeInfoVisible(true)} url={client.user.badge("SUB_2")} />}
+                    {client.user.flags(informations.flags.toString()).has(userFlags.PREMIUM_3_USER) && <UserBadges size={24} onPress={() => setBadgeInfoVisible(true)} url={client.user.badge("SUB_3")} />}
+                    {informations.is_private && <SvgElement onPress={() => setBadgeInfoVisible(true)} size={22} name="lock" color={colors.text_normal} />}
+                    {informations.certified && <SvgElement onPress={() => setBadgeInfoVisible(true)} size={22} name="verified" color={colors.text_normal} />}
                 </View>
-                <View style={[{ padding: 5 }]}>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                        <FastImage style={[styles.pdp64, { marginTop: -30, backgroundColor: colors.bg_secondary }]} source={{
-                            uri: `${client.user.avatar(informations.user_id, informations.avatar)}`
-                        }} />
-                        <View style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            alignItems: "center"
-                        }}>
-                            {informations.follow_back && <Tooltip title="Follow Back"><IconButton style={{ margin: 0 }} icon="account-sync" /></Tooltip>}
-                            <IconButton style={{ margin: 0 }} onPress={() => setModalVisible(true)} icon="dots-horizontal" />
-                            {informations.user_id !== user?.user_id && informations.allow_dm && <IconButton style={{ margin: 0 }} onPress={() => createDM()} icon="email" />}
-                            {informations.user_id !== user?.user_id && informations.custom_subscription && (
-                                <IconButton style={{ margin: 0 }} iconColor={informations.pay_custom_subscription ? colors.good_color : undefined} onPress={() => {
-                                    getSubscriptions();
-                                    showModal();
-                                }} icon="account-cash" />
-                            )}
-                            {informations.user_id === user?.user_id && <Button mode="contained-tonal" onPress={() => navigation.push("ProfileEditScreen", { info: informations })}>{t("profile.edit")}</Button>}
-                            {informations.user_id !== user?.user_id && <Button mode="contained-tonal" onPress={() => informations.followed ? unfollow() : follow()}>{t(`profile.${informations.followed ? "unfollow" : "follow"}`)}</Button>}
-                        </View>
+            </View>
+            <FastImage
+                style={{
+                    width: 100,
+                    height: 100,
+                    borderRadius: 10,
+                    borderColor: colors.bg_primary,
+                    borderWidth: 3,
+                    marginTop: -25,
+                    backgroundColor: colors.bg_secondary
+                }}
+                source={{ uri: `${client.user.avatar(informations.user_id, informations.avatar)}` }} />
+                
+        </View>
+    )
+
+    const ProfileButtons = () => (
+        <View style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            paddingRight: 5,
+            marginLeft: -10
+        }}>
+            {informations.follow_back && <Tooltip title="Follow Back"><IconButton style={{ margin: 0 }} icon="account-sync" /></Tooltip>}
+            {informations.user_id !== user?.user_id && <Tooltip title={t(`profile.${informations.followed ? "unfollow" : "follow"}`)}><IconButton iconColor={informations.followed ? colors.good_color : undefined } icon="account-heart" style={{ margin: 0 }} onPress={() => informations.followed ? unfollow() : follow()} /></Tooltip>}
+            {informations.user_id !== user?.user_id && informations.allow_dm && <IconButton style={{ margin: 0 }} onPress={() => createDM()} icon="email" />}
+            {informations.user_id !== user?.user_id && informations.custom_subscription && (
+                <IconButton style={{ margin: 0 }} iconColor={informations.pay_custom_subscription ? colors.good_color : undefined} onPress={() => {
+                    getSubscriptions();
+                    showModal();
+                }} icon="account-cash" />
+            )}
+
+        </View>
+    )
+
+    return (
+        <View style={{ borderBottomColor: colors.bg_secondary, borderBottomWidth: 1 }}>
+            <AllModals />
+            <View>
+                <ProfileBanner />
+                <View style={[{ paddingLeft: 15, paddingRight: 15 }]}>
+                    <ProfilePictures />
+                    <View style={{ marginLeft: 5, paddingBottom: 5 }}>   
+                        <Markdown token={user.token} content={informations?.description ?? ""} />
                     </View>
-                    <View style={{ paddingTop: 5 }}>
-                        <Text>{informations.username}</Text>
-                        <View style={styles.row}>
-                            {informations.is_private && <SvgElement onPress={() => setBadgeInfoVisible(true)} size={18} name="lock" color={colors.text_normal} />}
-                            {informations.certified && <SvgElement onPress={() => setBadgeInfoVisible(true)} size={18} name="verified" color={colors.text_normal} />}
-                            {client.user.flags(informations.flags.toString()).has(userFlags.TRENDER_EMPLOYEE) && <UserBadges onPress={() => setBadgeInfoVisible(true)} url={client.user.badge("TRENDER_EMPLOYEE")} />}
-                            {client.user.flags(informations.flags.toString()).has(userFlags.EARLY_SUPPORTER) && <UserBadges onPress={() => setBadgeInfoVisible(true)} url={client.user.badge("EARLY_SUPPORTER")} />}
-                            {client.user.flags(informations.flags.toString()).has(userFlags.TRENDER_PARTNER) && <UserBadges onPress={() => setBadgeInfoVisible(true)} url={client.user.badge("TRENDER_PARTNER")} />}
-                            {client.user.flags(informations.flags.toString()).has(userFlags.PREMIUM_USER) && <UserBadges onPress={() => setBadgeInfoVisible(true)} url={client.user.badge("SUB_1")} />}
-                            {client.user.flags(informations.flags.toString()).has(userFlags.PREMIUM_2_USER) && <UserBadges onPress={() => setBadgeInfoVisible(true)} url={client.user.badge("SUB_2")} />}
-                            {client.user.flags(informations.flags.toString()).has(userFlags.PREMIUM_3_USER) && <UserBadges onPress={() => setBadgeInfoVisible(true)} url={client.user.badge("SUB_3")} />}
-                        </View>
-                        <View style={styles.row}>
-                            <Text>@{informations.nickname}</Text>
-                        </View>
-                    </View>
-                    <Markdown token={user.token} content={informations?.description ?? ""} />
-                    <View >
-                        {typeof informations.link === "string" ? <Button style={{ marginLeft: -5 }} contentStyle={{ justifyContent: "flex-start", marginLeft: -5 }} onPress={() => openURL(informations?.link ?? "")} icon="link-variant"><Text style={{ color: colors.text_link }}>{informations.link.length > 50 ? `${informations.link.substring(0, 45)}...` : informations.link}</Text></Button> : null}
-                        <Text>{t("profile.joined")} : {dayjs(informations.created_at).locale(i18n.language).format("MMMM YYYY")}</Text>
-                        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                            <View style={{ flexDirection: "row" }}>
-                                <TouchableOpacity onPress={() => {
-                                    navigation.push('ProfileFollower', {
-                                        type: "subscriptions",
-                                        nickname: nickname
-                                    })
-                                }}>
-                                    <Text style={{ marginRight: 5 }}><Text style={{ fontWeight: "900" }}>{informations.subscriptions}</Text> {t("profile.subscriptions").toLocaleLowerCase()}</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => {
-                                    navigation.push('ProfileFollower', {
-                                        type: "subscribers",
-                                        nickname: nickname
-                                    })
-                                }}>
-                                    <Text><Text style={{ fontWeight: "900" }}>{informations.subscribers}</Text> {t("profile.subscribers").toLocaleLowerCase()}</Text>
-                                </TouchableOpacity>
+                    <View style={{ marginLeft: 5}} >
+                        {typeof informations.link === "string" && informations.link.trim().length > 0 ? <Button style={{ marginLeft: -5 }} contentStyle={{ justifyContent: "flex-start", marginLeft: -5 }} onPress={() => openURL(informations?.link ?? "")} icon="link-variant"><Text style={{ color: colors.text_link }}>{informations.link.length > 50 ? `${informations.link.substring(0, 45)}...` : informations.link}</Text></Button> : null}
+                        <Text>{t("profile.joined")} : <Text  style={{ textTransform: "capitalize" }}>{dayjs(informations.created_at).locale(i18n.language).format("MMMM YYYY")}</Text></Text>
+
+                        <ProfileButtons />
+                        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingBottom: 10 }}>
+                            <TouchableOpacity style={[styles.column, { alignItems: "center" }]} onPress={() => navigation.push('ProfileFollower', { type: "subscriptions", nickname: nickname })}>
+                                <Text variant="bodyLarge" style={{ fontWeight: "900" }}>{informations.subscriptions}</Text>
+                                <Text variant="bodySmall" style={{ color: colors.text_normal_hover }}>{t("profile.subscriptions")}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.column, { alignItems: "center" }]} onPress={() => navigation.push('ProfileFollower', { type: "subscribers", nickname: nickname })}>
+                                <Text variant="bodyLarge" style={{ fontWeight: "900" }}>{informations.subscribers}</Text>
+                                <Text variant="bodySmall" style={{ color: colors.text_normal_hover }}>{t("profile.subscribers")}</Text>
+                            </TouchableOpacity>
+                            <View style={[styles.column, { alignItems: "center" }]}>
+                                <Text variant="bodyMedium" style={{ textTransform: "capitalize", fontWeight: "900" }}>{informations.total_posts}</Text>
+                                <Text variant="bodySmall" style={{ color: colors.text_normal_hover }}>Trends</Text>
                             </View>
                         </View>
                     </View>

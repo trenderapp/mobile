@@ -19,36 +19,35 @@ type PostNormalContext = {
 }
 
 function PostNormal({ maxLines }: { maxLines?: number }) {
-    
+
     const { info }: PostNormalContext = useContext(SinglePostContext);
     const { client, token } = useClient();
     const { i18n } = useTranslation();
 
-    const enableTranslation = (text_lang: string) => {        
-        if(i18n.language.startsWith(text_lang.toLocaleLowerCase())) return undefined;
+    const enableTranslation = (text_lang: string) => {
+        if (i18n.language.startsWith(text_lang.toLocaleLowerCase())) return undefined;
         return i18n.language;
     }
 
     return (
         <View>
-            <Postheader info={info.from} created_at={info.created_at} />
-                <View style={{ padding: 5, paddingTop: 0 }}>
-                    {
-                        info.display_not_allowed ? 
-                            <Button onPress={() => {}}>Subscribe to {info.from.username} to display</Button> 
-                            : <Markdown translate={info.content_language ? enableTranslation(info.content_language) : undefined} token={token} maxLine={maxLines} content={info.content} />
-                    }
-                </View>
-            {
-                info?.type ?
-                    info.type === 1 ? 
-                        <Carroussel pictures={info.attachments} creator={undefined} changeList={undefined} />
+            <View style={{ paddingLeft: 5, paddingTop: 0 }}>
+                {
+                    info.display_not_allowed ?
+                        <Button onPress={() => { }}>Subscribe to {info.from.username} to display</Button>
+                        : <Markdown translate={info.content_language ? enableTranslation(info.content_language) : undefined} token={token} maxLine={maxLines} content={info.content} />
+                }
+            </View>
+                {
+                    info?.type ?
+                        info.type === 1 ?
+                            <Carroussel pictures={info.attachments} creator={undefined} changeList={undefined} />
                             : info.type === 2 ?
                                 <VideoPlayer
-                                    thumbnail={info.attachments[0]?.thumbnail ? client.post.file(info.from.user_id, info.post_id, info.attachments[0]?.thumbnail) : undefined} 
-                                        uri={client.post.file(info.from.user_id, info.post_id, encodeURIComponent(info.attachments[0]?.name))} attachments={undefined} /> 
+                                    thumbnail={info.attachments[0]?.thumbnail ? client.post.file(info.from.user_id, info.post_id, info.attachments[0]?.thumbnail) : undefined}
+                                    uri={client.post.file(info.from.user_id, info.post_id, encodeURIComponent(info.attachments[0]?.name))} attachments={undefined} />
                                 : null : null
-            }
+                }
         </View>
     )
 }

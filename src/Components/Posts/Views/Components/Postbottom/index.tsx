@@ -15,8 +15,6 @@ function Postbottom() {
     const { info } = useContext<{ info: postResponseSchema }>(SinglePostContext);
     const navigation = useNavigation<NavigationContextI>();
 
-
-
     return (
         <View>
             <View

@@ -36,7 +36,7 @@ const Renderer: SectionProps = ({ content, noBr, maxLine }) => {
     const { colors } = useTheme();
 
     const enter = content.split("\n");
-
+    
     return (
         <Text>
             {

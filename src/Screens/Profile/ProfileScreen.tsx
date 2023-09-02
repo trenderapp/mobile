@@ -71,14 +71,14 @@ function ProfileScreen({ route }: any) {
     ), [])
 
     return (
-        <ProfileContainer username={profile?.username}>
+        <ProfileContainer>
             {
                 !loading ?
                     <FlatList
                         onScrollEndDrag={() => getPosts()}
                         ListHeaderComponent={profile ? profile?.code ?
                             <ProfileNotFound error={profile} nickname={nickname} />
-                            : <ProfileComponent setInfo={setProfile} pined={pined} informations={profile} nickname={nickname} />
+                            : <ProfileComponent pined={pined} informations={profile} nickname={nickname} setInfo={setProfile} />
                             : <Loader />}
                         data={posts}
                         renderItem={renderItem}

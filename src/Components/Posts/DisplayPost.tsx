@@ -11,6 +11,7 @@ import { SinglePostContextProvider } from "./PostContext.js";
 import PostNormal from "./Views/PostNormal";
 import Postbottom from "./Views/Components/Postbottom";
 import { Loader } from "../../Other";
+import Postheader from "./Views/Components/Postheader";
 
 type SectionProps = React.FC<{
     informations: PostInterface.postResponseSchema;
@@ -50,6 +51,15 @@ const DisplayPosts: SectionProps = ({
         if (informations.attached_post_id && comments) loadAttachedPosts(informations.attached_post_id);
     }, [informations]);
 
+    const PinnedView = () => (
+        <View style={{ marginLeft: 5 }}>
+            <Text style={styles.pined}>
+                <SvgElement name="pin" noColor size={12} margin={undefined} />{" "}
+                {t("posts.pin")}
+            </Text>
+        </View>
+    )
+
     return (
         <SinglePostContextProvider
             informations={{
@@ -57,29 +67,19 @@ const DisplayPosts: SectionProps = ({
                 is_comment: is_comment,
                 is_share: is_share,
                 no_bottom: no_bottom,
-            }}
-        >
+            }}>
             <TouchableOpacity activeOpacity={0.7} onPress={() => (comments ? null : navigation?.push("PostStack", { screen: "PostScreen", params: { post_id: informations.post_id } }))}>
-                {attached_post ? (
-                    <DisplayPosts is_original_post={true} informations={attached_post} />
-                ) : typeof attached_post !== "undefined" && (
-                    <Button>{t("posts.deleted_post")}</Button>
-                )}
-                {commentLoad && <Loader />}
+                { attached_post ? <DisplayPosts is_original_post={true} informations={attached_post} /> : typeof attached_post !== "undefined" && <Button>{t("posts.deleted_post")}</Button> }
 
-                {pined && (
-                    <View style={{ marginLeft: 5 }}>
-                        <Text style={styles.pined}>
-                            <SvgElement name="pin" noColor size={12} margin={undefined} />{" "}
-                            {t("posts.pin")}
-                        </Text>
-                    </View>
-                )}
+                { commentLoad && <Loader /> }
 
+                { pined && <PinnedView /> }
+
+                <Postheader info={informations.from} created_at={informations.created_at} />
                 <PostNormal maxLines={comments ? undefined : 5} />
             </TouchableOpacity>
             {informations.shared_post_id && !is_share && (
-                <View style={{ marginLeft: 40, borderColor: colors.bg_secondary, borderWidth: 1, borderRadius: 8, padding: 10 }}>
+                <View style={{ marginLeft: 30, borderColor: colors.bg_secondary, borderWidth: 1, borderRadius: 8, padding: 10 }}>
                     {informations.shared_post && informations.shared_user ? (
                         <DisplayPosts is_share={true} informations={{
                             from: informations.shared_user,

@@ -1,9 +1,19 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { View } from "react-native";
 import { getBottomSpace } from "react-native-iphone-x-helper";
 import useTheme from "./Theme/useTheme";
 
-function SafeBottomContainer({ children , safeAreaInsets }) {
+type SectionProps = PropsWithChildren<{
+    safeAreaInsets?: {
+        left: number;
+        right: number;
+        bottom: number;
+        [x: string]: any
+    };
+    padding: number
+}>
+
+function SafeBottomContainer({ children , safeAreaInsets, padding = 5 }: SectionProps) {
     const BOTTOM_INSET = getBottomSpace();
     const { colors } = useTheme();
 
@@ -19,7 +29,7 @@ function SafeBottomContainer({ children , safeAreaInsets }) {
                 backgroundColor: colors.bg_primary,
                 marginBottom: insets.bottom,
                 marginHorizontal: Math.max(insets.left, insets.right),
-                padding: 5
+                padding: padding
             }}>
             { children }
         </View>
