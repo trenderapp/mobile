@@ -4,10 +4,9 @@ import { Button, Text } from "react-native-paper";
 import { PostInterface } from "trender-client";
 import { Markdown } from "../../Elements/Text";
 import { SinglePostContext } from "../PostContext.js";
-import Postheader from "./Components/Postheader";
 import Carroussel from "./Components/Carroussel";
 import VideoPlayer from "./Components/VideoPlayer";
-import { useClient } from "../../Container";
+import { useClient, useTheme } from "../../Container";
 import { useTranslation } from "react-i18next";
 
 type PostNormalContext = {
@@ -15,6 +14,7 @@ type PostNormalContext = {
         is_comment?: boolean;
         is_share?: boolean;
         no_bottom?: boolean;
+        original_post_user?: any
     },
 }
 
@@ -22,7 +22,8 @@ function PostNormal({ maxLines }: { maxLines?: number }) {
 
     const { info }: PostNormalContext = useContext(SinglePostContext);
     const { client, token } = useClient();
-    const { i18n } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const { colors } = useTheme();
 
     const enableTranslation = (text_lang: string) => {
         if (i18n.language.startsWith(text_lang.toLocaleLowerCase())) return undefined;
@@ -30,14 +31,24 @@ function PostNormal({ maxLines }: { maxLines?: number }) {
     }
 
     return (
-        <View>
-            <View style={{ paddingLeft: 5, paddingTop: 0 }}>
+        <>
+            <View style={{ paddingLeft: 5 }}>
+                
+            {info?.original_post_user && <Text variant="labelMedium" style={{ color: colors.text_muted }} >{t("posts.reply_to", { username: info.original_post_user.username })}</Text>}
                 {
                     info.display_not_allowed ?
-                        <Button onPress={() => { }}>Subscribe to {info.from.username} to display</Button>
+                        <Button onPress={() => { }}>{t("posts.subscribe_to", { username: info.from.username })}</Button>
                         : <Markdown translate={info.content_language ? enableTranslation(info.content_language) : undefined} token={token} maxLine={maxLines} content={info.content} />
                 }
             </View>
+            <View style={{
+                marginTop: 5,
+                borderRadius: 10,
+                width: "100%",
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center"
+            }}>
                 {
                     info?.type ?
                         info.type === 1 ?
@@ -48,7 +59,8 @@ function PostNormal({ maxLines }: { maxLines?: number }) {
                                     uri={client.post.file(info.from.user_id, info.post_id, encodeURIComponent(info.attachments[0]?.name))} attachments={undefined} />
                                 : null : null
                 }
-        </View>
+            </View>
+        </>
     )
 }
 

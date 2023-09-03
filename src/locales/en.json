@@ -86,6 +86,10 @@
         "unavailable": "Unavailable",
         "deleted_post": "This Trend doesn't exist",
         "shares": "Shares",
+        "reply_to": "Reply to {{username}}",
+        "subscribe_to": "Subscribe to {{username}} to display.",
+        "paying": "Paying",
+        "free": "Free",
 
         "bookmark": "Bookmark",
         "bookmarks": "Bookmarks"

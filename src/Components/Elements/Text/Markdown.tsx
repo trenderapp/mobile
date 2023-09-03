@@ -1,7 +1,7 @@
 import React, { Suspense, lazy, useState } from "react";
 import { Divider, Text } from "react-native-paper";
-import { translateText } from "../../../Services";
 import { useTranslation } from "react-i18next";
+import { translateText } from "../../../Services";
 const Renderer = lazy(() => import("./Markdown/Renderer"));
 
 type SectionProps = React.FC<{
@@ -9,7 +9,7 @@ type SectionProps = React.FC<{
     noBr?: boolean,
     maxLine?: number,
     translate?: string,
-    token: string
+    token?: string
 }>
 
 const Markdown: SectionProps = ({ content, noBr, maxLine, translate, token }) => {
@@ -18,6 +18,7 @@ const Markdown: SectionProps = ({ content, noBr, maxLine, translate, token }) =>
     const { t } = useTranslation();
 
     const setTranslation = async (to: string) => {
+        if(!token) return;
         const txt = await translateText(token, {
             content: content,
             to: to

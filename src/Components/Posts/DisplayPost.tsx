@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { TouchableOpacity, View } from "react-native";
-import { Button, Divider, Text } from "react-native-paper";
+import { Button, Divider, Text, Card } from "react-native-paper";
 import { PostInterface } from "trender-client";
 
 import styles from "../../Style/style";
@@ -21,6 +21,7 @@ type SectionProps = React.FC<{
     is_share?: boolean;
     no_bottom?: boolean;
     is_original_post?: boolean;
+    original_post_user?: any;
 }>;
 
 const DisplayPosts: SectionProps = ({
@@ -31,6 +32,7 @@ const DisplayPosts: SectionProps = ({
     is_share,
     no_bottom,
     is_original_post,
+    original_post_user
 }): JSX.Element => {
     const { t } = useTranslation();
     const { colors } = useTheme();
@@ -61,42 +63,49 @@ const DisplayPosts: SectionProps = ({
     )
 
     return (
-        <SinglePostContextProvider
-            informations={{
-                ...informations,
-                is_comment: is_comment,
-                is_share: is_share,
-                no_bottom: no_bottom,
-            }}>
-            <TouchableOpacity activeOpacity={0.7} onPress={() => (comments ? null : navigation?.push("PostStack", { screen: "PostScreen", params: { post_id: informations.post_id } }))}>
-                { attached_post ? <DisplayPosts is_original_post={true} informations={attached_post} /> : typeof attached_post !== "undefined" && <Button>{t("posts.deleted_post")}</Button> }
 
-                { commentLoad && <Loader /> }
+        <Card mode={"contained"} style={{
+            borderRadius: 10,
+            margin: 10
+        }}>
+            <SinglePostContextProvider
+                informations={{
+                    ...informations,
+                    is_comment: is_comment,
+                    is_share: is_share,
+                    no_bottom: no_bottom,
+                    original_post_user: original_post_user
+                }}>
+                <TouchableOpacity activeOpacity={0.7} onPress={() => comments ? null : navigation?.push("PostStack", { screen: "PostScreen", params: { post_id: informations.post_id } })}>
+                    {attached_post ? <DisplayPosts is_original_post={true} comments informations={attached_post} /> : typeof attached_post !== "undefined" && <Button>{t("posts.deleted_post")}</Button>}
 
-                { pined && <PinnedView /> }
+                    {commentLoad && <Loader />}
 
-                <Postheader info={informations.from} created_at={informations.created_at} />
-                <PostNormal maxLines={comments ? undefined : 5} />
-            </TouchableOpacity>
-            {informations.shared_post_id && !is_share && (
-                <View style={{ marginLeft: 30, borderColor: colors.bg_secondary, borderWidth: 1, borderRadius: 8, padding: 10 }}>
-                    {informations.shared_post && informations.shared_user ? (
-                        <DisplayPosts is_share={true} informations={{
-                            from: informations.shared_user,
-                            ...informations.shared_post as any
-                        }} />
+                    {pined && <PinnedView />}
+
+                    <Postheader info={informations.from} created_at={informations.created_at} />
+                    <PostNormal maxLines={comments ? undefined : 5} />
+                </TouchableOpacity>
+                {informations.shared_post_id && !is_share && (
+                    <View style={{ margin: 10, borderColor: colors.bg_primary, borderWidth: 1, borderRadius: 8 }}>
+                        {informations.shared_post && informations.shared_user ? (
+                            <DisplayPosts is_share={true} informations={{
+                                from: informations.shared_user,
+                                ...informations.shared_post as any
+                            }} />
                         ) : typeof informations.shared_user === "object" ? <Button onPress={() => navigation?.push("PostStack", { screen: "PostScreen", params: { post_id: informations.shared_post_id } })}>{t("posts.hidden")}</Button>
                             : <Button>{t("posts.unavailable")}</Button>
-                    }
-                </View>
-            )}
-            {!is_share && (
-                <>
-                    <Postbottom />
-                    {is_original_post ? <Divider bold horizontalInset /> : <Divider bold />}
-                </>
-            )}
-        </SinglePostContextProvider>
+                        }
+                    </View>
+                )}
+                {!is_share && (
+                    <>
+                        <Postbottom />
+                        {is_original_post && <Divider bold horizontalInset />}
+                    </>
+                )}
+            </SinglePostContextProvider>
+        </Card>
     );
 };
 

@@ -27,10 +27,12 @@ type SectionProps = {
     nickname: string,
     pined: postResponseSchema,
     informations: profileInformationsInterface,
-    setInfo: any
+    setInfo: any;
+    modalVisible: boolean;
+    setModalVisible: any;
 }
 
-function ProfileComponent({ nickname, pined, informations, setInfo }: SectionProps) {
+function ProfileComponent({ nickname, pined, informations, setInfo, setModalVisible, modalVisible }: SectionProps) {
 
     const { t, i18n } = useTranslation('');
     const { colors } = useTheme();
@@ -38,7 +40,6 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
     const naviteNavigation = useNativeNavigation<navigationProps>();
     const navigation = useNavigation();
     const { dispatch } = useContext(DmGroupListContext);
-    const [modalVisible, setModalVisible] = useState(false);
     const [visible, setVisible] = useState(false);
     const [badgeInfoVisible, setBadgeInfoVisible] = useState(false);
     const [subscriptionPrice, setSubscriptionPrice] = useState<getUserSubscriptionResponseInterface>({
@@ -117,9 +118,9 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
     )
 
     const ProfileHeader = () => (
-        <View style={[styles.row, { justifyContent: "space-between", position: "absolute", zIndex: 99, width: full_width }]}>
+        <View style={[styles.row, { justifyContent: "space-between", position: "absolute", zIndex: 99, width: full_width, backgroundColor: `${colors.bg_third}${0}` }]}>
             {naviteNavigation.canGoBack() && <IconButton mode="contained-tonal" icon="arrow-left" onPress={() => naviteNavigation.goBack()} />}
-            {informations.user_id === user?.user_id && <Tooltip title={t(`profile.edit`)}><IconButton mode="contained-tonal" icon="account-edit" style={{ margin: 0 }} onPress={() => navigation.push("ProfileEditScreen", { info: informations })} /></Tooltip>}
+            
             <IconButton mode="contained-tonal" style={{ marginRight: 5 }} onPress={() => setModalVisible(true)} icon="dots-horizontal" />    
         </View>
     )
@@ -135,7 +136,7 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
 
     const ProfileBanner = () => (
         <View style={{ height: 150 }}>
-            <ProfileHeader />
+            
             {
                 informations?.banner ? <FastImage style={[styles.banner_image, { backgroundColor: colors.bg_secondary }]} source={{ uri: `${client.user.banner(informations.user_id, informations.banner)}` }} /> : <View style={[styles.banner_image, { backgroundColor: informations.accent_color }]} />
             }
@@ -183,7 +184,6 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
             marginLeft: -10
         }}>
             {informations.follow_back && <Tooltip title="Follow Back"><IconButton style={{ margin: 0 }} icon="account-sync" /></Tooltip>}
-            {informations.user_id !== user?.user_id && <Tooltip title={t(`profile.${informations.followed ? "unfollow" : "follow"}`)}><IconButton iconColor={informations.followed ? colors.good_color : undefined } icon="account-heart" style={{ margin: 0 }} onPress={() => informations.followed ? unfollow() : follow()} /></Tooltip>}
             {informations.user_id !== user?.user_id && informations.allow_dm && <IconButton style={{ margin: 0 }} onPress={() => createDM()} icon="email" />}
             {informations.user_id !== user?.user_id && informations.custom_subscription && (
                 <IconButton style={{ margin: 0 }} iconColor={informations.pay_custom_subscription ? colors.good_color : undefined} onPress={() => {
@@ -199,13 +199,14 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
         <View style={{ borderBottomColor: colors.bg_secondary, borderBottomWidth: 1 }}>
             <AllModals />
             <View>
+                <ProfileHeader />
                 <ProfileBanner />
                 <View style={[{ paddingLeft: 15, paddingRight: 15 }]}>
                     <ProfilePictures />
                     <View style={{ marginLeft: 5, paddingBottom: 5 }}>   
                         <Markdown token={user.token} content={informations?.description ?? ""} />
                     </View>
-                    <View style={{ marginLeft: 5}} >
+                    <View style={{ marginLeft: 5, marginBottom: 20 }} >
                         {typeof informations.link === "string" && informations.link.trim().length > 0 ? <Button style={{ marginLeft: -5 }} contentStyle={{ justifyContent: "flex-start", marginLeft: -5 }} onPress={() => openURL(informations?.link ?? "")} icon="link-variant"><Text style={{ color: colors.text_link }}>{informations.link.length > 50 ? `${informations.link.substring(0, 45)}...` : informations.link}</Text></Button> : null}
                         <Text>{t("profile.joined")} : <Text  style={{ textTransform: "capitalize" }}>{dayjs(informations.created_at).locale(i18n.language).format("MMMM YYYY")}</Text></Text>
 
@@ -224,6 +225,8 @@ function ProfileComponent({ nickname, pined, informations, setInfo }: SectionPro
                                 <Text variant="bodySmall" style={{ color: colors.text_normal_hover }}>Trends</Text>
                             </View>
                         </View>
+                        {informations.user_id !== user?.user_id && <Button mode="contained" icon={informations.followed ? "account-heart" : "account"} onPress={() => informations.followed ? unfollow() : follow()} >{t(`profile.${informations.followed ? "unfollow" : "follow"}`)}</Button>}
+                        { informations.user_id === user?.user_id && <Button onPress={() => navigation.push("ProfileEditScreen", { info: informations })} icon="account-edit" mode="contained">{t(`profile.edit`)}</Button> }
                     </View>
                 </View>
             </View>

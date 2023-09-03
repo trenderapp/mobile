@@ -1,8 +1,7 @@
 import React, { useContext, useState } from "react";
-import { View, ScrollView, Pressable } from "react-native";
-import { IconButton, Text } from "react-native-paper";
+import { View, ScrollView, Pressable, StyleSheet } from "react-native";
+import { IconButton, Text, Badge } from "react-native-paper";
 import ImageModal from 'react-native-image-modal';
-import styles, { full_width } from "../../../../Style/style";
 import { useClient, useTheme } from "../../../Container";
 import { SinglePostContext } from "../../PostContext.js";
 import { attachments } from "trender-client/Managers/Interfaces/Global";
@@ -35,8 +34,7 @@ function BlurImage({ img, info, setOpen, openModal }: {
     return blur && img.nsfw ? (
                     <Pressable style={{ 
                             backgroundColor: colors.badge_color, 
-                            width: full_width, 
-                            height: "100%",
+                            ...sectionStyle.media_image,
                             flex: 1,
                             flexDirection: "column",
                             justifyContent: "center",
@@ -50,9 +48,9 @@ function BlurImage({ img, info, setOpen, openModal }: {
                         onOpen={() => setOpen(true)}
                         onClose={() => setOpen(false)}
                         resizeMode={openModal ? "contain" : "cover"}
-                        style={styles.media_image}
+                        style={sectionStyle.media_image}
                         source={{ uri: client.post.file(info?.from?.user_id, info?.post_id, img.name) }}
-                        imageBackgroundColor={colors.bg_primary}
+                        imageBackgroundColor={colors.bg_secondary}
                     />
                 )
 }
@@ -71,14 +69,46 @@ export default function Carroussel({ pictures }: carrousselType) {
 
     return (
         <View>
-            <ScrollView onScroll={change} horizontal pagingEnabled showsHorizontalScrollIndicator={false} style={styles.media_image}>
+            <ScrollView onScroll={change} horizontal pagingEnabled showsHorizontalScrollIndicator={false} style={sectionStyle.media_image}>
                 { pictures.map((img: attachments, i: number) => <BlurImage key={i} img={img} info={info} setOpen={setOpen} openModal={openModal} />) }
             </ScrollView>
-            <View style={styles.circleDiv}>
+            {
+                pictures.length > 1 && <Badge style={sectionStyle.text}>{Index+1}</Badge>
+            }
+            <View style={sectionStyle.circleDiv}>
                 {
-                    pictures.length > 1 && pictures.map((image, i) => <View style={[styles.whiteCircle, { backgroundColor: colors.fa_primary, opacity: i === Index ? 1 : 0.25 }]} key={i} />)
+                    pictures.length > 1 && pictures.map((image, i) => <View style={[sectionStyle.whiteCircle, { backgroundColor: colors.fa_primary, opacity: i === Index ? 1 : 0.25 }]} key={i} />)
                 }
             </View>
         </View>
     )
 }
+
+const sectionStyle = StyleSheet.create({
+    circleDiv:  {
+        position: "absolute",
+        bottom: 15,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+        height: 10
+    },
+    whiteCircle: {
+        width: 6,
+        height: 6,
+        borderRadius: 3,
+        margin: 5,
+    },
+    text: {
+        position: "absolute",
+        top: 15,
+        right: 5,
+    },
+    media_image: {
+        width: 350,
+        height: 350,
+        borderRadius: 10
+    }
+})

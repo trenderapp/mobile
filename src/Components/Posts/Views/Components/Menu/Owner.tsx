@@ -18,7 +18,7 @@ import { posturl } from "../../../../../Services/constante";
 type SectionProps = {
     modalVisible: boolean,
     setModalVisible: (bool: boolean) => any,
-    pined: string,
+    pined?: string,
     post_id: string
 }
 

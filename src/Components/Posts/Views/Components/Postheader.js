@@ -1,21 +1,14 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { View, TouchableOpacity} from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import styles from "../../../../Style/style";
 import { useClient } from "../../../Container";
-import SvgElement from "../../../Elements/Svg";
 import { Avatar, Username } from "../../../Member";
-import Owner from "./Menu/Owner";
-import { SinglePostContext } from "../../PostContext.js";
-import User from "./Menu/User";
 
 function Postheader({ info, created_at }) { 
     
-    const [showModal, setShowModal] = useState(false);
-    const { client, user } = useClient();
+    const { client } = useClient();
     const navigation = useNavigation();
-    const post = useContext(SinglePostContext);
-
     
     return (
         <View style={{ 
@@ -39,9 +32,6 @@ function Postheader({ info, created_at }) {
                     <Username user={info} created_at={created_at} />
                 </View>
             </TouchableOpacity>
-            <SvgElement onPress={() => setShowModal(true)} size={22} name="ellipsis" />
-            { info?.user_id === user?.user_id && <Owner pined={info.pined_post} post_id={post.info.post_id} modalVisible={showModal} setModalVisible={() => setShowModal(false)} /> }
-            { info?.user_id !== user?.user_id && <User post_id={post.info.post_id} modalVisible={showModal}  setModalVisible={() => setShowModal(false)} /> }
         </View>
     )
 }

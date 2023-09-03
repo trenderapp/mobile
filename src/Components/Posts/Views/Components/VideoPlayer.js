@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Modal, Pressable, View } from "react-native";
+import { Modal, Pressable, StyleSheet, View } from "react-native";
 import { IconButton, Text } from "react-native-paper";
 import Video from 'react-native-video';
 import { full_height, full_width } from "../../../../Style/style";
@@ -22,33 +22,33 @@ function VideoPlayer({ uri, thumbnail, attachments }) {
     setVisible(true);
     return;
   }
-  
+
+  const FullScreenVideoModal = () => (
+    <Modal visible={visible} animationType="slide" >
+      <RenderVideoScreen
+        source={{
+          uri: uri
+        }}
+        style={{
+          width: full_width,
+          height: full_height
+        }}
+        onBack={() => setVisible(false)}
+        tapAnywhereToPause={false}
+        disableFullscreen
+      />
+    </Modal>
+  )
+
   return (
     <>
-      <Modal visible={visible} animationType="slide" >
-        <RenderVideoScreen
-          source={{
-            uri: uri
-          }}
-          style={{
-            width: full_width,
-            height: full_height
-          }}
-          onBack={() => setVisible(false)}
-          tapAnywhereToPause={false}
-          disableFullscreen
-        />
-      </Modal>
-
-      <View style={{
-        width: full_width,
-        height: 250
-      }}>
+      <FullScreenVideoModal />
+      <View style={videoPreviewStyle.video}>
         {
           attachments?.nsfw ? (
             <Pressable style={{
               backgroundColor: colors.badge_color,
-              width: full_width,
+              width: "100%",
               height: "100%",
               flex: 1,
               flexDirection: "column",
@@ -60,8 +60,8 @@ function VideoPlayer({ uri, thumbnail, attachments }) {
             </Pressable>
           ) : (
             <Pressable onPress={() => setFullScren()} style={{
-              width: full_width,
-              height: 250
+              width: "100%",
+              height: "100%"
             }}>
               <Video
                 poster={thumbnail}
@@ -75,6 +75,7 @@ function VideoPlayer({ uri, thumbnail, attachments }) {
                   left: 0,
                   bottom: 0,
                   right: 0,
+                  borderRadius: 10
                 }}
                 paused={paused}
                 repeat={repeat}
@@ -114,5 +115,13 @@ function VideoPlayer({ uri, thumbnail, attachments }) {
     </>
   )
 }
+
+const videoPreviewStyle = StyleSheet.create({
+  video: {
+    width: 350,
+    height: 350,
+    borderRadius: 10
+  }
+})
 
 export default VideoPlayer;

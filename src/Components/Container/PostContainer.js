@@ -11,7 +11,7 @@ const PostContainer = ({ children, title }) => {
     const { t } = useTranslation();
 
     return (  
-        <View style={{flex: 1, backgroundColor: colors.bg_primary }}>
+        <View style={{ flex: 1, backgroundColor: colors.bg_primary }}>
             <CustomHeader title={t(`${title}`)} />
             { children }
         </View>

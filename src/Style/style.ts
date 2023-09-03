@@ -38,26 +38,6 @@ export const styles = StyleSheet.create({
         height: '100%',
         resizeMode: 'contain'   
     },
-    circleDiv: {
-        position: "absolute",
-        bottom: 15,
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "100%",
-        height: 10
-    },
-    whiteCircle: {
-        width: 6,
-        height: 6,
-        borderRadius: 3,
-        margin: 5,
-    },
-    media_image: {
-        width: width,
-        height: 400,
-    },
     banner_image: {
         width: width,
         height: "100%",

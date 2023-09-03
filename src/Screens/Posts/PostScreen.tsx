@@ -12,14 +12,13 @@ function PostScreen({ route }: any) {
 
     const { client } = useClient();
     const { post_id } = route.params;
-    const posts = useAppSelector((state) => state.commentFeed);
     const dispatch = useAppDispatch();
     const [loader, setLoader] = useState(true);
     const [pagination_key, setPaginationKey] = useState<string | undefined>(undefined);
     const [informations, setInformations] = useState<PostInterface.postResponseSchema>()
+    const [posts, setPosts] = useState<PostInterface.postResponseSchema[]>()
 
     async function getData() {
-        dispatch(initCommentTrends([]))
         // Get post informations
         const post = await client.post.fetchOne(post_id);
         if(post?.error) return;
@@ -30,7 +29,7 @@ function PostScreen({ route }: any) {
         if(response.error || !response.data) return;
         if(response.data.length < 1) return;        
         if(response.pagination_key) setPaginationKey(response.pagination_key);
-        dispatch(initCommentTrends(response.data));
+        setPosts(response.data);
     }
 
     useEffect(() => {
@@ -49,7 +48,7 @@ function PostScreen({ route }: any) {
     }
 
     const renderItem = ({ item }: { item: PostInterface.postResponseSchema }) => (
-        <DisplayPosts comments={false} informations={item} />
+        <DisplayPosts original_post_user={informations?.from} comments={false} is_comment informations={item} />
     )
 
     const memoizedValue = useMemo(() => renderItem, [posts]);

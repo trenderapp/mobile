@@ -106,14 +106,14 @@ function ClientProvider({ children }) {
                     "onTertiary": "rgba(255, 255, 255, 1)",
                     "onTertiaryContainer": "rgba(49, 17, 29, 1)",
                     "outline": "rgba(121, 116, 126, 1)",
-                    "outlineVariant": colors.bg_secondary,
+                    "outlineVariant": colors.bg_primary,
                     "primary": colors.fa_primary,
                     "primaryContainer": "rgba(234, 221, 255, 1)",
                     "secondary": "rgba(98, 91, 113, 1)",
                     "secondaryContainer": colors.bg_secondary,
                     "surface": colors.bg_primary,
                     "surfaceDisabled": colors.text_muted,
-                    "surfaceVariant": colors.bg_third,
+                    "surfaceVariant": colors.bg_secondary,
                     "tertiary": "rgba(125, 82, 96, 1)",
                     "tertiaryContainer": "rgba(255, 216, 228, 1)"
                 }

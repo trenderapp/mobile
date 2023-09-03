@@ -27,7 +27,7 @@ export default function MainNavigation({ navigation }: { navigation: NavigationC
     const initialNotification = await notifee.getInitialNotification();
 
     if (initialNotification && navigation) {
-      const pressActionID = initialNotification.pressAction.id;
+      const pressActionID = initialNotification.pressAction.id;      
       const post_id = initialNotification.notification.data ? initialNotification.notification.data.post_id : undefined;
       if (pressActionID === "display-post" && typeof post_id === "string") return navigation.navigate("PostStack", {
         screen: "PostScreen",

@@ -28,7 +28,7 @@ export default function Username({ user, created_at, lefComponent }) {
                     { flags.has(userFlags.VERIFIED_USER) && <SvgElement name="verified" size={15} /> }
                 </View>
                 <View style={styles.row}>
-                    <Text style={[styles.text_muted, { color: colors.text_muted }]}>{created_at && `${messageFormatDate(created_at).fullDate() /*dayjs(created_at).locale(i18n.language).fromNow(true).replace("une", "1").replace("un", "1")*/}`}</Text>
+                    { created_at && <Text style={[styles.text_muted, { color: colors.text_muted }]}>{`${messageFormatDate(created_at).postDate(i18n.language)}`}</Text> }
                     { lefComponent && lefComponent }
                 </View>
             </View>
