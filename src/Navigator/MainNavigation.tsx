@@ -7,6 +7,8 @@ import { BottomNavigation } from ".";
 import { PostStack, ProfileStack, CreateStack, MessageStack, SettingsStack } from "./Stacks";
 import { NotificationScreen } from "../Screens/Notifications";
 import { NavigationContextI } from "../Components/Container/Navigation/NavigationContext";
+import { Linking } from "react-native";
+import { parseURL } from "../Services";
 
 const Stack = createStackNavigator();
 
@@ -22,24 +24,44 @@ export default function MainNavigation({ navigation }: { navigation: NavigationC
     { name: "NotificationScreen", screen: NotificationScreen }
   ])
 
+  const regex = new RegExp(/^\/[a-zA-Z0-9]+$/);
+
+  const navigateToPost = (post_id: string) => {
+    if (navigation) return navigation.navigate("PostStack", { screen: "PostScreen", params: { post_id: post_id } })
+  }
+
+  const navigateToProfile = (nickname: string) => {
+    if (navigation) return navigation.navigate("ProfileStack", { screen: "ProfileScreen", params: { nickname: nickname } })
+  }
 
   async function bootstrap() {
     const initialNotification = await notifee.getInitialNotification();
 
     if (initialNotification && navigation) {
-      const pressActionID = initialNotification.pressAction.id;      
+      const pressActionID = initialNotification.pressAction.id;
       const post_id = initialNotification.notification.data ? initialNotification.notification.data.post_id : undefined;
-      if (pressActionID === "display-post" && typeof post_id === "string") return navigation.navigate("PostStack", {
-        screen: "PostScreen",
-        params: {
-          post_id: post_id
-        }
-      })
+      if (pressActionID === "display-post" && typeof post_id === "string") return navigateToPost(post_id)
     }
   }
 
+  const redirectLink = (url: string | false) => {
+    if (typeof url !== "string") return;
+    if (url.startsWith("/trends")) return navigateToPost(url.split("/trends").slice(1)[0].replace("/", ""));
+    if (regex.test(url)) return navigateToProfile(url.replace("/", ""));
+    return;
+}
+
+  const getUrlAsync = async () => {
+    const initialUrl = await Linking.getInitialURL();
+    if (!initialUrl) return;
+    const param = parseURL(initialUrl);
+    return redirectLink(param);
+  };
+
   useEffect(() => {
-    bootstrap()
+    bootstrap();
+    getUrlAsync();
+    Linking.addEventListener("url", ({ url }) =>  redirectLink(parseURL(url)));
   }, [])
 
   return (

@@ -61,32 +61,39 @@ function Routes() {
         DmGroupList.setUnreads(request.data);
     }
 
+    /**
+     * 
+     * @param {String} url 
+     * @returns 
+     */
+    const redirectLink = (url) => {
+        if (typeof url !== "string") return;
+        if (url.startsWith("/register/verify")) return navigation.navigate("RegisterVerificationCode", {
+            code: url.split("/register/verify").slice(1)[0].replace("/", "")
+        });
+        else if (url.startsWith("/recovery/password")) return navigation.navigate("ChangePassword", {
+            code: url.split("/recovery/password").slice(1)[0].replace("/", "")
+        });
+        return;
+    }
+
     const getUrlAsync = async () => {
-        // Get the deep link used to open the app   
         const initialUrl = await Linking.getInitialURL();
         if (!initialUrl) return;
-
-        const [param] = parseURL(initialUrl);
-
-        if (param.startsWith("/register/verify")) {
-            return navigation.navigate("RegisterVerificationCode", {
-                code: param.split("/register/verify").slice(1)[0].replace("/", "")
-            });
-        } else if (param.startsWith("/recovery/password")) {
-            return navigation.navigate("ChangePassword", {
-                code: param.split("/recovery/password").slice(1)[0].replace("/", "")
-            });
-        } else {
-            return;
-        }
+        const param = parseURL(initialUrl);
+        return redirectLink(param);
     };
 
     useEffect(() => {
         dayjs.locale(i18n.language);
         notifee.setBadgeCount(0);
+        notifee.cancelAllNotifications();
         getUrlAsync();
+    }, [])
 
-    }, [Linking])
+    useEffect(() => {
+        Linking.addEventListener("url", ({ url }) => redirectLink(parseURL(url)))
+    }, [])
 
     const registerFCMToken = async () => {
         const fcmToken = await requestNotificationPermission();

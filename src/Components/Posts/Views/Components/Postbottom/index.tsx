@@ -74,9 +74,9 @@ function Postbottom() {
                         <Text style={textStyle}>{info?.views ?? 1}</Text>
                     </View>
                 </View>
-                        <IconButton onPress={() => setShowModal(true)} icon="dots-horizontal" />
-            { info?.from.user_id === user?.user_id && <Owner pined={info.from?.pined_post} post_id={info.post_id} modalVisible={showModal} setModalVisible={() => setShowModal(false)} /> }
-            { info?.from.user_id !== user?.user_id && <User modalVisible={showModal}  setModalVisible={() => setShowModal(false)} /> }
+                <IconButton onPress={() => setShowModal(true)} icon="dots-horizontal" />
+                {info?.from.user_id === user?.user_id && <Owner pined={info.from?.pined_post} post_id={info.post_id} modalVisible={showModal} setModalVisible={() => setShowModal(false)} />}
+                {info?.from.user_id !== user?.user_id && <User modalVisible={showModal} setModalVisible={() => setShowModal(false)} />}
             </View>
         </View>
     )

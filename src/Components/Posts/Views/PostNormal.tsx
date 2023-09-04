@@ -8,6 +8,7 @@ import Carroussel from "./Components/Carroussel";
 import VideoPlayer from "./Components/VideoPlayer";
 import { useClient, useTheme } from "../../Container";
 import { useTranslation } from "react-i18next";
+import DisplayEmbed from "./Components/DisplayEmbed";
 
 type PostNormalContext = {
     info: PostInterface.postResponseSchema & {
@@ -57,7 +58,7 @@ function PostNormal({ maxLines }: { maxLines?: number }) {
                                 <VideoPlayer
                                     thumbnail={info.attachments[0]?.thumbnail ? client.post.file(info.from.user_id, info.post_id, info.attachments[0]?.thumbnail) : undefined}
                                     uri={client.post.file(info.from.user_id, info.post_id, encodeURIComponent(info.attachments[0]?.name))} attachments={undefined} />
-                                : null : null
+                                : null : info.embeds?.length > 0 ? <DisplayEmbed embed={info.embeds[0]} /> : null
                 }
             </View>
         </>

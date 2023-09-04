@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, View, ScrollView , Platform, KeyboardAvoidingView } from 'react-native';
+import { FlatList, View, ScrollView, Platform, KeyboardAvoidingView } from 'react-native';
 import { connect, useDispatch } from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
 import Toast from 'react-native-toast-message';
@@ -46,15 +46,15 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
 
   const sendInfo = async () => {
     if (sending.send) return Toast.show({ text1: t(`errors.sending_form`) })
-    if(!content) {
-      if(files.length < 1 && !shared_post) return Toast.show({ text1: t(`errors.2001`) })
+    if (!content) {
+      if (files.length < 1 && !shared_post) return Toast.show({ text1: t(`errors.2001`) })
     }
     if (content && content.length > advantages.textLength()) return Toast.show({ text1: t(`errors.2001`) })
     setSending({ send: true, progress: 0 })
 
-    let data = { 
-      content: content ?? "", 
-      ...options 
+    let data = {
+      content: content ?? "",
+      ...options
     };
 
     if (files.length > 0) {
@@ -88,9 +88,9 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
 
     if (!response.data) {
       setSending({ send: false, progress: 0 })
-      return Toast.show({ text1: t(`errors.${response.error.code}`)})
+      return Toast.show({ text1: t(`errors.${response.error.code}`) })
     }
-    if(response.data) dispatch(addMainCreatedTrends({ ...response?.data, from: { ...user } }));
+    if (response.data) dispatch(addMainCreatedTrends({ ...response?.data, from: { ...user } }));
     setFiles([])
     SetContent("")
     Toast.show({
@@ -174,22 +174,25 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
       {sending.progress > 0 && <ProgressBar progress={sending.progress} />}
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <ScrollView>
-          { attached_post && <DisplayAttachedPost attached_post={attached_post} /> }
+          {attached_post && <DisplayAttachedPost attached_post={attached_post} />}
           <View style={[styles.row, { width: full_width, padding: 10 }]}>
             <Avatar size={45} url={client.user.avatar(user.user_id, user.avatar)} />
             <View style={[styles.column, { justifyContent: "flex-start", alignItems: "flex-start" }]}>
-              <Username 
-                created_at={dayjs().format()} 
-                user={user} 
-                lefComponent={user.payout_enabled && <Chip 
-                textStyle={{ fontSize: 10 }} 
-                onPress={() => setOptions({ ...options, paid: !options.paid })} 
-                icon={`cash${options.paid ? "" : "-remove"}`} 
-                theme={{ colors: { secondaryContainer: colors[options.paid ? "warning_color" : "good_color"] } }}>{t(`posts.${options.paid ? "paying" : "free"}`)}</Chip>} />
+              <Username
+                created_at={dayjs().format()}
+                user={user}
+                lefComponent={user.payout_enabled && (
+                  <Chip
+                    style={{ marginLeft: 5 }}
+                    textStyle={{ fontSize: 10 }}
+                    onPress={() => setOptions({ ...options, paid: !options.paid })}
+                    icon={`cash${options.paid ? "" : "-remove"}`}
+                    theme={{ colors: { secondaryContainer: colors[options.paid ? "warning_color" : "good_color"] } }}>{t(`posts.${options.paid ? "paying" : "free"}`)}</Chip>
+                )} />
             </View>
           </View>
           <TextAreaAutoComplete autoFocus={true} value={content} setValue={(text) => SetContent(text)} />
-          { shared_post && <DisplaySharedPost shared_post={shared_post} /> }
+          {shared_post && <DisplaySharedPost shared_post={shared_post} />}
         </ScrollView>
         <BottomItems />
       </KeyboardAvoidingView>

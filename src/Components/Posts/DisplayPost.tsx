@@ -66,7 +66,7 @@ const DisplayPosts: SectionProps = ({
 
         <Card mode={"contained"} style={{
             borderRadius: 10,
-            margin: 10
+            margin: is_original_post ? 0 : 10
         }}>
             <SinglePostContextProvider
                 informations={{

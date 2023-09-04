@@ -137,12 +137,7 @@ export const cgvLink = (language: string) => {
   return lang;
 }
 
-/**
- * 
- * @param {String} url 
- * @returns {Array<String>}
- */
-export const parseURL = (url: string) => {
+export const parseURL = (url: string): string | false => {
     if(!url) return false;
 
     let link = [""];
@@ -151,7 +146,7 @@ export const parseURL = (url: string) => {
     else if(url.startsWith("http://www.trenderapp.com")) link = url.split("http://www.trenderapp.com");
     else if(url.startsWith("http://trenderapp.com")) link = url.split("http://trenderapp.com");
     
-    return link.slice(1);
+    return link[1];
 }
 
 export const NameValidator = (value: string) => {

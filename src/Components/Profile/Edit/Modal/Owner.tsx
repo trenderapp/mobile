@@ -7,6 +7,8 @@ import Clipboard from "@react-native-clipboard/clipboard";
 import { useTheme } from "../../../Container";
 import { BottomModal } from "../../../../Other";
 import { profileInformationsInterface } from "trender-client/Managers/Interfaces/User";
+import { Share } from "react-native";
+import { websiteurl } from "../../../../Services/constante";
 
 type SectionProps = {
     modalVisible: boolean;
@@ -24,9 +26,17 @@ function ProfileOwnerModal({ modalVisible, setModalVisible, informations }: Sect
         Toast.show({ text1: t("commons.success") as string })
     }
 
+    const onShare = async () => {
+        await Share.share({
+            message: `${websiteurl}/${informations.nickname}`,
+            url: `${websiteurl}/${informations.nickname}`
+        });
+    }
 
     return (
         <BottomModal onSwipeComplete={() => setModalVisible(false)} dismiss={() => setModalVisible(false)} isVisible={modalVisible}>
+            <Button uppercase onPress={() => onShare()} icon="share-variant">{t("posts.share")}</Button>
+            <Divider bold theme={{ colors: { outlineVariant: colors.bg_primary } }} />
             <Button uppercase onPress={() => copyUserID()} icon="content-copy">{t("profile.copy_user_id")}</Button>
             <Divider bold theme={{ colors: { outlineVariant: colors.bg_primary } }} />
             <Button uppercase textColor={colors.warning_color} onPress={() => setModalVisible(false)} icon="keyboard-return">{t("commons.cancel")}</Button>

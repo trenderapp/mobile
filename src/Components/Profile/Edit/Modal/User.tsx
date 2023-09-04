@@ -7,6 +7,8 @@ import Clipboard from "@react-native-clipboard/clipboard";
 import { useClient, useTheme } from "../../../Container";
 import { BottomModal } from "../../../../Other";
 import { profileInformationsInterface } from "trender-client/Managers/Interfaces/User";
+import { Share } from "react-native";
+import { websiteurl } from "../../../../Services/constante";
 
 type SectionProps = {
     modalVisible: boolean;
@@ -24,7 +26,7 @@ function ProfileUserModal({ modalVisible, setModalVisible, informations, setInfo
     const report = async () => {
         const response = await client.user.report(informations.user_id, 1);
         setModalVisible(false);
-        if (response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string})
+        if (response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string })
         Toast.show({ text1: t("commons.success") as string })
         setModalVisible(false)
     }
@@ -44,9 +46,17 @@ function ProfileUserModal({ modalVisible, setModalVisible, informations, setInfo
         setModalVisible(false)
     }
 
+    const onShare = async () => {
+        await Share.share({
+            message: `${websiteurl}/${informations.nickname}`,
+            url: `${websiteurl}/${informations.nickname}`
+        });
+    }
 
     return (
         <BottomModal onSwipeComplete={() => setModalVisible(false)} dismiss={() => setModalVisible(false)} isVisible={modalVisible}>
+            <Button uppercase onPress={() => onShare()} icon="share-variant">{t("posts.share")}</Button>
+            <Divider bold theme={{ colors: { outlineVariant: colors.bg_primary } }} />
             <Button uppercase onPress={() => copyUserID()} icon="content-copy">{t("profile.copy_user_id")}</Button>
             <Divider bold theme={{ colors: { outlineVariant: colors.bg_primary } }} />
             <Button uppercase onPress={() => report()} icon="shield-alert-outline">{t("commons.report")}</Button>
