@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { View, TouchableOpacity } from "react-native";
+import { IconButton } from "react-native-paper";
+
+import Owner from "./Menu/Owner";
+import User from "./Menu/User";
 import styles from "../../../../Style/style";
 import { useClient } from "../../../Container";
 import { Avatar, Username } from "../../../Member";
 
-function Postheader({ info, created_at }) { 
+function Postheader({ info, created_at, post_id }) { 
     
-    const { client } = useClient();
+    const { client, user } = useClient();
     const navigation = useNavigation();
+    const [showModal, setShowModal] = useState(false);
     
     return (
         <View style={{ 
@@ -32,6 +37,9 @@ function Postheader({ info, created_at }) {
                     <Username user={info} created_at={created_at} />
                 </View>
             </TouchableOpacity>
+            <IconButton style={{ marginTop: -5 }} onPress={() => setShowModal(true)} icon="dots-horizontal" />
+            {info?.user_id === user?.user_id && <Owner pined={info.from?.pined_post} post_id={post_id} modalVisible={showModal} setModalVisible={() => setShowModal(false)} />}
+            {info?.user_id !== user?.user_id && <User modalVisible={showModal} setModalVisible={() => setShowModal(false)} />}
         </View>
     )
 }

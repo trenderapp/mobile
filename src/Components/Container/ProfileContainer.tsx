@@ -1,5 +1,5 @@
 import React, { PropsWithChildren  } from "react";
-import { SafeBottomContainer} from ".";
+import { SafeBottomContainer } from ".";
 
 type SectionProps = PropsWithChildren
 

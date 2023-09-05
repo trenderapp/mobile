@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, memo, useCallback, useRef } from 'react';
-import { FlatList, Animated } from 'react-native';
+import { FlatList, Animated, SafeAreaView } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { useTranslation } from 'react-i18next';
 import { PostInterface } from 'trender-client';
@@ -38,7 +38,7 @@ function ProfileScreen({ route }: any) {
         setLoader(false);
         if (response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string });
         if (!response.data) return;
-        if (response.pagination_key) setPaginationKey(response.pagination_key);        
+        if (response.pagination_key) setPaginationKey(response.pagination_key);
         setPosts([...posts, ...response.data]);
     }
 
@@ -91,15 +91,17 @@ function ProfileScreen({ route }: any) {
     });
 
     const ProfileHeader = () => (
-        <Animated.View style={[styles.row, { justifyContent: "space-between", position: "absolute", zIndex: 99, width: full_width, backgroundColor: `${colors.bg_primary}`, opacity: headerOpacity }]}>
-            {naviteNavigation.canGoBack() && <IconButton icon="arrow-left" onPress={() => naviteNavigation.goBack()} />}
-            <IconButton style={{ marginRight: 5 }} onPress={() => setModalVisible(true)} icon="dots-horizontal" />
-        </Animated.View>
+        <SafeAreaView>
+            <Animated.View style={[styles.row, { justifyContent: "space-between", position: "absolute", zIndex: 99, width: full_width, backgroundColor: `${colors.bg_primary}`, opacity: headerOpacity }]}>
+                {naviteNavigation.canGoBack() && <IconButton icon="arrow-left" onPress={() => naviteNavigation.goBack()} />}
+                <IconButton style={{ marginRight: 5 }} onPress={() => setModalVisible(true)} icon="dots-horizontal" />
+            </Animated.View>
+        </SafeAreaView>
     )
 
     return (
         <ProfileContainer>
-            { profile && <ProfileHeader /> }
+            {profile && <ProfileHeader />}
             {
                 !loading ?
                     <FlatList

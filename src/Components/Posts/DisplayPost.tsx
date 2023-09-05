@@ -83,7 +83,7 @@ const DisplayPosts: SectionProps = ({
 
                     {pined && <PinnedView />}
 
-                    <Postheader info={informations.from} created_at={informations.created_at} />
+                    <Postheader info={informations.from} post_id={informations.post_id} created_at={informations.created_at} />
                     <PostNormal maxLines={comments ? undefined : 5} />
                 </TouchableOpacity>
                 {informations.shared_post_id && !is_share && (
