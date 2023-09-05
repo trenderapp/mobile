@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Toast from 'react-native-toast-message';
-import { useClient } from "../../Components/Container";
+import { CustomHeader, useClient } from "../../Components/Container";
 import { Text } from "react-native-paper";
 import MemberList from "../../Components/Profile/MemberList";
 import ProfileContainer from "../../Components/Container/ProfileContainer";
@@ -44,7 +44,8 @@ function FollowScreen({ route }: any) {
 
 
     return (
-        <ProfileContainer username={t(`profile.${type}`)}>
+        <ProfileContainer>
+            <CustomHeader title={t(`profile.${type}`) as string} />
             { !info ? <Text>{t("commons.nothing_display")}</Text> : <MemberList noDescription={true} onBottom={() => bottomHandler()} loader={loader} list={info} /> }
         </ProfileContainer>
     )
