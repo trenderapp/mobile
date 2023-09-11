@@ -33,13 +33,13 @@ function PostNormal({ maxLines }: { maxLines?: number }) {
 
     return (
         <>
-            <View style={{ paddingLeft: 5 }}>
+            <View style={{ paddingLeft: 15 }}>
                 
             {info?.original_post_user && <Text variant="labelMedium" style={{ color: colors.text_muted }} >{t("posts.reply_to", { username: info.original_post_user.username })}</Text>}
                 {
                     info.display_not_allowed ?
                         <Button onPress={() => { }}>{t("posts.subscribe_to", { username: info.from.username })}</Button>
-                        : <Markdown translate={info.content_language ? enableTranslation(info.content_language) : undefined} token={token} maxLine={maxLines} content={info.content} />
+                        : <View style={{ marginTop: -15 }}><Markdown translate={info.content_language ? enableTranslation(info.content_language) : undefined} token={token} maxLine={maxLines} content={info.content} /></View>
                 }
             </View>
             <View style={{

@@ -108,7 +108,7 @@ function ClientProvider({ children }) {
                     "outline": "rgba(121, 116, 126, 1)",
                     "outlineVariant": colors.bg_primary,
                     "primary": colors.fa_primary,
-                    "primaryContainer": "rgba(234, 221, 255, 1)",
+                    "primaryContainer": colors.fa_primary,
                     "secondary": "rgba(98, 91, 113, 1)",
                     "secondaryContainer": colors.bg_secondary,
                     "surface": colors.bg_primary,

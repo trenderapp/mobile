@@ -12,9 +12,10 @@ type SectionProps = React.FC<{
     label?: string;
     onClearPress: () => void;
     onSearchPress: () => void;
-} & TextInputProps>
+    inputProps?: TextInputProps
+}>
 
-const SearchBar: SectionProps = ({ style, placeholder, onChangeText, value = "", onClearPress, onSearchPress }) => {
+const SearchBar: SectionProps = ({ style, placeholder, onChangeText, value = "", onClearPress, onSearchPress, inputProps }) => {
 
     const { colors } = useTheme();
 
@@ -36,8 +37,9 @@ const SearchBar: SectionProps = ({ style, placeholder, onChangeText, value = "",
             },
           }, style]}>
             <View style={[styles.row]}>
-                <IconButton onPress={onSearchPress} icon="magnify" />
+                <IconButton size={18} onPress={onSearchPress} icon="magnify" />
                 <TextInput
+                    {...inputProps}
                     placeholderTextColor={colors.text_normal}
                     placeholder={placeholder}
                     onChangeText={onChangeText}
@@ -50,7 +52,7 @@ const SearchBar: SectionProps = ({ style, placeholder, onChangeText, value = "",
                     onSubmitEditing={onSearchPress}
                 />
             </View>
-            <IconButton onPress={onClearPress} style={{ marginRight: 5, marginLeft: "auto" }} icon="close" />
+            <IconButton animated onPress={onClearPress} style={{ marginRight: 5, marginLeft: "auto" }} size={18} icon="close" />
         </View>
     )
 }

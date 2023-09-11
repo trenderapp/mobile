@@ -118,7 +118,7 @@ function ProfileComponent({ nickname, pined, informations, setInfo, setModalVisi
     )
 
     const ProfileHeader = () => (
-        <View style={[styles.row, { justifyContent: "space-between", position: "absolute", zIndex: 99, width: full_width, backgroundColor: `${colors.bg_third}${0}` }]}>
+        <View style={[styles.row, { justifyContent: "space-between", position: "absolute", zIndex: 5, width: full_width, backgroundColor: `${colors.bg_third}${0}` }]}>
             {naviteNavigation.canGoBack() && <IconButton mode="contained-tonal" icon="arrow-left" onPress={() => naviteNavigation.goBack()} />}
             
             <IconButton mode="contained-tonal" style={{ marginRight: 5 }} onPress={() => setModalVisible(true)} icon="dots-horizontal" />    

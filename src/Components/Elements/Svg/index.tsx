@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Svg, { G, Path } from "react-native-svg"
-import { TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View, ViewStyle, StyleProp } from "react-native";
 import { useTheme } from "../../Container";
 import svgList from "./SvgList";
 
@@ -12,8 +12,10 @@ type SectionType = {
     noColor?: boolean,
     color?: string;
     padding?: number;
+    style?: StyleProp<ViewStyle>;
+
 }
-function SvgElement({ onPress = undefined, name, size = 33, margin, noColor, color, padding }: SectionType) {
+function SvgElement({ onPress = undefined, name, size = 33, margin, noColor, color, padding, style }: SectionType) {
 
     const { colors } = useTheme();
     const [svg, setSvg] = useState({
@@ -51,14 +53,14 @@ function SvgElement({ onPress = undefined, name, size = 33, margin, noColor, col
                             </G>
                         </Svg>
                     </TouchableOpacity>) : (
-                    <View style={{
+                    <View style={[style, {
                         marginRight: margin ? margin : 0,
                         flexDirection: "row",
                         justifyContent: "center",
                         alignItems: "center",
                         padding: padding ? padding : 5,
                         borderRadius: 60 / 2
-                    }}>
+                    }]}>
                         <Svg width={size} height={size} viewBox={`0 0 ${svg.w} ${svg.h}`}>
                             <G fill={noColor ? "white" : colors.fa_primary} fillRule="nonzero">
                                 {

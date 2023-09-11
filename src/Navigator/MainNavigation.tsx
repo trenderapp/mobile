@@ -4,7 +4,7 @@ import notifee from "@notifee/react-native";
 
 import { NavigationProvider } from "../Components/Container";
 import { BottomNavigation } from ".";
-import { PostStack, ProfileStack, CreateStack, MessageStack, SettingsStack } from "./Stacks";
+import { PostStack, ProfileStack, CreateStack, MessageStack, SettingsStack, SearchStack } from "./Stacks";
 import { NotificationScreen } from "../Screens/Notifications";
 import { NavigationContextI } from "../Components/Container/Navigation/NavigationContext";
 import { Linking } from "react-native";
@@ -21,7 +21,8 @@ export default function MainNavigation({ navigation }: { navigation: NavigationC
     { name: "PostStack", screen: PostStack },
     { name: "SettingsStack", screen: SettingsStack },
     { name: "MessagesStack", screen: MessageStack },
-    { name: "NotificationScreen", screen: NotificationScreen }
+    { name: "NotificationScreen", screen: NotificationScreen },
+    { name: "SearchStack", screen: SearchStack }
   ])
 
   const regex = new RegExp(/^\/[a-zA-Z0-9]+$/);

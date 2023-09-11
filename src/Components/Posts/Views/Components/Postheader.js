@@ -9,7 +9,7 @@ import styles from "../../../../Style/style";
 import { useClient } from "../../../Container";
 import { Avatar, Username } from "../../../Member";
 
-function Postheader({ info, created_at, post_id }) { 
+function Postheader({ info, created_at, post_id, lefComponent }) { 
     
     const { client, user } = useClient();
     const navigation = useNavigation();
@@ -34,7 +34,7 @@ function Postheader({ info, created_at, post_id }) {
                     alignItems: "flex-start"
                 } ]}>
                     <Avatar size={40} url={client.user.avatar(info?.user_id, info?.avatar)} />
-                    <Username user={info} created_at={created_at} />
+                    <Username user={info} created_at={created_at} lefComponent={lefComponent} />
                 </View>
             </TouchableOpacity>
             <IconButton style={{ marginTop: -5 }} onPress={() => setShowModal(true)} icon="dots-horizontal" />

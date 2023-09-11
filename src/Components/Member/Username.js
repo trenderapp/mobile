@@ -27,7 +27,7 @@ export default function Username({ user, created_at, lefComponent }) {
                     { user?.is_private && <SvgElement margin={-5} size={15} name="lock" color={colors.text_normal} /> }
                     { flags.has(userFlags.VERIFIED_USER) && <SvgElement name="verified" size={15} /> }
                 </View>
-                <View style={styles.row}>
+                <View style={[styles.row, { marginTop: -5 }]}>
                     { created_at && <Text style={[styles.text_muted, { color: colors.text_muted }]}>{`${messageFormatDate(created_at).postDate(i18n.language)}`}</Text> }
                     { lefComponent && lefComponent }
                 </View>

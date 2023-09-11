@@ -1,18 +1,14 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { FlatList } from 'react-native';
-import { connect } from 'react-redux';
 import { PostContainer, useClient } from '../../Components/Container';
 import DisplayPosts from '../../Components/Posts/DisplayPost';
-import { addCommentTrends, initCommentTrends } from '../../Redux/commentFeed/action';
 import { Loader } from '../../Other';
-import { RootState, useAppDispatch, useAppSelector } from '../../Redux';
 import { PostInterface } from 'trender-client';
 
 function PostScreen({ route }: any) {
 
     const { client } = useClient();
     const { post_id } = route.params;
-    const dispatch = useAppDispatch();
     const [loader, setLoader] = useState(true);
     const [pagination_key, setPaginationKey] = useState<string | undefined>(undefined);
     const [informations, setInformations] = useState<PostInterface.postResponseSchema>()
@@ -43,7 +39,6 @@ function PostScreen({ route }: any) {
         if(response.error || !response.data) return;
         if(response.data.length < 1) return;
         if(response.pagination_key) setPaginationKey(response.pagination_key);
-        // dispatch(addCommentTrends(response.data));
         setLoader(false)
     }
 
@@ -65,16 +60,5 @@ function PostScreen({ route }: any) {
         </PostContainer>
     )
 }
-
-const mapStateToProps = (state: RootState) => {
-    return {
-      commentFeed: state.commentFeed,
-    };
-  };
   
-const mapDispatchToProps = {
-    addCommentTrends,
-    initCommentTrends
-};
-  
-export default connect(mapStateToProps, mapDispatchToProps)(PostScreen);
+export default PostScreen;

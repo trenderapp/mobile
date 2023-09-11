@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
-import { FAB} from 'react-native-paper';
+import { FAB } from 'react-native-paper';
 
 import { CustomHeader, useTheme } from '../../Components/Container';
 import GuildList from '../../Components/Messages/GuildList';
@@ -14,26 +14,26 @@ const GuildListScreen = () => {
   const navigation = useNavigation()
 
   return (
-    <View style={{flex: 1, backgroundColor: colors.bg_primary }}>
+    <View style={{ flex: 1, backgroundColor: colors.bg_primary }}>
       <CustomHeader isHome={true} title={t("commons.messages")} />
       <View style={{ flex: 1 }}>
-          <GuildList />
-          <FAB
-            icon={'plus'}
-            onPress={() => navigation.navigate("MessagesStack" , {
-              screen: "CreateGroupScreen"
-            })}
-            visible={true}
-            animateFrom={'right'}
-            mode="flat"
-            style={{
-              bottom: 10,
-              right: 10,
-              position: 'absolute',
-              backgroundColor: colors.bg_secondary,
-              borderRadius: 60 / 2
-            }}
-          />
+        <GuildList />
+        <FAB
+          icon='plus'
+          onPress={() => navigation.navigate("MessagesStack", {
+            screen: "CreateGroupScreen"
+          })}
+          color={colors.bg_primary}
+          variant='primary'
+          style={{
+            position: 'absolute',
+            margin: 16,
+            right: 0,
+            bottom: 0,
+            zIndex: 3,
+            borderRadius: 60
+          }}
+        />
       </View>
     </View>
   );

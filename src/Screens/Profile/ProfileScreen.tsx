@@ -92,7 +92,7 @@ function ProfileScreen({ route }: any) {
 
     const ProfileHeader = () => (
         <SafeAreaView>
-            <Animated.View style={[styles.row, { justifyContent: "space-between", position: "absolute", zIndex: 99, width: full_width, backgroundColor: `${colors.bg_primary}`, opacity: headerOpacity }]}>
+            <Animated.View style={[styles.row, { justifyContent: "space-between", position: "absolute", zIndex: 7, width: full_width, backgroundColor: `${colors.bg_primary}`, opacity: headerOpacity }]}>
                 {naviteNavigation.canGoBack() && <IconButton icon="arrow-left" onPress={() => naviteNavigation.goBack()} />}
                 <IconButton style={{ marginRight: 5 }} onPress={() => setModalVisible(true)} icon="dots-horizontal" />
             </Animated.View>

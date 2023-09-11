@@ -8,11 +8,11 @@ import { useClient, useTheme } from "../Components/Container";
 import { DmGroupListContext } from "../Context/DmGuildListContext";
 import HomeScreen from "../Screens/Home/HomeScreen";
 import GuildListScreen from "../Screens/Messages/GuildListScreen";
-import SearchStack from "./Stacks/SearchStack";
 import ExploreScreen from "../Screens/Explore/ExploreScreen";
 import { useAppDispatch, useAppSelector } from "../Redux";
 import { initNotificationFeed } from "../Redux/NotificationFeed/action";
 import { connect } from "react-redux";
+import SearchScreen from "../Screens/Search/SearchScreen";
 
 
 function BottomStack() {
@@ -28,9 +28,9 @@ function BottomStack() {
     const { unreads, groups } = useContext(DmGroupListContext);
     const [routes, setRoutes] = useState([
         { key: 'home', focusedIcon: 'home', unfocusedIcon: "home-outline", title: t("commons.home"), badge: false },
-        { key: 'users', focusedIcon: "account-multiple", title: t('commons.search'), badge: false },
-        { key: 'explore', focusedIcon: "earth", unfocusedIcon: "earth", title: t('commons.notifications'), badge: false, labeled: false },
-        { key: 'messages', focusedIcon: "message-text", unfocusedIcon: "message-text-outline", title: t('commons.messages'), badge: false, labeled: false },
+        { key: 'search', focusedIcon: "magnify", unfocusedIcon: "magnify", title: t('commons.search'), badge: false },
+        { key: 'explore', focusedIcon: "trending-up", unfocusedIcon: "trending-up", title: t('commons.explore'), badge: false },
+        { key: 'messages', focusedIcon: "message-text", unfocusedIcon: "message-text-outline", title: t('commons.messages'), badge: false },
     ]);
 
     const newBottom = ({
@@ -39,25 +39,25 @@ function BottomStack() {
     }) => {
         setRoutes([
             { key: 'home', focusedIcon: 'home', unfocusedIcon: "home-outline", title: t("commons.home"), badge: home_notification },
-            { key: 'users', focusedIcon: "account-multiple", title: t('commons.search'), badge: false },
-            { key: 'explore', focusedIcon: "earth", unfocusedIcon: "earth", title: t('commons.notifications'), badge: false, labeled: false },
-            { key: 'messages', focusedIcon: "message-text", unfocusedIcon: "message-text-outline", title: t('commons.messages'), badge: message_notification, labeled: false },
+            { key: 'search', focusedIcon: "magnify", unfocusedIcon: "magnify", title: t('commons.search'), badge: false },
+            { key: 'explore', focusedIcon: "trending-up", unfocusedIcon: "trending-up", title: t('commons.notifications'), badge: false },
+            { key: 'messages', focusedIcon: "message-text", unfocusedIcon: "message-text-outline", title: t('commons.messages'), badge: message_notification },
         ])
     }
 
     const notificationList = async () => {
         const request = await client.notification.fetch();
-        if(!request.data) return;
-        if(request.data.length < 1) return;
+        if (!request.data) return;
+        if (request.data.length < 1) return;
         dispatch(initNotificationFeed(request.data));
-      }
+    }
 
     const countNotifications = () => notifications.filter(n => n.readed === false || typeof n.readed === "undefined").length;
     const countUnreadsDM = () => {
         let i = 0;
         groups.forEach((g) => {
-            if(g.last_message) {
-                if(!unreads.some(u => u.message_id === g.last_message.message_id)) i++
+            if (g.last_message) {
+                if (!unreads.some(u => u.message_id === g.last_message.message_id)) i++
             }
         })
 
@@ -76,7 +76,7 @@ function BottomStack() {
 
     const renderScene = BottomNavigation.SceneMap({
         home: HomeScreen,
-        users: SearchStack,
+        search: SearchScreen,
         explore: ExploreScreen,
         messages: GuildListScreen
     });
@@ -106,8 +106,8 @@ function BottomStack() {
 
 const mapStateToProps = (state) => {
     return {
-      notificationFeed: state.notificationFeed,
+        notificationFeed: state.notificationFeed,
     };
-  };
-  
+};
+
 export default connect(mapStateToProps)(BottomStack);

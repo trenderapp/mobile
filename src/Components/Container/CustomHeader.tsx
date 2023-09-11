@@ -13,31 +13,34 @@ type SectionProps = React.FC<{
     title?: JSX.Element | string,
     leftComponent?: JSX.Element,
     children?: JSX.Element
-  }>
+}>
 
 const CustomHeader: SectionProps = ({ title, isHome, leftComponent, children }) => {
-    
+
     const { client, user } = useClient();
     const navigation = useNavigation<navigationProps>();
-    
+
+    const DisplayAvatar = () => (
+        <TouchableOpacity activeOpacity={0.5} onPress={() => navigation.openDrawer()}>
+            <Avatar marginLeft={5} marginRight={5} url={client.user.avatar(user?.user_id, user?.avatar)} />
+        </TouchableOpacity>
+    )
+
     return (
         <Appbar.Header elevated style={{ width: full_width, flexDirection: "row", justifyContent: "space-between", paddingTop: 0 }}>
             <View style={[styles.row, { justifyContent: "flex-end" }]}>
-                { !isHome ? navigation.canGoBack() ? <Appbar.BackAction onPress={() => navigation.goBack()} /> : null : (
-                    <TouchableOpacity activeOpacity={0.5} onPress={() => navigation.openDrawer()}>
-                        <Avatar marginLeft={5} marginRight={5} url={client.user.avatar(user?.user_id, user?.avatar)} />
-                    </TouchableOpacity>)}
-                    { title && <Text style={{ fontSize: 16, fontWeight:'700', marginLeft: 5 }}>{title}</Text> }
+                {!isHome ? navigation.canGoBack() ? <Appbar.BackAction onPress={() => navigation.goBack()} /> : <DisplayAvatar /> : <DisplayAvatar />}
+                {title && <Text style={{ fontSize: 16, fontWeight: '700', marginLeft: 5 }}>{title}</Text>}
             </View>
-            { children && children }
+            {children && children}
             {
                 leftComponent ? leftComponent : (
                     <View style={[styles.row, { justifyContent: "flex-end" }]}>
-                    { 
-                    // <Appbar.Action icon="qrcode-scan" /> 
-                    }
- 
-                </View>
+                        {
+                            // <Appbar.Action icon="qrcode-scan" /> 
+                        }
+
+                    </View>
                 )
             }
 

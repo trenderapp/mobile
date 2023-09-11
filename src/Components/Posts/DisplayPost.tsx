@@ -62,6 +62,12 @@ const DisplayPosts: SectionProps = ({
         </View>
     )
 
+    const CategoriesBox = ({ c }: { c: number }) => (
+        <View>
+            <Text variant="labelSmall" style={{ backgroundColor: colors.bg_primary, borderWidth: 1, padding: 3, paddingLeft: 6, marginLeft: 5, borderRadius: 60, flex: 1, justifyContent: "center", alignItems: "center" }}>{t(`categories.${c}`)}</Text>
+        </View>
+    )
+
     return (
 
         <Card mode={"contained"} style={{
@@ -83,7 +89,7 @@ const DisplayPosts: SectionProps = ({
 
                     {pined && <PinnedView />}
 
-                    <Postheader info={informations.from} post_id={informations.post_id} created_at={informations.created_at} />
+                    <Postheader lefComponent={informations.categories && informations.categories.length > 0 && <View style={styles.row}>{informations.categories.map((c, idx) => <CategoriesBox key={idx} c={c} />)}</View>} info={informations.from} post_id={informations.post_id} created_at={informations.created_at} />
                     <PostNormal maxLines={comments ? undefined : 5} />
                 </TouchableOpacity>
                 {informations.shared_post_id && !is_share && (

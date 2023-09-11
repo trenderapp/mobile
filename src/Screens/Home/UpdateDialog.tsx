@@ -1,7 +1,7 @@
 import { Dialog, Paragraph, Portal, Button } from 'react-native-paper';
 import { openURL, storeLink } from '../../Services';
-import { UseTranslationResponse } from 'react-i18next';
 import { TFunction } from 'i18next';
+import React from 'react';
 
 export default function UpdateDialog({ t }: {
     t: TFunction<"translation", undefined, "translation">
