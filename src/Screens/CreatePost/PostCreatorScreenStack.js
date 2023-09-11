@@ -4,8 +4,9 @@ import { FlatList, View, ScrollView, Platform, KeyboardAvoidingView } from 'reac
 import { connect, useDispatch } from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
 import Toast from 'react-native-toast-message';
-import { ProgressBar, Chip } from 'react-native-paper';
+import { ProgressBar, Chip, Text, Button } from 'react-native-paper';
 import dayjs from 'dayjs';
+import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons"
 
 import { useClient, PostCreatorContainer, useNavigation, useTheme } from '../../Components/Container';
 import { axiosInstance } from '../../Services';
@@ -19,6 +20,8 @@ import CreatorVideoDisplay from '../../Components/Posts/Creator/CreatorVideoDisp
 import CreatorImageDisplay from '../../Components/Posts/Creator/CreatorImageDisplay';
 import DisplayAttachedPost from '../../Components/Posts/Creator/DisplayAttachedPost';
 import DisplaySharedPost from '../../Components/Posts/Creator/DisplaySharedPost';
+import { BottomModal } from '../../Other';
+import { trendsCategories } from 'trender-client';
 
 const PostCreatorScreenStack = ({ route: { params } }) => {
 
@@ -27,6 +30,7 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
   const [options, setOptions] = useState({
     paid: false
   })
+  const [modalVisible, setModalVisible] = useState(false);
   const [files, setFiles] = useState([]);
   const [sending, setSending] = useState({
     send: false,
@@ -38,14 +42,49 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const advantages = premiumAdvantages(user?.premium_type ?? 0, user.flags ?? 0)
+  const [categories, setCategories] = useState(trendsCategories);
 
   useEffect(() => {
     if (Array.isArray(initFiles)) setFiles(initFiles);
     else setFiles([initFiles])
   }, [initFiles])
 
+  useEffect(() => {
+    setOptions({
+      ...options,
+      categories: categories.filter(c => c.selected).map(c => c.number)
+    })
+  }, [categories])
+
+  const selectCategories = (x) => {
+    let selectedCount = 0;
+
+    // Compter le nombre de catégories sélectionnées
+    const updatedCategories = categories.map((category, index) => {
+      if (index === x) {
+        // Inverser la sélection de la catégorie actuelle
+        return { ...category, selected: !category.selected };
+      } else if (category.selected) {
+        selectedCount++;
+        if (selectedCount > 1) {
+          // Désélectionner les catégories supplémentaires si déjà 2 sélectionnées
+          return { ...category, selected: false };
+        }
+      }
+      return category;
+    });
+
+    setCategories(updatedCategories);
+  };
+
+  const CategoriesBox = ({ c }) => (
+    <View>
+      <Text variant="labelSmall" style={{ backgroundColor: colors.bg_primary, borderWidth: 1, padding: 3, paddingLeft: 6, marginLeft: 5, borderRadius: 60, flex: 1, justifyContent: "center", alignItems: "center" }}>{t(`categories.${c}`)}</Text>
+    </View>
+  )
+
   const sendInfo = async () => {
-    if (sending.send) return Toast.show({ text1: t(`errors.sending_form`) })
+    if (sending.send) return Toast.show({ text1: t(`errors.sending_form`) });
     if (!content) {
       if (files.length < 1 && !shared_post) return Toast.show({ text1: t(`errors.2001`) })
     }
@@ -162,13 +201,21 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
         scrollsToTop={true}
         renderItem={({ item, index }) => item?.type.startsWith("video") ? <CreatorVideoDisplay deleteImage={(i) => deleteImage(i)} index={index} uri={item.uri} /> : <CreatorImageDisplay deleteImage={(i) => deleteImage(i)} index={index} uri={item.uri} />}
       />
-      <BottomButtonPostCreator content={content} maxLength={advantages.textLength()} setFiles={(info) => setFiles([...files, info])} setCameraVisible={() => navigation.replace("CameraScreen", {
+      <BottomButtonPostCreator setModalVisible={setModalVisible} content={content} maxLength={advantages.textLength()} setFiles={(info) => setFiles([...files, info])} setCameraVisible={() => navigation.replace("CameraScreen", {
         ...params,
         initContent: content,
         initFiles: files
       })} addFiles={addFiles} />
     </View>
   )
+
+  const LeftComponent = () => (
+    <View style={styles.row}>
+      { options.paid ? <MaterialIcons style={{ marginLeft: 3 }} size={20} color={colors.color_green} name={`cash`} /> : null}
+      { options.categories ? <View style={styles.row}>{options.categories.map((c, idx) => <CategoriesBox key={idx} c={c} />)}</View> : null }
+    </View>
+  )
+
   return (
     <PostCreatorContainer dontSend={content.length > advantages.textLength()} onSave={() => sendInfo()} changeVisibilty={() => navigation.goBack()} >
       {sending.progress > 0 && <ProgressBar progress={sending.progress} />}
@@ -176,25 +223,47 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
         <ScrollView>
           {attached_post && <DisplayAttachedPost attached_post={attached_post} />}
           <View style={[styles.row, { width: full_width, padding: 10 }]}>
-            <Avatar size={45} url={client.user.avatar(user.user_id, user.avatar)} />
+            <Avatar size={40} url={client.user.avatar(user.user_id, user.avatar)} />
             <View style={[styles.column, { justifyContent: "flex-start", alignItems: "flex-start" }]}>
               <Username
                 created_at={dayjs().format()}
                 user={user}
-                lefComponent={user.payout_enabled && (
-                  <Chip
-                    style={{ marginLeft: 5 }}
-                    textStyle={{ fontSize: 10 }}
-                    onPress={() => setOptions({ ...options, paid: !options.paid })}
-                    icon={`cash${options.paid ? "" : "-remove"}`}
-                    theme={{ colors: { secondaryContainer: colors[options.paid ? "warning_color" : "good_color"] } }}>{t(`posts.${options.paid ? "paying" : "free"}`)}</Chip>
-                )} />
+                lefComponent={<LeftComponent />} />
             </View>
           </View>
           <TextAreaAutoComplete autoFocus={true} value={content} setValue={(text) => SetContent(text)} />
           {shared_post && <DisplaySharedPost shared_post={shared_post} />}
         </ScrollView>
         <BottomItems />
+        <BottomModal onSwipeComplete={() => setModalVisible(false)} dismiss={() => setModalVisible(false)} isVisible={modalVisible}>
+          <View style={{ padding: 10 }}>
+            <Text style={{ marginBottom: 5, textTransform: "capitalize" }} variant="titleMedium">{t(`filter.categories`)}</Text>
+            <ScrollView style={{ maxHeight: 250, borderRadius: 12, backgroundColor: colors.bg_primary }} contentContainerStyle={[styles.row, { flexWrap: "wrap", padding: 10 }]}>
+              {
+                categories.map((item, idx) => (
+                  <Chip
+                    key={idx}
+                    selected={item.selected}
+                    onPress={() => selectCategories(item.number)}
+                    compact
+                    textStyle={{ textTransform: "capitalize" }}
+                    style={{ marginLeft: 5, marginBottom: 5 }}
+                    mode="flat">{t(`categories.${item.number}`)}</Chip>
+                ))
+              }
+            </ScrollView>
+          </View>
+          {
+            user.payout_enabled && (
+              <Button
+                mode='contained'
+                onPress={() => setOptions({ ...options, paid: !options.paid })}
+                theme={{ colors: { primary: colors[options.paid ? "warning_color" : "good_color"] } }}
+                icon={`cash${options.paid ? "" : "-remove"}`}
+              >{t(`posts.${options.paid ? "paying" : "free"}`)}</Button>
+            )
+          }
+        </BottomModal>
       </KeyboardAvoidingView>
     </PostCreatorContainer>
   );

@@ -22,8 +22,8 @@ export default function Username({ user, created_at, lefComponent }) {
     return (
         <View>
             <View>
-                <View style={styles.row}>
-                    <Text style={[{ maxWidth: "100%", overflow: "hidden" } ]}>{user?.username}</Text>
+                <View style={[styles.row]}>
+                    <Text numberOfLines={1}>{user?.username}</Text>
                     { user?.is_private && <SvgElement margin={-5} size={15} name="lock" color={colors.text_normal} /> }
                     { flags.has(userFlags.VERIFIED_USER) && <SvgElement name="verified" size={15} /> }
                 </View>

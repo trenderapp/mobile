@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { TouchableOpacity, View } from "react-native";
 import { Button, Divider, Text, Card } from "react-native-paper";
 import { PostInterface } from "trender-client";
+import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import styles from "../../Style/style";
 import { useClient, useNavigation, useTheme } from "../Container";
@@ -68,9 +69,15 @@ const DisplayPosts: SectionProps = ({
         </View>
     )
 
+    const LeftComponent = () => (
+        <View style={styles.row}>
+            { informations.paid ? <MaterialIcons style={{ marginLeft: 3 }} size={20} color={colors.color_green} name={`cash`} /> : null }
+            { informations.categories && informations.categories.length > 0 && <View style={styles.row}>{informations.categories.map((c, idx) => <CategoriesBox key={idx} c={c} />)}</View> }
+        </View>
+    )
+    
     return (
-
-        <Card mode={"contained"} style={{
+        <Card mode="contained" style={{
             borderRadius: 10,
             margin: is_original_post ? 0 : 10
         }}>
@@ -89,7 +96,7 @@ const DisplayPosts: SectionProps = ({
 
                     {pined && <PinnedView />}
 
-                    <Postheader lefComponent={informations.categories && informations.categories.length > 0 && <View style={styles.row}>{informations.categories.map((c, idx) => <CategoriesBox key={idx} c={c} />)}</View>} info={informations.from} post_id={informations.post_id} created_at={informations.created_at} />
+                    <Postheader lefComponent={<LeftComponent />} info={informations.from} post_id={informations.post_id} created_at={informations.created_at} />
                     <PostNormal maxLines={comments ? undefined : 5} />
                 </TouchableOpacity>
                 {informations.shared_post_id && !is_share && (

@@ -15,11 +15,12 @@ type PropsType = {
     }) => any,
     addFiles: (target: "photo" | "video") => any,
     setCameraVisible: (bool: boolean) => any,
+    setModalVisible: (bool: boolean) => any,
     content: string;
     maxLength: number;
 }
 
-function BottomButtonPostCreator({ setFiles, addFiles, setCameraVisible, content, maxLength }: PropsType) {
+function BottomButtonPostCreator({ setFiles, addFiles, setCameraVisible, content, maxLength, setModalVisible }: PropsType) {
 
     const { colors } = useTheme();
     const [filter, setFilter] = useState<{ assetType: AssetType }>({
@@ -87,6 +88,7 @@ function BottomButtonPostCreator({ setFiles, addFiles, setCameraVisible, content
         }
         return to_return;
     }
+
     const buttons = [
         {
             icon: "camera",
@@ -105,6 +107,12 @@ function BottomButtonPostCreator({ setFiles, addFiles, setCameraVisible, content
             onPress: async () => await getPhotos("Videos"),
             text: "commons.videos",
             disable: photos.selected && filter.assetType === "Videos"
+        },
+        {
+            icon: "dots-horizontal",
+            onPress: async () => setModalVisible(true),
+            text: "commons.categories",
+            disable: false
         }
     ]
 
@@ -118,6 +126,7 @@ function BottomButtonPostCreator({ setFiles, addFiles, setCameraVisible, content
             }}>Other</Button>}
         </View>
     )
+
     return (
         <View style={{
             backgroundColor: colors.bg_secondary,
