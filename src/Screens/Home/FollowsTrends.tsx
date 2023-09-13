@@ -13,7 +13,6 @@ import { RootState, useAppDispatch, useAppSelector } from '../../Redux';
 import CustomHomeHeader from './CustomHomeHeader';
 import styles, { full_width } from '../../Style/style';
 import { Avatar } from '../../Components/Member';
-import type { navigationProps } from '../../Services';
 
 const FollowsTrends = () => {
 

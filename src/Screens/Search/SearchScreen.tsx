@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { View, FlatList, TouchableOpacity } from 'react-native';
+import { View, FlatList, TouchableOpacity, RefreshControl } from 'react-native';
 import { Text, FAB } from 'react-native-paper';
 import { useNavigation as useNativeNavigation } from '@react-navigation/native';
 import { CustomHeader, useClient, useTheme, useNavigation } from "../../Components/Container";
@@ -24,13 +24,18 @@ function SearchScreen() {
     const [users, setUsers] = useState<GlobalInterface.userInfo[] | undefined>(undefined);
     const [bestUsers, setBestUsers] = useState<GlobalInterface.userInfo[] | undefined>(undefined);
     const [loader, setLoader] = useState(true);
+    const [loaderF, setLoaderF] = useState(true);
     const [modalVisible, setModalVisible] = useState(false);
     const navigation = useNavigation();
     const nativeNavigation = useNativeNavigation<navigationProps>();
 
     async function getBestUsers() {
+        setLoaderF(true)
         setLoader(true)
-        const response = await client.explore.bestUsers();
+        const response = await client.explore.randomUsers({
+            locale: "KR"
+        });
+        setLoaderF(false)
         setLoader(false)
         if (response.error || !response.data) return;
         setBestUsers(response.data);
@@ -57,7 +62,7 @@ function SearchScreen() {
         getBestUsers()
     }, [])
 
-    const renderItem = useCallback(({ item, index }: { item: GlobalInterface.userInfo, index?: number }) => {
+    const renderItem = useCallback(({ item }: { item: GlobalInterface.userInfo, index?: number }) => {
 
         const flags = new UserPermissions(item?.flags);
 
@@ -112,7 +117,9 @@ function SearchScreen() {
                     />
                 </View>
             </CustomHeader>
-            <FAB
+            {
+                /**
+                 * <FAB
                 icon="tune-variant"
                 size='medium'
                 color={colors.bg_primary}
@@ -127,10 +134,20 @@ function SearchScreen() {
                     borderRadius: 60
                 }}
             />
+                 */
+            }
             <BottomModal onSwipeComplete={() => setModalVisible(false)} dismiss={() => setModalVisible(false)} isVisible={modalVisible}>
                 <SearchFilter />
             </BottomModal>
-            {users && users.length > 0 ? <FlatList data={users} keyExtractor={(item) => item.user_id} renderItem={renderItem} /> : <FlatList data={bestUsers} keyExtractor={(item) => item.user_id} renderItem={renderItem} />}
+            {users && users.length > 0 ? 
+                <FlatList data={users} keyExtractor={(item) => item.user_id} renderItem={renderItem} /> 
+                : <FlatList data={bestUsers} keyExtractor={(item) => item.user_id} renderItem={renderItem} refreshControl={<RefreshControl 
+                    refreshing={loaderF} 
+                    progressBackgroundColor={colors.bg_primary} 
+                    tintColor={colors.fa_primary} 
+                    colors={[colors.fa_primary, colors.fa_secondary, colors.fa_third]} 
+                    onRefresh={() => getBestUsers()} 
+                />} />}
         </View>
     )
 }

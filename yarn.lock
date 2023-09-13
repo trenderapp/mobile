@@ -1196,9 +1196,9 @@
   integrity sha512-sx8h62U4FrR4pqlbN1rkgPsdamDt9Tad0zgfO6VtP6rNJq/78k8nxUnh0xIX3WPDcCV8KAzdYCE7+UNvhF1CpQ==
 
 "@react-native-camera-roll/camera-roll@^5.2.0":
-  version "5.2.3"
-  resolved "https://registry.yarnpkg.com/@react-native-camera-roll/camera-roll/-/camera-roll-5.2.3.tgz#6427f32ac19396c739354aa9fb573ba14798757f"
-  integrity sha512-GNdFJj5F2pPQw6RH/BxbT0Ner+WPCm6olmjLn8JBlaRQ0IBX4K9l44YKJLJZsMJ54uqiKK0fDiRzT90Eg0iuIg==
+  version "5.9.0"
+  resolved "https://registry.yarnpkg.com/@react-native-camera-roll/camera-roll/-/camera-roll-5.9.0.tgz#e638a7693bcebd41199ee32ae644dafab12ffa16"
+  integrity sha512-6dRB0oklozLCbklaLkINoxncLnyG7TfUPiTlqSy2+dvwGLNQv2fYGL+hZPPk6ANoNYnxuE82NbMFgf1v6L/9TA==
 
 "@react-native-clipboard/clipboard@^1.11.2":
   version "1.11.2"
@@ -2296,9 +2296,9 @@ axios@^0.27.2:
     form-data "^4.0.0"
 
 axios@^1.2.1:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-1.3.2.tgz#7ac517f0fa3ec46e0e636223fd973713a09c72b3"
-  integrity sha512-1M3O703bYqYuPhbHeya5bnhpYVsDDRyQSabNja04mZtboLNSuZ4YrltestrLXfHgmzua4TpUqRiVKbiQuo2epw==
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.5.0.tgz#f02e4af823e2e46a9768cfc74691fdd0517ea267"
+  integrity sha512-D4DdjDo5CY50Qms0qGQTTw6Q44jl7zRwY7bthds06pUGfChBCTcQs+N743eFWGEd6pRTMd6A+I87aWyFV5wiZQ==
   dependencies:
     follow-redirects "^1.15.0"
     form-data "^4.0.0"
@@ -8876,10 +8876,10 @@ tr46@~0.0.3:
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
   integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
 
-trender-client@^5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/trender-client/-/trender-client-5.2.0.tgz#d102dddb9edfe1827ce517b8faaaf2e8ac394daf"
-  integrity sha512-3n4jrTGu0yXVWCYvucpu06amMGcm0PbZNKf/JFJqS9vohtohQhXXOl9UYjZ5EmhDuOCHiqQ8q62UCRjKMv0i+Q==
+trender-client@latest:
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/trender-client/-/trender-client-5.2.5.tgz#9f1a37e8b5b35c1c4f32048f5f01a3c94ba0174a"
+  integrity sha512-T/INVl06UuLf2d75Ah++S61XcujWpXYmDuGfrnGZcDTGxqModooaBd7vYpBiSEWA/9v0ERrxgPG9AFqvAa+faQ==
   dependencies:
     axios "^0.27.2"
 

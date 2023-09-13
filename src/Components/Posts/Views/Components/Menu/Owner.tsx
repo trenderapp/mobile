@@ -11,7 +11,6 @@ import { BottomModal } from "../../../../../Other";
 import { useClient, useTheme } from "../../../../Container";
 import { deleteProfileTrends } from "../../../../../Redux/profileFeed/action";
 import { deleteMainTrends } from "../../../../../Redux/mainFeed/action";
-import { deleteCommentTrends } from "../../../../../Redux/commentFeed/action";
 import { SinglePostContext } from "../../../PostContext.js";
 import { posturl } from "../../../../../Services/constante";
 
@@ -38,9 +37,7 @@ function Owner({ modalVisible, setModalVisible, pined, post_id }: SectionProps) 
         const currentScreen = navigation.getState().routes[0].name;
         const response = await client.post.delete(post_id);
         if (response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string })
-        if (info.is_comment) {
-            dispatch(deleteCommentTrends(post_id));
-        } else if (currentScreen === "PostScreen") {
+        if (currentScreen === "PostScreen") {
             if (navigation.canGoBack()) return navigation.goBack();
         } else if (currentScreen === "ProfileScreen") {
             dispatch(deleteProfileTrends(post_id));

@@ -10,7 +10,7 @@ import { exploreTopTrendsReducer } from './exploreTopTrends';
 import { exploreTopWorldTrendsReducer } from './exploreTopWorldTrends';
 import { profileFeedReducer } from './profileFeed';
 import { postSearchReducer } from './PostSearch';
-import { commentFeedReducer } from './commentFeed';
+import { postTempSaveFeedReducer } from './postTempSaveFeed';
 import { guildListReducer } from './guildList';
 import { guildMessagesReducer } from './guildMessages';
 import { notificationFeedReducer } from './NotificationFeed';
@@ -29,7 +29,7 @@ const rootReducer = combineReducers({
   exploreTopTrends: exploreTopTrendsReducer,
   exploreTopWorldTrends: exploreTopWorldTrendsReducer,
   profileFeed: profileFeedReducer,
-  commentFeed: commentFeedReducer,
+  postTempSaveFeed: postTempSaveFeedReducer,
   guildList: guildListReducer,
   guildMessages: guildMessagesReducer,
   notificationFeed: notificationFeedReducer

@@ -4,7 +4,10 @@ import { TouchableOpacity, View } from "react-native";
 import { Button, Divider, Text, Card } from "react-native-paper";
 import { PostInterface } from "trender-client";
 import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { connect } from 'react-redux';
 
+import { RootState, useAppDispatch, useAppSelector } from '../../Redux';
+import { addPostTempSaveTrends } from '../../Redux/postTempSaveFeed/action';
 import styles from "../../Style/style";
 import { useClient, useNavigation, useTheme } from "../Container";
 import SvgElement from "../Elements/Svg";
@@ -39,15 +42,24 @@ const DisplayPosts: SectionProps = ({
     const { colors } = useTheme();
     const { client } = useClient();
     const navigation = useNavigation();
+    const savedPosts = useAppSelector((state) => state.postTempSaveFeed);
+    const dispatch = useAppDispatch();
     const [attached_post, setAttachedPost] = useState<PostInterface.postResponseSchema | undefined | false>(undefined);
     const [commentLoad, setCommentLoad] = useState(false);
 
     const loadAttachedPosts = async (post_id: string) => {
         setCommentLoad(true);
-        const response = await client.post.fetchOne(post_id);
-        setCommentLoad(false);
-        if (response.error || !response.data) return setAttachedPost(false);
-        return setAttachedPost(response.data);
+        const findPost = savedPosts.find(p => p.post_id === post_id);
+        if (findPost) {
+            setCommentLoad(false);
+            return setAttachedPost(findPost)
+        } else {
+            const response = await client.post.fetchOne(post_id);
+            setCommentLoad(false);
+            if (response.error || !response.data) return setAttachedPost(false);
+            dispatch(addPostTempSaveTrends([response.data]));
+            return setAttachedPost(response.data);
+        }
     };
 
     useEffect(() => {
@@ -71,11 +83,11 @@ const DisplayPosts: SectionProps = ({
 
     const LeftComponent = () => (
         <View style={styles.row}>
-            { informations.paid ? <MaterialIcons style={{ marginLeft: 3 }} size={20} color={colors.color_green} name={`cash`} /> : null }
-            { informations.categories && informations.categories.length > 0 && <View style={styles.row}>{informations.categories.map((c, idx) => <CategoriesBox key={idx} c={c} />)}</View> }
+            {informations.paid ? <MaterialIcons style={{ marginLeft: 3 }} size={20} color={colors.color_green} name={`cash`} /> : null}
+            {informations.categories && informations.categories.length > 0 && <View style={styles.row}>{informations.categories.map((c, idx) => <CategoriesBox key={idx} c={c} />)}</View>}
         </View>
     )
-    
+
     return (
         <Card mode="contained" style={{
             borderRadius: 10,
@@ -122,4 +134,15 @@ const DisplayPosts: SectionProps = ({
     );
 };
 
-export default memo(DisplayPosts);
+const mapStateToProps = (state: RootState) => {
+    return {
+        mainFeed: state.mainFeed,
+        notificationFeed: state.notificationFeed
+    };
+};
+
+const mapDispatchToProps = {
+    addPostTempSaveTrends,
+};
+
+export default memo(connect(mapStateToProps, mapDispatchToProps)(DisplayPosts));

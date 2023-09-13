@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { FlatList } from 'react-native';
+import { PostInterface } from 'trender-client';
+
 import { PostContainer, useClient } from '../../Components/Container';
 import DisplayPosts from '../../Components/Posts/DisplayPost';
 import { Loader } from '../../Other';
-import { PostInterface } from 'trender-client';
 
 function PostScreen({ route }: any) {
 
