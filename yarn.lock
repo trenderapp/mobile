@@ -9361,7 +9361,7 @@ tr46@~0.0.3:
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
   integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
 
-trender-client@latest:
+trender-client@^2.5.2:
   version "5.2.5"
   resolved "https://registry.yarnpkg.com/trender-client/-/trender-client-5.2.5.tgz#9f1a37e8b5b35c1c4f32048f5f01a3c94ba0174a"
   integrity sha512-T/INVl06UuLf2d75Ah++S61XcujWpXYmDuGfrnGZcDTGxqModooaBd7vYpBiSEWA/9v0ERrxgPG9AFqvAa+faQ==
