@@ -10,8 +10,9 @@ import { useTranslation } from 'react-i18next';
 
 const renderScene = SceneMap({
   topTrends: ExploreTopTrendsScreen,
-  recentTrends: ExploreRecentTrendsScreen,
-  recentWorldTrends: ExploreRecentWorldTrendsScreen,
+  //topUsers: ExploreTopTrendsScreen,
+  //recentTrends: ExploreRecentTrendsScreen,
+  //recentWorldTrends: ExploreRecentWorldTrendsScreen,
   topWorldTrends: ExploreTopWorldTrendsScreen
 });
 
@@ -23,9 +24,10 @@ function ExploreScreenNavigator() {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: 'topTrends', title: t("commons.top_of_day") },
-    { key: 'recentTrends', title: t("commons.last_rends") },
+    //{ key: 'topUsers', title: t("commons.top_users_of_day") },
+    //{ key: 'recentTrends', title: t("commons.last_rends") },
     { key: 'topWorldTrends', title: t("commons.top_world_trends_day") },
-    { key: 'recentWorldTrends', title: t("commons.last_word_trends") },
+    //{ key: 'recentWorldTrends', title: t("commons.last_word_trends") },
   ]);
 
   const renderTabBar = (props: any) => (
@@ -40,10 +42,10 @@ function ExploreScreenNavigator() {
       }}
       labelStyle={{
         color: colors.text_normal,
-        textTransform: "none"
+        textTransform: "capitalize"
       }}
       tabStyle={{
-        width: 'auto'
+        width: full_width / 2
       }}
     />
   );

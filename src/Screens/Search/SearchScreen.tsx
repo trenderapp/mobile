@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { View, FlatList, TouchableOpacity, RefreshControl } from 'react-native';
-import { Text, FAB } from 'react-native-paper';
+import { Text } from 'react-native-paper';
 import { useNavigation as useNativeNavigation } from '@react-navigation/native';
 import { CustomHeader, useClient, useTheme, useNavigation } from "../../Components/Container";
 import { SearchBar } from "../../Components/Elements/Input";
@@ -13,39 +13,35 @@ import SvgElement from "../../Components/Elements/Svg";
 import UserPermissions from "trender-client/Permissions/UserPermissions";
 import { GlobalInterface, userFlags } from "trender-client";
 import { navigationProps } from "../../Services";
+import { ISO_639_CODE_LIST } from "trender-client/utils/ISO-369-1";
 
 function SearchScreen() {
 
     const { colors } = useTheme();
     const [text, setText] = useState("");
     const [pagination_key, setPaginationKey] = useState<string | undefined>(undefined);
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const { client } = useClient();
     const [users, setUsers] = useState<GlobalInterface.userInfo[] | undefined>(undefined);
     const [bestUsers, setBestUsers] = useState<GlobalInterface.userInfo[] | undefined>(undefined);
-    const [loader, setLoader] = useState(true);
     const [loaderF, setLoaderF] = useState(true);
     const [modalVisible, setModalVisible] = useState(false);
     const navigation = useNavigation();
     const nativeNavigation = useNativeNavigation<navigationProps>();
 
     async function getBestUsers() {
-        setLoaderF(true)
-        setLoader(true)
+        setLoaderF(true);
         const response = await client.explore.randomUsers({
-            locale: "KR"
+            locale: i18n.language as ISO_639_CODE_LIST
         });
-        setLoaderF(false)
-        setLoader(false)
+        setLoaderF(false);
         if (response.error || !response.data) return;
         setBestUsers(response.data);
     }
 
     useEffect(() => {
         async function getData() {
-            setLoader(true)
             const response = await client.user.search(text, pagination_key);
-            setLoader(false)
             if (response.error || !response.data) return;
             setUsers(response.data);
             if (response.pagination_key) setPaginationKey(response.pagination_key);
@@ -139,15 +135,19 @@ function SearchScreen() {
             <BottomModal onSwipeComplete={() => setModalVisible(false)} dismiss={() => setModalVisible(false)} isVisible={modalVisible}>
                 <SearchFilter />
             </BottomModal>
-            {users && users.length > 0 ? 
-                <FlatList data={users} keyExtractor={(item) => item.user_id} renderItem={renderItem} /> 
-                : <FlatList data={bestUsers} keyExtractor={(item) => item.user_id} renderItem={renderItem} refreshControl={<RefreshControl 
-                    refreshing={loaderF} 
-                    progressBackgroundColor={colors.bg_primary} 
-                    tintColor={colors.fa_primary} 
-                    colors={[colors.fa_primary, colors.fa_secondary, colors.fa_third]} 
-                    onRefresh={() => getBestUsers()} 
-                />} />}
+            {users && users.length > 0 ?
+                <FlatList data={users} keyExtractor={(item) => item.user_id} renderItem={renderItem} />
+                : <FlatList
+                    data={bestUsers}
+                    keyExtractor={(item) => item.user_id}
+                    renderItem={renderItem}
+                    refreshControl={<RefreshControl
+                        refreshing={loaderF}
+                        progressBackgroundColor={colors.bg_primary}
+                        tintColor={colors.fa_primary}
+                        colors={[colors.fa_primary, colors.fa_secondary, colors.fa_third]}
+                        onRefresh={() => getBestUsers()}
+                    />} />}
         </View>
     )
 }

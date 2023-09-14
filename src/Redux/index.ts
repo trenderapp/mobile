@@ -16,6 +16,7 @@ import { guildMessagesReducer } from './guildMessages';
 import { notificationFeedReducer } from './NotificationFeed';
 import { postSharesReducer } from './PostShares';
 import { postBookmarksReducer } from './Bookmarks';
+import ExploreTopUsers from '../Screens/Explore/ExploreTopUsers';
 
 // Combine les réducteurs en un seul objet de réducteur
 const rootReducer = combineReducers({
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   exploreRecentTrends: exploreRecentTrendsReducer,
   exploreWorldRecentTrends: exploreWorldRecentTrendsReducer,
   exploreTopTrends: exploreTopTrendsReducer,
+  exploreTopUsers: ExploreTopUsers,
   exploreTopWorldTrends: exploreTopWorldTrendsReducer,
   profileFeed: profileFeedReducer,
   postTempSaveFeed: postTempSaveFeedReducer,
