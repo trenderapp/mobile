@@ -7,6 +7,7 @@ import Toast from 'react-native-toast-message';
 import { ProgressBar, Chip, Text, Button } from 'react-native-paper';
 import dayjs from 'dayjs';
 import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons"
+import { trendsCategories } from 'trender-client';
 
 import { useClient, PostCreatorContainer, useNavigation, useTheme } from '../../Components/Container';
 import { axiosInstance } from '../../Services';
@@ -21,7 +22,6 @@ import CreatorImageDisplay from '../../Components/Posts/Creator/CreatorImageDisp
 import DisplayAttachedPost from '../../Components/Posts/Creator/DisplayAttachedPost';
 import DisplaySharedPost from '../../Components/Posts/Creator/DisplaySharedPost';
 import { BottomModal } from '../../Other';
-import { trendsCategories } from 'trender-client';
 
 const PostCreatorScreenStack = ({ route: { params } }) => {
 

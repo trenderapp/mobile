@@ -2,6 +2,9 @@ import React, { memo, useEffect, useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { View, FlatList, TouchableOpacity, RefreshControl } from 'react-native';
 import { Text } from 'react-native-paper';
+import { GlobalInterface, userFlags } from "trender-client";
+import { ISO_639_CODE_LIST } from "trender-client/utils/ISO-369-1";
+import UserPermissions from "trender-client/Permissions/UserPermissions";
 import { useNavigation as useNativeNavigation } from '@react-navigation/native';
 import { CustomHeader, useClient, useTheme, useNavigation } from "../../Components/Container";
 import { SearchBar } from "../../Components/Elements/Input";
@@ -10,16 +13,12 @@ import { BottomModal } from "../../Other";
 import SearchFilter from "../Home/SearchFilter";
 import { Avatar } from "../../Components/Member";
 import SvgElement from "../../Components/Elements/Svg";
-import UserPermissions from "trender-client/Permissions/UserPermissions";
-import { GlobalInterface, userFlags } from "trender-client";
 import { navigationProps } from "../../Services";
-import { ISO_639_CODE_LIST } from "trender-client/utils/ISO-369-1";
 
 function SearchScreen() {
 
     const { colors } = useTheme();
     const [text, setText] = useState("");
-    const [pagination_key, setPaginationKey] = useState<string | undefined>(undefined);
     const { t, i18n } = useTranslation();
     const { client } = useClient();
     const [users, setUsers] = useState<GlobalInterface.userInfo[] | undefined>(undefined);
@@ -41,10 +40,9 @@ function SearchScreen() {
 
     useEffect(() => {
         async function getData() {
-            const response = await client.user.search(text, pagination_key);
+            const response = await client.user.search(text);
             if (response.error || !response.data) return;
             setUsers(response.data);
-            if (response.pagination_key) setPaginationKey(response.pagination_key);
         }
 
         if (text?.length < 1) {
@@ -94,9 +92,9 @@ function SearchScreen() {
             <CustomHeader isHome={false}>
                 <View>
                     <SearchBar
-                        inputProps={{
+                        /*inputProps={{
                             autoFocus: true
-                        }}
+                        }}*/
                         onSearchPress={() => nativeNavigation?.navigate("PostStack", {
                             screen: "PostScreenSearch",
                             params: {

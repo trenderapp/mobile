@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 const renderScene = SceneMap({
   topTrends: ExploreTopTrendsScreen,
   //topUsers: ExploreTopTrendsScreen,
-  //recentTrends: ExploreRecentTrendsScreen,
+  recentTrends: ExploreRecentTrendsScreen,
   //recentWorldTrends: ExploreRecentWorldTrendsScreen,
   topWorldTrends: ExploreTopWorldTrendsScreen
 });
@@ -25,7 +25,7 @@ function ExploreScreenNavigator() {
   const [routes] = React.useState([
     { key: 'topTrends', title: t("commons.top_of_day") },
     //{ key: 'topUsers', title: t("commons.top_users_of_day") },
-    //{ key: 'recentTrends', title: t("commons.last_rends") },
+    { key: 'recentTrends', title: t("commons.last_trends") },
     { key: 'topWorldTrends', title: t("commons.top_world_trends_day") },
     //{ key: 'recentWorldTrends', title: t("commons.last_word_trends") },
   ]);
@@ -45,7 +45,7 @@ function ExploreScreenNavigator() {
         textTransform: "capitalize"
       }}
       tabStyle={{
-        width: full_width / 2
+        width: "auto"
       }}
     />
   );
