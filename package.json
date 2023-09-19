@@ -20,6 +20,7 @@
     "update": "yarn upgrade-interactive --latest",
     "upgrade": "react-native upgrade",
     "clear": "react-native start --reset-cache",
+    "doctor": "react-native doctor",
     "install:preprod": "yarn add ../trender-client/dist"
   },
   "dependencies": {
