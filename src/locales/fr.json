@@ -149,6 +149,7 @@
         "protect_nsfw": "Bloquer les contenus explicite",
         "app_version": "Version de l'application",
         "language_spoken": "Langues parlées",
+        "fees_charged": "Frais facturés",
     
         "dark_blue": "Bleu foncé",
         "dark": "Foncé",
@@ -184,6 +185,10 @@
         "report_message": "Signaler le message"
     },
     "subscription": {
+        "fees": "Frais",
+        "for_you": "Pour vous",
+        "the_user_pay": "L'utilisateur paye",
+        "you_receive": "Vous recevez",
         "my_subscriptions": "Mes abonnements",
         "no_subscriptions": "Vous n'avez aucun abonnement actif",
         "recap": "Récapitulatif",

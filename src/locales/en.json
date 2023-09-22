@@ -148,6 +148,7 @@
         "protect_nsfw": "Block explicit contents",
         "app_version": "App version",
         "language_spoken": "Languages spoken",
+        "fees_charged": "Fees charged",
 
         "dark_blue": "Dark blue",
         "dark": "Dark",
@@ -183,6 +184,10 @@
         "report_message": "Report the message"
     },
     "subscription": {
+        "fees": "Fees",
+        "for_you": "For you",
+        "the_user_pay": "The user pay",
+        "you_receive": "You receive",
         "my_subscriptions": "My subscriptions :",
         "no_subscriptions": "You didn't subscribe to an account",
         "recap": "Recap",
