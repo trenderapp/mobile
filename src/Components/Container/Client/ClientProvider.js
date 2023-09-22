@@ -52,6 +52,11 @@ function ClientProvider({ children }) {
             });
 
             const user = await client.informations();
+
+            const language_condition = !user.data.language_spoken || user.data.language_spoken.length < 1;
+            const language = i18n.language.split("-")[0];
+            
+            if(language_condition) await client.user.edit({ language_spoken: [language] });
             
             if(user.error) {
                 clearStorage("user_info");
@@ -64,7 +69,10 @@ function ClientProvider({ children }) {
             setValue({
                 client: client,
                 token: user_token,
-                user: user.data,
+                user: {
+                    ...user.data,
+                    language_spoken: language_condition ? user.data.language_spoken : [language]
+                },
                 state: "loged"
             });
           }

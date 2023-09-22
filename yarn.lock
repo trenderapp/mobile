@@ -8876,10 +8876,10 @@ tr46@~0.0.3:
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
   integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
 
-trender-client@^5.2.5:
-  version "5.2.5"
-  resolved "https://registry.yarnpkg.com/trender-client/-/trender-client-5.2.5.tgz#9f1a37e8b5b35c1c4f32048f5f01a3c94ba0174a"
-  integrity sha512-T/INVl06UuLf2d75Ah++S61XcujWpXYmDuGfrnGZcDTGxqModooaBd7vYpBiSEWA/9v0ERrxgPG9AFqvAa+faQ==
+trender-client@^5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/trender-client/-/trender-client-5.3.0.tgz#b35a8abf4d6a050cb97d9657c2ae7c3122227752"
+  integrity sha512-0D9fcL2HZUNMuqrPfh7Vx2dIOMB6SEl2yOoMWMruZJCGP2sVMiQmzj8rqEABQ9/RDJWhsKNJXgqSNGPSJEKcsw==
   dependencies:
     axios "^0.27.2"
 

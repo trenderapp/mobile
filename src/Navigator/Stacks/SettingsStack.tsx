@@ -11,6 +11,7 @@ import SubscriptionValidationScreen from "../../Screens/Settings/SubscriptionVal
 import SubscriptionScreen from "../../Screens/Settings/SubscriptionScreen";
 import SubscriptionDashboardScreen from "../../Screens/Settings/SubscriptionDashboardScreen";
 import CustomSubscriptionScreen from "../../Screens/Settings/CustomSubscriptionScreen";
+import LanguageSpokenScreen from "../../Screens/Settings/LanguageSpokenScreen";
 
 const Stack = createStackNavigator();
 
@@ -26,7 +27,8 @@ const SettingsStack = () => {
     { name: "SubscriptionScreen", screen: SubscriptionScreen },
     { name: "CustomSubscriptionScreen", screen: CustomSubscriptionScreen },
     { name: "SubscriptionValidationScreen", screen: SubscriptionValidationScreen },
-    { name: "SubscriptionDashboardScreen", screen: SubscriptionDashboardScreen }
+    { name: "SubscriptionDashboardScreen", screen: SubscriptionDashboardScreen },
+    { name: "LanguageSpokenScreen", screen: LanguageSpokenScreen }
   ])
 
   return (

@@ -21,7 +21,7 @@ function ProfileEditScreen({ route }) {
     const { colors } = useTheme();
 
     const { client, token, setValue, user } = useClient();
-    const old_client = useClient()
+    const old_client = useClient();
 
     const [modif, setModif] = useState(info);
     const [profilePictures, setProfilePicture] = useState({

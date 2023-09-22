@@ -17,7 +17,7 @@
         "home": "Accueil",
         "images": "Images",
         "videos": "Vidéos",
-        "search": "Rechercher",
+        "search": "Recherche de Trends",
         "nothing_display": "Il semblerait que ce soit vide ici ....",
         "yes": "Oui",
         "no": "Non",
@@ -148,6 +148,7 @@
         "my_code": "Mon code",
         "protect_nsfw": "Bloquer les contenus explicite",
         "app_version": "Version de l'application",
+        "language_spoken": "Langues parlées",
     
         "dark_blue": "Bleu foncé",
         "dark": "Foncé",

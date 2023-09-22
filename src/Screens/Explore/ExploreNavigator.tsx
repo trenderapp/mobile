@@ -12,7 +12,7 @@ const renderScene = SceneMap({
   topTrends: ExploreTopTrendsScreen,
   //topUsers: ExploreTopTrendsScreen,
   recentTrends: ExploreRecentTrendsScreen,
-  //recentWorldTrends: ExploreRecentWorldTrendsScreen,
+  recentWorldTrends: ExploreRecentWorldTrendsScreen,
   topWorldTrends: ExploreTopWorldTrendsScreen
 });
 
@@ -27,7 +27,7 @@ function ExploreScreenNavigator() {
     //{ key: 'topUsers', title: t("commons.top_users_of_day") },
     { key: 'recentTrends', title: t("commons.last_trends") },
     { key: 'topWorldTrends', title: t("commons.top_world_trends_day") },
-    //{ key: 'recentWorldTrends', title: t("commons.last_word_trends") },
+    { key: 'recentWorldTrends', title: t("commons.last_word_trends") },
   ]);
 
   const renderTabBar = (props: any) => (

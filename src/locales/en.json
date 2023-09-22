@@ -17,7 +17,7 @@
         "home": "Home",
         "images": "Images",
         "videos": "Videos",
-        "search": "Search",
+        "search": "Trends Search",
         "nothing_display": "It seems to be empty here...",
         "yes": "Yes",
         "no": "No",
@@ -147,6 +147,8 @@
         "my_code": "My code",
         "protect_nsfw": "Block explicit contents",
         "app_version": "App version",
+        "language_spoken": "Languages spoken",
+
         "dark_blue": "Dark blue",
         "dark": "Dark",
         "white": "White",

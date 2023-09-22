@@ -27,6 +27,11 @@ export const convertFirstCharacterToUppercase = (stringToConvert: string) => {
 
 export const messageFormatDate = (date: Date | string) => new formatDate(date);
 
+export const subscriptionCustomAllowedPrices = {
+  min: 3,
+  max: 1000 
+}
+
 export const subscriptionCurrencyArray = [
   {
     symbol: "€",

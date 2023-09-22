@@ -49,7 +49,7 @@ function SearchScreen() {
             getBestUsers()
             setUsers(undefined)
         }
-        if (text?.length > 1) getData();
+        if (text?.length > 2) getData();
     }, [text])
 
     useEffect(() => {
@@ -86,6 +86,21 @@ function SearchScreen() {
             </TouchableOpacity>
         )
     }, [])
+
+
+    const RandomUsers = () => (
+        <FlatList
+            data={bestUsers}
+            keyExtractor={(item) => item.user_id}
+            renderItem={renderItem}
+            refreshControl={<RefreshControl
+                refreshing={loaderF}
+                progressBackgroundColor={colors.bg_primary}
+                tintColor={colors.fa_primary}
+                colors={[colors.fa_primary, colors.fa_secondary, colors.fa_third]}
+                onRefresh={() => getBestUsers()}
+            />} />
+    )
 
     return (
         <View style={{ flex: 1, backgroundColor: colors.bg_primary }}>
@@ -135,17 +150,7 @@ function SearchScreen() {
             </BottomModal>
             {users && users.length > 0 ?
                 <FlatList data={users} keyExtractor={(item) => item.user_id} renderItem={renderItem} />
-                : <FlatList
-                    data={bestUsers}
-                    keyExtractor={(item) => item.user_id}
-                    renderItem={renderItem}
-                    refreshControl={<RefreshControl
-                        refreshing={loaderF}
-                        progressBackgroundColor={colors.bg_primary}
-                        tintColor={colors.fa_primary}
-                        colors={[colors.fa_primary, colors.fa_secondary, colors.fa_third]}
-                        onRefresh={() => getBestUsers()}
-                    />} />}
+                : text.length > 2 ? <FlatList data={users} keyExtractor={(item) => item.user_id} renderItem={renderItem} /> : <RandomUsers /> }
         </View>
     )
 }

@@ -5,7 +5,7 @@ import Toast from 'react-native-toast-message';
 import { useNavigation } from "@react-navigation/native";
 import SelectDropdown from 'react-native-select-dropdown'
 import { getUserSubscriptionResponseInterface } from "trender-client/Managers/Interfaces/CustomSubscription";
-import { navigationProps, subscriptionCurrencyArray } from "../../Services";
+import { navigationProps, subscriptionCurrencyArray, subscriptionCustomAllowedPrices } from "../../Services";
 import { useClient, useTheme } from "../Container";
 import { useTranslation } from 'react-i18next';
 
@@ -21,7 +21,7 @@ type sectionProps = {
     sendInformations: any;
 }
 
-const CustomSubscriptionCreateCard = ({ subscription,setCurrency, setPrice, inputPrice, setActive, currency, loading,sendInformations }: sectionProps) => {
+const CustomSubscriptionCreateCard = ({ subscription,setCurrency, setPrice, inputPrice, setActive, currency, loading, sendInformations }: sectionProps) => {
 
     const { colors } = useTheme();
     const { t } = useTranslation();
@@ -52,8 +52,8 @@ const CustomSubscriptionCreateCard = ({ subscription,setCurrency, setPrice, inpu
                     <TextInput
                         style={{ marginBottom: 5, marginTop: 5, width: "85%" }}
                         mode='outlined'
-                        label={`Between 5 & 1000`}
-                        error={subscription.price < 5 || subscription.price > 1000}
+                        label={`Between ${subscriptionCustomAllowedPrices.min} & ${subscriptionCustomAllowedPrices.max}`}
+                        error={subscription.price < subscriptionCustomAllowedPrices.min || subscription.price > subscriptionCustomAllowedPrices.max}
                         value={inputPrice}
                         keyboardType='numeric'
                         right={<TextInput.Affix text={`${currency.symbol} /${t("subscription.month").toLocaleLowerCase()}`} />}
@@ -129,7 +129,7 @@ const CustomSubscriptionCreateCard = ({ subscription,setCurrency, setPrice, inpu
             <Card.Actions>
                 <Button icon={subscription?.active ? "check" : "close"} onPress={() => setActive()}>{t(`commons.${subscription?.active ? "active" : "inactive"}`)}</Button>
                 <Button
-                    disabled={subscription.price < 5 || subscription.price > 1000}
+                    disabled={subscription.price < subscriptionCustomAllowedPrices.min || subscription.price > subscriptionCustomAllowedPrices.max}
                     mode='elevated'
                     theme={{ colors: { elevation: { level1: colors.good_color } } }}
                     loading={loading}
