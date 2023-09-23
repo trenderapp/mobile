@@ -33,24 +33,24 @@ function HomeSettingsScreen() {
                 textDecorationLine: "underline"
             }}>{t("settings.my_account")}:</Text>
 
-            <HomeButtonSection onPress={() => navigation?.push("SubscriptionScreen")} t={t("settings.subscriptions")} icon={undefined} />
-            <HomeButtonSection onPress={() => navigation?.push("CustomSubscriptionScreen")} t={t("settings.custom_subscriptions")} icon={undefined} />
-            <HomeButtonSection onPress={() => navigation.push("LanguageSpokenScreen")} t={t("settings.language_spoken")} icon={undefined} />
+            <HomeButtonSection onPress={() => navigation?.push("SubscriptionScreen")} t={t("settings.subscriptions")} />
+            <HomeButtonSection disable onPress={() => {} /*navigation?.push("CustomSubscriptionScreen")*/} t={t("settings.custom_subscriptions")} />
+            <HomeButtonSection onPress={() => navigation.push("LanguageSpokenScreen")} t={t("settings.language_spoken")} />
 
-            <HomeButtonSection onPress={() => navigation.push("AffiliationScreen")} t={t("settings.affiliation")} icon={undefined} />
-            <HomeButtonSection onPress={() => navigation.push("SessionScreen")} t={t("settings.sessions")} icon={undefined} />
+            <HomeButtonSection onPress={() => navigation.push("AffiliationScreen")} t={t("settings.affiliation")} />
+            <HomeButtonSection onPress={() => navigation.push("SessionScreen")} t={t("settings.sessions")} />
             <Br />
             <Text variant='bodyLarge' style={{
                 textDecorationLine: "underline"
             }}>{t("settings.my_app")}:</Text>
-            <HomeButtonSection onPress={() => navigation.push("LanguageThemeScreen")} t={t("settings.lang_and_theme")} icon={undefined} />
+            <HomeButtonSection onPress={() => navigation.push("LanguageThemeScreen")} t={t("settings.lang_and_theme")} />
             { appInfo && <HomeButtonSection onPress={() => copyText(`App version : ${appInfo.version} (${appInfo.build_number})`)} t={`${t("settings.app_version")} : ${appInfo.version} (${appInfo.build_number})`} icon={"content-copy"} /> }
             <Br />
             <Text variant='bodyLarge' style={{
                 textDecorationLine: "underline"
             }}>{t("settings.my_security")}:</Text>
-            <HomeButtonSection onPress={() => navigation.push("BlockedScreen")} t={t("settings.blocked")} icon={undefined} />
-            <HomeButtonSection onPress={() => navigation.push("SecurityScreen")} t={t("settings.security")} icon={undefined} />
+            <HomeButtonSection onPress={() => navigation.push("BlockedScreen")} t={t("settings.blocked")} />
+            <HomeButtonSection onPress={() => navigation.push("SecurityScreen")} t={t("settings.security")} />
         </SettingsContainer>
     )
 }

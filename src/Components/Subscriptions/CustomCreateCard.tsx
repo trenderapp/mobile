@@ -14,11 +14,11 @@ import {
     ContributionGraph,
     StackedBarChart
 } from "react-native-chart-kit";
+import { AbstractChartConfig } from 'react-native-chart-kit/dist/AbstractChart';
 import { navigationProps, subscriptionCurrencyArray, subscriptionCustomAllowedPrices } from "../../Services";
 import { useClient, useTheme } from "../Container";
 import { full_width } from '../../Style/style';
 import { BottomModal } from '../../Other';
-import { AbstractChartConfig } from 'react-native-chart-kit/dist/AbstractChart';
 
 
 type sectionProps = {
@@ -60,7 +60,7 @@ const CustomSubscriptionCreateCard = ({ subscription, setCurrency, setPrice, inp
     useEffect(() => {
             const price = subscription.price;
             const stripe_fees = price*0.03+0.25;
-            const trender_fees = price < 10 ? 0.12+(price*0.03) : stripe_fees-(stripe_fees*0.1);
+            const trender_fees = price < 10 ? 0.12+(price*0.03) : price*0.1;
             const final_fees = stripe_fees+trender_fees;
             const final_price = price - final_fees;
             
