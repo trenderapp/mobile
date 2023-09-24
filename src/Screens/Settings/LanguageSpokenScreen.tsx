@@ -56,7 +56,7 @@ function LanguageSpokenScreen() {
     const sendInfo = async () => {
         setLoader(true)
         if(loader) return;
-        const filtered = languages.filter(l => l.selected === true).map(l => l.language);
+        const filtered = languages.filter(l => l.selected === true).map(l => l.language);        
         const response = await client.user.edit({ language_spoken: filtered });
         setLoader(false);
         if(!response.data && response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string });
@@ -71,7 +71,8 @@ function LanguageSpokenScreen() {
             const exist = user.language_spoken?.some(l => l === item.language);
             return { ...item, selected: exist };
         })
-        setFilter(map)        
+        setFilter(map)
+        setLanguages(map)     
         setLoader(false)
     }, [])
 

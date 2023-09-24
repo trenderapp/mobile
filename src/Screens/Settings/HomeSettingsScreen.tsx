@@ -34,7 +34,7 @@ function HomeSettingsScreen() {
             }}>{t("settings.my_account")}:</Text>
 
             <HomeButtonSection onPress={() => navigation?.push("SubscriptionScreen")} t={t("settings.subscriptions")} />
-            <HomeButtonSection disable onPress={() => {} /*navigation?.push("CustomSubscriptionScreen")*/} t={t("settings.custom_subscriptions")} />
+            <HomeButtonSection onPress={() => navigation?.push("CustomSubscriptionScreen")} t={t("settings.custom_subscriptions")} />
             <HomeButtonSection onPress={() => navigation.push("LanguageSpokenScreen")} t={t("settings.language_spoken")} />
 
             <HomeButtonSection onPress={() => navigation.push("AffiliationScreen")} t={t("settings.affiliation")} />
