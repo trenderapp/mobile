@@ -1,7 +1,7 @@
 {
   "name": "trender",
-  "version": "5.3.5",
-  "version_number": 104,
+  "version": "5.3.6",
+  "version_number": 105,
   "private": true,
   "repository": {
     "type": "git",

@@ -35,12 +35,12 @@ function PostScreen({ route }: any) {
     
     const bottomHandler = async () => {
         if(loader) return;
-        setLoader(true)        
+        setLoader(true);  
         const response = await client.post.comments(post_id, { pagination_key: pagination_key });
+        setLoader(false)
         if(response.error || !response.data) return;
         if(response.data.length < 1) return;
         if(response.pagination_key) setPaginationKey(response.pagination_key);
-        setLoader(false)
     }
 
     const renderItem = ({ item }: { item: PostInterface.postResponseSchema }) => (
