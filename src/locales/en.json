@@ -9,6 +9,7 @@
         "success": "Success",
         "report": "Report",
         "cancel": "Cancel",
+        "canceled": "Canceled",
         "notifications": "Notifications",
         "messages": "Messages",
         "explore": "Explore",
@@ -37,7 +38,7 @@
 
         "top_of_day": "Trends",
         "top_users_of_day": "Top Users",
-        "last_rends": "Last Trends",
+        "last_trends": "Last Trends",
         "top_world_trends_day": "World Trends",
         "last_word_trends": "Last World Trends"
     },
@@ -149,6 +150,7 @@
         "app_version": "App version",
         "language_spoken": "Languages spoken",
         "fees_charged": "Fees charged",
+        "cancel_subscription": "Cancel the subscription",
 
         "dark_blue": "Dark blue",
         "dark": "Dark",
@@ -190,6 +192,8 @@
         "you_receive": "You receive",
         "my_subscriptions": "My subscriptions :",
         "no_subscriptions": "You didn't subscribe to an account",
+        "new_renew": "Renew",
+
         "recap": "Recap",
         "price": "Price",
         "subscription": "Subscription",

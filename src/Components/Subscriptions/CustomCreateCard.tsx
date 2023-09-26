@@ -1,19 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Card, TextInput, Text, Divider, Portal, Dialog } from 'react-native-paper';
+import { Button, Card, TextInput, Text, Divider } from 'react-native-paper';
 import { View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { useNavigation } from "@react-navigation/native";
 import SelectDropdown from 'react-native-select-dropdown'
 import { getUserSubscriptionResponseInterface } from "trender-client/Managers/Interfaces/CustomSubscription";
 import { useTranslation } from 'react-i18next';
-import {
-    LineChart,
-    BarChart,
-    PieChart,
-    ProgressChart,
-    ContributionGraph,
-    StackedBarChart
-} from "react-native-chart-kit";
+import { PieChart } from "react-native-chart-kit";
 import { AbstractChartConfig } from 'react-native-chart-kit/dist/AbstractChart';
 import { navigationProps, subscriptionCurrencyArray, subscriptionCustomAllowedPrices } from "../../Services";
 import { useClient, useTheme } from "../Container";
@@ -57,14 +50,13 @@ const CustomSubscriptionCreateCard = ({ subscription, setCurrency, setPrice, inp
         });
     }
 
-    useEffect(() => {
-            const price = subscription.price;
-            const stripe_fees = price*0.03+0.25;
-            const trender_fees = price < 10 ? 0.12+(price*0.03) : price*0.1;
-            const final_fees = stripe_fees+trender_fees;
-            const final_price = price - final_fees;
+    useEffect(() => {       
+        const price = subscription.price;
+        const stripe_fees = price*0.03+0.25;
+        const trender_fees = price < 10 ? 0.12+(price*0.03) : price*0.1;
+        const final_fees = price < 10 ? stripe_fees+trender_fees : trender_fees;
+        const final_price = price - final_fees;
             
-
         setFees({
             creator: parseFloat(final_price.toFixed(2)),
             stripe: parseFloat(stripe_fees.toFixed(2)),
@@ -84,7 +76,7 @@ const CustomSubscriptionCreateCard = ({ subscription, setCurrency, setPrice, inp
             },
             {
                 name: "Stripe",
-                price: fees.stripe,
+                price: subscription.price < 10 ? fees.stripe : 0,
                 color: "#625AFA",
                 legendFontColor: colors.text_normal,
                 legendFontSize: 15

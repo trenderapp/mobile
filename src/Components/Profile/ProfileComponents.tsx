@@ -120,7 +120,6 @@ function ProfileComponent({ nickname, pined, informations, setInfo, setModalVisi
     const ProfileHeader = () => (
         <View style={[styles.row, { justifyContent: "space-between", position: "absolute", zIndex: 5, width: full_width, backgroundColor: `${colors.bg_third}${0}` }]}>
             {naviteNavigation.canGoBack() && <IconButton mode="contained-tonal" icon="arrow-left" onPress={() => naviteNavigation.goBack()} />}
-            
             <IconButton mode="contained-tonal" style={{ marginRight: 5 }} onPress={() => setModalVisible(true)} icon="dots-horizontal" />    
         </View>
     )
@@ -174,6 +173,11 @@ function ProfileComponent({ nickname, pined, informations, setInfo, setModalVisi
         </View>
     )
 
+    const showSubscriptionModal = () => {
+        getSubscriptions()
+        showModal()
+    }
+
     const ProfileButtons = () => (
         <View style={{
             display: "flex",
@@ -186,10 +190,7 @@ function ProfileComponent({ nickname, pined, informations, setInfo, setModalVisi
             {informations.follow_back && <Tooltip title="Follow Back"><IconButton style={{ margin: 0 }} icon="account-sync" /></Tooltip>}
             {informations.user_id !== user?.user_id && informations.allow_dm && <IconButton style={{ margin: 0 }} onPress={() => createDM()} icon="email" />}
             {informations.user_id !== user?.user_id && informations.custom_subscription && (
-                <IconButton style={{ margin: 0 }} iconColor={informations.pay_custom_subscription ? colors.good_color : undefined} onPress={() => {
-                    getSubscriptions();
-                    showModal();
-                }} icon="account-cash" />
+                <IconButton style={{ margin: 0 }} iconColor={informations.pay_custom_subscription ? colors.good_color : undefined} onPress={() => informations.pay_custom_subscription ? undefined : showSubscriptionModal() } icon="account-cash" />
             )}
 
         </View>

@@ -9,6 +9,7 @@
         "success": "Succès",
         "report": "Signaler",
         "cancel": "Annuler",
+        "canceled": "Annulé",
         "notifications": "Notifications",
         "messages": "Messages",
         "explore": "Explorer",
@@ -150,6 +151,7 @@
         "app_version": "Version de l'application",
         "language_spoken": "Langues parlées",
         "fees_charged": "Frais facturés",
+        "cancel_subscription": "Annuler la souscription",
     
         "dark_blue": "Bleu foncé",
         "dark": "Foncé",
@@ -191,6 +193,8 @@
         "you_receive": "Vous recevez",
         "my_subscriptions": "Mes abonnements",
         "no_subscriptions": "Vous n'avez aucun abonnement actif",
+        "next_renew": "Renouvellement",
+
         "recap": "Récapitulatif",
         "price": "Prix",
         "subscription": "Abonnement",
