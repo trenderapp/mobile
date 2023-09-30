@@ -3,7 +3,13 @@ import FastImage from "react-native-fast-image";
 import { useTheme } from '../../Container';
 import { IconButton, Button } from 'react-native-paper';
 
-export default function CreatorImageDisplay({ uri, index, deleteImage }) {
+type SectionProps = {
+  uri: string;
+  index: number;
+  deleteImage: (idx: number) => any
+}
+
+export default function CreatorImageDisplay({ uri, index, deleteImage }: SectionProps) {
 
   const { colors } = useTheme();
   
@@ -16,7 +22,6 @@ export default function CreatorImageDisplay({ uri, index, deleteImage }) {
         height: 100,
         borderRadius: 8,
         margin: 5,
-        resizeMode: "cover",
         backgroundColor: colors.bg_secondary
       }} source={{
         uri: uri

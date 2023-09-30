@@ -9,7 +9,7 @@ import FastImage from "react-native-fast-image";
 import { postResponseSchema } from "trender-client/Managers/Interfaces/Post";
 import { useNavigation as useNativeNavigation } from "@react-navigation/native";
 
-import styles, { full_height, full_width } from "../../Style/style";
+import styles, { full_height } from "../../Style/style";
 import { UserBadges } from "../Member";
 import { useClient, useNavigation, useTheme } from "../Container";
 import { Markdown } from "../Elements/Text";
@@ -117,13 +117,6 @@ function ProfileComponent({ nickname, pined, informations, setInfo, setModalVisi
         </Portal>
     )
 
-    const ProfileHeader = () => (
-        <View style={[styles.row, { justifyContent: "space-between", position: "absolute", zIndex: 5, width: full_width, backgroundColor: `${colors.bg_third}${0}` }]}>
-            {naviteNavigation.canGoBack() && <IconButton mode="contained-tonal" icon="arrow-left" onPress={() => naviteNavigation.goBack()} />}
-            <IconButton mode="contained-tonal" style={{ marginRight: 5 }} onPress={() => setModalVisible(true)} icon="dots-horizontal" />    
-        </View>
-    )
-
     const AllModals = () => (
         <>
             <SubscriptionModal />
@@ -200,7 +193,6 @@ function ProfileComponent({ nickname, pined, informations, setInfo, setModalVisi
         <View style={{ borderBottomColor: colors.bg_secondary, borderBottomWidth: 1 }}>
             <AllModals />
             <View>
-                <ProfileHeader />
                 <ProfileBanner />
                 <View style={[{ paddingLeft: 15, paddingRight: 15 }]}>
                     <ProfilePictures />

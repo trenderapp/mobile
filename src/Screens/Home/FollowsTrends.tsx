@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { connect } from 'react-redux';
-import { Animated, FlatList, RefreshControl, View, SafeAreaView, TouchableOpacity } from 'react-native';
+import { FlatList, RefreshControl, View, TouchableOpacity } from 'react-native';
 import { Appbar, FAB, Text } from 'react-native-paper';
 import { PostInterface } from 'trender-client';
 
@@ -11,8 +11,7 @@ import { Loader } from '../../Other';
 import EmptyHome from '../../Components/Home/EmptyHome';
 import { RootState, useAppDispatch, useAppSelector } from '../../Redux';
 import CustomHomeHeader from './CustomHomeHeader';
-import styles, { full_width } from '../../Style/style';
-import { Avatar } from '../../Components/Member';
+import styles from '../../Style/style';
 
 const FollowsTrends = () => {
 
@@ -24,7 +23,7 @@ const FollowsTrends = () => {
   const [loaderF, setLoaderF] = useState(false);
   const navigation = useNavigation();
   const { colors } = useTheme();
-  const { client, user } = useClient();
+  const { client } = useClient();
 
   async function getData(refresh: boolean = false) {
     if (refresh) {
@@ -56,20 +55,8 @@ const FollowsTrends = () => {
     if (response.pagination_key) setPaginationKey(response.pagination_key);
     dispatch(addMainTrends(response.data));
   }
-
-  const scrollY = useRef(new Animated.Value(0)).current; // Opacité initiale à 1 (complètement visible)
+  
   const flatListRef: any = useRef(undefined);
-
-  const handleScroll = Animated.event(
-    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-    { useNativeDriver: false } // Nécessaire pour utiliser Animated avec opacity
-  );
-
-  const headerOpacity = scrollY.interpolate({
-    inputRange: [0, 200],
-    outputRange: [0, 1],
-    extrapolate: "clamp",
-  });
 
   const renderItem = useCallback(({ item }: { item: PostInterface.postResponseSchema }) => (
     <DisplayPosts comments={false} informations={item} pined={undefined} is_comment={undefined} />
@@ -104,21 +91,9 @@ const FollowsTrends = () => {
     )
   }
 
-  const SoftHeader = () => (
-    <SafeAreaView>
-      <Animated.View style={[styles.row, { justifyContent: "space-between", position: "absolute", zIndex: 99, width: full_width, backgroundColor: colors.bg_primary, opacity: headerOpacity, marginRight: 10, marginLeft: 5 }]}>
-        <TouchableOpacity style={styles.row} activeOpacity={0.5} onPress={() => navigation.openDrawer()}>
-          <Avatar marginLeft={5} marginRight={5} url={client.user.avatar(user?.user_id, user?.avatar)} />
-          <Text style={{ fontWeight: '700', marginLeft: 5 }}>{user.username}</Text>
-        </TouchableOpacity>
-        <CustomLeftComponent />
-      </Animated.View>
-    </SafeAreaView>
-  )
-
   return (
     <>
-      <SoftHeader />
+      <CustomHomeHeader leftComponent={<CustomLeftComponent />} />
       <FAB
         icon="chevron-up"
         size='medium'
@@ -136,13 +111,11 @@ const FollowsTrends = () => {
       />
       <FlatList
         ref={flatListRef}
-        onScroll={handleScroll}
         removeClippedSubviews={true}
         initialNumToRender={20}
         data={posts}
         renderItem={memoizedValue}
         keyExtractor={item => item.post_id}
-        ListHeaderComponent={<CustomHomeHeader leftComponent={<CustomLeftComponent />} />}
         ListFooterComponent={loader ? <Loader /> : undefined}
         onScrollEndDrag={() => bottomHandler()}
         ListEmptyComponent={<EmptyHome />}

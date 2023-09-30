@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext, memo, useCallback, useRef } from 'react';
-import { FlatList, Animated, SafeAreaView } from 'react-native';
+import React, { useEffect, useState, useContext, memo, useCallback } from 'react';
+import { FlatList, Animated } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { useTranslation } from 'react-i18next';
 import { PostInterface } from 'trender-client';
@@ -77,26 +77,11 @@ function ProfileScreen({ route }: any) {
         <DisplayPosts informations={item} />
     ), [])
 
-    const scrollY = useRef(new Animated.Value(0)).current; // Opacité initiale à 1 (complètement visible)
-
-    const handleScroll = Animated.event(
-        [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-        { useNativeDriver: false } // Nécessaire pour utiliser Animated avec opacity
-    );
-
-    const headerOpacity = scrollY.interpolate({
-        inputRange: [0, 200],
-        outputRange: [0, 1],
-        extrapolate: "clamp",
-    });
-
     const ProfileHeader = () => (
-        <SafeAreaView>
-            <Animated.View style={[styles.row, { justifyContent: "space-between", position: "absolute", zIndex: 7, width: full_width, backgroundColor: `${colors.bg_primary}`, opacity: headerOpacity }]}>
-                {naviteNavigation.canGoBack() && <IconButton icon="arrow-left" onPress={() => naviteNavigation.goBack()} />}
-                <IconButton style={{ marginRight: 5 }} onPress={() => setModalVisible(true)} icon="dots-horizontal" />
-            </Animated.View>
-        </SafeAreaView>
+        <Animated.View style={[styles.row, { justifyContent: "space-between", width: full_width, backgroundColor: `${colors.bg_primary}` }]}>
+            {naviteNavigation.canGoBack() && <IconButton icon="arrow-left" onPress={() => naviteNavigation.goBack()} />}
+            <IconButton style={{ marginRight: 5 }} onPress={() => setModalVisible(true)} icon="dots-horizontal" />
+        </Animated.View>
     )
 
     return (
@@ -105,7 +90,6 @@ function ProfileScreen({ route }: any) {
             {
                 !loading ?
                     <FlatList
-                        onScroll={handleScroll}
                         scrollEventThrottle={16}
                         onScrollEndDrag={() => getPosts()}
                         ListHeaderComponent={profile ? profile?.code ?

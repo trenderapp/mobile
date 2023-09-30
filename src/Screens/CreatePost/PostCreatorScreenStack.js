@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlatList, View, ScrollView, Platform, KeyboardAvoidingView } from 'react-native';
 import { connect, useDispatch } from 'react-redux';
@@ -27,11 +27,11 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
 
   const { attached_post, shared_post, initFiles, initContent } = params;
   const [content, SetContent] = useState(initContent ?? "");
+  const [files, setFiles] = useState([]);
   const [options, setOptions] = useState({
     paid: false
   })
   const [modalVisible, setModalVisible] = useState(false);
-  const [files, setFiles] = useState([]);
   const [sending, setSending] = useState({
     send: false,
     progress: 0
@@ -43,6 +43,8 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
   const navigation = useNavigation();
   const advantages = premiumAdvantages(user?.premium_type ?? 0, user.flags ?? 0)
   const [categories, setCategories] = useState(trendsCategories);
+
+  const memoizedFiles = useMemo(() => files, [files]);
 
   useEffect(() => {
     if (Array.isArray(initFiles)) setFiles(initFiles);
@@ -196,7 +198,7 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
     }}>
       <FlatList
         horizontal={true}
-        data={files}
+        data={memoizedFiles}
         keyExtractor={(item, idx) => idx}
         scrollsToTop={true}
         renderItem={({ item, index }) => item?.type.startsWith("video") ? <CreatorVideoDisplay deleteImage={(i) => deleteImage(i)} index={index} uri={item.uri} /> : <CreatorImageDisplay deleteImage={(i) => deleteImage(i)} index={index} uri={item.uri} />}
@@ -211,9 +213,41 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
 
   const LeftComponent = () => (
     <View style={styles.row}>
-      { options.paid ? <MaterialIcons style={{ marginLeft: 3 }} size={20} color={colors.color_green} name={`cash`} /> : null}
-      { options.categories ? <View style={styles.row}>{options.categories.map((c, idx) => <CategoriesBox key={idx} c={c} />)}</View> : null }
+      {options.paid ? <MaterialIcons style={{ marginLeft: 3 }} size={20} color={colors.color_green} name={`cash`} /> : null}
+      {options.categories ? <View style={styles.row}>{options.categories.map((c, idx) => <CategoriesBox key={idx} c={c} />)}</View> : null}
     </View>
+  )
+
+  const BottomOptions = () => (
+    <BottomModal onSwipeComplete={() => setModalVisible(false)} dismiss={() => setModalVisible(false)} isVisible={modalVisible}>
+      <View style={{ padding: 10 }}>
+        <Text style={{ marginBottom: 5, textTransform: "capitalize" }} variant="titleMedium">{t(`filter.categories`)}</Text>
+        <ScrollView style={{ maxHeight: 250, borderRadius: 12, backgroundColor: colors.bg_primary }} contentContainerStyle={[styles.row, { flexWrap: "wrap", padding: 10 }]}>
+          {
+            categories.map((item, idx) => (
+              <Chip
+                key={idx}
+                selected={item.selected}
+                onPress={() => selectCategories(item.number)}
+                compact
+                textStyle={{ textTransform: "capitalize" }}
+                style={{ marginLeft: 5, marginBottom: 5 }}
+                mode="flat">{t(`categories.${item.number}`)}</Chip>
+            ))
+          }
+        </ScrollView>
+      </View>
+      {
+        user.payout_enabled && (
+          <Button
+            mode='contained'
+            onPress={() => setOptions({ ...options, paid: !options.paid })}
+            theme={{ colors: { primary: colors[options.paid ? "warning_color" : "good_color"] } }}
+            icon={`cash${options.paid ? "" : "-remove"}`}
+          >{t(`posts.${options.paid ? "paying" : "free"}`)}</Button>
+        )
+      }
+    </BottomModal>
   )
 
   return (
@@ -235,35 +269,7 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
           {shared_post && <DisplaySharedPost shared_post={shared_post} />}
         </ScrollView>
         <BottomItems />
-        <BottomModal onSwipeComplete={() => setModalVisible(false)} dismiss={() => setModalVisible(false)} isVisible={modalVisible}>
-          <View style={{ padding: 10 }}>
-            <Text style={{ marginBottom: 5, textTransform: "capitalize" }} variant="titleMedium">{t(`filter.categories`)}</Text>
-            <ScrollView style={{ maxHeight: 250, borderRadius: 12, backgroundColor: colors.bg_primary }} contentContainerStyle={[styles.row, { flexWrap: "wrap", padding: 10 }]}>
-              {
-                categories.map((item, idx) => (
-                  <Chip
-                    key={idx}
-                    selected={item.selected}
-                    onPress={() => selectCategories(item.number)}
-                    compact
-                    textStyle={{ textTransform: "capitalize" }}
-                    style={{ marginLeft: 5, marginBottom: 5 }}
-                    mode="flat">{t(`categories.${item.number}`)}</Chip>
-                ))
-              }
-            </ScrollView>
-          </View>
-          {
-            user.payout_enabled && (
-              <Button
-                mode='contained'
-                onPress={() => setOptions({ ...options, paid: !options.paid })}
-                theme={{ colors: { primary: colors[options.paid ? "warning_color" : "good_color"] } }}
-                icon={`cash${options.paid ? "" : "-remove"}`}
-              >{t(`posts.${options.paid ? "paying" : "free"}`)}</Button>
-            )
-          }
-        </BottomModal>
+        <BottomOptions />
       </KeyboardAvoidingView>
     </PostCreatorContainer>
   );

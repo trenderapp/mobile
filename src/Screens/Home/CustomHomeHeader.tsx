@@ -1,14 +1,13 @@
 import React from "react";
-import { IconButton, Text } from 'react-native-paper';
-import { View, TouchableOpacity, TextInput } from 'react-native';
+import { Text } from 'react-native-paper';
+import { View, TouchableOpacity } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
-import { useTranslation } from "react-i18next";
 
 import styles, { full_width } from '../../Style/style';
 import { Avatar } from '../../Components/Member';
 import { navigationProps } from '../../Services';
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useClient, useTheme, useNavigation as useContainerNavigation } from "../../Components/Container";
+import { useClient, useTheme } from "../../Components/Container";
 
 type SectionProps = React.FC<{
     isHome?: boolean;
@@ -20,46 +19,8 @@ type SectionProps = React.FC<{
 const CustomHomeHeader: SectionProps = ({ leftComponent }) => {
 
     const navigation = useNavigation<navigationProps>();
-    const containerNavigation = useContainerNavigation();
     const { client, user } = useClient();
     const { colors } = useTheme();
-    const { t } = useTranslation();
-
-    const SearchBar = () => (
-        <TouchableOpacity
-            onPress={() => containerNavigation.push("SearchStack")}
-            style={{
-                height: 40,
-                width: "100%",
-                borderRadius: 12,
-                alignSelf: "center",
-                flexDirection: "row",
-                alignItems: "center",
-                backgroundColor: colors.bg_secondary,
-                shadowColor: colors.bg_third,
-                shadowRadius: 8,
-                shadowOpacity: 0.3,
-                shadowOffset: {
-                    width: 0,
-                    height: 3,
-                },
-            }}>
-            <View style={[styles.row]}>
-                <IconButton size={18} icon="magnify" />
-                <TextInput
-                    editable={false}
-                    placeholderTextColor={colors.text_normal}
-                    placeholder={t("commons.search") + " ..."}
-                    value=""
-                    style={{
-                        width: "75%",
-                        color: colors.text_normal
-                    }}
-                />
-            </View>
-            <IconButton size={18} style={{ marginRight: 5, marginLeft: "auto" }} icon="tune-variant" />
-        </TouchableOpacity>
-    )
 
     return (
         <SafeAreaView>
@@ -76,7 +37,6 @@ const CustomHomeHeader: SectionProps = ({ leftComponent }) => {
                     </View>
                     {leftComponent && leftComponent}
                 </View>
-                { /**<SearchBar /> */ }
             </View>
         </SafeAreaView>
     )

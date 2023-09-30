@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Video from 'react-native-video';
 import { IconButton } from 'react-native-paper';
 
-export default function CreatorVideoDisplay({ uri, index, deleteImage }) {
+type SectionProps = {
+    uri: string;
+    index: number;
+    deleteImage: (idx: number) => any
+}
 
-    const [repeat] = useState(true);
-    const [paused, setPaused] = useState(false);
-    const [muted] = useState(false);
+export default function CreatorVideoDisplay({ uri, index, deleteImage }: SectionProps) {
 
     return (
         <>
@@ -36,10 +38,9 @@ export default function CreatorVideoDisplay({ uri, index, deleteImage }) {
                     borderRadius: 8,
                     margin: 5
                 }}
-                onProgress={() => setPaused(true)}
-                paused={paused}
-                repeat={repeat}
-                muted={muted}
+                paused={true}
+                repeat={false}
+                muted={true}
             />
         </>
     )

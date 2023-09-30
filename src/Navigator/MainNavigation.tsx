@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 import notifee from "@notifee/react-native";
 
-import { NavigationProvider } from "../Components/Container";
+import { NavigationProvider, useClient } from "../Components/Container";
 import { BottomNavigation } from ".";
 import { PostStack, ProfileStack, CreateStack, MessageStack, SettingsStack, SearchStack } from "./Stacks";
 import { NotificationScreen } from "../Screens/Notifications";
@@ -13,6 +13,8 @@ import { parseURL } from "../Services";
 const Stack = createStackNavigator();
 
 export default function MainNavigation({ navigation }: { navigation: NavigationContextI }) {
+
+  const { client } = useClient();
 
   const [routes] = useState([
     { name: "BottomNavigation", screen: BottomNavigation },
@@ -41,6 +43,8 @@ export default function MainNavigation({ navigation }: { navigation: NavigationC
     if (initialNotification && navigation) {
       const pressActionID = initialNotification.pressAction.id;
       const post_id = initialNotification.notification.data ? initialNotification.notification.data.post_id : undefined;
+      const notification_id = initialNotification.notification.data ? initialNotification.notification.data.notification_id as string : "0";
+      await client.notification.readOne(notification_id);
       if (pressActionID === "display-post" && typeof post_id === "string") return navigateToPost(post_id)
     }
   }
