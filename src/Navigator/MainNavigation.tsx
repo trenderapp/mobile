@@ -7,7 +7,7 @@ import { BottomNavigation } from ".";
 import { PostStack, ProfileStack, CreateStack, MessageStack, SettingsStack, SearchStack } from "./Stacks";
 import { NotificationScreen } from "../Screens/Notifications";
 import { NavigationContextI } from "../Components/Container/Navigation/NavigationContext";
-import { Linking } from "react-native";
+import { Linking, Platform } from "react-native";
 import { parseURL } from "../Services";
 
 const Stack = createStackNavigator();
@@ -40,7 +40,7 @@ export default function MainNavigation({ navigation }: { navigation: NavigationC
   async function bootstrap() {
     const initialNotification = await notifee.getInitialNotification();
 
-    if (initialNotification && navigation) {
+    if (Platform.OS === "android" && initialNotification && navigation) {
       const pressActionID = initialNotification.pressAction.id;
       const post_id = initialNotification.notification.data ? initialNotification.notification.data.post_id : undefined;
       const notification_id = initialNotification.notification.data ? initialNotification.notification.data.notification_id as string : "0";
