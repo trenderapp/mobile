@@ -310,7 +310,10 @@
         "48": "Investissement",
         "49": "Géopolitique",
         "50": "Nudité",
-        "51": "Mode de vie"
+        "51": "Mode de vie",
+        "52": "Adulte",
+        "53": "Thread",
+        "54": "Contenu sensible"
     },
     "errors": {
         "0": "Paramètre non valide",

@@ -305,7 +305,10 @@
         "48": "Investment",
         "49": "Geopolitics",
         "50": "Nudity",
-        "51": "Lifestyle"
+        "51": "Lifestyle",
+        "52": "Adult",
+        "53": "Thread",
+        "54": "Sensitive content"
     },
     "errors": {
         "0": "Invalid parameter",

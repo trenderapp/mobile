@@ -7589,10 +7589,10 @@ react-native-gradle-plugin@^0.71.14:
   resolved "https://registry.yarnpkg.com/react-native-gradle-plugin/-/react-native-gradle-plugin-0.71.14.tgz#cc399662f04fbfcc0e352d03eae1d3efbd5f635a"
   integrity sha512-nnLawTZEPPRAKq92UqDkzoGgCBl9aa9zAihFHMwmwzn4WRVdK4O6Cd4XYiyoNOiQzx3Hh9k5WOckHE80C92ivQ==
 
-react-native-image-crop-picker@^0.39.0:
-  version "0.39.0"
-  resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.39.0.tgz#9cb8e8ffb0e8ab06f7b3227cadf077169e225eba"
-  integrity sha512-4aANbQMrmU6zN/4b0rVBA7SbaZ3aa5JESm3Xk751sINybZMt1yz/9h95LkO7U0pbslHDo3ofXjG75PmQRP6a/w==
+react-native-image-crop-picker@^0.40.0:
+  version "0.40.0"
+  resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.40.0.tgz#cf378a4cbdb64b9b6ff94399b8515ff3bdccbf9c"
+  integrity sha512-FpqiCS4CiPQp8qIorlELWKbpi1d9lyhJki9spZr4LShv9hk65GWo6tYJupfTV19o5XcRwJn8d4MHIUoyWMJRTQ==
 
 react-native-image-modal@^2.0.4:
   version "2.0.4"
@@ -8895,10 +8895,10 @@ tr46@~0.0.3:
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
   integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
 
-trender-client@^5.4.1:
-  version "5.4.1"
-  resolved "https://registry.yarnpkg.com/trender-client/-/trender-client-5.4.1.tgz#086cbd51aacb2a67c2ed418fac2bf442e596530d"
-  integrity sha512-PgAhbX/kr7y9vLM2r/manpAEZvGDdpxR71n/sJ6UhCvNlu7wKTmu0HH6MUlJfwr1J9+KaEOCZXkCzNKpeBQE5w==
+trender-client@^5.4.2:
+  version "5.4.2"
+  resolved "https://registry.yarnpkg.com/trender-client/-/trender-client-5.4.2.tgz#5a2b97b8e90a735727a9ad7acf907851c60f5aad"
+  integrity sha512-8440bQ9SwcRbBdp5C7kNYlO5IJ/218j1ozO3uBNKPe/kBAVlq+YWhPQYtLbMiuz9bzaqUq5ivpiVADrJ5cp5xA==
   dependencies:
     axios "^0.27.2"
 
