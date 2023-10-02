@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { connect } from 'react-redux';
-import { FlatList, RefreshControl, View, TouchableOpacity } from 'react-native';
+import { FlatList, RefreshControl, View, TouchableOpacity, SafeAreaView, Platform } from 'react-native';
 import { Appbar, FAB, Text } from 'react-native-paper';
 import { PostInterface } from 'trender-client';
 
@@ -92,23 +92,25 @@ const FollowsTrends = () => {
   }
 
   return (
-    <>
+    <SafeAreaView>
       <CustomHomeHeader leftComponent={<CustomLeftComponent />} />
-      <FAB
-        icon="chevron-up"
-        size='medium'
-        color={colors.bg_primary}
-        variant='primary'
-        onPress={() => flatListRef.current.scrollToOffset({ animated: true, offset: 0 })}
-        style={{
-          position: 'absolute',
-          margin: 16,
-          right: 0,
-          bottom: 0,
-          zIndex: 3,
-          borderRadius: 60
-        }}
-      />
+    {
+      Platform.OS === "android" && <FAB
+      icon="chevron-up"
+      size='medium'
+      color={colors.bg_primary}
+      variant='primary'
+      onPress={() => flatListRef.current.scrollToOffset({ animated: true, offset: 0 })}
+      style={{
+        position: 'absolute',
+        margin: 16,
+        right: 0,
+        bottom: 0,
+        zIndex: 3,
+        borderRadius: 60
+      }}
+    />
+    }
       <FlatList
         ref={flatListRef}
         removeClippedSubviews={true}
@@ -121,7 +123,7 @@ const FollowsTrends = () => {
         ListEmptyComponent={<EmptyHome />}
         refreshControl={<RefreshControl refreshing={loaderF} progressBackgroundColor={colors.bg_primary} tintColor={colors.fa_primary} colors={[colors.fa_primary, colors.fa_secondary, colors.fa_third]} onRefresh={() => getData(true)} />}
       />
-    </>
+    </SafeAreaView>
   );
 };
 

@@ -80,9 +80,19 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
   };
 
   const CategoriesBox = ({ c }) => (
-    <View>
-      <Text variant="labelSmall" style={{ backgroundColor: colors.bg_primary, borderWidth: 1, padding: 3, paddingLeft: 6, marginLeft: 5, borderRadius: 60, flex: 1, justifyContent: "center", alignItems: "center" }}>{t(`categories.${c}`)}</Text>
-    </View>
+    <View style={{
+      backgroundColor: colors.bg_primary,
+      borderWidth: 1,
+      borderRadius: 60, 
+      padding: 3, 
+      paddingLeft: 6, 
+      marginLeft: 5,
+  }}>
+      <Text variant="labelSmall" style={{ 
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center" }}>{t(`categories.${c}`)}</Text>
+  </View>
   )
 
   const sendInfo = async () => {

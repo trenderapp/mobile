@@ -23,22 +23,20 @@ const CustomHomeHeader: SectionProps = ({ leftComponent }) => {
     const { colors } = useTheme();
 
     return (
-        <SafeAreaView>
-            <View style={{ marginRight: 10, marginLeft: 10, marginTop: 5 }}>
-                <View style={{ width: full_width, flexDirection: "row", justifyContent: "space-between", marginBottom: 5 }}>
-                    <View style={[styles.row, { justifyContent: "flex-end" }]}>
-                        <TouchableOpacity activeOpacity={0.5} onPress={() => navigation.openDrawer()}>
-                            <Avatar marginRight={5} url={client.user.avatar(user?.user_id, user?.avatar)} />
-                        </TouchableOpacity>
-                        <View>
-                            <Text style={{ fontWeight: '700', marginLeft: 5 }}>{user.username}</Text>
-                            <Text variant="labelSmall" style={{ fontWeight: '700', marginLeft: 5, color: colors.text_muted }}>@{user.nickname}</Text>
-                        </View>
+        <View style={{ marginRight: 10, marginLeft: 10, marginTop: 5 }}>
+            <View style={{ width: full_width, flexDirection: "row", justifyContent: "space-between", marginBottom: 5 }}>
+                <View style={[styles.row, { justifyContent: "flex-end" }]}>
+                    <TouchableOpacity activeOpacity={0.5} onPress={() => navigation.openDrawer()}>
+                        <Avatar marginRight={5} url={client.user.avatar(user?.user_id, user?.avatar)} />
+                    </TouchableOpacity>
+                    <View>
+                        <Text style={{ fontWeight: '700', marginLeft: 5 }}>{user.username}</Text>
+                        <Text variant="labelSmall" style={{ fontWeight: '700', marginLeft: 5, color: colors.text_muted }}>@{user.nickname}</Text>
                     </View>
-                    {leftComponent && leftComponent}
                 </View>
+                {leftComponent && leftComponent}
             </View>
-        </SafeAreaView>
+        </View>
     )
 }
 

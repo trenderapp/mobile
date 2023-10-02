@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, memo, useCallback } from 'react';
-import { FlatList, Animated } from 'react-native';
+import { FlatList, Animated, SafeAreaView } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { useTranslation } from 'react-i18next';
 import { PostInterface } from 'trender-client';
@@ -86,22 +86,24 @@ function ProfileScreen({ route }: any) {
 
     return (
         <ProfileContainer>
-            {profile && <ProfileHeader />}
-            {
-                !loading ?
-                    <FlatList
-                        scrollEventThrottle={16}
-                        onScrollEndDrag={() => getPosts()}
-                        ListHeaderComponent={profile ? profile?.code ?
-                            <ProfileNotFound error={profile} nickname={nickname} />
-                            : <ProfileComponent modalVisible={modalVisible} setModalVisible={setModalVisible} pined={pined} informations={profile} nickname={nickname} setInfo={setProfile} />
-                            : <Loader />}
-                        data={posts}
-                        renderItem={renderItem}
-                        keyExtractor={item => item.post_id}
-                        ListFooterComponent={!loading && loader && <Loader /> || undefined}
-                    /> : <Loader />
-            }
+            <SafeAreaView>
+                {profile && <ProfileHeader />}
+                {
+                    !loading ?
+                        <FlatList
+                            scrollEventThrottle={16}
+                            onScrollEndDrag={() => getPosts()}
+                            ListHeaderComponent={profile ? profile?.code ?
+                                <ProfileNotFound error={profile} nickname={nickname} />
+                                : <ProfileComponent modalVisible={modalVisible} setModalVisible={setModalVisible} pined={pined} informations={profile} nickname={nickname} setInfo={setProfile} />
+                                : <Loader />}
+                            data={posts}
+                            renderItem={renderItem}
+                            keyExtractor={item => item.post_id}
+                            ListFooterComponent={!loading && loader && <Loader /> || undefined}
+                        /> : <Loader />
+                }
+            </SafeAreaView>
         </ProfileContainer>
     )
 }
