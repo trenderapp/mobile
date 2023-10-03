@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Toast from 'react-native-toast-message';
 import { FlatList, RefreshControl } from 'react-native';
@@ -8,7 +8,7 @@ import { useClient, useTheme } from '../../Components/Container';
 import DisplayNotifications from '../../Components/Notifications/DisplayNotifications';
 import { RootState, useAppDispatch, useAppSelector } from '../../Redux';
 import { connect } from 'react-redux';
-import { addNotificationFeed, initNotificationFeed, readNotificationFeed } from '../../Redux/NotificationFeed/action';
+import { addNotificationFeed, initNotificationFeed, readNotificationFeed, readOneNotificationFeed } from '../../Redux/NotificationFeed/action';
 
 const NoficationListScreen = () => {
 
@@ -34,11 +34,16 @@ const NoficationListScreen = () => {
     dispatch(readNotificationFeed())
   }
 
-  useEffect(() => {
+  const readOneNotification = async (notification_id: string) => {
+    await client.notification.readOne(notification_id)
+    dispatch(readOneNotificationFeed(notification_id))
+  }
+
+  /*useEffect(() => {
     readNotification()
-  }, [])
+  }, [])*/
   
-  const renderItem = ({ item }: { item: NotificationInterface.notificationFetchResponseSchema }) => <DisplayNotifications info={item} />;
+  const renderItem = ({ item }: { item: NotificationInterface.notificationFetchResponseSchema }) => <DisplayNotifications readOneNotification={readOneNotification} info={item} />;
 
   const memoizedValue = useMemo(() => renderItem, [notifications]);
 

@@ -1,5 +1,5 @@
 import { NotificationInterface } from "trender-client";
-import { ADD_NOTIFICATION_FEED, INIT_NOTIFICATION_FEED, RESET_NOTIFICATION_FEED, MARK_READ_NOTIFICATION_FEED } from "./actionTypes";
+import { ADD_NOTIFICATION_FEED, INIT_NOTIFICATION_FEED, RESET_NOTIFICATION_FEED, MARK_READ_NOTIFICATION_FEED, MARK_READ_ONE_NOTIFICATION_FEED } from "./actionTypes";
 
 export const resetNotificationFeed = (info: []) => ({
     type: RESET_NOTIFICATION_FEED,
@@ -18,4 +18,9 @@ export const readNotificationFeed = () => ({
 export const initNotificationFeed = (info: NotificationInterface.notificationFetchResponseSchema[]) => ({
     type: INIT_NOTIFICATION_FEED,
     info,
+});
+
+export const readOneNotificationFeed = (info: string) => ({
+    type: MARK_READ_ONE_NOTIFICATION_FEED,
+    info
 });

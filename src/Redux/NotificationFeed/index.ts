@@ -1,5 +1,5 @@
 import { NotificationInterface } from "trender-client";
-import { MARK_READ_NOTIFICATION_FEED, ADD_NOTIFICATION_FEED, INIT_NOTIFICATION_FEED, RESET_NOTIFICATION_FEED } from "./actionTypes";
+import { MARK_READ_NOTIFICATION_FEED, ADD_NOTIFICATION_FEED, INIT_NOTIFICATION_FEED, RESET_NOTIFICATION_FEED, MARK_READ_ONE_NOTIFICATION_FEED } from "./actionTypes";
 
 export const notificationFeedReducer = (state: NotificationInterface.notificationFetchResponseSchema[] = [], action: {
     type: string,
@@ -19,6 +19,11 @@ export const notificationFeedReducer = (state: NotificationInterface.notificatio
                 readed: true
             }
         });
+    case MARK_READ_ONE_NOTIFICATION_FEED:
+        const array = state;
+        const index = array.findIndex(a => a.notification_id === action.info);
+        array[index].readed =  true;
+        return array
     default:
       return state;
   }

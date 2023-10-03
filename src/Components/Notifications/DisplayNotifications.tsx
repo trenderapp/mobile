@@ -4,13 +4,18 @@ import { Markdown } from "../Elements/Text";
 import { Username, Avatar } from "../Member";
 import { useNavigation } from '@react-navigation/native';
 import { useClient, useTheme } from "../Container";
-import styles, { full_width } from "../../Style/style";
-import FastImage from "react-native-fast-image";
+import styles from "../../Style/style";
 import { navigationProps } from "../../Services";
 import { notificationTypeInterface } from "trender-client/Managers/Interfaces/Global";
 import { IconButton } from "react-native-paper";
+import { NotificationInterface } from "trender-client";
 
-const DisplayNotifications = ({ info }: any) => {
+type sectionProps = {
+    info: NotificationInterface.notificationFetchResponseSchema;
+    readOneNotification: (notification_id: string) => Promise<void>;
+}
+
+const DisplayNotifications = ({ info, readOneNotification }: sectionProps) => {
 
     const { client, token } = useClient();
     const { colors } = useTheme();
@@ -33,8 +38,9 @@ const DisplayNotifications = ({ info }: any) => {
         }
     }
 
-    const navigateScreen = (notification_type: notificationTypeInterface) => {
+    const navigateScreen = async (notification_type: notificationTypeInterface) => {
         if(!navigation) return;
+        await readOneNotification(info.notification_id)
         switch (notification_type) {
             case "follows":
                 return navigation.navigate("ProfileStack", { screen: "ProfileScreen", params: { nickname: info.from.nickname }})
@@ -51,26 +57,6 @@ const DisplayNotifications = ({ info }: any) => {
         }
     }
 
-    const DisplayAttachments = () => {
-        if(!info?.post) return <View></View>;
-        if(info.post.attachments.length < 1) return <View></View>;
-        const type = info.post.type;
-        const attachments = info.post.attachments;
-        if(type === 1 || type === 2) return <View style={{
-            backgroundColor: colors.bg_secondary
-        }}>
-            <FastImage
-        resizeMode={"cover"}
-        style={{
-            width: full_width,
-            height: 250
-        }}
-        source={{ uri: client.post.file(info?.target_id, info?.post.post_id, type === 1 ? attachments[0].name : attachments[0]?.thumbnail) }}/>
-        </View>
-        // if(type === 2) return <VideoPlayer uri={`${client.post.file(info.from.user_id, info.post.post_id, attachments[0]?.name)}`} />
-        return <View></View>
-    }
-
     return (
         <TouchableOpacity activeOpacity={0.7} onPress={() => navigateScreen(info?.notification_type ?? "none")}>
             <View style={{
@@ -79,6 +65,7 @@ const DisplayNotifications = ({ info }: any) => {
                 justifyContent: "flex-start",
                 alignItems: "flex-start",
                 borderBottomColor: colors.bg_secondary,
+                backgroundColor: info?.readed ? undefined : colors.bg_secondary,
                 borderBottomWidth: 1
             }}>
                 <View style={[styles.row, { justifyContent: "flex-start", alignItems: "flex-start" }]}>

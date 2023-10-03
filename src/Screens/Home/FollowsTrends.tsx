@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { connect } from 'react-redux';
-import { FlatList, RefreshControl, View, TouchableOpacity, SafeAreaView, Platform } from 'react-native';
-import { Appbar, FAB, Text } from 'react-native-paper';
+import { FlatList, RefreshControl, View, TouchableOpacity, SafeAreaView } from 'react-native';
+import { Appbar, Text } from 'react-native-paper';
 import { PostInterface } from 'trender-client';
 
 import { useClient, useNavigation, useTheme } from '../../Components/Container';
@@ -94,23 +94,6 @@ const FollowsTrends = () => {
   return (
     <SafeAreaView>
       <CustomHomeHeader leftComponent={<CustomLeftComponent />} />
-    {
-      Platform.OS === "android" && <FAB
-      icon="chevron-up"
-      size='medium'
-      color={colors.bg_primary}
-      variant='primary'
-      onPress={() => flatListRef.current.scrollToOffset({ animated: true, offset: 0 })}
-      style={{
-        position: 'absolute',
-        margin: 16,
-        right: 0,
-        bottom: 0,
-        zIndex: 3,
-        borderRadius: 60
-      }}
-    />
-    }
       <FlatList
         ref={flatListRef}
         removeClippedSubviews={true}

@@ -20,6 +20,9 @@ import 'dayjs/locale/en'
 import DrawerNavigation from './Components/Container/DrawerNavigation';
 import ChangePassword from './Screens/Login/ChangePassword';
 import WebViewScreen from './Screens/Other/WebViewScreen';
+import { addNotificationFeed } from './Redux/NotificationFeed/action';
+import { connect } from 'react-redux';
+import { useAppDispatch } from './Redux';
 
 const Stack = createStackNavigator();
 
@@ -30,6 +33,7 @@ function Routes() {
     const { notification } = useWebSocket();
     const DmGroupList = useContext(DmGroupListContext);
     const navigation = useNavigation();
+    const dispatch = useAppDispatch();
     const [routes] = useState([
         { name: "DrawerNavigation", screen: DrawerNavigation },
         /*{ name: "ProfileStack", screen: ProfileStack},
@@ -119,6 +123,10 @@ function Routes() {
             if (idx < 1) return;
             DmGroupList.dispatch(initDmGroup(changeElementPlaceArray(DmGroupList.groups, 0, idx)));
             DmGroupList.dispatch(modifyDmGroup({ guild_id: data.channel_id, content: data.content, created_at: data.created_at, message_id: data.message_id }))
+        } else if(notification.code === webSocketRoutes.RECEIVE_NOTIFICATION) {
+            const data = notification.data;
+            if(!data) return;
+            dispatch(addNotificationFeed([data]))
         }
     }, [notification])
 
@@ -145,4 +153,14 @@ function Routes() {
     )
 }
 
-export default Routes;
+const mapStateToProps = (state) => {
+    return {
+      notificationFeed: state.notificationFeed,
+    };
+  };
+
+const mapDispatchToProps = {
+    addNotificationFeed
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Routes);
