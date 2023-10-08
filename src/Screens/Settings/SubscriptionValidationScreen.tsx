@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Toast from 'react-native-toast-message';
 import { Button, Text, Card, TextInput } from 'react-native-paper';
-import { useStripe } from '@stripe/stripe-react-native';
+import { useStripe, PlatformPayButton, isPlatformPaySupported, PlatformPay, confirmPlatformPayPayment } from '@stripe/stripe-react-native';
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from 'react-i18next';
 import { axiosInstance, navigationProps } from '../../Services';
@@ -17,6 +17,7 @@ function SubscriptionValidationScreen({ route }: any) {
     const client = useClient();
     const { colors } = useTheme();
     const [loading, setLoading] = useState(true);
+    const [isApplePaySupported, setIsApplePaySupported] = useState(false);
     const { subscription, title }: { subscription: SubscriptionInterface.getSubscriptionsResponseInterface; title: string } = route.params;
 
     const fetchPaymentSheetParams = async (subscription_id: string, coupon_id?: string) => {
@@ -46,7 +47,7 @@ function SubscriptionValidationScreen({ route }: any) {
 
     const initializePaymentSheet = async (subscription_id: string) => {
         const request = await fetchPaymentSheetParams(subscription_id);
-        if (!request) return;
+        if (!request) return Toast.show({ text1: `[50] Error` });;
         const { paymentIntent, ephemeralKey, customer } = request;
 
         const { error } = await initPaymentSheet({
@@ -83,10 +84,46 @@ function SubscriptionValidationScreen({ route }: any) {
         }
     };
 
+    const pay = async () => {
+        const clientSecret = await fetchPaymentSheetParams(subscription.subscription_id);
+        if (!clientSecret) return Toast.show({ text1: `[89] Error` });
+        const { error } = await confirmPlatformPayPayment(
+            clientSecret.ephemeralKey,
+          {
+            applePay: {
+              cartItems: [
+                {
+                  label: title,
+                  amount: `${(subscription.price / 100).toFixed(2)}`,
+                  paymentType: PlatformPay.PaymentType.Immediate,
+                },
+              ],
+              merchantCountryCode: 'US',
+              currencyCode: 'USD',
+              requiredShippingAddressFields: [
+                PlatformPay.ContactField.PostalAddress,
+              ],
+              requiredBillingContactFields: [PlatformPay.ContactField.PhoneNumber],
+            },
+          }
+        );
+        if (error) {
+          console.log(error);
+        } else {
+            Toast.show({ text1: `Success Your order is confirmed!` });
+        }
+      };
+    
+
     useEffect(() => {
         initializePaymentSheet(subscription.subscription_id)
     }, [subscription])
 
+    useEffect(() => {
+        (async function () {
+          setIsApplePaySupported(await isPlatformPaySupported());
+        })();
+      }, [isPlatformPaySupported]);
 
     return (
         <SettingsContainer title={t("settings.subscriptions_checkout")}>
@@ -104,6 +141,18 @@ function SubscriptionValidationScreen({ route }: any) {
                     <Button mode='elevated' theme={{ colors: { elevation: { level1: colors.good_color } } }} loading={loading} onPress={() => openPaymentSheet()}>{t("subscription.checkout")}</Button>
                 </Card.Actions>
             </Card>
+            {isApplePaySupported && (
+        <PlatformPayButton
+          onPress={() => pay()}
+          type={PlatformPay.ButtonType.Order}
+          appearance={PlatformPay.ButtonStyle.Black}
+          borderRadius={4}
+          style={{
+            width: '100%',
+            height: 50,
+          }}
+        />
+      )}
         </SettingsContainer>
     )
 }

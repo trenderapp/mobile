@@ -49,7 +49,7 @@ function BlurImage({ img, info, setOpen, openModal }: {
                         onClose={() => setOpen(false)}
                         resizeMode={openModal ? "contain" : "cover"}
                         style={sectionStyle.media_image}
-                        source={{ uri: client.post.file(info?.from?.user_id, info?.post_id, img.name) }}
+                        source={{ uri: client.post.file(info?.from?.user_id, info?.post_id, img.name), priority: "high", cache: "immutable" }}
                         imageBackgroundColor={colors.bg_secondary}
                     />
                 )

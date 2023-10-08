@@ -8,7 +8,7 @@ import { useClient, useTheme } from '../../Components/Container';
 import DisplayNotifications from '../../Components/Notifications/DisplayNotifications';
 import { RootState, useAppDispatch, useAppSelector } from '../../Redux';
 import { connect } from 'react-redux';
-import { addNotificationFeed, initNotificationFeed, readNotificationFeed, readOneNotificationFeed } from '../../Redux/NotificationFeed/action';
+import { addNotificationFeed, initNotificationFeed, readOneNotificationFeed } from '../../Redux/NotificationFeed/action';
 
 const NoficationListScreen = () => {
 
@@ -27,11 +27,6 @@ const NoficationListScreen = () => {
     if(!request.data) return;
     if(request.data.length < 1) return;
     dispatch(refresh ? initNotificationFeed(request.data) : addNotificationFeed(request.data));
-  }
-
-  const readNotification = async () => {
-    await client.notification.read();
-    dispatch(readNotificationFeed())
   }
 
   const readOneNotification = async (notification_id: string) => {
