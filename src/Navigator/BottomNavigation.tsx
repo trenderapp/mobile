@@ -3,13 +3,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from 'react-i18next'
 import { BottomNavigation } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons"
 
 import { useClient, useTheme } from "../Components/Container";
 import { DmGroupListContext } from "../Context/DmGuildListContext";
 import HomeScreen from "../Screens/Home/HomeScreen";
 import GuildListScreen from "../Screens/Messages/GuildListScreen";
 import ExploreScreen from "../Screens/Explore/ExploreScreen";
-import { useAppDispatch, useAppSelector } from "../Redux";
+import { RootState, useAppDispatch, useAppSelector } from "../Redux";
 import { initNotificationFeed } from "../Redux/NotificationFeed/action";
 import { connect } from "react-redux";
 import SearchScreen from "../Screens/Search/SearchScreen";
@@ -104,7 +105,7 @@ function BottomStack() {
     )
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: RootState) => {
     return {
         notificationFeed: state.notificationFeed,
     };

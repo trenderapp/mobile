@@ -200,8 +200,28 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
     setFiles(array);
   }
 
-  const BottomItems = () => (
-    <View style={{
+  return (
+    <PostCreatorContainer dontSend={content.length > advantages.textLength()} onSave={() => sendInfo()} changeVisibilty={() => navigation.goBack()} >
+      {sending.progress > 0 && <ProgressBar progress={sending.progress} />}
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        <ScrollView>
+          {attached_post && <DisplayAttachedPost attached_post={attached_post} />}
+          <View style={[styles.row, { width: full_width, padding: 10 }]}>
+            <Avatar size={40} url={client.user.avatar(user.user_id, user.avatar)} />
+            <View style={[styles.column, { justifyContent: "flex-start", alignItems: "flex-start" }]}>
+              <Username
+                created_at={dayjs().format()}
+                user={user}
+                lefComponent={   <View style={styles.row}>
+                {options.paid ? <MaterialIcons style={{ marginLeft: 3 }} size={20} color={colors.color_green} name={`cash`} /> : null}
+              </View>} />
+            </View>
+          </View>
+          {options.categories ? <View style={styles.row}>{options.categories.map((c, idx) => <CategoriesBox key={idx} c={c} />)}</View> : null}
+          <TextAreaAutoComplete autoFocus={true} value={content} setValue={(text) => SetContent(text)} />
+          {shared_post && <DisplaySharedPost shared_post={shared_post} />}
+        </ScrollView>
+        <View style={{
       bottom: 0,
       marginLeft: -5,
       width: full_width
@@ -219,17 +239,7 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
         initFiles: files
       })} addFiles={addFiles} />
     </View>
-  )
-
-  const LeftComponent = () => (
-    <View style={styles.row}>
-      {options.paid ? <MaterialIcons style={{ marginLeft: 3 }} size={20} color={colors.color_green} name={`cash`} /> : null}
-      {options.categories ? <View style={styles.row}>{options.categories.map((c, idx) => <CategoriesBox key={idx} c={c} />)}</View> : null}
-    </View>
-  )
-
-  const BottomOptions = () => (
-    <BottomModal onSwipeComplete={() => setModalVisible(false)} dismiss={() => setModalVisible(false)} isVisible={modalVisible}>
+        <BottomModal onSwipeComplete={() => setModalVisible(false)} dismiss={() => setModalVisible(false)} isVisible={modalVisible}>
       <View style={{ padding: 10 }}>
         <Text style={{ marginBottom: 5, textTransform: "capitalize" }} variant="titleMedium">{t(`filter.categories`)}</Text>
         <ScrollView style={{ maxHeight: 250, borderRadius: 12, backgroundColor: colors.bg_primary }} contentContainerStyle={[styles.row, { flexWrap: "wrap", padding: 10 }]}>
@@ -258,28 +268,6 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
         )
       }
     </BottomModal>
-  )
-
-  return (
-    <PostCreatorContainer dontSend={content.length > advantages.textLength()} onSave={() => sendInfo()} changeVisibilty={() => navigation.goBack()} >
-      {sending.progress > 0 && <ProgressBar progress={sending.progress} />}
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-        <ScrollView>
-          {attached_post && <DisplayAttachedPost attached_post={attached_post} />}
-          <View style={[styles.row, { width: full_width, padding: 10 }]}>
-            <Avatar size={40} url={client.user.avatar(user.user_id, user.avatar)} />
-            <View style={[styles.column, { justifyContent: "flex-start", alignItems: "flex-start" }]}>
-              <Username
-                created_at={dayjs().format()}
-                user={user}
-                lefComponent={<LeftComponent />} />
-            </View>
-          </View>
-          <TextAreaAutoComplete autoFocus={true} value={content} setValue={(text) => SetContent(text)} />
-          {shared_post && <DisplaySharedPost shared_post={shared_post} />}
-        </ScrollView>
-        <BottomItems />
-        <BottomOptions />
       </KeyboardAvoidingView>
     </PostCreatorContainer>
   );

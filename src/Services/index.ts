@@ -131,14 +131,20 @@ export const openURL = async (url: string) => {
 }
 
 export const cguLink = (language: string) => {
-  let lang = "https://cdn.trenderapp.com/assets/legal/T&S.pdf"
-  if(language === "fr") lang = "https://cdn2.trenderapp.com/assets/legal/CGU.pdf"
+  let lang = "https://cdn.trenderapp.com/assets/legal/en/terms_of_use.pdf"
+  if(language === "fr") lang = "https://cdn.trenderapp.com/assets/legal/fr/terms_of_use.pdf"
   return lang;
 }
 
 export const cgvLink = (language: string) => {
-  let lang = "https://cdn.trenderapp.com/assets/legal/TOS.pdf"
-  if(language === "fr") lang = "https://cdn2.trenderapp.com/assets/legal/CGV.pdf"
+  let lang = "https://cdn.trenderapp.com/assets/legal/en/terms_of_sales.pdf"
+  if(language === "fr") lang = "https://cdn.trenderapp.com/assets/legal/fr/terms_of_sales.pdf"
+  return lang;
+}
+
+export const privacyLink = (language: string) => {
+  let lang = "https://cdn.trenderapp.com/assets/legal/en/privacy.pdf"
+  if(language === "fr") lang = "https://cdn.trenderapp.com/assets/legal/fr/privacy.pdf"
   return lang;
 }
 

@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { View, FlatList, TouchableOpacity, RefreshControl } from 'react-native';
 import { Text } from 'react-native-paper';
 import { GlobalInterface, userFlags } from "trender-client";
-import { ISO_639_CODE_LIST } from "trender-client/utils/ISO-369-1";
 import UserPermissions from "trender-client/Permissions/UserPermissions";
 import { useNavigation as useNativeNavigation } from '@react-navigation/native';
 import { CustomHeader, useClient, useTheme, useNavigation } from "../../Components/Container";
@@ -19,10 +18,11 @@ function SearchScreen() {
 
     const { colors } = useTheme();
     const [text, setText] = useState("");
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const { client } = useClient();
     const [users, setUsers] = useState<GlobalInterface.userInfo[] | undefined>(undefined);
     const [bestUsers, setBestUsers] = useState<GlobalInterface.userInfo[] | undefined>(undefined);
+    const [pagination_key, setPaginationKey] = useState<string | undefined>(undefined);
     const [loaderF, setLoaderF] = useState(true);
     const [modalVisible, setModalVisible] = useState(false);
     const navigation = useNavigation();
@@ -30,12 +30,13 @@ function SearchScreen() {
 
     async function getBestUsers() {
         setLoaderF(true);
-        const response = await client.explore.randomUsers({
-            locale: i18n.language as ISO_639_CODE_LIST
+        const response = await client.explore.bestUsers({
+            pagination_key: pagination_key
         });
         setLoaderF(false);
         if (response.error || !response.data) return;
         setBestUsers(response.data);
+        setPaginationKey(response.pagination_key);
     }
 
     useEffect(() => {
@@ -93,6 +94,7 @@ function SearchScreen() {
             data={bestUsers}
             keyExtractor={(item) => item.user_id}
             renderItem={renderItem}
+            onScrollAnimationEnd={() => getBestUsers()}
             refreshControl={<RefreshControl
                 refreshing={loaderF}
                 progressBackgroundColor={colors.bg_primary}
@@ -150,7 +152,7 @@ function SearchScreen() {
             </BottomModal>
             {users && users.length > 0 ?
                 <FlatList data={users} keyExtractor={(item) => item.user_id} renderItem={renderItem} />
-                : text.length > 2 ? <FlatList data={users} keyExtractor={(item) => item.user_id} renderItem={renderItem} /> : <RandomUsers /> }
+                : text.length > 2 ? <FlatList data={users} keyExtractor={(item) => item.user_id} renderItem={renderItem} /> : <RandomUsers />}
         </View>
     )
 }
