@@ -8,5 +8,9 @@
 	<array>
 		<string>applinks:trenderapp.com</string>
 	</array>
+	<key>com.apple.developer.in-app-payments</key>
+	<array>
+		<string>merchant.trenderapp.com</string>
+	</array>
 </dict>
 </plist>
