@@ -1862,6 +1862,14 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.5.tgz#5f19d2b85a98e9558036f6a3cacc8819420f05cf"
   integrity sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==
 
+"@types/react-native-vector-icons@^6.4.15":
+  version "6.4.15"
+  resolved "https://registry.yarnpkg.com/@types/react-native-vector-icons/-/react-native-vector-icons-6.4.15.tgz#93cad672b6e5d4de2f8d48d8ace695586effede1"
+  integrity sha512-gmyVIANMFQXzpzejg4uMpYZ6KffrItkeb2F9LgcLnZz8RVrtbF8I3wbkRafHJoDJ2U0p8QiRui+BghD11ae8Gg==
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "^0.70"
+
 "@types/react-native-video@^5.0.16":
   version "5.0.16"
   resolved "https://registry.yarnpkg.com/@types/react-native-video/-/react-native-video-5.0.16.tgz#0baca1401c82a85eb67577512ff7907f146868fb"
@@ -1876,6 +1884,13 @@
   integrity sha512-/eEjr04Zqo7mTMszuSdrLx90+j5nWhDMMOgtnKZfAYyV3RwmlpSb7F17ilmMMxZWJY81n/JZ4e6wdhMJFpjrCg==
   dependencies:
     "@react-native/virtualized-lists" "^0.72.4"
+    "@types/react" "*"
+
+"@types/react-native@^0.70":
+  version "0.70.15"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.70.15.tgz#82900eae7fe7100329e2b7a61d9c000805e564ae"
+  integrity sha512-wHrMQd65odOFbejFSDF7riocwLGEjkoJCF3GhH2a1vKqWbCExH361AZa/1GMG8gijAP86hkjF9gHZFHepEXaZA==
+  dependencies:
     "@types/react" "*"
 
 "@types/react-native@^0.70.8":

@@ -6,16 +6,17 @@ import { FAB } from 'react-native-paper';
 
 import { CustomHeader, useTheme } from '../../Components/Container';
 import GuildList from '../../Components/Messages/GuildList';
+import { RootStackParamList } from '../../Services';
 
 const GuildListScreen = () => {
 
   const { colors } = useTheme();
   const { t } = useTranslation();
-  const navigation = useNavigation()
+  const navigation = useNavigation<RootStackParamList>()
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.bg_primary }}>
-      <CustomHeader isHome={true} title={t("commons.messages")} />
+      <CustomHeader isHome={true} title={t("commons.messages") as string} />
       <View style={{ flex: 1 }}>
         <GuildList />
         <FAB

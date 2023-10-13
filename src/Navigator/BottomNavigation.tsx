@@ -1,8 +1,7 @@
 // import { useIsFocused } from "@react-navigation/native";
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from 'react-i18next'
-import { BottomNavigation } from 'react-native-paper';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons"
 
 import { useClient, useTheme } from "../Components/Container";
@@ -15,6 +14,7 @@ import { initNotificationFeed } from "../Redux/NotificationFeed/action";
 import { connect } from "react-redux";
 import SearchScreen from "../Screens/Search/SearchScreen";
 
+const Tab = createMaterialBottomTabNavigator();
 
 function BottomStack() {
 
@@ -23,26 +23,24 @@ function BottomStack() {
     const { client } = useClient();
     const dispatch = useAppDispatch();
     const notifications = useAppSelector((state) => state.notificationFeed);
-    // const isFocused = useIsFocused();
-    const insets = useSafeAreaInsets();
-    const [index, setIndex] = useState(0);
+
     const { unreads, groups } = useContext(DmGroupListContext);
     const [routes, setRoutes] = useState([
-        { key: 'home', focusedIcon: 'home', unfocusedIcon: "home-outline", title: t("commons.home"), badge: false },
-        { key: 'search', focusedIcon: "magnify", unfocusedIcon: "magnify", title: t('commons.search'), badge: false },
-        { key: 'explore', focusedIcon: "trending-up", unfocusedIcon: "trending-up", title: t('commons.explore'), badge: false },
-        { key: 'messages', focusedIcon: "message-text", unfocusedIcon: "message-text-outline", title: t('commons.messages'), badge: false },
+        { key: 'home', focusedIcon: 'home', unfocusedIcon: "home-outline", title: t("commons.home"), badge: false, component: HomeScreen },
+        { key: 'search', focusedIcon: "magnify", unfocusedIcon: "magnify", title: t('commons.search'), badge: false, component: SearchScreen },
+        { key: 'explore', focusedIcon: "trending-up", unfocusedIcon: "trending-up", title: t('commons.explore'), badge: false, component: ExploreScreen },
+        { key: 'messages', focusedIcon: "message-text", unfocusedIcon: "message-text-outline", title: t('commons.messages'), badge: false, component: GuildListScreen },
     ]);
 
-    const newBottom = ({
-        home_notification = false,
-        message_notification = false
+    const newBottom = (params: {
+        home_notification: boolean;
+        message_notification: boolean;
     }) => {
         setRoutes([
-            { key: 'home', focusedIcon: 'home', unfocusedIcon: "home-outline", title: t("commons.home"), badge: home_notification },
-            { key: 'search', focusedIcon: "magnify", unfocusedIcon: "magnify", title: t('commons.search'), badge: false },
-            { key: 'explore', focusedIcon: "trending-up", unfocusedIcon: "trending-up", title: t('commons.notifications'), badge: false },
-            { key: 'messages', focusedIcon: "message-text", unfocusedIcon: "message-text-outline", title: t('commons.messages'), badge: message_notification },
+            { key: 'home', focusedIcon: 'home', unfocusedIcon: "home-outline", title: t("commons.home"), badge: params.home_notification, component: HomeScreen },
+            { key: 'search', focusedIcon: "magnify", unfocusedIcon: "magnify", title: t('commons.search'), badge: false, component: SearchScreen },
+            { key: 'explore', focusedIcon: "trending-up", unfocusedIcon: "trending-up", title: t('commons.notifications'), badge: false, component: ExploreScreen },
+            { key: 'messages', focusedIcon: "message-text", unfocusedIcon: "message-text-outline", title: t('commons.messages'), badge: params?.message_notification ?? false, component: GuildListScreen },
         ])
     }
 
@@ -56,9 +54,9 @@ function BottomStack() {
     const countNotifications = () => notifications.filter(n => n.readed === false || typeof n.readed === "undefined").length;
     const countUnreadsDM = () => {
         let i = 0;
-        groups.forEach((g) => {
+        groups.forEach((g: any) => {
             if (g.last_message) {
-                if (!unreads.some(u => u.message_id === g.last_message.message_id)) i++
+                if (!unreads.some((u: any) => u.message_id === g?.last_message?.message_id)) i++
             }
         })
 
@@ -70,38 +68,36 @@ function BottomStack() {
 
     useEffect(() => {
         newBottom({
-            home_notification: countNotifications() > 0 ? countNotifications() : false,
+            home_notification: countNotifications() > 0 ? true : false,
             message_notification: countUnreadsDM() > 0 ? false : false
         })
     }, [notifications])
 
-    const renderScene = BottomNavigation.SceneMap({
-        home: HomeScreen,
-        search: SearchScreen,
-        explore: ExploreScreen,
-        messages: GuildListScreen
-    });
-
-    const theme = {
-        colors: {
-            text: colors.text_normal,
-            primary: colors.bg_primary,
-        },
-    }
-
     return (
-        <BottomNavigation
-            safeAreaInsets={{ bottom: insets.bottom }}
-            barStyle={{
-                borderTopColor: colors.text_normal,
-                borderTopWidth: 0.5
-            }}
-            labeled={false}
-            theme={theme}
-            navigationState={{ index, routes }}
-            onIndexChange={setIndex}
-            renderScene={renderScene}
-        />
+        <Tab.Navigator
+        initialRouteName={routes[0].key}
+        activeColor={colors.fa_primary}
+        labeled={false}
+        barStyle={{ 
+            backgroundColor: `${colors.bg_secondary}96` 
+        }}
+      >
+        {
+            routes.map((t, idx) => (          
+                <Tab.Screen
+                    key={idx}
+                    name={t.key}
+                    component={t.component}
+                    options={{
+                    tabBarLabel: t.title,
+                    tabBarIcon: ({ color, focused }) => (
+                        <MaterialIcons name={focused ? t.focusedIcon : t.unfocusedIcon} color={color} size={26} />
+                    ),
+                    }}
+                />
+            ))
+        }
+      </Tab.Navigator>
     )
 }
 

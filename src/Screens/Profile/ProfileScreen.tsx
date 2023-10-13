@@ -86,8 +86,9 @@ function ProfileScreen({ route }: any) {
 
     return (
         <ProfileContainer>
-            <SafeAreaView>
-                {profile && <ProfileHeader />}
+                <SafeAreaView>
+                    {profile && <ProfileHeader />}
+                </SafeAreaView>
                 {
                     !loading ?
                         <FlatList
@@ -103,7 +104,6 @@ function ProfileScreen({ route }: any) {
                             ListFooterComponent={!loading && loader && <Loader /> || undefined}
                         /> : <Loader />
                 }
-            </SafeAreaView>
         </ProfileContainer>
     )
 }

@@ -32,7 +32,7 @@ const RegisterBirthdayAccept = ({ navigation, route }) => {
     const [captcha, setCaptcha] = useState(false);
     const [users, setUsers] = useState({
         ...params,
-        birthday: new Date(max_birthday),
+        birthday: dayjs().subtract(13, "years").subtract(1, 'day').toDate(),
         accept_tas: false
     });
 
@@ -44,7 +44,7 @@ const RegisterBirthdayAccept = ({ navigation, route }) => {
 
         const birthday = users.birthday;
 
-        if (dayjs(birthday).isBefore(min_birthday) || dayjs(birthday).isAfter(max_birthday) || dayjs(birthday).isSame(min_birthday)) return setError({ error: true, response: t(`errors.4`) });
+        if (dayjs(birthday).isBefore(min_birthday) || dayjs(birthday).isAfter(max_birthday)) return setError({ error: true, response: t(`errors.4`) });
 
         setCaptcha(true)
     };
@@ -102,7 +102,7 @@ const RegisterBirthdayAccept = ({ navigation, route }) => {
                             <Text style={{ color: colors.warning_color, textAlign: "center" }}>{error.error && error.response}</Text>
                         </View>
                         <View style={styles.SectionStyle}>
-                            <DateInput onChange={(date) => setUsers({ ...users, birthday: date })} minimumDate={new Date(min_birthday)} value={users?.birthday} maximumDate={new Date(max_birthday)} label={t("login.birthday")} />
+                            <DateInput onChange={(date) => setUsers({ ...users, birthday: date })} minimumDate={new Date(min_birthday)} value={users?.birthday}  label={t("login.birthday")} />
                             <View style={styles.row}>
                                 <Checkbox.Android status={users.accept_tas ? "checked" : "unchecked"} onPress={() => setUsers({ ...users, accept_tas: !users.accept_tas })} />
                                 <LinkButtonText text={t("login.t_and_s")} onPress={() => {

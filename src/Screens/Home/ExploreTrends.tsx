@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { connect } from 'react-redux';
 import { FlatList, RefreshControl } from 'react-native';
 import { PostInterface } from 'trender-client';
@@ -8,7 +8,6 @@ import DisplayPosts from '../../Components/Posts/DisplayPost';
 import { addMainTrends, initMainTrends } from '../../Redux/mainFeed/action';
 import { Loader } from '../../Other';
 import EmptyHome from '../../Components/Home/EmptyHome';
-import { getAppInfo } from '../../Services';
 import { RootState, useAppDispatch, useAppSelector } from '../../Redux';
 
 const ExploreTrends = () => {
@@ -20,7 +19,6 @@ const ExploreTrends = () => {
   const [pagination_key, setPaginationKey] = useState<string | undefined>(undefined);
   const [loader, setLoader] = useState(true);
   const [loaderF, setLoaderF] = useState(false);
-  const [updateRequire, setUpdateRequire] = useState(false);
 
   async function getData(refresh: boolean = false) {
     if(refresh) {
@@ -34,15 +32,6 @@ const ExploreTrends = () => {
     dispatch(initMainTrends(response.data));
     if(response.pagination_key) setPaginationKey(response.pagination_key);
   }
-  
-  useEffect(() => {
-    async function start() {
-      const update_require = await getAppInfo();
-      if(update_require) return setUpdateRequire(true);
-      getData()
-    }
-    start()
-  }, [])
 
   const bottomHandler = async () => {
     setLoader(true)

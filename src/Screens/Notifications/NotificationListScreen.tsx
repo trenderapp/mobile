@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Toast from 'react-native-toast-message';
 import { FlatList, RefreshControl } from 'react-native';
@@ -33,10 +33,6 @@ const NoficationListScreen = () => {
     await client.notification.readOne(notification_id)
     dispatch(readOneNotificationFeed(notification_id))
   }
-
-  /*useEffect(() => {
-    readNotification()
-  }, [])*/
   
   const renderItem = ({ item }: { item: NotificationInterface.notificationFetchResponseSchema }) => <DisplayNotifications readOneNotification={readOneNotification} info={item} />;
 
@@ -44,9 +40,6 @@ const NoficationListScreen = () => {
 
   return (
       <FlatList
-        style={{
-          height: "100%"
-        }}
         data={notifications}
         keyExtractor={item => item.notification_id}
         renderItem={memoizedValue}

@@ -10,7 +10,7 @@ export const notificationFeedReducer = (state: NotificationInterface.notificatio
         return [];
     case INIT_NOTIFICATION_FEED:
         return action.info;
-    case ADD_NOTIFICATION_FEED:
+    case ADD_NOTIFICATION_FEED:        
         return [...state, ...action.info];
     case MARK_READ_NOTIFICATION_FEED:
         return state.map((n) => {

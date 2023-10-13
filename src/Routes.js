@@ -36,21 +36,11 @@ function Routes() {
     const dispatch = useAppDispatch();
     const [routes] = useState([
         { name: "DrawerNavigation", screen: DrawerNavigation },
-        /*{ name: "ProfileStack", screen: ProfileStack},
-        { name: "CreateStack", screen: CreateStack},
-        { name: "PostStack", screen: PostStack},
-        { name: "SettingsStack", screen: SettingsStack},
-        { name: "MessagesStack", screen: MessageStack}*/
     ])
     const [allRoutes] = useState([
         { name: "RegisterVerificationCode", screen: VerificationCode },
         { name: "ChangePassword", screen: ChangePassword },
         { name: "WebViewScreen", screen: WebViewScreen },
-        /*{ name: "ProfileStack", screen: ProfileStack},
-        { name: "CreateStack", screen: CreateStack},
-        { name: "PostStack", screen: PostStack},
-        { name: "SettingsStack", screen: SettingsStack},
-        { name: "MessagesStack", screen: MessageStack}*/
     ])
 
     async function getGuilds() {
