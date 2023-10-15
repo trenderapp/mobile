@@ -7,6 +7,7 @@ import { Linking } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { webSocketRoutes } from 'trender-client';
 import messaging from "@react-native-firebase/messaging";
+import { connect } from 'react-redux';
 
 import { LoginNavigator, SplashScreen } from './Navigator';
 import { useClient, useWebSocket } from './Components/Container';
@@ -21,7 +22,6 @@ import DrawerNavigation from './Components/Container/DrawerNavigation';
 import ChangePassword from './Screens/Login/ChangePassword';
 import WebViewScreen from './Screens/Other/WebViewScreen';
 import { addNotificationFeed } from './Redux/NotificationFeed/action';
-import { connect } from 'react-redux';
 import { useAppDispatch } from './Redux';
 
 const Stack = createStackNavigator();

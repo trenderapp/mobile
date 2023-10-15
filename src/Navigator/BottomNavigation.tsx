@@ -1,8 +1,6 @@
 // import { useIsFocused } from "@react-navigation/native";
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from 'react-i18next'
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons"
 
 import { useClient, useTheme } from "../Components/Container";
 import { DmGroupListContext } from "../Context/DmGuildListContext";
@@ -13,8 +11,7 @@ import { RootState, useAppDispatch, useAppSelector } from "../Redux";
 import { initNotificationFeed } from "../Redux/NotificationFeed/action";
 import { connect } from "react-redux";
 import SearchScreen from "../Screens/Search/SearchScreen";
-
-const Tab = createMaterialBottomTabNavigator();
+import { BottomNavigation } from "react-native-paper";
 
 function BottomStack() {
 
@@ -23,6 +20,7 @@ function BottomStack() {
     const { client } = useClient();
     const dispatch = useAppDispatch();
     const notifications = useAppSelector((state) => state.notificationFeed);
+    const [index, setIndex] = useState(0);
 
     const { unreads, groups } = useContext(DmGroupListContext);
     const [routes, setRoutes] = useState([
@@ -73,31 +71,32 @@ function BottomStack() {
         })
     }, [notifications])
 
+    const renderScene = BottomNavigation.SceneMap({
+        home: HomeScreen,
+        search: SearchScreen,
+        explore: ExploreScreen,
+        messages: GuildListScreen
+    });
+
+    const theme = {
+        colors: {
+            text: colors.text_normal,
+            primary: colors.bg_primary,
+        },
+    }
+
     return (
-        <Tab.Navigator
-        initialRouteName={routes[0].key}
-        activeColor={colors.fa_primary}
-        labeled={false}
-        barStyle={{ 
-            backgroundColor: `${colors.bg_secondary}96` 
-        }}
-      >
-        {
-            routes.map((t, idx) => (          
-                <Tab.Screen
-                    key={idx}
-                    name={t.key}
-                    component={t.component}
-                    options={{
-                    tabBarLabel: t.title,
-                    tabBarIcon: ({ color, focused }) => (
-                        <MaterialIcons name={focused ? t.focusedIcon : t.unfocusedIcon} color={color} size={26} />
-                    ),
-                    }}
-                />
-            ))
-        }
-      </Tab.Navigator>
+        <BottomNavigation
+            barStyle={{
+                borderTopColor: colors.text_normal,
+                borderTopWidth: 0.5
+            }}
+            labeled={false}
+            theme={theme}
+            navigationState={{ index, routes }}
+            onIndexChange={setIndex}
+            renderScene={renderScene}
+        />
     )
 }
 

@@ -43,7 +43,6 @@ const CustomHeader: SectionProps = ({ title, isHome, leftComponent, children }) 
                     </View>
                 )
             }
-
         </Appbar.Header>
     )
 }

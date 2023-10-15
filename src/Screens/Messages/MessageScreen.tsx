@@ -15,7 +15,7 @@ import { Avatar } from '../../Components/Member';
 import { webSocketRoutes } from 'trender-client';
 import { changeElementPlaceArray } from '../../Services';
 
-const MessageScreen = ({ route }) => {
+const MessageScreen: React.FC<any> = ({ route }) => {
 
   const { colors } = useTheme();
   const { client } = useClient();
@@ -23,7 +23,6 @@ const MessageScreen = ({ route }) => {
   const navigation = useNavigation();
   const { notification, sendMessage } = useWebSocket();
 
-  const [attachments, setAttachments] = useState([]);
   const [content, setContent] = useState("");
   const [inwait, setInwait] = useState(false);
   const [scrollTop, setScrollToTop] = useState(true);
@@ -34,7 +33,7 @@ const MessageScreen = ({ route }) => {
 
   const getMessages = async (init = false) => {
     const request = await client.message.fetch(params.guild_id, { skip: messages.length });
-    if(request.error) return Toast.show({ text1: t(`errors.${request.error.code}`)});
+    if(request.error) return Toast.show({ text1: t(`errors.${request.error.code}`) as string});
     dispatch(init ? initDmMessages(request.data) : addDmMessages(request.data));
     if(request.data.length < 1) return;
     DmGroupList.changeLastMessageUnreads(params.guild_id, request.data[0].message_id, true)
@@ -117,7 +116,7 @@ const readMessage = (data) => {
             </View>
           </TouchableOpacity>
         </Appbar.Header>
-          <KeyboardAvoidingView behavior={Platform.OS === "ios" && "padding"} style={{ flex: 1 }}>
+          <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding": undefined} style={{ flex: 1 }}>
           <FlatList
             inverted={true}
             data={messages}
@@ -132,7 +131,7 @@ const readMessage = (data) => {
           { typings.length > 0 && <View style={{ width: full_width,
                                                   padding: 5,
                                                   backgroundColor: colors.bg_secondary
-              }}><Text>... {typings.map(u => u.username).join(", ")}</Text></View>}
+              }}><Text>... {typings.map(u => u?.username).join(", ")}</Text></View>}
           <MessageTextInput channel_id={params.guild_id} onAttachment={() => createAttachments()} value={content} setValue={setContent} displaySend={content.length > 0 || attachments.length > 0} onSubmit={() => sendMessageToChannel()} />
           </KeyboardAvoidingView>
 

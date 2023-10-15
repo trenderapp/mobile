@@ -92,7 +92,7 @@ const FollowsTrends = () => {
   }
 
   return (
-    <SafeAreaView>
+    <>
       <CustomHomeHeader leftComponent={<CustomLeftComponent />} />
       <FlatList
         ref={flatListRef}
@@ -104,9 +104,15 @@ const FollowsTrends = () => {
         ListFooterComponent={loader ? <Loader /> : undefined}
         onScrollEndDrag={() => bottomHandler()}
         ListEmptyComponent={<EmptyHome />}
-        refreshControl={<RefreshControl refreshing={loaderF} progressBackgroundColor={colors.bg_primary} tintColor={colors.fa_primary} colors={[colors.fa_primary, colors.fa_secondary, colors.fa_third]} onRefresh={() => getData(true)} />}
+        refreshControl={<RefreshControl 
+          refreshing={loaderF} 
+          progressBackgroundColor={colors.bg_primary} 
+          tintColor={colors.fa_primary} 
+          colors={[colors.fa_primary, colors.fa_secondary, colors.fa_third]} 
+          onRefresh={() => getData(true)} />
+        }
       />
-    </SafeAreaView>
+    </>
   );
 };
 

@@ -34,9 +34,7 @@ const App = () => {
             <WebsocketProvider>
               <DmGroupListContextProvider>
                 <Provider store={store}>
-                  <SafeAreaProvider >
-                    <Routes />
-                  </SafeAreaProvider>
+                  <Routes />
                 </Provider>
               </DmGroupListContextProvider>
             </WebsocketProvider>

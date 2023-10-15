@@ -25,7 +25,7 @@ function SafeBottomContainer({ children , safeAreaInsets, padding = 5 }: Section
 
     return (
         <View style={{
-                flex: 1, 
+                flex: 1,
                 backgroundColor: colors.bg_primary,
                 marginBottom: insets.bottom,
                 marginHorizontal: Math.max(insets.left, insets.right),
