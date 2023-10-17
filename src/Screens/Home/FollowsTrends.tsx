@@ -93,7 +93,9 @@ const FollowsTrends = () => {
 
   return (
     <>
+      <SafeAreaView>
       <CustomHomeHeader leftComponent={<CustomLeftComponent />} />
+      </SafeAreaView>
       <FlatList
         ref={flatListRef}
         removeClippedSubviews={true}
