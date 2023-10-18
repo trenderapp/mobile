@@ -15,7 +15,7 @@ import { Avatar } from '../../Components/Member';
 import { webSocketRoutes } from 'trender-client';
 import { changeElementPlaceArray } from '../../Services';
 
-const MessageScreen: React.FC<any> = ({ route }) => {
+const MessageScreen = ({ route }) => {
 
   const { colors } = useTheme();
   const { client } = useClient();
@@ -33,7 +33,7 @@ const MessageScreen: React.FC<any> = ({ route }) => {
 
   const getMessages = async (init = false) => {
     const request = await client.message.fetch(params.guild_id, { skip: messages.length });
-    if(request.error) return Toast.show({ text1: t(`errors.${request.error.code}`) as string});
+    if(request.error) return Toast.show({ text1: t(`errors.${request.error.code}`)});
     dispatch(init ? initDmMessages(request.data) : addDmMessages(request.data));
     if(request.data.length < 1) return;
     DmGroupList.changeLastMessageUnreads(params.guild_id, request.data[0].message_id, true)
@@ -132,7 +132,7 @@ const readMessage = (data) => {
                                                   padding: 5,
                                                   backgroundColor: colors.bg_secondary
               }}><Text>... {typings.map(u => u?.username).join(", ")}</Text></View>}
-          <MessageTextInput channel_id={params.guild_id} onAttachment={() => createAttachments()} value={content} setValue={setContent} displaySend={content.length > 0 || attachments.length > 0} onSubmit={() => sendMessageToChannel()} />
+          <MessageTextInput channel_id={params.guild_id} onAttachment={() => createAttachments()} value={content} setValue={setContent} displaySend={content.length > 0 || false} onSubmit={() => sendMessageToChannel()} />
           </KeyboardAvoidingView>
 
       </SafeBottomContainer>
