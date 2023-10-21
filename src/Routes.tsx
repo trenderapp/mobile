@@ -11,7 +11,6 @@ import { connect } from 'react-redux';
 
 import { LoginNavigator, SplashScreen } from './Navigator';
 import { useClient, useWebSocket } from './Components/Container';
-import { DmGroupListContext, initDmGroup, modifyDmGroup } from './Context/DmGuildListContext';
 import { changeElementPlaceArray, parseURL } from './Services';
 import { requestNotificationPermission } from './Services/notifications';
 import VerificationCode from './Screens/Login/Verify/VerificationCode';
@@ -22,7 +21,9 @@ import DrawerNavigation from './Components/Container/DrawerNavigation';
 import ChangePassword from './Screens/Login/ChangePassword';
 import WebViewScreen from './Screens/Other/WebViewScreen';
 import { addNotificationFeed } from './Redux/NotificationFeed/action';
-import { useAppDispatch } from './Redux';
+import { RootState, useAppDispatch, useAppSelector } from './Redux';
+import { initGuildList, modifyGuildList, setUnreadGuildList } from './Redux/guildList/action';
+import { NavigationContextI } from './Components/Container/Navigation/NavigationContext';
 
 const Stack = createStackNavigator();
 
@@ -31,8 +32,8 @@ function Routes() {
     const { state, client } = useClient();
     const { i18n } = useTranslation();
     const { notification } = useWebSocket();
-    const DmGroupList = useContext(DmGroupListContext);
-    const navigation = useNavigation();
+    const DmGroupList = useAppSelector((state) => state.guildListFeed);
+    const navigation = useNavigation<NavigationContextI>();
     const dispatch = useAppDispatch();
     const [routes] = useState([
         { name: "DrawerNavigation", screen: DrawerNavigation },
@@ -45,14 +46,14 @@ function Routes() {
 
     async function getGuilds() {
         const request = await client.guild.fetch();
-        if (request.error) return;
-        DmGroupList.dispatch(initDmGroup(request.data));
+        if (request.error || !request.data) return;
+        dispatch(initGuildList(request.data));
     }
 
     async function getUnreads() {
         const request = await client.message.unreads();
-        if (request.error) return;
-        DmGroupList.setUnreads(request.data);
+        if (request.error || !request.data) return;
+        dispatch(setUnreadGuildList(request.data))
     }
 
     /**
@@ -60,12 +61,12 @@ function Routes() {
      * @param {String} url 
      * @returns 
      */
-    const redirectLink = (url) => {
+    const redirectLink = (url: string | false) => {
         if (typeof url !== "string") return;
-        if (url.startsWith("/register/verify")) return navigation.navigate("RegisterVerificationCode", {
+        if (url.startsWith("/register/verify")) return navigation?.navigate("RegisterVerificationCode", {
             code: url.split("/register/verify").slice(1)[0].replace("/", "")
         });
-        else if (url.startsWith("/recovery/password")) return navigation.navigate("ChangePassword", {
+        else if (url.startsWith("/recovery/password")) return navigation?.navigate("ChangePassword", {
             code: url.split("/recovery/password").slice(1)[0].replace("/", "")
         });
         return;
@@ -108,13 +109,13 @@ function Routes() {
 
     useEffect(() => {
         if (notification.code === webSocketRoutes.SEND_MESSAGE) {
-            const data = notification.data;
-            const idx = DmGroupList.groups.findIndex(g => g.guild_id === data.channel_id);
+            const data: any = notification.data;
+            const idx = DmGroupList.findIndex(g => g.guild_id === data.channel_id);
             if (idx < 1) return;
-            DmGroupList.dispatch(initDmGroup(changeElementPlaceArray(DmGroupList.groups, 0, idx)));
-            DmGroupList.dispatch(modifyDmGroup({ guild_id: data.channel_id, content: data.content, created_at: data.created_at, message_id: data.message_id }))
+            dispatch(initGuildList(changeElementPlaceArray(DmGroupList, 0, idx)));
+            dispatch(modifyGuildList({ guild_id: data.channel_id, content: data.content, created_at: data.created_at, message_id: data.message_id }))
         } else if(notification.code === webSocketRoutes.RECEIVE_NOTIFICATION) {
-            const data = notification.data;
+            const data: any = notification.data;
             if(!data) return;
             dispatch(addNotificationFeed([data]))
         }
@@ -143,14 +144,18 @@ function Routes() {
     )
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: RootState) => {
     return {
       notificationFeed: state.notificationFeed,
+      guildListFeed: state.guildListFeed,
     };
   };
 
 const mapDispatchToProps = {
-    addNotificationFeed
+    addNotificationFeed,
+    initGuildList, 
+    modifyGuildList,
+    setUnreadGuildList
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Routes);

@@ -32,7 +32,7 @@ const rootReducer = combineReducers({
   exploreTopWorldTrends: exploreTopWorldTrendsReducer,
   profileFeed: profileFeedReducer,
   postTempSaveFeed: postTempSaveFeedReducer,
-  guildList: guildListReducer,
+  guildListFeed: guildListReducer,
   guildMessages: guildMessagesReducer,
   notificationFeed: notificationFeedReducer
 });

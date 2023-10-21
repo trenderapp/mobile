@@ -1,26 +1,29 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View, FlatList } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { Appbar, Button, Chip, Divider, Text } from 'react-native-paper';
+import { connect, useDispatch } from 'react-redux';
 
 import { useClient, useTheme } from '../../Components/Container';
 import styles, { full_width } from '../../Style/style';
 import DisplayMember from '../../Components/Member/DisplayMember';
 import { Avatar } from '../../Components/Member';
-import { addDmGroup, DmGroupListContext } from '../../Context/DmGuildListContext';
 import { SearchBar } from '../../Components/Elements/Input';
 import { userInfo } from 'trender-client/Managers/Interfaces/Global';
+import { NavigationContextI } from '../../Components/Container/Navigation/NavigationContext';
+import { addGuildList } from '../../Redux/guildList/action';
+import { RootState } from '../../Redux';
 
 const CreateGuildScreen = () => {
 
     const { colors } = useTheme();
     const { client } = useClient();
     const { t } = useTranslation();
-    const navigation = useNavigation()
+    const navigation = useNavigation<NavigationContextI>()
     const [selected, setSelected] = useState<userInfo[]>([]);
-    const { dispatch } = useContext(DmGroupListContext);
+    const dispatch = useDispatch();
     const [list, setList] = useState<userInfo[]>([]);
     const [text, setText] = useState("");
     const [loading, setLoader] = useState(false);
@@ -41,11 +44,11 @@ const CreateGuildScreen = () => {
         setLoader(true)
         const request = await client.guild.create(selected.map(u => u.user_id));
         setLoader(false)
-        if (request.error) return Toast.show({ text1: t(`errors.${request.error.code}`) as string });
-        if (request.data) dispatch(addDmGroup([request.data]));
+        if (request.error || !request.data) return Toast.show({ text1: t(`errors.${request?.error?.code}`) as string });
+        if (request.data) dispatch(addGuildList([request.data]));
 
         setTimeout(() => {
-            navigation.push("MessagesStack", {
+            navigation?.push("MessagesStack", {
                 screen: "MessageScreen",
                 params: request.data,
             })
@@ -106,4 +109,14 @@ const CreateGuildScreen = () => {
     );
 };
 
-export default CreateGuildScreen;
+const mapStateToProps = (state: RootState) => {
+    return {
+        guildListFeed: state.guildListFeed,
+    };
+};
+
+const mapDispatchToProps = {
+    addGuildList
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateGuildScreen);

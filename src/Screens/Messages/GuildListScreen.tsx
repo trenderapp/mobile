@@ -6,13 +6,13 @@ import { FAB } from 'react-native-paper';
 
 import { CustomHeader, useTheme } from '../../Components/Container';
 import GuildList from '../../Components/Messages/GuildList';
-import { RootStackParamList } from '../../Services';
+import { NavigationContextI } from '../../Components/Container/Navigation/NavigationContext';
 
 const GuildListScreen = () => {
 
   const { colors } = useTheme();
   const { t } = useTranslation();
-  const navigation = useNavigation<RootStackParamList>()
+  const navigation = useNavigation<NavigationContextI>()
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.bg_primary }}>
@@ -21,7 +21,7 @@ const GuildListScreen = () => {
         <GuildList />
         <FAB
           icon='plus'
-          onPress={() => navigation.navigate("MessagesStack", {
+          onPress={() => navigation?.navigate("MessagesStack", {
             screen: "CreateGroupScreen"
           })}
           color={colors.bg_primary}
