@@ -1,13 +1,13 @@
-const dev_ip = undefined // "192.168.1.160";
+const dev_ip = "192.168.1.160";
 
 const link = typeof dev_ip !== "undefined" ? dev_ip : "api.trenderapp.com";
 const s = link === "api.trenderapp.com" ? "s" : "";
-const port = link === "api.trenderapp.com" ? "" : ":4003";
+const port = link === "api.trenderapp.com" ? "" : ":4004";
 
-export const apibaseurl = `http${s}://${link}${port}/v4`;
+export const apibaseurl = `http${s}://${link}${port}/v5`;
 export const cdnbaseurl = `https://cdn.trenderapp.com`;
 export const websiteurl = "https://trenderapp.com";
-export const websocketurl = `ws${s}://${link}${port}/v4`;
+export const websocketurl = `ws${s}://${link}${port}/v5`;
 export const captchasiteKey = "6c5b583c-f335-4af1-ba18-d6cf3c5814ca";
 export const posturl = `${websiteurl}/trends`;
 

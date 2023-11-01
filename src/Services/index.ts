@@ -25,7 +25,7 @@ export const convertFirstCharacterToUppercase = (stringToConvert: string) => {
   return firstCharacter.toUpperCase() + restString;
 }
 
-export const messageFormatDate = (date: Date | string) => new formatDate(date);
+export const messageFormatDate = (date: Date | string | number) => new formatDate(date);
 
 export const subscriptionCustomAllowedPrices = {
   min: 3,

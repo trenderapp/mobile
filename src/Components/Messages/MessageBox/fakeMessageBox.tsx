@@ -6,7 +6,9 @@ import { useClient, useTheme } from "../../Container";
 import { Markdown } from "../../Elements/Text";
 import { Avatar } from "../../Member";
 
-function FakeMessageBox({ content }) {
+function FakeMessageBox({ content }: {
+    content: string
+}) {
 
     const { client, user } = useClient();
     const { colors } = useTheme();

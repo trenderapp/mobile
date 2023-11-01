@@ -1,5 +1,5 @@
 import { GuildInterface, MessageInterface } from "trender-client";
-import { ADD_GUILDS, DELETE_GUILDS, INIT_GUILDS, MODIFY_GUILDS, RESET_GUILDS, UNREAD_GUILDS } from "./actionTypes";
+import { ADD_GUILDS, DELETE_GUILDS, INIT_GUILDS, MODIFY_GUILDS, RESET_GUILDS, UNREAD_GUILDS, CHANGE_MESSAGE_UNREAD_GUILDS } from "./actionTypes";
 
 export const resetGuildList = (info = []) => ({
     type: RESET_GUILDS,
@@ -28,5 +28,14 @@ export const modifyGuildList = (info: { guild_id: string, content: string, creat
 
 export const setUnreadGuildList = (info: MessageInterface.unreadFetchResponseInterface[]) => ({
     type: UNREAD_GUILDS,
+    info
+})
+
+export const changeLastMessageUnreads = (info: { 
+    guild_id: string; 
+    message_id: string; 
+    read?: boolean 
+}) => ({
+    type: CHANGE_MESSAGE_UNREAD_GUILDS,
     info
 })

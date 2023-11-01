@@ -15,7 +15,7 @@ import { Avatar } from '../../Components/Member';
 import { webSocketRoutes } from 'trender-client';
 import { changeElementPlaceArray } from '../../Services';
 
-const MessageScreen = ({ route }) => {
+const MessageScreen = ({ route }: any) => {
 
   const { colors } = useTheme();
   const { client } = useClient();
@@ -31,7 +31,7 @@ const MessageScreen = ({ route }) => {
   const DmGroupList = useContext(DmGroupListContext);
   const { params } = route;
 
-  const getMessages = async (init = false) => {
+  const getMessages = async (init: boolean = false) => {
     const request = await client.message.fetch(params.guild_id, { skip: messages.length });
     if(request.error) return Toast.show({ text1: t(`errors.${request.error.code}`)});
     dispatch(init ? initDmMessages(request.data) : addDmMessages(request.data));
@@ -105,7 +105,7 @@ const readMessage = (data) => {
   }
 
   return (
-      <SafeBottomContainer>
+      <SafeBottomContainer padding={0}>
         <Appbar.Header style={{ width: full_width, backgroundColor: colors.bg_primary, flexDirection: "row" , alignContent: "center", borderBottomColor: colors.bg_secondary, borderBottomWidth: 0.5 }}>
           <Appbar.BackAction color={colors.text_normal} onPress={() => navigation ? navigation.goBack() : null} />
           <TouchableOpacity onPress={() => params.type === 0 && navigation.navigate('ProfileStack', { screen: "ProfileScreen", params: { nickname: params.users[0].nickname }}) } style={{ flexDirection: "row", alignItems: "center" }}>

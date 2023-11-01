@@ -4,7 +4,7 @@ import { initialWebSocketState } from './reducer';
 const webSocketContext = React.createContext({
     notification: initialWebSocketState,
     dispatch: () => {},
-    sendMessage: () => {}
+    sendMessage: (_params: any) => {}
 });
 
 webSocketContext.displayName = 'webSocketContext';

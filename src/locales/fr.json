@@ -124,7 +124,7 @@
         "my_security": "Securité",
         "connexions": "Connexions",
         "subscriptions": "Abonnements",
-        "custom_subscriptions": "Abonnements personnalisés",
+        "custom_subscriptions": "Fans seulement",
         "subscriptions_checkout": "Paiement de l'abonnement",
         "screen": "Ecran",
         "blocked": "Comptes bloqués",
@@ -179,13 +179,15 @@
         "support_creator": "Soutenez votre créateur préféré et accédez à du contenu exclusif pour"
     },
     "messages": {
+        "input_placeholder": "Aa.",
         "create_guild": "Créer un groupe",
         "with": "Avec :",
         "load_more_messages": "Charger plus de messages",
         "copy_id": "Copier l'identifiant",
         "leave_conversation": "Quitter la conversation",
         "copy_message": "Copier le message",
-        "report_message": "Signaler le message"
+        "report_message": "Signaler le message",
+        "no_messages": "Pas encore de messages"
     },
     "subscription": {
         "fees": "Frais",

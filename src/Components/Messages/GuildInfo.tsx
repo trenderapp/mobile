@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 import { Text, Badge, Card } from "react-native-paper";
 import { useNavigation } from '@react-navigation/native';
@@ -16,6 +16,7 @@ import { RootState } from "../../Redux";
 import { deleteGuildList } from "../../Redux/guildList/action";
 import { NavigationContextI } from "../Container/Navigation/NavigationContext";
 import { guildI } from "../../Redux/guildList";
+import { GuildInterface } from "trender-client";
 
 type sectionProps = {
     info: guildI;
@@ -23,12 +24,13 @@ type sectionProps = {
 
 function GuildInfo({ info }: sectionProps) {
 
-    const { client } = useClient();
+    const { client, user } = useClient();
     const { colors } = useTheme();
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const [modalVisible, setModalVisible] = useState(false);
     const navigation = useNavigation<NavigationContextI>();
+    const [users, setUsers] = useState<GuildInterface.userInfo[]>([user])
 
     const leaveDm = async () => {
         await client.guild.leave(info.guild_id);
@@ -40,6 +42,10 @@ function GuildInfo({ info }: sectionProps) {
         Clipboard.setString(text);
         Toast.show({ text1: t(`commons.success`) as string });
     }
+
+    useEffect(() => {
+        setUsers(info.users.filter(u => u.user_id !== user.user_id))
+    }, [info])
 
     return (
         <>
@@ -73,9 +79,9 @@ function GuildInfo({ info }: sectionProps) {
                     onLongPress={() => setModalVisible(true)}>
                     <View style={{ flexDirection: "row", alignItems: "center", width: full_width, position: "relative" }}>
                         {info.unread && <Badge style={{ position: "absolute", top: 2, left: -2, zIndex: 2 }} size={10} />}
-                        {info.users.length >= 2 ? <MultipleAvatar url={client.user.avatar(info.users[0].user_id, info.users[0].avatar)} number={info.users.length} /> : <Avatar url={client.user.avatar(info.users[0].user_id, info.users[0].avatar)} />}
+                        {users.length >= 2 ? <MultipleAvatar url={client.user.avatar(users[0].user_id, users[0].avatar)} number={info.users.length} /> : <Avatar url={client.user.avatar(users[0].user_id, users[0].avatar)} />}
                         <View>
-                            <Text numberOfLines={1} textBreakStrategy="balanced">{info?.users.map(u => u.username).join(", ")}</Text>
+                            <Text numberOfLines={1} textBreakStrategy="balanced">{users.map(u => u.username).join(", ")}</Text>
                             {
                                 info.last_message && (
                                     <Text

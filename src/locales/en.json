@@ -123,7 +123,7 @@
         "my_security": "Security",
         "connexions": "Connections",
         "subscriptions": "Subscriptions",
-        "custom_subscriptions": "Custom Subscriptions",
+        "custom_subscriptions": "Fans Only",
         "subscriptions_checkout": "Subscriptions Checkout",
         "screen": "Screen",
         "blocked": "Blocked Account",
@@ -178,13 +178,15 @@
         "support_creator": "Support your favorite creator and access to exclusive content for"
     },
     "messages": {
+        "input_placeholder": "Aa.",
         "create_guild": "Create a group",
         "with": "With:",
         "load_more_messages": "Load more messages",
         "copy_id": "Copy ID",
         "leave_conversation": "Leave the conversation",
         "copy_message": "Copy the message",
-        "report_message": "Report the message"
+        "report_message": "Report the message",
+        "no_messages": "No messages here yet"
     },
     "subscription": {
         "fees": "Fees",
@@ -210,7 +212,7 @@
         "coming_soon": "Coming Soon",
         "cancel": "Cancel your subscription ?",
         "will_end": "Your subscription will end at the end of period",
-        "custom_activate": "Activate Custom Subscription",
+        "custom_activate": "Activate Fans Only",
         "year": "Year",
         "month": "Month",
         "elite": "Elite",

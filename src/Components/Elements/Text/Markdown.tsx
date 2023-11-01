@@ -2,6 +2,7 @@ import React, { Suspense, lazy, useState } from "react";
 import { Divider, Text } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 import { translateText } from "../../../Services";
+import { StyleProp, TextStyle } from "react-native";
 const Renderer = lazy(() => import("./Markdown/Renderer"));
 
 type SectionProps = React.FC<{
@@ -9,10 +10,11 @@ type SectionProps = React.FC<{
     noBr?: boolean,
     maxLine?: number,
     translate?: string,
-    token?: string
+    token?: string,
+    style?: StyleProp<TextStyle>
 }>
 
-const Markdown: SectionProps = ({ content, noBr, maxLine, translate, token }) => {
+const Markdown: SectionProps = ({ content, noBr, maxLine, translate, token, style }) => {
 
     const [newText, setNewText] = useState<undefined | string>(undefined);
     const { t } = useTranslation();
@@ -30,7 +32,7 @@ const Markdown: SectionProps = ({ content, noBr, maxLine, translate, token }) =>
 
     return (
         <>
-            <Text style={{ fontSize: 15, }} onPress={undefined} selectable={true} numberOfLines={maxLine ? maxLine + 1 : undefined}>
+            <Text style={[style, { fontSize: 15 }]} onPress={undefined} selectable={true} numberOfLines={maxLine ? maxLine + 1 : undefined}>
                 <Suspense fallback={content}>
                     <Renderer noBr={noBr ? false : true} maxLine={maxLine} content={maxLine ? `${content.slice(0, 150)}` : content} />
                 </Suspense>

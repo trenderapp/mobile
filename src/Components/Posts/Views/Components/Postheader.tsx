@@ -6,7 +6,7 @@ import { IconButton } from "react-native-paper";
 import Owner from "./Menu/Owner";
 import User from "./Menu/User";
 import styles from "../../../../Style/style";
-import { useClient, useTheme } from "../../../Container";
+import { useClient } from "../../../Container";
 import { Avatar, Username } from "../../../Member";
 import { navigationProps } from "../../../../Services";
 import { GlobalInterface } from "trender-client";
@@ -21,7 +21,6 @@ type SectionProps = {
 function Postheader({ info, created_at, post_id, lefComponent }: SectionProps) { 
     
     const { client, user } = useClient();
-    const { colors } = useTheme();
     const navigation = useNavigation<navigationProps>();
     const [showModal, setShowModal] = useState(false);
     
