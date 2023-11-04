@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FlatList, RefreshControl } from "react-native";
 import Toast from 'react-native-toast-message';
@@ -8,6 +8,7 @@ import GroupInfo from "./GuildInfo";
 import { connect } from "react-redux";
 import { RootState, useAppDispatch, useAppSelector } from "../../Redux";
 import { initGuildList, setUnreadGuildList } from "../../Redux/guildList/action";
+import { guildI } from "../../Redux/guildList";
 
 function GuildList() {
 
@@ -32,6 +33,12 @@ function GuildList() {
         dispatch(initGuildList(request.data))
         await getUnreads()
     }
+
+    const renderItem = useCallback(({ item }: { item: guildI }) => (
+        <GroupInfo info={item} />
+    ), []);
+
+    const memoizedValue = useMemo(() => renderItem, [groups]);
     
     return (
         <FlatList
@@ -40,7 +47,7 @@ function GuildList() {
             }}
             data={groups}
             ListEmptyComponent={<Text>{t("commons.nothing_display")}</Text>}
-            renderItem={({ item }) => <GroupInfo info={item} />}
+            renderItem={memoizedValue}
             keyExtractor={item => item.guild_id}
             refreshControl={<RefreshControl refreshing={loading} progressBackgroundColor={colors.bg_primary} tintColor={colors.fa_primary} colors={[colors.fa_primary, colors.fa_secondary, colors.fa_third]} onRefresh={() => getData()} />}
         />

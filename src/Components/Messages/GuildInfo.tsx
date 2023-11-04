@@ -30,13 +30,13 @@ function GuildInfo({ info }: sectionProps) {
     const dispatch = useDispatch();
     const [modalVisible, setModalVisible] = useState(false);
     const navigation = useNavigation<NavigationContextI>();
-    const [users, setUsers] = useState<GuildInterface.userInfo[]>([user as any])
+    const [users, setUsers] = useState<GuildInterface.userInfo[]>(info.users)
 
     const leaveDm = async () => {
         await client.guild.leave(info.guild_id);
         dispatch(deleteGuildList(info.guild_id));
         setModalVisible(false)
-    }    
+    }
 
     const copyText = (text: string) => {
         Clipboard.setString(text);
@@ -45,12 +45,15 @@ function GuildInfo({ info }: sectionProps) {
 
     useEffect(() => {
         setUsers(info.users.filter(u => u.user_id !== user.user_id))
+        console.log(info.users.filter(u => u.user_id !== user.user_id).map(u => u.username).join(", "), info.users.filter(u => u.user_id !== user.user_id).length);
+        
     }, [info])
+    
 
     return (
         <>
             <BottomModal onSwipeComplete={() => setModalVisible(false)} dismiss={() => setModalVisible(false)} isVisible={modalVisible}>
-                <ModalSection onPress={() => copyText(info?.guild_id)}>
+                <ModalSection onPress={() => copyText(info.guild_id)}>
                     <>
                         <SvgElement name="copy" margin={5} size={22} />
                         <Text>{t("messages.copy_id")}</Text>
@@ -79,7 +82,7 @@ function GuildInfo({ info }: sectionProps) {
                     onLongPress={() => setModalVisible(true)}>
                     <View style={{ flexDirection: "row", alignItems: "center", width: full_width, position: "relative" }}>
                         {info.unread && <Badge style={{ position: "absolute", top: 2, left: -2, zIndex: 2 }} size={10} />}
-                        {users.length >= 2 ? <MultipleAvatar url={client.user.avatar(users[0].user_id, users[0].avatar)} number={info.users.length} /> : <Avatar url={client.user.avatar(users[0].user_id, users[0].avatar)} />}
+                        {users.length > 1 ? <MultipleAvatar /> : <Avatar url={client.user.avatar(users[0]?.user_id, users[0]?.avatar)} />}
                         <View>
                             <Text numberOfLines={1} textBreakStrategy="balanced">{users.map(u => u.username).join(", ")}</Text>
                             {
