@@ -32,7 +32,7 @@ export const AttachmentButton = ({
       accessibilityLabel={l10n.attachmentButtonAccessibilityLabel}
       accessibilityRole='button'
       onPress={handlePress}
-      style={{ margin: 0, marginLeft: -10, marginRight: 5 }}
+      style={{ margin: -10, marginRight: 5 }}
       icon="camera" />
   )
 }

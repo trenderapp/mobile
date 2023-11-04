@@ -1,13 +1,10 @@
 import * as React from 'react'
 import {
   GestureResponderEvent,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
   TouchableOpacityProps,
 } from 'react-native'
 
-import { L10nContext, ThemeContext } from '../../utils'
+import { IconButton } from 'react-native-paper'
 
 export interface SendButtonPropsAdditionalProps {
   touchableOpacityProps?: TouchableOpacityProps
@@ -22,8 +19,6 @@ export const SendButton = ({
   onPress,
   touchableOpacityProps,
 }: SendButtonProps) => {
-  const l10n = React.useContext(L10nContext)
-  const theme = React.useContext(ThemeContext)
 
   const handlePress = (event: GestureResponderEvent) => {
     onPress()
@@ -31,25 +26,15 @@ export const SendButton = ({
   }
 
   return (
-    <TouchableOpacity
-      accessibilityLabel={l10n.sendButtonAccessibilityLabel}
+    <IconButton 
       accessibilityRole='button'
-      {...touchableOpacityProps}
       onPress={handlePress}
-      style={styles.sendButton}
-    >
-      {theme.icons?.sendButtonIcon?.() ?? (
-        <Image
-          source={require('../../assets/icon-send.png')}
-          style={{ tintColor: theme.colors.inputText }}
-        />
-      )}
-    </TouchableOpacity>
+      style={{
+        margin: -10,
+        marginLeft: 5
+      }}
+      icon="send"
+      size={20}
+      />
   )
 }
-
-const styles = StyleSheet.create({
-  sendButton: {
-    marginLeft: 16,
-  },
-})

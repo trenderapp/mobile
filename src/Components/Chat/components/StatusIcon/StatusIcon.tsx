@@ -1,93 +1,52 @@
 import * as React from 'react'
-import { Image, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
-import { MessageType, Theme } from '../../types'
-import { CircularActivityIndicator } from '../CircularActivityIndicator'
+import { MessageType } from '../../types'
 import { useTheme } from '../../../Container'
+import { ActivityIndicator, IconButton } from 'react-native-paper'
 
-export const StatusIcon = React.memo(
-  ({
-    currentUserIsAuthor,
-    showStatus,
-    status,
-    theme,
-  }: {
-    currentUserIsAuthor: boolean
-    showStatus: boolean
-    status?: MessageType.Any['status']
-    theme: Theme
-  }) => {
-    let statusIcon: React.ReactNode | null = null
-    const { colors } = useTheme();
-    /*switch (status) {
-      case 'delivered':
-        <IconButton iconColor={colors.color_red} icon="check-all" size={10} />
-        break;
-      case 'sent':
-        <IconButton iconColor={colors.text_normal} icon="check" size={10} />
-        break;
-      case 'error':
-        <IconButton iconColor={colors.color_red} icon="alert-circle-outline" size={10} />
-        break;
-      case 'seen':
-        <IconButton iconColor={colors.text_link} icon="check-all" size={10} />
-        break;
-      case 'sending':
-        <ActivityIndicator size={10} />
-        break;*/
+export const StatusIcon = React.memo(({
+  currentUserIsAuthor,
+  showStatus,
+  status,
+}: {
+  currentUserIsAuthor: boolean
+  showStatus: boolean
+  status?: MessageType.Any['status']
+}) => {
+  const { colors } = useTheme();
+  const [statusIcon, setStatusIcon] = React.useState<React.ReactNode | null>(null)
+
+  React.useEffect(() => {
     if (showStatus) {
       switch (status) {
         case 'delivered':
+          setStatusIcon(<IconButton icon="check-all" size={10} />)
+          break;
         case 'sent':
-          statusIcon = theme.icons?.deliveredIcon?.() ?? (
-            <Image
-              source={require('../../assets/icon-seen.png')}
-              style={{ tintColor: colors.text_normal }}
-              testID='DeliveredIcon'
-            />
-          )
+          setStatusIcon(<IconButton iconColor={colors.text_normal} icon="check" size={10} />)
           break;
         case 'error':
-          statusIcon = theme.icons?.errorIcon?.() ?? (
-            <Image
-              source={require('../../assets/icon-error.png')}
-              style={{ tintColor: colors.color_red }}
-              testID='ErrorIcon'
-            />
-          )
-          break
+          setStatusIcon(<IconButton iconColor={colors.color_red} icon="alert-circle-outline" size={10} />)
+          break;
         case 'seen':
-          statusIcon = theme.icons?.seenIcon?.() ?? (
-            <Image
-              source={require('../../assets/icon-seen.png')}
-              style={{ tintColor: colors.text_link }}
-              testID='SeenIcon'
-            />
-          )
-          break
+          setStatusIcon(<IconButton iconColor={colors.text_link} icon="check-all" size={10} />)
+          break;
         case 'sending':
-          statusIcon = theme.icons?.sendingIcon?.() ?? (
-            <CircularActivityIndicator color={theme.colors.primary} size={10} />
-          )
-          break
+          setStatusIcon(<ActivityIndicator size={10} />)
+          break;
         default:
-          statusIcon = theme.icons?.deliveredIcon?.() ?? (
-            <Image
-              source={require('../../assets/icon-delivered.png')}
-              style={{ tintColor: colors.text_normal }}
-              testID='DeliveredIcon'
-            />
-          )
           break;
       }
     }
+  }, [status])
 
-    return currentUserIsAuthor ? (
-      <View style={styles.container} testID='StatusIconContainer'>
-        {statusIcon}
-      </View>
-    ) : null
-  }
+  return currentUserIsAuthor ? (
+    <View style={styles.container} testID='StatusIconContainer'>
+      {statusIcon}
+    </View>
+  ) : null
+}
 )
 
 const styles = StyleSheet.create({

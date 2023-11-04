@@ -25,7 +25,7 @@ const formatMessages = (messages: MessageInterface.fetchMessageResponseInterface
     },
     guild_id: guild_id,
     id: m.message_id,
-    status: "sending",
+    status: undefined,
     text: m.content,
     type: "text",
     createdAt: dayjs(m.created_at).toDate().getTime()

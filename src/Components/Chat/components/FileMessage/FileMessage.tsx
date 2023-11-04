@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Image, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 
 import { MessageType } from '../../types'
 import {
@@ -9,6 +9,7 @@ import {
   UserContext,
 } from '../../utils'
 import styles from './styles'
+import { IconButton } from 'react-native-paper'
 
 export interface FileMessageProps {
   message: MessageType.DerivedFile
@@ -18,7 +19,7 @@ export const FileMessage = ({ message }: FileMessageProps) => {
   const l10n = React.useContext(L10nContext)
   const theme = React.useContext(ThemeContext)
   const user = React.useContext(UserContext)
-  const { container, icon, iconContainer, name, size, textContainer } = styles({
+  const { container, iconContainer, name, size, textContainer } = styles({
     message,
     theme,
     user,
@@ -30,12 +31,7 @@ export const FileMessage = ({ message }: FileMessageProps) => {
       style={container}
     >
       <View style={iconContainer}>
-        {theme.icons?.documentIcon?.() ?? (
-          <Image
-            source={require('../../assets/icon-document.png')}
-            style={icon}
-          />
-        )}
+        <IconButton icon="file" />
       </View>
       <View style={textContainer}>
         <Text style={name}>{message.name}</Text>
