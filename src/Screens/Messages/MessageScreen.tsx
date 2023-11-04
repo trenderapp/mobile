@@ -38,7 +38,7 @@ const MessageScreen = ({ route }: any) => {
   const { params }: { params: guildI } = route;
   const { client, user } = useClient();
   const { t } = useTranslation();
-  const { notification, sendMessage } = useWebSocket();
+  const { notification } = useWebSocket();
   const [pagination_key, setPaginationKey] = useState<string | undefined>(undefined)
   const [loadMessages, setLoadMessages] = useState(true);
   const [inWait, setInwait] = useState(false);
@@ -84,7 +84,7 @@ const MessageScreen = ({ route }: any) => {
     const request = await client.message.fetch(params.guild_id, { pagination_key: pagination_key });
     if(request.data) {
       dispatch(addScrollGuildMessages(formatMessages(request.data, params.guild_id, client)))
-      setPaginationKey(request.pagination_key)
+      if(request.pagination_key) setPaginationKey(request.pagination_key)
     }
   }
 

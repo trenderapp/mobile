@@ -44,9 +44,7 @@ function GuildInfo({ info }: sectionProps) {
     }
 
     useEffect(() => {
-        setUsers(info.users.filter(u => u.user_id !== user.user_id))
-        console.log(info.users.filter(u => u.user_id !== user.user_id).map(u => u.username).join(", "), info.users.filter(u => u.user_id !== user.user_id).length);
-        
+        setUsers(info.users.filter(u => u.user_id !== user.user_id))        
     }, [info])
     
 
