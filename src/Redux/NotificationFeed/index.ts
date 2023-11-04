@@ -20,10 +20,18 @@ export const notificationFeedReducer = (state: NotificationInterface.notificatio
             }
         });
     case MARK_READ_ONE_NOTIFICATION_FEED:
-        const array = state;
-        const index = array.findIndex(a => a.notification_id === action.info);
-        array[index].readed =  true;
-        return array
+        const index = state.findIndex(a => a.notification_id === action.info);
+        if (index !== -1) {
+          const newState = [
+            ...state.slice(0, index), // Les éléments avant l'élément modifié
+            { ...state[index], readed: true }, // Élément modifié avec readed à true
+            ...state.slice(index + 1), // Les éléments après l'élément modifié
+          ];
+        
+          return newState;
+        } else {
+          return state; // Aucun changement, retourne l'état inchangé
+        }        
     default:
       return state;
   }

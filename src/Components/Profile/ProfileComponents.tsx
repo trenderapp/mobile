@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { View, TouchableOpacity } from "react-native";
 import { Divider, Text, IconButton, Button, Tooltip, Portal, Modal } from "react-native-paper";
 import { userFlags } from "trender-client";
@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next'
 import Toast from 'react-native-toast-message';
 import FastImage from "react-native-fast-image";
 import { postResponseSchema } from "trender-client/Managers/Interfaces/Post";
-import { useNavigation as useNativeNavigation } from "@react-navigation/native";
 
 import styles, { full_height } from "../../Style/style";
 import { UserBadges } from "../Member";
@@ -15,13 +14,14 @@ import { useClient, useNavigation, useTheme } from "../Container";
 import { Markdown } from "../Elements/Text";
 import DisplayPosts from "../Posts/DisplayPost";
 import SvgElement from "../Elements/Svg";
-import { addDmGroup, DmGroupListContext } from "../../Context/DmGuildListContext";
 import ProfileUserModal from "./Edit/Modal/User";
 import ProfileOwnerModal from "./Edit/Modal/Owner";
 import { profileInformationsInterface } from "trender-client/Managers/Interfaces/User";
-import { navigationProps, openURL, subscriptionCurrencyArray } from "../../Services";
+import { openURL, subscriptionCurrencyArray } from "../../Services";
 import { getUserSubscriptionResponseInterface } from "trender-client/Managers/Interfaces/CustomSubscription";
 import BadgeModal from "../../Other/BadgeModal";
+import { useDispatch } from "react-redux";
+import { addGuildList } from "../../Redux/guildList/action";
 
 type SectionProps = {
     nickname: string,
@@ -37,9 +37,8 @@ function ProfileComponent({ nickname, pined, informations, setInfo, setModalVisi
     const { t, i18n } = useTranslation('');
     const { colors } = useTheme();
     const { client, user } = useClient();
-    const naviteNavigation = useNativeNavigation<navigationProps>();
     const navigation = useNavigation();
-    const { dispatch } = useContext(DmGroupListContext);
+    const dispatch = useDispatch();
     const [visible, setVisible] = useState(false);
     const [badgeInfoVisible, setBadgeInfoVisible] = useState(false);
     const [subscriptionPrice, setSubscriptionPrice] = useState<getUserSubscriptionResponseInterface>({
@@ -71,7 +70,7 @@ function ProfileComponent({ nickname, pined, informations, setInfo, setModalVisi
     const createDM = async () => {
         const response = await client.guild.create([informations.user_id]);
         if (response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string });
-        dispatch(addDmGroup([response.data]));
+        dispatch(addGuildList([response.data as any]));
 
         setTimeout(() => {
             navigation.replace("MessagesStack", {

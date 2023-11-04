@@ -45,7 +45,7 @@ const CreateGuildScreen = () => {
         const request = await client.guild.create(selected.map(u => u.user_id));
         setLoader(false)
         if (request.error || !request.data) return Toast.show({ text1: t(`errors.${request?.error?.code}`) as string });
-        if (request.data) dispatch(addGuildList([request.data]));
+        if (request.data) dispatch(addGuildList([request.data as any]));
 
         setTimeout(() => {
             navigation?.push("MessagesStack", {

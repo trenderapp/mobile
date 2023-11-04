@@ -1,6 +1,6 @@
 {
   "name": "trender",
-  "version": "5.5.0",
+  "version": "5.5.1",
   "version_number": 113,
   "private": true,
   "repository": {
@@ -82,7 +82,7 @@
     "react-redux": "^8.0.5",
     "realm": "11.0.0",
     "redux": "^4.2.0",
-    "trender-client": "^5.4.3"
+    "trender-client": "^5.4.6"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

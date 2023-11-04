@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ScrollView } from "react-native";
+import { ScrollView, Platform } from "react-native";
 import { Text } from 'react-native-paper';
 import Toast from 'react-native-toast-message';
 import Clipboard from "@react-native-clipboard/clipboard";
@@ -35,7 +35,7 @@ function HomeSettingsScreen() {
                     textDecorationLine: "underline"
                 }}>{t("settings.my_account")}:</Text>
 
-                <HomeButtonSection onPress={() => navigation?.push("SubscriptionScreen")} t={t("settings.subscriptions")} />
+                { Platform.OS !== "ios" && <HomeButtonSection onPress={() => navigation?.push("SubscriptionScreen")} t={t("settings.subscriptions")} /> }
                 <HomeButtonSection onPress={() => navigation?.push("CustomSubscriptionScreen")} t={t("settings.custom_subscriptions")} />
                 <HomeButtonSection onPress={() => navigation.push("LanguageSpokenScreen")} t={t("settings.language_spoken")} />
 

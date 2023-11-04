@@ -6,7 +6,6 @@ import { useNavigation } from "@react-navigation/native";
 import styles, { full_width } from '../../Style/style';
 import { Avatar } from '../../Components/Member';
 import { navigationProps } from '../../Services';
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useClient, useTheme } from "../../Components/Container";
 
 type SectionProps = React.FC<{

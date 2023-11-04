@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Chat, MessageType, defaultTheme } from '../../Components/Chat'
 
@@ -11,16 +11,21 @@ import MessageBoxHeader from '../../Components/Messages/MessageBoxHeader';
 import dayjs from 'dayjs';
 import { Text } from 'react-native-paper';
 import { Loader } from '../../Other';
+import { connect, useDispatch } from 'react-redux';
+import { RootState, useAppSelector } from '../../Redux';
+import { changeLastMessageGuildList, modifyGuildList } from '../../Redux/guildList/action';
+import { addGuildMessages, addScrollGuildMessages, initGuildMessages } from '../../Redux/guildMessages/action';
 
-const formatMessages = (messages: MessageInterface.fetchMessageResponseInterface[], client: Client): MessageType.Any[] => messages.map(((m) => {
+const formatMessages = (messages: MessageInterface.fetchMessageResponseInterface[], guild_id: string, client: Client): MessageType.Any[] => messages.map(((m) => {
   return {
     author: {
       id: m.from.user_id,
       firstName: m.from.username,
       imageUrl: client.user.avatar(m.from.user_id, m.from.avatar)
     },
+    guild_id: guild_id,
     id: m.message_id,
-    status: m.status,
+    status: "sending",
     text: m.content,
     type: "text",
     createdAt: dayjs(m.created_at).toDate().getTime()
@@ -30,17 +35,17 @@ const formatMessages = (messages: MessageInterface.fetchMessageResponseInterface
 const MessageScreen = ({ route }: any) => {
 
   const { colors } = useTheme();
+  const { params }: { params: guildI } = route;
   const { client, user } = useClient();
   const { t } = useTranslation();
   const { notification, sendMessage } = useWebSocket();
   const [pagination_key, setPaginationKey] = useState<string | undefined>(undefined)
-  const [messages, setMessages] = useState<MessageType.Any[]>([])
   const [loadMessages, setLoadMessages] = useState(true);
   const [inWait, setInwait] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [messageInfo, setMessageInfo] = useState<MessageType.Text>();
-
-  const { params }: { params: guildI } = route;
+  const dispatch = useDispatch();
+  const messages = useAppSelector((state) => state.guildMessagesFeed[params.guild_id] ?? []);  
 
   const getMessages = async () => {
     setLoadMessages(true)
@@ -48,33 +53,24 @@ const MessageScreen = ({ route }: any) => {
     setLoadMessages(false)
     if (request.error || !request.data) return Toast.show({ text1: t(`errors.${request?.error?.code}`) as string });
     if (request.data.length < 1) return;
-    setMessages(formatMessages(request.data, client))
+    dispatch(initGuildMessages(formatMessages(request.data, params.guild_id, client)))
+    dispatch(modifyGuildList({ guild_id: params.guild_id, content: request.data[0].content, created_at: request.data[0].created_at, message_id: request.data[0].message_id, unread: false }))
     setPaginationKey(request.pagination_key)
-    sendMessage({
-      code: webSocketRoutes.READ_MESSAGE,
-      data: {
-        message_id: request.data[0].message_id,
-        channel_id: params.guild_id
-      }
-    })
+    readMessage(request.data[0])
   }
 
   useEffect(() => {
     getMessages()
   }, [])
+  
 
   useEffect(() => {    
     if (notification.code === webSocketRoutes.SEND_MESSAGE) {
       let data: any = notification.data;
       if (data.channel_id === params.guild_id) {
-        setMessages([...formatMessages([notification.data], client), ...messages])
-        sendMessage({
-          code: webSocketRoutes.READ_MESSAGE,
-          data: {
-            message_id: data.message_id,
-            channel_id: data.channel_id
-          }
-        })
+        dispatch(addGuildMessages(formatMessages([data], params.guild_id, client)))        
+        dispatch(modifyGuildList({ guild_id: data.channel_id, content: data.content, created_at: data.created_at, message_id: data.message_id, unread: false }))
+        readMessage(data)
       }
     } /*else if(notification.code === webSocketRoutes.START_TYPING) {
       if(typings.some(t => t.user_id === notification.data.from.user_id)) return;
@@ -87,19 +83,13 @@ const MessageScreen = ({ route }: any) => {
   const onBottom = async () => {
     const request = await client.message.fetch(params.guild_id, { pagination_key: pagination_key });
     if(request.data) {
-      setMessages([...formatMessages(request.data, client), ...messages])
+      dispatch(addScrollGuildMessages(formatMessages(request.data, params.guild_id, client)))
       setPaginationKey(request.pagination_key)
     }
   }
 
-  const readMessage = (data: MessageInterface.fetchMessageResponseInterface) => {
-    sendMessage({
-      code: webSocketRoutes.READ_MESSAGE,
-      data: {
-        message_id: data.message_id,
-        channel_id: data.channel_id
-      }
-    })
+  const readMessage = async (data: MessageInterface.fetchMessageResponseInterface) => {
+    await client.message.read(data.channel_id, data.message_id)
   }
 
   const sendMessageToChannel = async (message: MessageType.PartialText) => {
@@ -109,7 +99,11 @@ const MessageScreen = ({ route }: any) => {
     setInwait(false);
     if(request.error) return Toast.show({ text1: t(`errors.${request.error.code}`) as string});
     if(!request.data) return;
-    setMessages([...formatMessages([request.data], client), ...messages])
+    dispatch(addGuildMessages(formatMessages([request.data], params.guild_id, client)))
+    dispatch(changeLastMessageGuildList({
+      data: request.data,
+      guild_id: params.guild_id
+    }))
   }
 
   const createAttachments = () => {
@@ -179,4 +173,18 @@ const MessageScreen = ({ route }: any) => {
   );
 };
 
-export default memo(MessageScreen);
+const mapStateToProps = (state: RootState) => {
+  return {
+    guildMessagesFeed: state.guildMessagesFeed,
+  };
+};
+
+const mapDispatchToProps = {
+  changeLastMessageGuildList,
+  modifyGuildList,
+  initGuildMessages,
+  addGuildMessages,
+  addScrollGuildMessages
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MessageScreen);

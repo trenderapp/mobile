@@ -1,9 +1,7 @@
-// import { useIsFocused } from "@react-navigation/native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from 'react-i18next'
 
 import { useClient, useTheme } from "../Components/Container";
-import { DmGroupListContext } from "../Context/DmGuildListContext";
 import HomeScreen from "../Screens/Home/HomeScreen";
 import GuildListScreen from "../Screens/Messages/GuildListScreen";
 import ExploreScreen from "../Screens/Explore/ExploreScreen";
@@ -20,9 +18,9 @@ function BottomStack() {
     const { client } = useClient();
     const dispatch = useAppDispatch();
     const notifications = useAppSelector((state) => state.notificationFeed);
+    const guilds = useAppSelector((state) => state.guildListFeed);
     const [index, setIndex] = useState(0);
 
-    const { unreads, groups } = useContext(DmGroupListContext);
     const [routes, setRoutes] = useState([
         { key: 'home', focusedIcon: 'home', unfocusedIcon: "home-outline", title: t("commons.home"), badge: false, component: HomeScreen },
         { key: 'search', focusedIcon: "magnify", unfocusedIcon: "magnify", title: t('commons.search'), badge: false, component: SearchScreen },
@@ -50,26 +48,18 @@ function BottomStack() {
     }
 
     const countNotifications = () => notifications.filter(n => n.readed === false || typeof n.readed === "undefined").length;
-    const countUnreadsDM = () => {
-        let i = 0;
-        groups.forEach((g: any) => {
-            if (g.last_message) {
-                if (!unreads.some((u: any) => u.message_id === g?.last_message?.message_id)) i++
-            }
-        })
+    const countUnreadsDM = () => guilds.filter(g => g.unread === true).length;
 
-        return i;
-    }
     useEffect(() => {
         notificationList()
     }, [])
 
-    useEffect(() => {
+    useEffect(() => {        
         newBottom({
             home_notification: countNotifications() > 0 ? true : false,
-            message_notification: countUnreadsDM() > 0 ? false : false
+            message_notification: countUnreadsDM() > 0 ? true : false
         })
-    }, [notifications])
+    }, [notifications, guilds, notifications])
 
     const renderScene = BottomNavigation.SceneMap({
         home: HomeScreen,

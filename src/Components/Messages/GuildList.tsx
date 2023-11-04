@@ -7,7 +7,7 @@ import { Text } from "react-native-paper";
 import GroupInfo from "./GuildInfo";
 import { connect } from "react-redux";
 import { RootState, useAppDispatch, useAppSelector } from "../../Redux";
-import { initGuildList } from "../../Redux/guildList/action";
+import { initGuildList, setUnreadGuildList } from "../../Redux/guildList/action";
 
 function GuildList() {
 
@@ -18,12 +18,19 @@ function GuildList() {
     const [loading, setLoading] = useState(false);
     const { t } = useTranslation();
 
+    async function getUnreads() {
+        const request = await client.message.unreads();
+        if (request.error || !request.data) return;
+        dispatch(setUnreadGuildList(request.data))
+    }
+
     async function getData() {
         setLoading(true);
         const request = await client.guild.fetch();
         setLoading(false);
         if(request.error || !request.data) return Toast.show({ text1: t(`errors.${request?.error?.code}`) as string});
         dispatch(initGuildList(request.data))
+        await getUnreads()
     }
     
     return (
@@ -47,7 +54,8 @@ const mapStateToProps = (state: RootState) => {
   };
 
 const mapDispatchToProps = {
-    initGuildList
+    initGuildList,
+    setUnreadGuildList
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GuildList);

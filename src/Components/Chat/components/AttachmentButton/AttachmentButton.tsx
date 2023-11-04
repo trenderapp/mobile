@@ -1,13 +1,10 @@
 import * as React from 'react'
 import {
   GestureResponderEvent,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
   TouchableOpacityProps,
 } from 'react-native'
 
-import { L10nContext, ThemeContext } from '../../utils'
+import { L10nContext } from '../../utils'
 import { IconButton } from 'react-native-paper'
 
 export interface AttachmentButtonAdditionalProps {
@@ -24,7 +21,6 @@ export const AttachmentButton = ({
   touchableOpacityProps,
 }: AttachmentButtonProps) => {
   const l10n = React.useContext(L10nContext)
-  const theme = React.useContext(ThemeContext)
 
   const handlePress = (event: GestureResponderEvent) => {
     onPress?.()

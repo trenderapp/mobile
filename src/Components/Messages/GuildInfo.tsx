@@ -30,13 +30,13 @@ function GuildInfo({ info }: sectionProps) {
     const dispatch = useDispatch();
     const [modalVisible, setModalVisible] = useState(false);
     const navigation = useNavigation<NavigationContextI>();
-    const [users, setUsers] = useState<GuildInterface.userInfo[]>([user])
+    const [users, setUsers] = useState<GuildInterface.userInfo[]>([user as any])
 
     const leaveDm = async () => {
         await client.guild.leave(info.guild_id);
         dispatch(deleteGuildList(info.guild_id));
         setModalVisible(false)
-    }
+    }    
 
     const copyText = (text: string) => {
         Clipboard.setString(text);

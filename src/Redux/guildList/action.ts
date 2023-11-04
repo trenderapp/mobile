@@ -21,7 +21,7 @@ export const deleteGuildList = (info: string) => ({
     info
 })
 
-export const modifyGuildList = (info: { guild_id: string, content: string, created_at: string, message_id: string }) => ({
+export const modifyGuildList = (info: { guild_id: string, content: string, created_at: string, message_id: string, unread?: boolean }) => ({
     type: MODIFY_GUILDS,
     info
 })
@@ -31,11 +31,12 @@ export const setUnreadGuildList = (info: MessageInterface.unreadFetchResponseInt
     info
 })
 
-export const changeLastMessageUnreads = (info: { 
-    guild_id: string; 
-    message_id: string; 
-    read?: boolean 
-}) => ({
+export interface IchangeLastMessageGuildList { 
+    guild_id: string;
+    data: MessageInterface.fetchMessageResponseInterface
+}
+
+export const changeLastMessageGuildList = (info: IchangeLastMessageGuildList) => ({
     type: CHANGE_MESSAGE_UNREAD_GUILDS,
     info
 })

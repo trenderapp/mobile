@@ -44,16 +44,17 @@ function Routes() {
         { name: "WebViewScreen", screen: WebViewScreen },
     ])
 
-    async function getGuilds() {
-        const request = await client.guild.fetch();
-        if (request.error || !request.data) return;
-        dispatch(initGuildList(request.data));
-    }
-
     async function getUnreads() {
         const request = await client.message.unreads();
         if (request.error || !request.data) return;
         dispatch(setUnreadGuildList(request.data))
+    }
+
+    async function getGuilds() {
+        const request = await client.guild.fetch();
+        if (request.error || !request.data) return;
+        dispatch(initGuildList(request.data));
+        await getUnreads()
     }
 
     /**
@@ -102,8 +103,8 @@ function Routes() {
             messaging().onTokenRefresh(async token => {
                 await client.pushNotification.register(token);
             });
+
             getGuilds()
-            getUnreads()
         }
     }, [state])
 
@@ -111,9 +112,9 @@ function Routes() {
         if (notification.code === webSocketRoutes.SEND_MESSAGE) {
             const data: any = notification.data;
             const idx = DmGroupList.findIndex(g => g.guild_id === data.channel_id);
-            if (idx < 1) return;
+            if (idx < 0) return;
             dispatch(initGuildList(changeElementPlaceArray(DmGroupList, 0, idx)));
-            dispatch(modifyGuildList({ guild_id: data.channel_id, content: data.content, created_at: data.created_at, message_id: data.message_id }))
+            dispatch(modifyGuildList({ guild_id: data.channel_id, content: data.content, created_at: data.created_at, message_id: data.message_id, unread: true }))
         } else if(notification.code === webSocketRoutes.RECEIVE_NOTIFICATION) {
             const data: any = notification.data;
             if(!data) return;
