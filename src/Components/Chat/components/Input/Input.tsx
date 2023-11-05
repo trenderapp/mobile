@@ -2,7 +2,7 @@ import * as React from 'react'
 import { TextInput, TextInputProps, View } from 'react-native'
 
 import { MessageType } from '../../types'
-import { L10nContext, ThemeContext, unwrap, UserContext } from '../../utils'
+import { ThemeContext, unwrap, UserContext } from '../../utils'
 import {
   AttachmentButton,
   AttachmentButtonAdditionalProps,
@@ -50,7 +50,6 @@ export const Input = ({
   sendButtonVisibilityMode,
   textInputProps,
 }: InputProps) => {
-  const l10n = React.useContext(L10nContext)
   const theme = React.useContext(ThemeContext)
   const user = React.useContext(UserContext)
   const { container, input, marginRight } = styles({ theme })
@@ -100,6 +99,7 @@ export const Input = ({
         ))}
       <TextInput
         multiline
+        maxLength={1000}
         placeholder={t("messages.input_placeholder") as string}
         placeholderTextColor={`${String(theme.colors.inputText)}80`}
         underlineColorAndroid='transparent'

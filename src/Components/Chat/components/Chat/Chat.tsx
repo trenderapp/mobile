@@ -12,8 +12,6 @@ import {
   GestureResponderHandlers,
   InteractionManager,
   LayoutAnimation,
-  StatusBar,
-  StatusBarProps,
   Text,
   View,
 } from 'react-native'
@@ -34,7 +32,6 @@ import {
 import { CircularActivityIndicator } from '../CircularActivityIndicator'
 import { Input, InputAdditionalProps, InputTopLevelProps } from '../Input'
 import { Message, MessageTopLevelProps } from '../Message'
-import ImageView from './ImageView'
 import styles from './styles'
 
 // Untestable
@@ -151,10 +148,7 @@ export const Chat = ({
   const animationRef = React.useRef(false)
   const list = React.useRef<FlatList<MessageType.DerivedAny>>(null)
   const insets = useSafeAreaInsets()
-  const [isImageViewVisible, setIsImageViewVisible] = React.useState(false)
   const [isNextPageLoading, setNextPageLoading] = React.useState(false)
-  const [imageViewIndex, setImageViewIndex] = React.useState(0)
-  const [stackEntry, setStackEntry] = React.useState<StatusBarProps>({})
 
   const l10nValue = React.useMemo(
     () => ({ ...l10n[locale], ...unwrap(l10nOverride) }),
@@ -227,41 +221,13 @@ export const Chat = ({
     [isLastPage, isNextPageLoading, messages.length, onEndReached]
   )
 
-  const handleImagePress = React.useCallback(
-    (message: MessageType.Image) => {
-      setImageViewIndex(
-        gallery.findIndex(
-          (image) => image.id === message.id && image.uri === message.uri
-        )
-      )
-      setIsImageViewVisible(true)
-      setStackEntry(
-        StatusBar.pushStackEntry({
-          barStyle: 'light-content',
-          animated: true,
-        })
-      )
-    },
-    [gallery]
-  )
 
   const handleMessagePress = React.useCallback(
     (message: MessageType.Any) => {
-      if (message.type === 'image' && !disableImageGallery) {
-        handleImagePress(message)
-      }
       onMessagePress?.(message)
     },
-    [disableImageGallery, handleImagePress, onMessagePress]
+    [disableImageGallery, onMessagePress]
   )
-
-  // TODO: Tapping on a close button results in the next warning:
-  // `An update to ImageViewing inside a test was not wrapped in act(...).`
-  /* istanbul ignore next */
-  const handleRequestClose = () => {
-    setIsImageViewVisible(false)
-    StatusBar.popStackEntry(stackEntry)
-  }
 
   const keyExtractor = React.useCallback(
     ({ id }: MessageType.DerivedAny) => id,
@@ -430,12 +396,6 @@ export const Chat = ({
                 />
               </KeyboardAccessoryView>
             )}
-            <ImageView
-              imageIndex={imageViewIndex}
-              images={gallery}
-              onRequestClose={handleRequestClose}
-              visible={isImageViewVisible}
-            />
           </View>
         </L10nContext.Provider>
       </ThemeContext.Provider>
