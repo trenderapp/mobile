@@ -14,8 +14,8 @@
 		7E81621225B30145E8569E40 /* libPods-trenderapp-trenderappTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B923F133FBAFCB9902C0B341 /* libPods-trenderapp-trenderappTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		BDF3B09F4AB2E99B86C10311 /* libPods-trenderapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E07F2A72F4356F0D4FD51F92 /* libPods-trenderapp.a */; };
-		FA5646392AE01183007700F9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA5646382AE01183007700F9 /* StoreKit.framework */; };
 		FA87364B294E76B600CCE2A4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA87364A294E76B500CCE2A4 /* GoogleService-Info.plist */; };
+		FAAE25DA2AF8DCB200F72F57 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAAE25D92AF8DCB200F72F57 /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,9 +48,9 @@
 		FA4281B52962F90D00A4E390 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Base; path = Base.lproj/Info.plist; sourceTree = "<group>"; };
 		FA4281B72962FA5100A4E390 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/Info.plist; sourceTree = "<group>"; };
 		FA4281B82963053D00A4E390 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = fr; path = fr.lproj/Info.plist; sourceTree = "<group>"; };
-		FA5646382AE01183007700F9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		FA87364A294E76B500CCE2A4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA873650294E7C3800CCE2A4 /* trenderapp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = trenderapp.entitlements; path = trenderapp/trenderapp.entitlements; sourceTree = "<group>"; };
+		FAAE25D92AF8DCB200F72F57 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,7 +67,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDF3B09F4AB2E99B86C10311 /* libPods-trenderapp.a in Frameworks */,
-				FA5646392AE01183007700F9 /* StoreKit.framework in Frameworks */,
+				FAAE25DA2AF8DCB200F72F57 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,7 +109,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FA5646382AE01183007700F9 /* StoreKit.framework */,
+				FAAE25D92AF8DCB200F72F57 /* StoreKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				E07F2A72F4356F0D4FD51F92 /* libPods-trenderapp.a */,
 				B923F133FBAFCB9902C0B341 /* libPods-trenderapp-trenderappTests.a */,
@@ -560,7 +560,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 23.11.4;
+				MARKETING_VERSION = 23.11.6;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -598,7 +598,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 23.11.4;
+				MARKETING_VERSION = 23.11.6;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

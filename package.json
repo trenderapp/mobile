@@ -17,7 +17,7 @@
     "test:typescript": "tsc --noEmit",
     "lint": "eslint .",
     "build:android": "cd android ; ./gradlew bundleRelease",
-    "build:ios": "yarn && cd ios && pod install --repo-update && rm -rf build && cd ..",
+    "build:ios": "yarn && cd ios && pod install --repo-update && cd ..",
     "update": "yarn upgrade-interactive --latest",
     "upgrade": "react-native upgrade",
     "clear": "react-native start --reset-cache",
