@@ -5,6 +5,16 @@ export type IguildMessages = {
     [guild_id: string]: MessageType.Any[];
 }
 
+export type IguildMessagesv2 = {
+    [guild_id: string]: {
+        pagination_key: string;
+        input: {
+            text: string;
+        };
+        data: MessageType.Any[]
+    };
+}
+
 export const guildMessagesReducer = (state: IguildMessages = {}, action: {
     type: string;
     info: any
