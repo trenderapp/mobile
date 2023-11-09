@@ -8,7 +8,7 @@ import { getUserSubscriptionResponseInterface } from "trender-client/Managers/In
 import { useTranslation } from 'react-i18next';
 import { PieChart } from "react-native-chart-kit";
 import { AbstractChartConfig } from 'react-native-chart-kit/dist/AbstractChart';
-import { navigationProps, subscriptionCurrencyArray, subscriptionCustomAllowedPrices } from "../../Services";
+import { navigationProps, openURL, subscriptionCurrencyArray, subscriptionCustomAllowedPrices } from "../../Services";
 import { useClient, useTheme } from "../Container";
 import { full_width } from '../../Style/style';
 import { BottomModal } from '../../Other';
@@ -45,9 +45,7 @@ const CustomSubscriptionCreateCard = ({ subscription, setCurrency, setPrice, inp
     const openDashboard = async () => {
         const request = await client.subscription.custom.dashboard();
         if (request.error) return Toast.show({ text1: t(`errors.${request.error.code}`) as string });
-        navigation.navigate("WebViewScreen", {
-            url: request.data?.url ?? ""
-        });
+        openURL(request.data?.url)
     }
 
     useEffect(() => {       

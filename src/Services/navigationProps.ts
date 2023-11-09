@@ -40,10 +40,6 @@ export type RootStackParamList = {
         code: string[] | false;
         [x: string]: any;
     };
-    WebViewScreen: {
-        url: string;
-        [x: string]: any;
-    };
 };
 
 export type navigationProps = DrawerNavigationProp<RootStackParamList, 'DrawerNavigation'>

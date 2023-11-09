@@ -19,7 +19,6 @@ import 'dayjs/locale/fr'
 import 'dayjs/locale/en'
 import DrawerNavigation from './Components/Container/DrawerNavigation';
 import ChangePassword from './Screens/Login/ChangePassword';
-import WebViewScreen from './Screens/Other/WebViewScreen';
 import { addNotificationFeed } from './Redux/NotificationFeed/action';
 import { RootState, useAppDispatch, useAppSelector } from './Redux';
 import { initGuildList, modifyGuildList, setUnreadGuildList } from './Redux/guildList/action';
@@ -40,8 +39,7 @@ function Routes() {
     ])
     const [allRoutes] = useState([
         { name: "RegisterVerificationCode", screen: VerificationCode },
-        { name: "ChangePassword", screen: ChangePassword },
-        { name: "WebViewScreen", screen: WebViewScreen },
+        { name: "ChangePassword", screen: ChangePassword }
     ])
 
     async function getUnreads() {

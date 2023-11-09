@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Toast from 'react-native-toast-message';
 import { FlatList } from 'react-native';
-import { useNavigation } from "@react-navigation/native";
 import { Button, Card, Dialog, Portal, Text } from 'react-native-paper';
 import { getUserActiveSubscriptionInterface, getUserSubscriptionResponseInterface } from 'trender-client/Managers/Interfaces/CustomSubscription';
 import { currencyType } from 'trender-client/Managers/Interfaces/Subscription';
@@ -12,7 +11,7 @@ import SettingsContainer from '../../Components/Container/SettingsContainer';
 import { useClient, useTheme } from '../../Components/Container';
 import { Loader } from '../../Other';
 import CustomSubscriptionCreateCard from '../../Components/Subscriptions/CustomCreateCard';
-import { messageFormatDate, navigationProps, subscriptionCurrencyArray } from '../../Services';
+import { messageFormatDate, openURL, subscriptionCurrencyArray } from '../../Services';
 import { UserInfo } from '../../Components/Member';
 
 const convertToFloat = (inputValue: string) => {
@@ -34,7 +33,6 @@ function Customsubscriptioncreen() {
 
     const { t } = useTranslation();
     const { user, client } = useClient();
-    const navigation = useNavigation<navigationProps>();
     const { colors } = useTheme();
     const [loading, setLoading] = useState<boolean>(false);
     const [visible, setVisible] = useState<boolean>(false);
@@ -55,9 +53,7 @@ function Customsubscriptioncreen() {
         const request = await client.subscription.custom.register();
         if (request.error) return Toast.show({ text1: t(`errors.${request.error.code}`) as string });
         setLoadingActivation(false)
-        navigation.navigate("WebViewScreen", {
-            url: request?.data?.url ?? ""
-        });
+        openURL(request?.data?.url)
     }
 
     const setActive = () => {

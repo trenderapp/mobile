@@ -10,6 +10,7 @@ import StandardCard from '../../Components/Subscriptions/StandardCard';
 import PremiumCard from '../../Components/Subscriptions/PremiumCard';
 import EliteCard from '../../Components/Subscriptions/EliteCard';
 import { SubscriptionInterface } from 'trender-client';
+import { openURL } from '../../Services';
 
 function SubscriptionScreen() {
 
@@ -33,9 +34,7 @@ function SubscriptionScreen() {
         if (response.data) {
             hideDialog()
             setLoading(false)
-            navigation?.push("SubscriptionDashboardScreen", {
-                url: response.data.url
-            })
+            openURL(response.data.url)
 
         } else {
             hideDialog()

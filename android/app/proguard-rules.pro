@@ -37,3 +37,10 @@
 
 # react-native-config https://github.com/luggit/react-native-config#problems-with-proguard
 -keep class com.trenderapp.social.BuildConfig { *; }
+
+# react-native-inappbrowser-reborn https://github.com/proyecto26/react-native-inappbrowser#android
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+  @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }

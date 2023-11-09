@@ -14,7 +14,7 @@ export default function DisplayEmbed({ embed }: displayEmbedType) {
             <Card.Cover style={{ margin: 10 }} source={{ uri: embed.icon_url }} />
             <Card.Title title={embed.title}  subtitle={embed.description} />
             <Card.Content>
-                <Text variant="labelSmall">{`${embed.url.substring(0, 60)}...`}</Text>
+                <Text variant="labelSmall">{`${embed?.url?.substring(0, 60)}...`}</Text>
             </Card.Content>
         </Card>
     )

@@ -66,12 +66,6 @@ export const TextMessage = ({
     })
   }
 
-  const handleUrlPress = (url: string) => {
-    const uri = url.toLowerCase().startsWith('http') ? url : `https://${url}`
-
-    Linking.openURL(uri)
-  }
-
   const renderPreviewDescription = (description: string) => {
     return (
       <Text numberOfLines={3} style={descriptionText}>

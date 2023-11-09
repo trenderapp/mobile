@@ -1,4 +1,4 @@
-import { Linking, Platform } from "react-native";
+import { Platform } from "react-native";
 import axios from "axios";
 import { apibaseurl } from "./constante";
 import { PERMISSIONS, RESULTS, check, request } from "react-native-permissions";
@@ -6,6 +6,7 @@ import DeviceInfo from 'react-native-device-info';
 import { formatDate } from "./dayjs";
 
 export * from "./navigationProps";
+export * from "./WebView";
 
 export const PATTERN_NAME = /[a-z ,.'-]+/;
 export const PATTERN_DOB = /\d{1,2}\/\d{1,2}\/\d{4}/;
@@ -124,10 +125,6 @@ export const getPermissions = async () => {
   const IOSMicrophone = Platform.OS === "ios" && await check(PERMISSIONS.IOS.MICROPHONE);
   if(IOSMicrophone !== RESULTS.GRANTED) await request(PERMISSIONS.IOS.MICROPHONE);
 
-}
-
-export const openURL = async (url: string) => {
-  await Linking.openURL(url);
 }
 
 export const cguLink = (language: string) => {
