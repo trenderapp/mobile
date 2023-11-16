@@ -76,26 +76,18 @@ export const initLocale = (locale?: keyof typeof l10n) => {
 /** Returns either prop or empty object if null or undefined */
 export const unwrap = <T>(prop: T) => prop ?? {}
 
-/** Returns formatted date used as a divider between different days in the chat history */
-const getVerboseDateTimeRepresentation = (dateTime: number, { dateFormat, timeFormat }: {
-    dateFormat?: string
-    timeFormat?: string
-  }) => `${messageFormatDate(dateTime).fromNow()}`
-
 /** Parses provided messages to chat messages (with headers) and returns them with a gallery */
 export const calculateChatMessages = (
   messages: MessageType.Any[],
   user: User,
   {
+    i18n,
     customDateHeaderText,
-    dateFormat,
     showUserNames,
-    timeFormat,
   }: {
     customDateHeaderText?: (dateTime: number) => string
-    dateFormat?: string
-    showUserNames: boolean
-    timeFormat?: string
+    showUserNames: boolean;
+    i18n: string;
   }
 ) => {
   let chatMessages: MessageType.DerivedAny[] = []
@@ -142,26 +134,15 @@ export const calculateChatMessages = (
     }
 
     if (messageHasCreatedAt && nextMessageHasCreatedAt) {
-      nextMessageDateThreshold =
-        nextMessage!.createdAt! - message.createdAt! >= 900000
+      nextMessageDateThreshold = nextMessage!.createdAt! - message.createdAt! >= 900000;
 
-      nextMessageDifferentDay = !dayjs(message.createdAt!).isSame(
-        nextMessage!.createdAt!,
-        'day'
-      )
+      nextMessageDifferentDay = !dayjs(message.createdAt!).isSame(nextMessage!.createdAt!,'day');
 
-      nextMessageInGroup =
-        nextMessageSameAuthor &&
-        nextMessage!.createdAt! - message.createdAt! <= 60000
+      nextMessageInGroup = nextMessageSameAuthor && nextMessage!.createdAt! - message.createdAt! <= 60000;
     }
 
     if (isFirst && messageHasCreatedAt) {
-      const text =
-        customDateHeaderText?.(message.createdAt!) ??
-        getVerboseDateTimeRepresentation(message.createdAt!, {
-          dateFormat,
-          timeFormat,
-        })
+      const text = customDateHeaderText?.(message.createdAt!) ?? `${messageFormatDate(message.createdAt!).fromNow(i18n)}` 
       chatMessages = [{ id: text, text, type: 'dateHeader' }, ...chatMessages]
     }
 
@@ -171,23 +152,14 @@ export const calculateChatMessages = (
         nextMessageInGroup,
         // TODO: Check this
         offset: !nextMessageInGroup ? 12 : 0,
-        showName:
-          notMyMessage &&
-          showUserNames &&
-          showName &&
-          !!getUserName(message.author),
+        showName: notMyMessage && showUserNames && showName && !!getUserName(message.author),
         showStatus: true,
       },
       ...chatMessages,
     ]
 
     if (nextMessageDifferentDay || nextMessageDateThreshold) {
-      const text =
-        customDateHeaderText?.(nextMessage!.createdAt!) ??
-        getVerboseDateTimeRepresentation(nextMessage!.createdAt!, {
-          dateFormat,
-          timeFormat,
-        })
+      const text = customDateHeaderText?.(nextMessage!.createdAt!) ?? `${messageFormatDate(nextMessage!.createdAt!).fromNow(i18n)}`
 
       chatMessages = [
         {

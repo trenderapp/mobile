@@ -3,7 +3,12 @@ import { View } from "react-native";
 import { Text } from "react-native-paper";
 import { emojies_defs } from "../Elements/Text/Markdown/emojis";
 
-function DisplayEmojis({ name, noName }) {
+type sectionProps = {
+    name: string;
+    noName?: boolean;
+}
+
+function DisplayEmojis({ name, noName }: sectionProps) {
 
     return (
         <View style={{

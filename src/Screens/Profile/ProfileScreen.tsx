@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useContext, memo, useCallback } from 'react';
-import { FlatList, Animated, SafeAreaView } from 'react-native';
+import { FlatList, Animated, SafeAreaView, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { useTranslation } from 'react-i18next';
 import { PostInterface } from 'trender-client';
 import { useNavigation as useNativeNavigation } from "@react-navigation/native";
-import { IconButton } from "react-native-paper";
+import { IconButton, Text } from "react-native-paper";
 
 import { useClient, useTheme } from '../../Components/Container';
 import DisplayPosts from '../../Components/Posts/DisplayPost';
@@ -77,33 +77,33 @@ function ProfileScreen({ route }: any) {
         <DisplayPosts informations={item} />
     ), [])
 
-    const ProfileHeader = () => (
-        <Animated.View style={[styles.row, { justifyContent: "space-between", width: full_width, backgroundColor: `${colors.bg_primary}` }]}>
-            {naviteNavigation.canGoBack() && <IconButton icon="arrow-left" onPress={() => naviteNavigation.goBack()} />}
-            <IconButton style={{ marginRight: 5 }} onPress={() => setModalVisible(true)} icon="dots-horizontal" />
-        </Animated.View>
-    )
-
     return (
         <ProfileContainer>
-                <SafeAreaView>
-                    {profile && <ProfileHeader />}
-                </SafeAreaView>
-                {
-                    !loading ?
-                        <FlatList
-                            scrollEventThrottle={16}
-                            onScrollEndDrag={() => getPosts()}
-                            ListHeaderComponent={profile ? profile?.code ?
-                                <ProfileNotFound error={profile} nickname={nickname} />
-                                : <ProfileComponent modalVisible={modalVisible} setModalVisible={setModalVisible} pined={pined} informations={profile} nickname={nickname} setInfo={setProfile} />
-                                : <Loader />}
-                            data={posts}
-                            renderItem={renderItem}
-                            keyExtractor={item => item.post_id}
-                            ListFooterComponent={!loading && loader && <Loader /> || undefined}
-                        /> : <Loader />
-                }
+            <SafeAreaView>
+                <Animated.View style={[styles.row, { justifyContent: "space-between", width: full_width, backgroundColor: `${colors.bg_primary}` }]}>
+                    <View style={styles.row}>
+                        {naviteNavigation.canGoBack() && <IconButton icon="arrow-left" onPress={() => naviteNavigation.goBack()} />}
+                        {profile && <Text variant='labelLarge'>{profile.username}</Text>}
+                    </View>
+                    <View style={styles.row}>
+                        {profile && <IconButton style={{ marginRight: 5 }} onPress={() => setModalVisible(true)} icon="dots-horizontal" />}
+                    </View>
+                </Animated.View>
+            </SafeAreaView>
+            {
+                !loading ? <FlatList
+                    scrollEventThrottle={16}
+                    onScrollEndDrag={() => getPosts()}
+                    ListHeaderComponent={profile ? profile?.code ?
+                        <ProfileNotFound error={profile} nickname={nickname} />
+                        : <ProfileComponent modalVisible={modalVisible} setModalVisible={setModalVisible} pined={pined} informations={profile} nickname={nickname} setInfo={setProfile} />
+                        : <Loader />}
+                    data={posts}
+                    renderItem={renderItem}
+                    keyExtractor={item => item.post_id}
+                    ListFooterComponent={!loading && loader && <Loader /> || undefined}
+                /> : <Loader />
+            }
         </ProfileContainer>
     )
 }

@@ -83,16 +83,17 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
     <View style={{
       backgroundColor: colors.bg_primary,
       borderWidth: 1,
-      borderRadius: 60, 
-      padding: 3, 
-      paddingLeft: 6, 
+      borderRadius: 60,
+      padding: 3,
+      paddingLeft: 6,
       marginLeft: 5,
-  }}>
-      <Text variant="labelSmall" style={{ 
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center" }}>{t(`categories.${c}`)}</Text>
-  </View>
+    }}>
+      <Text variant="labelSmall" style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center"
+      }}>{t(`categories.${c}`)}</Text>
+    </View>
   )
 
   const sendInfo = async () => {
@@ -141,7 +142,14 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
       setSending({ send: false, progress: 0 })
       return Toast.show({ text1: t(`errors.${response.error.code}`) })
     }
-    if (response.data) dispatch(addMainCreatedTrends({ ...response?.data, from: { ...user } }));
+    if (response.data) dispatch(addMainCreatedTrends({ 
+      ...response?.data, 
+      from: user,
+      shared_user: shared_post?.from,
+      shared_post: shared_post,
+      shared_post_id: shared_post?.post_id,
+      attached_post_id: attached_post?.post_id
+    }));
     setFiles([])
     SetContent("")
     Toast.show({
@@ -212,62 +220,62 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
               <Username
                 created_at={dayjs().format()}
                 user={user}
-                lefComponent={   <View style={styles.row}>
-                {options.paid ? <MaterialIcons style={{ marginLeft: 3 }} size={20} color={colors.color_green} name={`cash`} /> : null}
-              </View>} />
+                lefComponent={<View style={styles.row}>
+                  {options.paid ? <MaterialIcons style={{ marginLeft: 3 }} size={20} color={colors.color_green} name={`cash`} /> : null}
+                </View>} />
             </View>
           </View>
           {options.categories ? <View style={styles.row}>{options.categories.map((c, idx) => <CategoriesBox key={idx} c={c} />)}</View> : null}
-          <TextAreaAutoComplete autoFocus={true} value={content} setValue={(text) => SetContent(text)} />
+          <TextAreaAutoComplete autoFocus={true} value={content} maxLength={advantages.textLength()} setValue={(text) => SetContent(text)} />
           {shared_post && <DisplaySharedPost shared_post={shared_post} />}
         </ScrollView>
         <View style={{
-      bottom: 0,
-      marginLeft: -5,
-      width: full_width
-    }}>
-      <FlatList
-        horizontal={true}
-        data={memoizedFiles}
-        keyExtractor={(item, idx) => idx}
-        scrollsToTop={true}
-        renderItem={({ item, index }) => item?.type.startsWith("video") ? <CreatorVideoDisplay deleteImage={(i) => deleteImage(i)} index={index} uri={item.uri} /> : <CreatorImageDisplay deleteImage={(i) => deleteImage(i)} index={index} uri={item.uri} />}
-      />
-      <BottomButtonPostCreator setModalVisible={setModalVisible} content={content} maxLength={advantages.textLength()} setFiles={(info) => setFiles([...files, info])} setCameraVisible={() => navigation.replace("CameraScreen", {
-        ...params,
-        initContent: content,
-        initFiles: files
-      })} addFiles={addFiles} />
-    </View>
+          bottom: 0,
+          marginLeft: -5,
+          width: full_width
+        }}>
+          <FlatList
+            horizontal={true}
+            data={memoizedFiles}
+            keyExtractor={(item, idx) => idx}
+            scrollsToTop={true}
+            renderItem={({ item, index }) => item?.type.startsWith("video") ? <CreatorVideoDisplay deleteImage={(i) => deleteImage(i)} index={index} uri={item.uri} /> : <CreatorImageDisplay deleteImage={(i) => deleteImage(i)} index={index} uri={item.uri} />}
+          />
+          <BottomButtonPostCreator setModalVisible={setModalVisible} content={content} maxLength={advantages.textLength()} setFiles={(info) => setFiles([...files, info])} setCameraVisible={() => navigation.replace("CameraScreen", {
+            ...params,
+            initContent: content,
+            initFiles: files
+          })} addFiles={addFiles} />
+        </View>
         <BottomModal onSwipeComplete={() => setModalVisible(false)} dismiss={() => setModalVisible(false)} isVisible={modalVisible}>
-      <View style={{ padding: 10 }}>
-        <Text style={{ marginBottom: 5, textTransform: "capitalize" }} variant="titleMedium">{t(`filter.categories`)}</Text>
-        <ScrollView style={{ maxHeight: 250, borderRadius: 12, backgroundColor: colors.bg_primary }} contentContainerStyle={[styles.row, { flexWrap: "wrap", padding: 10 }]}>
+          <View style={{ padding: 10 }}>
+            <Text style={{ marginBottom: 5, textTransform: "capitalize" }} variant="titleMedium">{t(`filter.categories`)}</Text>
+            <ScrollView style={{ maxHeight: 250, borderRadius: 12, backgroundColor: colors.bg_primary }} contentContainerStyle={[styles.row, { flexWrap: "wrap", padding: 10 }]}>
+              {
+                categories.map((item, idx) => (
+                  <Chip
+                    key={idx}
+                    selected={item.selected}
+                    onPress={() => selectCategories(item.number)}
+                    compact
+                    textStyle={{ textTransform: "capitalize" }}
+                    style={{ marginLeft: 5, marginBottom: 5 }}
+                    mode="flat">{t(`categories.${item.number}`)}</Chip>
+                ))
+              }
+            </ScrollView>
+          </View>
           {
-            categories.map((item, idx) => (
-              <Chip
-                key={idx}
-                selected={item.selected}
-                onPress={() => selectCategories(item.number)}
-                compact
-                textStyle={{ textTransform: "capitalize" }}
-                style={{ marginLeft: 5, marginBottom: 5 }}
-                mode="flat">{t(`categories.${item.number}`)}</Chip>
-            ))
+            user.payout_enabled && (
+              <Button
+                mode='contained'
+                onPress={() => setOptions({ ...options, paid: !options.paid })}
+                theme={{ colors: { primary: colors[options.paid ? "warning_color" : "good_color"] } }}
+                icon={`cash${options.paid ? "" : "-remove"}`}
+              >{t(`posts.${options.paid ? "paying" : "free"}`)}</Button>
+            )
           }
-        </ScrollView>
-      </View>
-      {
-        user.payout_enabled && (
-          <Button
-            mode='contained'
-            onPress={() => setOptions({ ...options, paid: !options.paid })}
-            theme={{ colors: { primary: colors[options.paid ? "warning_color" : "good_color"] } }}
-            icon={`cash${options.paid ? "" : "-remove"}`}
-          >{t(`posts.${options.paid ? "paying" : "free"}`)}</Button>
-        )
-      }
-    </BottomModal>
+        </BottomModal>
       </KeyboardAvoidingView>
     </PostCreatorContainer>
   );

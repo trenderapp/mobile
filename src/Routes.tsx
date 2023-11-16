@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
@@ -17,6 +17,7 @@ import VerificationCode from './Screens/Login/Verify/VerificationCode';
 
 import 'dayjs/locale/fr'
 import 'dayjs/locale/en'
+import 'dayjs/locale/ru'
 import DrawerNavigation from './Components/Container/DrawerNavigation';
 import ChangePassword from './Screens/Login/ChangePassword';
 import { addNotificationFeed } from './Redux/NotificationFeed/action';

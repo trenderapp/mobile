@@ -28,9 +28,9 @@ export class formatDate {
         else return dayjs(this.current_date).format("LLL");
     }
 
-    fromNow() {
+    fromNow(i18n = "en") {
         const current = dayjs(this.current_date);
-        return current.isToday() ? current.format("LT") : current.format("LLL");
+        return current.isToday() ? current.locale(i18n).format("LT") : current.locale(i18n).format("LLL");
     }
 
     isOlder(recent) {

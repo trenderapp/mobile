@@ -22,6 +22,7 @@ import { getUserSubscriptionResponseInterface } from "trender-client/Managers/In
 import BadgeModal from "../../Other/BadgeModal";
 import { useDispatch } from "react-redux";
 import { addGuildList } from "../../Redux/guildList/action";
+import ImageModal from "react-native-image-modal";
 
 type SectionProps = {
     nickname: string,
@@ -39,6 +40,7 @@ function ProfileComponent({ nickname, pined, informations, setInfo, setModalVisi
     const { client, user } = useClient();
     const navigation = useNavigation();
     const dispatch = useDispatch();
+    const [openAvatar, setOpenAvatar] = useState(false);
     const [visible, setVisible] = useState(false);
     const [badgeInfoVisible, setBadgeInfoVisible] = useState(false);
     const [subscriptionPrice, setSubscriptionPrice] = useState<getUserSubscriptionResponseInterface>({
@@ -127,7 +129,7 @@ function ProfileComponent({ nickname, pined, informations, setInfo, setModalVisi
 
     const ProfileBanner = () => (
         <View style={{ height: 150 }}>
-            
+
             {
                 informations?.banner ? <FastImage style={[styles.banner_image, { backgroundColor: colors.bg_secondary }]} source={{ uri: `${client.user.banner(informations.user_id, informations.banner)}` }} /> : <View style={[styles.banner_image, { backgroundColor: informations.accent_color }]} />
             }
@@ -161,7 +163,7 @@ function ProfileComponent({ nickname, pined, informations, setInfo, setModalVisi
                     backgroundColor: colors.bg_secondary
                 }}
                 source={{ uri: `${client.user.avatar(informations.user_id, informations.avatar)}` }} />
-                
+
         </View>
     )
 
@@ -182,7 +184,7 @@ function ProfileComponent({ nickname, pined, informations, setInfo, setModalVisi
             {informations.follow_back && <Tooltip title="Follow Back"><IconButton style={{ margin: 0 }} icon="account-sync" /></Tooltip>}
             {informations.user_id !== user?.user_id && informations.allow_dm && <IconButton style={{ margin: 0 }} onPress={() => createDM()} icon="email" />}
             {informations.user_id !== user?.user_id && informations.custom_subscription && (
-                <IconButton style={{ margin: 0 }} iconColor={informations.pay_custom_subscription ? colors.good_color : undefined} onPress={() => informations.pay_custom_subscription ? undefined : showSubscriptionModal() } icon="account-cash" />
+                <IconButton style={{ margin: 0 }} iconColor={informations.pay_custom_subscription ? colors.good_color : undefined} onPress={() => informations.pay_custom_subscription ? undefined : showSubscriptionModal()} icon="account-cash" />
             )}
 
         </View>
@@ -195,12 +197,12 @@ function ProfileComponent({ nickname, pined, informations, setInfo, setModalVisi
                 <ProfileBanner />
                 <View style={[{ paddingLeft: 15, paddingRight: 15 }]}>
                     <ProfilePictures />
-                    <View style={{ marginLeft: 5, paddingBottom: 5 }}>   
+                    <View style={{ marginLeft: 5, paddingBottom: 5 }}>
                         <Markdown token={user.token} content={informations?.description ?? ""} />
                     </View>
                     <View style={{ marginLeft: 5, marginBottom: 20 }} >
                         {typeof informations.link === "string" && informations.link.trim().length > 0 ? <Button style={{ marginLeft: -5 }} contentStyle={{ justifyContent: "flex-start", marginLeft: -5 }} onPress={() => openURL(informations?.link ?? "")} icon="link-variant"><Text style={{ color: colors.text_link }}>{informations.link.length > 50 ? `${informations.link.substring(0, 45)}...` : informations.link}</Text></Button> : null}
-                        <Text>{t("profile.joined")} : <Text  style={{ textTransform: "capitalize" }}>{dayjs(informations.created_at).locale(i18n.language).format("MMMM YYYY")}</Text></Text>
+                        <Text>{t("profile.joined")} : <Text style={{ textTransform: "capitalize" }}>{dayjs(informations.created_at).locale(i18n.language).format("MMMM YYYY")}</Text></Text>
 
                         <ProfileButtons />
                         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingBottom: 10 }}>
@@ -218,7 +220,7 @@ function ProfileComponent({ nickname, pined, informations, setInfo, setModalVisi
                             </View>
                         </View>
                         {informations.user_id !== user?.user_id && <Button mode="contained" icon={informations.followed ? "account-heart" : "account"} onPress={() => informations.followed ? unfollow() : follow()} >{t(`profile.${informations.followed ? "unfollow" : "follow"}`)}</Button>}
-                        { informations.user_id === user?.user_id && <Button onPress={() => navigation.push("ProfileEditScreen", { info: informations })} icon="account-edit" mode="contained">{t(`profile.edit`)}</Button> }
+                        {informations.user_id === user?.user_id && <Button onPress={() => navigation.push("ProfileEditScreen", { info: informations })} icon="account-edit" mode="contained">{t(`profile.edit`)}</Button>}
                     </View>
                 </View>
             </View>

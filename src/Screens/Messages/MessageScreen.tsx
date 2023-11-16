@@ -37,7 +37,7 @@ const MessageScreen = ({ route }: any) => {
   const { colors } = useTheme();
   const { params }: { params: guildI } = route;
   const { client, user } = useClient();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { notification } = useWebSocket();
   const [pagination_key, setPaginationKey] = useState<string | undefined>(undefined)
   const [loadMessages, setLoadMessages] = useState(true);
@@ -124,6 +124,7 @@ const MessageScreen = ({ route }: any) => {
       { messageInfo && <MessageBox info={messageInfo} modalVisible={modalVisible} setModalVisible={disableModal} /> }
       <MessageBoxHeader params={params} />
         <Chat
+          locale={i18n.language}
           onEndReached={() => onBottom()}
           sendButtonVisibilityMode='editing'
           emptyState={() => loadMessages ? <Loader /> : <Text>{t("messages.no_messages")}</Text>}

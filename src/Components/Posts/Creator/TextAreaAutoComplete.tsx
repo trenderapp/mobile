@@ -1,15 +1,38 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FlatList, TextInput, TouchableOpacity, View } from "react-native";
+import { GlobalInterface } from "trender-client";
 import { useClient, useTheme } from "../../Container";
 import { emojies_defs } from "../../Elements/Text/Markdown/emojis";
 import DisplayMember from "../../Member/DisplayMember";
 import { DisplayEmoji } from "../../Emojis";
 
-function TextAreaAutoComplete({ value, setValue, maxLength, autoFocus }) {
+type sectionProps = {
+    autoFocus: boolean;
+    value: string;
+    maxLength?: number;
+    setValue: (value: string) => void;
+}
 
-    const [state, setState] = useState({ type: "none" });
-    const [selection, setSelection] = useState({
+interface Iselection {
+    start: number;
+    end: number;
+}
+
+interface Istate {
+    type: "none" | "emoji" | "user",
+    matches?: string[] | GlobalInterface.userInfo[];
+    selected: number,
+    within?: boolean,
+}
+
+function TextAreaAutoComplete({ value, setValue, maxLength, autoFocus }: sectionProps) {
+
+    const [state, setState] = useState<Istate>({
+        type: "none",
+        selected: 0
+    });
+    const [selection, setSelection] = useState<Iselection>({
         start: 0,
         end: 0
     })
@@ -17,8 +40,8 @@ function TextAreaAutoComplete({ value, setValue, maxLength, autoFocus }) {
     const { client } = useClient();
     const { t } = useTranslation();
 
-    function findSearchString(selection, el) {
-        
+    function findSearchString(selection: Iselection) {
+
         if (selection.start === selection.end) {
             const cursor = selection.start;
             const content = value.slice(0, cursor);
@@ -48,8 +71,8 @@ function TextAreaAutoComplete({ value, setValue, maxLength, autoFocus }) {
                         current === "#"
                             ? "channel"
                             : current === ":"
-                            ? "emoji"
-                            : "user",
+                                ? "emoji"
+                                : "user",
                         search.toLowerCase(),
                         current === ":" ? j + 1 : j,
                     ];
@@ -58,13 +81,14 @@ function TextAreaAutoComplete({ value, setValue, maxLength, autoFocus }) {
         }
     }
 
-    async function onChange(selection) {
+    async function onChange(selection: Iselection) {
 
         const result = findSearchString(selection);
-        
+
         if (result) {
             const [type, search] = result;
-            const regex = new RegExp(search, "i");
+            const regex = new RegExp(search.toString(), "i");
+            const new_search = search.toString();
 
             if (type === "emoji") {
                 // ! TODO: we should convert it to a Binary Search Tree and use that
@@ -73,8 +97,7 @@ function TextAreaAutoComplete({ value, setValue, maxLength, autoFocus }) {
                     .splice(0, 5);
 
                 if (matches.length > 0) {
-                    const currentPosition =
-                        state.type !== "none" ? state.selected : 0;
+                    const currentPosition = state.type !== "none" ? state.selected : 0;
 
                     setState({
                         type: "emoji",
@@ -88,12 +111,12 @@ function TextAreaAutoComplete({ value, setValue, maxLength, autoFocus }) {
             }
 
             if (type === "user") {
-                if(search.length < 1) return;
-                let users = await client.user.search(search);
-                if(users.error) return;
-                
+                if (new_search.length < 1) return;
+                let users = await client.user.search(new_search);
+                if (users.error || !users.data) return;
+
                 let matches = users.data;
-                
+
                 if (matches.length > 0) {
                     const currentPosition =
                         state.type !== "none" ? state.selected : 0;
@@ -111,39 +134,49 @@ function TextAreaAutoComplete({ value, setValue, maxLength, autoFocus }) {
         }
 
         if (state.type !== "none") {
-            setState({ type: "none" });
+            setState({
+                type: "none",
+                selected: 0
+            });
         }
     }
 
     function selectCurrent() {
-        
+
         if (state.type !== "none") {
             const result = findSearchString(selection);
 
             if (result) {
                 const [_type, search, index] = result;
+                const new_index = parseInt(index.toString());
+                const new_search = search.toString();
 
                 const new_content = value.split("");
-                
+
                 if (state.type === "emoji") {
+                    const matches = state.matches as string[];
+
                     new_content.splice(
-                        index,
-                        search.length,
-                        state.matches[state.selected],
+                        new_index,
+                        new_search.length,
+                        matches[state.selected],
                         ": ",
                     );
                 } else if (state.type === "user") {
+                    const matches = state.matches as GlobalInterface.userInfo[];
+
                     new_content.splice(
-                        index,
-                        search.length + 1,
+                        new_index,
+                        new_search.length + 1,
                         "@",
-                        state.matches[state.selected].nickname,
+                        matches[state.selected].nickname,
                     );
                 }
 
                 setValue(new_content.join(""));
                 setState({
-                    type: "none"
+                    type: "none",
+                    selected: 0
                 })
             }
         }
@@ -165,21 +198,25 @@ function TextAreaAutoComplete({ value, setValue, maxLength, autoFocus }) {
                 style={{
                     color: colors.text_normal
                 }}
-                placeholder={t("posts.what_new")}
+                placeholder={t("posts.what_new") as string}
             />
             {state.type === "user" &&
-                <FlatList 
-                    keyExtractor={(item => item.user_id)}
-                    data={state.matches}
-                    renderItem={({ item }) => <View style={{ borderTopColor: colors.bg_secondary, borderTopWidth: 1}}><DisplayMember onPress={() => selectCurrent()} informations={item} noDescription /></View>}
+                <FlatList
+                    keyExtractor={((item: GlobalInterface.userInfo) => item.user_id)}
+                    data={state.matches as GlobalInterface.userInfo[]}
+                    renderItem={({ item }) => <DisplayMember onPress={() => selectCurrent()} informations={item} noDescription />}
                 />
             }
             {state.type === "emoji" &&
-                    <FlatList 
-                        keyExtractor={(item => item)}
-                        data={state.matches}
-                        renderItem={({ item }) => <TouchableOpacity style={{ borderTopColor: colors.bg_secondary, borderTopWidth: 1}} onPress={() => selectCurrent()}><DisplayEmoji name={item} /></TouchableOpacity>}
-                    />
+                <FlatList
+                    keyExtractor={(item => item)}
+                    data={state.matches as string[]}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity style={{ borderTopColor: colors.bg_secondary, borderTopWidth: 1 }} onPress={() => selectCurrent()}>
+                            <DisplayEmoji name={item} />
+                        </TouchableOpacity>
+                    )}
+                />
             }
         </View>
     )

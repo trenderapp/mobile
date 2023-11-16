@@ -76,7 +76,7 @@ export interface ChatProps extends ChatTopLevelProps {
   isLastPage?: boolean
   /** Override the default localized copy. */
   l10nOverride?: Partial<Record<keyof typeof l10n[keyof typeof l10n], string>>
-  locale?: keyof typeof l10n
+  locale?: keyof typeof l10n | string
   messages: MessageType.Any[]
   /** Used for pagination (infinite scroll). Called when user scrolls
    * to the very end of the list (minus `onEndReachedThreshold`).
@@ -155,11 +155,10 @@ export const Chat = ({
     [l10nOverride, locale]
   )
 
-  const { chatMessages, gallery } = calculateChatMessages(messages, user, {
+  const { chatMessages } = calculateChatMessages(messages, user, {
     customDateHeaderText,
-    dateFormat,
     showUserNames,
-    timeFormat,
+    i18n: locale
   })
 
   const previousChatMessages = usePrevious(chatMessages)
