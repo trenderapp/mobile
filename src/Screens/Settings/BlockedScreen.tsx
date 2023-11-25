@@ -5,11 +5,12 @@ import { Button, Dialog, Paragraph, Portal, Text } from 'react-native-paper';
 import { useClient, useTheme } from '../../Components/Container';
 import SettingsContainer from '../../Components/Container/SettingsContainer';
 import DisplayMember from '../../Components/Member/DisplayMember';
+import { BlockInterface } from 'trender-client';
 
 function BlockedScreen() {
 
 
-    const [info, setInfo] = useState([])
+    const [info, setInfo] = useState<BlockInterface.blockUserInformations[]>([])
     const { t } = useTranslation();
     const { client } = useClient();
     const { colors } = useTheme();
@@ -17,33 +18,32 @@ function BlockedScreen() {
     const [selected, setSelected] = useState(0);
 
     const hideDialog = () => setVisible(false);
-    
+
     useEffect(() => {
         async function getData() {
             const request = await client.user.block.fetch();
-            if(request.error) return;
-
-            setInfo(request.data)
+            if (request.error || !request.data) return;
+            setInfo(request.data);
 
         }
 
         getData()
     }, [])
 
-    const unblockUser = async (target_id) => {
+    const unblockUser = async (target_id: string) => {
         const response = await client.user.block.delete(target_id);
-        if(response.error) return;
+        if (response.error) return;
         setInfo(info.filter((u) => u.user_id !== target_id))
         setVisible(false)
     }
-    
+
     return (
         <SettingsContainer title={t("settings.blocked")}>
             <Portal>
                 <Dialog visible={visible} onDismiss={hideDialog}>
                     <Dialog.Title>
                         <Paragraph>
-                            {t("settings.sure_unblock", { username: info[selected]?.username ?? ""})}
+                            {t("settings.sure_unblock", { username: info[selected]?.username ?? "" })}
                         </Paragraph>
                     </Dialog.Title>
                     <Dialog.Actions>
@@ -52,18 +52,27 @@ function BlockedScreen() {
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
-            <FlatList 
-                data={info} 
-                ListEmptyComponent={<Text style={{ padding: 10}}>{t("commons.nothing_display")}</Text>} 
-                keyExtractor={item => item.user_id} renderItem={({ item, index }) => 
+            <FlatList
+                data={info}
+                ListEmptyComponent={<Text style={{ padding: 10 }}>{t("commons.nothing_display")}</Text>}
+                keyExtractor={item => item.user_id}
+                renderItem={({ item, index }) => (
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
-                        <DisplayMember informations={item} />
-                        <Button uppercase={false} onPress={() => {
+                        <DisplayMember full_width informations={item} />
+                        <Button
+                        style={{
+                            right: 10,
+                            position: "absolute"
+                        }}
+                        uppercase={false} 
+                        onPress={() => {
                             setVisible(true)
                             setSelected(index)
-                        }} textColor={colors.text_normal}>{t("settings.block")}</Button>
-                    </View>}
-                />
+                        }} 
+                        textColor={colors.text_normal}>{t("settings.block")}</Button>
+                    </View>
+                )}
+            />
         </SettingsContainer>
     )
 }

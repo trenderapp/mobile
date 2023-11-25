@@ -152,7 +152,12 @@
         "language_spoken": "Languages spoken",
         "fees_charged": "Fees charged",
         "cancel_subscription": "Cancel the subscription",
-
+        "theme": "Theme",
+        "language": "Language",
+        
+        "dark_grey": "Dark grey",
+        "dark_green": "Dark / green",
+        "dark_pink": "Dark / pink",
         "dark_blue": "Dark blue",
         "dark": "Dark",
         "white": "White",

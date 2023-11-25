@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useColorScheme } from "react-native";
 
 import ThemeContext from './ThemeContext';
-import { DarkBlueTheme, WhiteTheme, DarkTheme } from './Themes';
+import { DarkBlueTheme, WhiteTheme, DarkTheme, Ithemes, DarkPinkTheme, DarkGreenTheme, DarkGreyTheme } from './Themes';
 
 type Props = {
     children: React.ReactNode
@@ -16,7 +16,7 @@ const ThemeProvider: React.FC<Props> = ({ children }) => {
         ...DarkBlueTheme
     });
 
-    const changeTheme = (type: "auto" | "darkblue" | "white" | "dark") => {
+    const changeTheme = (type: Ithemes) => {
         
         let style = DarkBlueTheme;
         switch (type) {
@@ -28,6 +28,15 @@ const ThemeProvider: React.FC<Props> = ({ children }) => {
                 break;
             case "dark":
                 style = DarkTheme;
+                break;
+            case "dark_pink":
+                style = DarkPinkTheme;
+                break;
+            case "dark_green":
+                style = DarkGreenTheme;
+                break;
+            case "dark_grey":
+                style = DarkGreyTheme;
                 break;
             default:
                 break;

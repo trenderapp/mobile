@@ -153,7 +153,12 @@
         "language_spoken": "Langues parlées",
         "fees_charged": "Frais facturés",
         "cancel_subscription": "Annuler la souscription",
-    
+        "theme": "Thème",
+        "language": "Langue",
+
+        "dark_grey": "Gris foncé",
+        "dark_green": "Foncé / vert",
+        "dark_pink": "Foncé / rose",
         "dark_blue": "Bleu foncé",
         "dark": "Foncé",
         "white": "Clair",

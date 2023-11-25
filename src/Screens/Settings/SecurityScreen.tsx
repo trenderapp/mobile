@@ -5,7 +5,7 @@ import { Text, Button, Dialog, Paragraph, Portal, TextInput as PaperTextInput } 
 import { useClient, useTheme } from '../../Components/Container';
 import SettingsContainer from '../../Components/Container/SettingsContainer';
 import { TextInput } from '../../Components/Elements/Input';
-import { axiosInstance, cguLink, cgvLink, openURL, privacyLink } from '../../Services';
+import { axiosInstance, cguLink, cgvLink, navigationProps, openURL, privacyLink } from '../../Services';
 import { useNavigation } from "@react-navigation/native";
 import { HomeButtonSection } from '../../Components/Settings';
 import { clearStorage } from '../../Services/storage';
@@ -20,7 +20,7 @@ function SecurityScreen() {
     const [loading, setLoading] = useState(false);
     const client = useClient();
     const { colors } = useTheme();
-    const navigation = useNavigation();
+    const navigation = useNavigation<navigationProps>();
 
     const hideDialog = () => setVisible(false);
 
@@ -41,10 +41,10 @@ function SecurityScreen() {
         const response = request.data;
 
         setLoading(false);
-        if (response.error) return setError(t(`errors.${response.error.code}`));
+        if (response.error) return setError(t(`errors.${response.error.code}`) as string);
 
         clearStorage("user_info")
-        return navigation.replace("LoginNavigator", { screen: "Login" })
+        return navigation.navigate("LoginNavigator", { screen: "Login" })
     }
 
     const changeNSFW = async () => {
@@ -86,7 +86,7 @@ function SecurityScreen() {
                                 returnKeyType="next"
                                 right={<PaperTextInput.Icon onPress={() => setShowPass(!showPass)} icon={!showPass ? `eye` : "eye-off"} />}
                                 value={password}
-                                onChangeText={(text) => setPassword(text)}
+                                onChangeText={(text: string) => setPassword(text)}
                             />
                         </ScrollView>
                     </Dialog.ScrollArea>

@@ -9,7 +9,7 @@ import SvgElement from "../Elements/Svg";
 import UserPermissions from "trender-client/Permissions/UserPermissions";
 import { userFlags } from "trender-client";
 
-function DisplayMember({ informations, onPress, full_width, LeftComponent }: any) {
+function DisplayMember({ informations, onPress, full_width }: any) {
 
     const { client } = useClient();
     const { colors } = useTheme();
@@ -25,7 +25,8 @@ function DisplayMember({ informations, onPress, full_width, LeftComponent }: any
                     backgroundColor: colors.bg_secondary,
                     borderRadius: 12,
                     padding: 10,
-                    margin: 5
+                    margin: 5,
+                    width: full_width ? "100%" : undefined
                 }
             ]}>
             { /** typeof index !== "undefined" ? <View style={{ backgroundColor: colors.bg_primary, borderRadius: 60, marginRight: 5, width: 30, height: 30, flexDirection: "row", justifyContent: "center", alignItems: "center" }}><Text>{`${index+1}`}</Text></View> : null */}

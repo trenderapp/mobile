@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { DarkBlueTheme } from './Themes';
+import { DarkBlueTheme, Ithemes } from './Themes';
 
 const ThemeContext = React.createContext({
     theme: "darkblue",
-    setTheme: (_type: "auto" | "darkblue" | "white" | "dark") => {},
+    setTheme: (_type: Ithemes) => {},
     ...DarkBlueTheme
 });
 
