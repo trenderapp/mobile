@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
 import { View, TouchableOpacity } from "react-native";
 import { IconButton } from "react-native-paper";
 
 import Owner from "./Menu/Owner";
 import User from "./Menu/User";
 import styles from "../../../../Style/style";
-import { useClient } from "../../../Container";
+import { useClient, useNavigation } from "../../../Container";
 import { Avatar, Username } from "../../../Member";
 import { navigationProps } from "../../../../Services";
 import { GlobalInterface } from "trender-client";
@@ -21,7 +20,7 @@ type SectionProps = {
 function Postheader({ info, created_at, post_id, lefComponent }: SectionProps) { 
     
     const { client, user } = useClient();
-    const navigation = useNavigation<navigationProps>();
+    const navigation = useNavigation();
     const [showModal, setShowModal] = useState(false);
     
     return (
@@ -30,7 +29,7 @@ function Postheader({ info, created_at, post_id, lefComponent }: SectionProps) {
                 flexDirection: "row",
                 justifyContent: "space-between"
             }}>
-            <TouchableOpacity activeOpacity={0.5} onPress={() => navigation.navigate("ProfileStack" , {
+            <TouchableOpacity activeOpacity={0.5} onPress={() => navigation.push("ProfileStack" , {
                 screen: "ProfileScreen",
                 params: {
                   nickname: info.nickname

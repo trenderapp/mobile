@@ -63,14 +63,14 @@ function ProfileScreen({ route }: any) {
                         ...pined_post.data
                     })
                 }
-            }),
-            getPosts()
+            })
         ])
     }
 
     useEffect(() => {
         if (profile?.nickname && nickname === profile.nickname) return;
         getData()
+        getPosts()
     }, [nickname])
 
     const renderItem = useCallback(({ item }: { item: PostInterface.postResponseSchema }) => (
