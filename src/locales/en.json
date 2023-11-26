@@ -180,7 +180,11 @@
         "block": "Block the User",
         "private_messages": "Private messages",
         "copy_user_id": "Copy ID",
-        "support_creator": "Support your favorite creator and access to exclusive content for"
+        "support_creator": "Support your favorite creator and access to exclusive content for",
+        "subscriber": "Subscriber",
+        "send_message": "Send a message",
+        "subscribe": "Subscribe",
+        "donate": "Donate"
     },
     "messages": {
         "input_placeholder": "Aa.",

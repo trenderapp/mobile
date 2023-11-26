@@ -180,7 +180,11 @@
         "block": "Заблокировать пользователя",
         "private_messages": "Личные сообщения",
         "copy_user_id": "Скопировать идентификатор",
-        "support_creator": "Поддержите вашего любимого создателя и получите эксклюзивный контент на"
+        "support_creator": "Поддержите вашего любимого создателя и получите эксклюзивный контент на",
+        "subscriber": "Subscriber",
+        "send_message": "Send a message",
+        "subscribe": "Subscribe",
+        "donate": "Donate"
     },
     "messages": {
         "input_placeholder": "Aa.",

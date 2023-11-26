@@ -80,10 +80,16 @@ function SearchScreen() {
                     }
                 ]}>
                 { /** typeof index !== "undefined" ? <View style={{ backgroundColor: colors.bg_primary, borderRadius: 60, marginRight: 5, width: 30, height: 30, flexDirection: "row", justifyContent: "center", alignItems: "center" }}><Text>{`${index+1}`}</Text></View> : null */}
+
                 <Avatar size={33} url={client.user.avatar(item.user_id, item.avatar)} />
-                <Text style={[{ maxWidth: "100%", overflow: "hidden" }]}>{item.username}</Text>
-                {item.is_private && <SvgElement margin={-5} size={15} name="lock" color={colors.text_normal} />}
-                {flags.has(userFlags.VERIFIED_USER) && <SvgElement name="verified" size={15} />}
+                <View style={{ flexDirection: "column", alignItems: "flex-start" }}>
+                    <View style={{ flexDirection: "row", alignItems: "center" }}>
+                        <Text variant="labelLarge" style={[{ maxWidth: "100%", overflow: "hidden" }]}>{item.username}</Text>
+                        {item.is_private && <SvgElement margin={-5} size={15} name="lock" color={colors.text_normal} />}
+                        {flags.has(userFlags.VERIFIED_USER) && <SvgElement name="verified" size={15} />}
+                    </View>
+                    { item.description && <Text numberOfLines={1}>{item.description}</Text> }
+                </View>
             </TouchableOpacity>
         )
     }, [])

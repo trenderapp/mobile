@@ -140,7 +140,7 @@ function ProfileComponent({ nickname, pined, informations, setInfo, setModalVisi
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
             <View style={{ paddingTop: 5 }}>
                 <Text style={{ maxWidth: 250, marginTop: 10 }} variant="titleLarge">{informations.username}</Text>
-                <Text style={{ color: colors.text_muted, marginBottom: 20 }}>@{nickname ?? "..."}</Text>
+                <Text style={{ color: colors.text_muted, marginBottom: 5 }}>@{nickname ?? "..."}</Text>
                 <View style={styles.row}>
                     {client.user.flags(informations.flags.toString()).has(userFlags.TRENDER_EMPLOYEE) && <UserBadges size={24} onPress={() => setBadgeInfoVisible(true)} url={client.user.badge("TRENDER_EMPLOYEE")} />}
                     {client.user.flags(informations.flags.toString()).has(userFlags.EARLY_SUPPORTER) && <UserBadges size={24} onPress={() => setBadgeInfoVisible(true)} url={client.user.badge("EARLY_SUPPORTER")} />}
@@ -163,7 +163,6 @@ function ProfileComponent({ nickname, pined, informations, setInfo, setModalVisi
                     backgroundColor: colors.bg_secondary
                 }}
                 source={{ uri: `${client.user.avatar(informations.user_id, informations.avatar)}` }} />
-
         </View>
     )
 
@@ -177,15 +176,36 @@ function ProfileComponent({ nickname, pined, informations, setInfo, setModalVisi
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            justifyContent: "flex-start",
+            justifyContent: "space-evenly",
             paddingRight: 5,
             marginLeft: -10
         }}>
-            {informations.follow_back && <Tooltip title="Follow Back"><IconButton style={{ margin: 0 }} icon="account-sync" /></Tooltip>}
-            {informations.user_id !== user?.user_id && informations.allow_dm && <IconButton style={{ margin: 0 }} onPress={() => createDM()} icon="email" />}
-            {informations.user_id !== user?.user_id && informations.custom_subscription && (
-                <IconButton style={{ margin: 0 }} iconColor={informations.pay_custom_subscription ? colors.good_color : undefined} onPress={() => informations.pay_custom_subscription ? undefined : showSubscriptionModal()} icon="account-cash" />
+            {informations.follow_back && (
+                <View style={{ flexDirection: "column", alignItems: "center" }}>
+                    <IconButton icon="account-sync" />
+                    <Text variant="labelMedium">{t("profile.subscriber")}</Text>
+                </View>
             )}
+            {informations.user_id !== user?.user_id && informations.allow_dm && (
+                <View style={{ flexDirection: "column", alignItems: "center" }}>
+                    <IconButton onPress={() => createDM()} icon="email" />
+                    <Text variant="labelMedium">{t("profile.send_message")}</Text>
+                </View>
+            )}
+            {informations.user_id !== user?.user_id && informations.custom_subscription && (
+                <View style={{ flexDirection: "column", alignItems: "center" }}>
+                    <IconButton iconColor={informations.pay_custom_subscription ? colors.good_color : undefined} onPress={() => informations.pay_custom_subscription ? undefined : showSubscriptionModal()} icon="account-cash" />
+                    <Text variant="labelMedium">{t("profile.subscribe")}</Text>
+                </View>
+            )}
+            {/**
+            informations.user_id !== user?.user_id && informations.custom_subscription && (
+                <View style={{ flexDirection: "column", alignItems: "center" }}>
+                <IconButton iconColor={informations.pay_custom_subscription ? colors.good_color : undefined} onPress={() => informations.pay_custom_subscription ? undefined : showSubscriptionModal()} icon="cash" />
+                    <Text variant="labelMedium">Donate</Text>
+                </View>
+            )
+            */}
 
         </View>
     )
@@ -199,12 +219,11 @@ function ProfileComponent({ nickname, pined, informations, setInfo, setModalVisi
                     <ProfilePictures />
                     <View style={{ marginLeft: 5, paddingBottom: 5 }}>
                         <Markdown token={user.token} content={informations?.description ?? ""} />
+                        <ProfileButtons />
                     </View>
                     <View style={{ marginLeft: 5, marginBottom: 20 }} >
                         {typeof informations.link === "string" && informations.link.trim().length > 0 ? <Button style={{ marginLeft: -5 }} contentStyle={{ justifyContent: "flex-start", marginLeft: -5 }} onPress={() => openURL(informations?.link ?? "")} icon="link-variant"><Text style={{ color: colors.text_link }}>{informations.link.length > 50 ? `${informations.link.substring(0, 45)}...` : informations.link}</Text></Button> : null}
                         <Text>{t("profile.joined")} : <Text style={{ textTransform: "capitalize" }}>{dayjs(informations.created_at).locale(i18n.language).format("MMMM YYYY")}</Text></Text>
-
-                        <ProfileButtons />
                         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingBottom: 10 }}>
                             <TouchableOpacity style={[styles.column, { alignItems: "center" }]} onPress={() => navigation.push('ProfileFollower', { type: "subscriptions", nickname: nickname })}>
                                 <Text variant="bodyLarge" style={{ fontWeight: "900" }}>{informations.subscriptions}</Text>
