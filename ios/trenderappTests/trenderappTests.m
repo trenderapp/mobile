@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface trenderappTests : XCTestCase
+@interface TrenderTests : XCTestCase
 
 @end
 
-@implementation trenderappTests
+@implementation TrenderTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL (^)(UIView *view))test
 {
@@ -26,7 +26,7 @@
   return NO;
 }
 
-- (void)testrenderappsWelcomeScreen
+- (void)testRendersWelcomeScreen
 {
   UIViewController *vc = [[[RCTSharedApplication() delegate] window] rootViewController];
   NSDate *date = [NSDate dateWithTimeIntervalSinceNow:TIMEOUT_SECONDS];

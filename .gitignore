@@ -1,7 +1,9 @@
-# osx
+# OSX
+#
 .DS_Store
 
-# xcode
+# Xcode
+#
 build/
 *.pbxuser
 !default.pbxuser
@@ -18,77 +20,49 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
-project.xcworkspace
-ios/debug.xcconfig
-ios/release.xcconfig
-/vendor
+ios/.xcode.env.local
 
-# android / intellij
+# Android/IntelliJ
+#
 build/
-app/bin
 .idea
 .gradle
 local.properties
 *.iml
 *.hprof
-android/.project
-android/app/.project
-android/app/bin/
-android/app/gradle*
-android/app/_build*
-
-# if we ever want to add google services
-android/app/google-services.json
+.cxx/
+*.keystore
+!debug.keystore
 
 # node.js
+#
 node_modules/
 npm-debug.log
 yarn-error.log
 
-# buck
-buck-out/
-\.buckd/
-*.keystore
-!debug.keystore
-
 # fastlane
-*/fastlane/report.xml
-*/fastlane/Preview.html
-*/fastlane/screenshots
+#
+# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
+# screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://docs.fastlane.tools/best-practices/source-control/
 
-# bundle artifact
+**/fastlane/report.xml
+**/fastlane/Preview.html
+**/fastlane/screenshots
+**/fastlane/test_output
+
+# Bundle artifact
 *.jsbundle
 
-# testing
-tests
-
-# app-specific
-/android/app/src/main/assets/InpageBridgeWeb3.js
-/app/core/InpageBridgeWeb3.js
-
-# environment variables
-.js.env
-.ios.env
-.android.env
-.env
-
-# Sentry
-/sentry.debug.properties
-/sentry.release.properties
-
-# editor
-.vscode
-
-# CocoaPods
+# Ruby / CocoaPods
 /ios/Pods/
+/vendor/bundle/
 
-# Language files to add
-/locales/languagesToUpdate/*.json
+# Temporary files created by Metro to check the health of the file watcher
+.metro-health-check*
 
-# attributions
-licenseInfos.json
+# testing
+/coverage
+android/app/google-services.json
 android/keystores/informations.json
-ios/trenderapp/GoogleService-Info.plist
-ios/GoogleService-Info.plist
-.env.development
-.env.production
