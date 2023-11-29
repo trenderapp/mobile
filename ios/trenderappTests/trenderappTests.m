@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface TrenderTests : XCTestCase
+@interface trenderappTests : XCTestCase
 
 @end
 
-@implementation TrenderTests
+@implementation trenderappTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL (^)(UIView *view))test
 {

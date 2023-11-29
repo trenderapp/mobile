@@ -25,20 +25,21 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'Trender' do
+target 'trenderapp' do
   config = use_native_modules!
   permissions_path = '../node_modules/react-native-permissions/ios'
-
+ 
   pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
   pod 'Permission-MediaLibrary', :path => "#{permissions_path}/MediaLibrary"
   pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications"
   pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary"
   pod 'Permission-PhotoLibraryAddOnly', :path => "#{permissions_path}/PhotoLibraryAddOnly"
   pod 'Permission-AppTrackingTransparency', :path => "#{permissions_path}/AppTrackingTransparency"
+  
   pod 'Firebase', :modular_headers => true
   pod 'FirebaseCore', :modular_headers => true
   pod 'GoogleUtilities', :modular_headers => true
-  
+
   $RNFirebaseAsStaticFramework = true
 
   # Flags change depending on the env values.
@@ -68,7 +69,7 @@ target 'Trender' do
     react_native_post_install(
       installer,
       config[:reactNativePath],
-      :mac_catalyst_enabled => true
+      :mac_catalyst_enabled => false
     )
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end

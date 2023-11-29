@@ -33,8 +33,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "TrenderTests.xctest"
-               BlueprintName = "TrenderTests"
+               BuildableName = "trenderappTests.xctest"
+               BlueprintName = "trenderappTests"
                ReferencedContainer = "container:trenderapp.xcodeproj">
             </BuildableReference>
          </TestableReference>
