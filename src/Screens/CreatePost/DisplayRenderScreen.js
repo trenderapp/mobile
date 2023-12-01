@@ -11,7 +11,7 @@ import { full_height, full_width } from '../../Style/style';
 import { useTranslation } from 'react-i18next';
 
 
-export function DisplayRenderScreen({ route: { params }}) {
+export default function DisplayRenderScreen({ route: { params }}) {
   
   const { type, info } = params;
   const { t } = useTranslation();

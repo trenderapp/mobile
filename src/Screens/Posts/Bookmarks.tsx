@@ -38,11 +38,11 @@ function Bookmarks({ route }: any) {
         if(loader) return;
         setLoader(true)        
         const response = await client.post.getSavedPost(target_id, { pagination_key: pagination_key });
+        setLoader(false);
         if(response.error || !response.data) return;
         if(response.data.length < 1) return;
         if(response.pagination_key) setPaginationKey(response.pagination_key);
         dispatch(addPostBookmarks(response.data));
-        setLoader(false)
     }
 
     const renderItem = ({ item }: { item: PostInterface.postResponseSchema }) => (
