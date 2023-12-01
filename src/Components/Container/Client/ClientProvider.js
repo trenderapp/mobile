@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Platform } from 'react-native';
 import Client from 'trender-client';
 import ClientContext from './ClientContext';
-import SplashScreen from 'react-native-splash-screen';
 import { DefaultTheme, Provider } from 'react-native-paper';
 import useTheme from '../Theme/useTheme';
 import { apibaseurl, cdnbaseurl } from '../../../Services/constante';
@@ -31,8 +30,6 @@ function ClientProvider({ children }) {
                 if(settings?.theme) setTheme(settings.theme);
                 if(settings?.locale) i18n.changeLanguage(settings.locale);
             }
-            
-            SplashScreen.hide()
 
             if(Platform.OS === "ios") {
                 const trackPermission = await check(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY);
