@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, memo, useCallback } from 'react';
-import { FlatList, Animated, SafeAreaView, View } from 'react-native';
+import { FlatList, Animated, SafeAreaView, View, Platform } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { useTranslation } from 'react-i18next';
 import { PostInterface } from 'trender-client';
@@ -92,7 +92,8 @@ function ProfileScreen({ route }: any) {
             </SafeAreaView>
             {
                 !loading ? <FlatList
-                    scrollEventThrottle={16}
+                    removeClippedSubviews={true}
+                    initialNumToRender={20}
                     onScrollEndDrag={() => getPosts()}
                     ListHeaderComponent={profile ? profile?.code ?
                         <ProfileNotFound error={profile} nickname={nickname} />
@@ -100,6 +101,9 @@ function ProfileScreen({ route }: any) {
                         : <Loader />}
                     data={posts}
                     renderItem={renderItem}
+                    scrollIndicatorInsets={Platform.OS === "ios" ? {
+                        right: 1
+                    } : undefined}
                     keyExtractor={item => item.post_id}
                     ListFooterComponent={!loading && loader && <Loader /> || undefined}
                 /> : <Loader />

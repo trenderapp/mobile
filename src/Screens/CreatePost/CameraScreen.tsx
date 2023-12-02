@@ -207,7 +207,7 @@ export default function CameraPage({ route: { params } }: any): React.ReactEleme
         setIsPressingButton={setIsPressingButton}
       />
 
-      <View style={[styles.leftButtonRow, { marginTop: Platform.OS === "ios" ? 20 : 0 }]}>
+      <View style={styles.leftButtonRow}>
         <IconButton mode='contained' icon="chevron-left" onPress={() => navigation.replace("PostCreatorScreen", params)} />
       </View>
 
@@ -256,11 +256,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   leftButtonRow: {
+    marginTop: Platform.OS === "ios" ? 20 : 0,
     position: "absolute",
     left: 20,
     top: 20,
   },
   rightButtonRow: {
+    marginTop: Platform.OS === "ios" ? 20 : 0,
     position: 'absolute',
     right: 20,
     top: 20,

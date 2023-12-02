@@ -528,8 +528,6 @@ PODS:
     - React-Core
   - react-native-safe-area-context (4.7.4):
     - React-Core
-  - react-native-splash-screen (3.3.0):
-    - React-Core
   - react-native-video (6.0.0-beta.0):
     - React-Core
     - react-native-video/Video (= 6.0.0-beta.0)
@@ -813,7 +811,6 @@ DEPENDENCIES:
   - react-native-mmkv (from `../node_modules/react-native-mmkv`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
-  - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-video (from `../node_modules/react-native-video`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
@@ -963,8 +960,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-pager-view"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
-  react-native-splash-screen:
-    :path: "../node_modules/react-native-splash-screen"
   react-native-video:
     :path: "../node_modules/react-native-video"
   react-native-webview:
@@ -1103,7 +1098,6 @@ SPEC CHECKSUMS:
   react-native-mmkv: e97c0c79403fb94577e5d902ab1ebd42b0715b43
   react-native-pager-view: 02a5c4962530f7efc10dd51ee9cdabeff5e6c631
   react-native-safe-area-context: 2cd91d532de12acdb0a9cbc8d43ac72a8e4c897c
-  react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   react-native-video: e9e6fe3ab11d515bd79abd5d81e07db538943c56
   react-native-webview: 88293a0f23eca8465c0433c023ec632930e644d0
   React-NativeModulesApple: b6868ee904013a7923128892ee4a032498a1024a
