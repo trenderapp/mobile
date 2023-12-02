@@ -11,7 +11,7 @@ import { SinglePostContext } from "../../../PostContext.js";
 import { posturl } from "../../../../../Services/constante";
 
 type SectionProps = {
-    modalVisible: boolean, 
+    modalVisible: boolean,
     setModalVisible: () => any
 }
 
@@ -24,14 +24,14 @@ function User({ modalVisible, setModalVisible }: SectionProps) {
 
     const block = async () => {
         const response = await client.user.block.create(info.from.user_id);
-        if(response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string })
+        if (response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string })
         Toast.show({ text1: t("commons.success") as string })
         setModalVisible()
     }
 
     const report = async () => {
         const response = await client.post.report(info.post_id, 1);
-        if(response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string })
+        if (response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string })
         Toast.show({ text1: t("commons.success") as string })
         setModalVisible()
     }
@@ -49,8 +49,19 @@ function User({ modalVisible, setModalVisible }: SectionProps) {
         });
     }
 
+    const download = async () => {
+        console.log(info);
+
+    }
+
     return (
         <BottomModal onSwipeComplete={() => setModalVisible()} dismiss={() => setModalVisible()} isVisible={modalVisible}>
+            {
+                /**
+                 * <Button uppercase onPress={() => download()} icon="download">{t("commons.download")}</Button>
+            <Divider bold theme={{ colors: { outlineVariant: colors.bg_primary } }} />
+                 */
+            }
             <Button uppercase onPress={() => onShare()} icon="share-variant">{t("posts.share")}</Button>
             <Divider bold theme={{ colors: { outlineVariant: colors.bg_primary } }} />
             <Button uppercase onPress={() => copyPostID()} icon="content-copy">{t("posts.copy_post_id")}</Button>

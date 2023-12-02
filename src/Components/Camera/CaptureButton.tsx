@@ -239,7 +239,7 @@ const _CaptureButton: React.FC<Props> = ({
             <Reanimated.View style={styles.button}>
               <Reanimated.View style={[{
                 borderRadius: CAPTURE_BUTTON_SIZE / 2,
-                backgroundColor: '#e34077',
+                backgroundColor: '#E34077',
               }, buttonAnimationStyle]} />
             </Reanimated.View>
           </Reanimated.View>

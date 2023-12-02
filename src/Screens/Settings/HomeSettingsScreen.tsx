@@ -23,8 +23,8 @@ function HomeSettingsScreen() {
         getInfo()
     }, [])
 
-    const copyText = (text: string) => {
-        Clipboard.setString(text);
+    const copyText = () => {
+        Clipboard.setString(`App informations : ${JSON.stringify(appInfo)}`);
         Toast.show({ text1: t(`commons.success`) as string });
     }
 
@@ -46,7 +46,7 @@ function HomeSettingsScreen() {
                     textDecorationLine: "underline"
                 }}>{t("settings.my_app")}:</Text>
                 <HomeButtonSection onPress={() => navigation.push("LanguageThemeScreen")} t={t("settings.lang_and_theme")} />
-                {appInfo && <HomeButtonSection onPress={() => copyText(`App version : ${appInfo.version} (${appInfo.build_number})`)} t={`${t("settings.app_version")} : ${appInfo.version} (${appInfo.build_number})`} icon={"content-copy"} />}
+                {appInfo && <HomeButtonSection onPress={() => copyText()} t={`${t("settings.app_version")} : ${appInfo.version} (${appInfo.build_number})`} icon={"content-copy"} />}
                 <Br />
                 <Text variant='bodyLarge' style={{
                     textDecorationLine: "underline"

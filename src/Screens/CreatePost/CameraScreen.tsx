@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useRef, useState, useCallback, useMemo } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity as PressableOpacity, Platform } from 'react-native'
+import { StyleSheet, View, TouchableOpacity as PressableOpacity, Platform } from 'react-native'
 import { PinchGestureHandler, PinchGestureHandlerGestureEvent, TapGestureHandler } from 'react-native-gesture-handler'
 import { Camera, CameraRuntimeError, PhotoFile, useCameraDevice, useCameraFormat, VideoFile } from 'react-native-vision-camera'
 import { MAX_ZOOM_FACTOR, SCREEN_HEIGHT, SCREEN_WIDTH } from '../../Components/Camera/Constants'
@@ -9,9 +9,8 @@ import { useEffect } from 'react'
 import { useIsForeground } from '../../Components/Camera/useIsForeground'
 import { CaptureButton } from '../../Components/Camera/CaptureButton'
 import { useIsFocused } from '@react-navigation/core'
-import { IconButton } from 'react-native-paper'
-import SvgElement from '../../Components/Elements/Svg'
-import { useNavigation } from '../../Components/Container';
+import { IconButton, Text } from 'react-native-paper'
+import { useNavigation, useTheme } from '../../Components/Container';
 
 const ReanimatedCamera = Reanimated.createAnimatedComponent(Camera)
 Reanimated.addWhitelistedNativeProps({
@@ -23,6 +22,7 @@ const SCALE_FULL_ZOOM = 3
 export default function CameraPage({ route: { params } }: any): React.ReactElement {
 
   const camera = useRef<Camera>(null)
+  const { colors } = useTheme();
   const navigation = useNavigation();
 
   const [isCameraInitialized, setIsCameraInitialized] = useState(false)
@@ -208,19 +208,29 @@ export default function CameraPage({ route: { params } }: any): React.ReactEleme
       />
 
       <View style={[styles.leftButtonRow, { marginTop: Platform.OS === "ios" ? 20 : 0 }]}>
-        <SvgElement name={"chevron-left"} noColor size={24} onPress={() => navigation.replace("PostCreatorScreen", params)} />
+        <IconButton mode='contained' icon="chevron-left" onPress={() => navigation.replace("PostCreatorScreen", params)} />
       </View>
 
       <View style={styles.rightButtonRow}>
-        {<IconButton icon="camera-retake" onPress={onFlipCameraPressed} />}
-        {supportsFlash && <IconButton icon={flash === 'on' ? 'flash' : 'flash-off'} onPress={onFlashPressed} />}
+        <IconButton mode='contained' icon="camera-retake" onPress={onFlipCameraPressed} />
+        {supportsFlash && <IconButton mode='contained' icon={flash === 'on' ? 'flash' : 'flash-off'} onPress={onFlashPressed} />}
         {supports60Fps && (
-          <PressableOpacity style={styles.button} onPress={() => setTargetFps((t) => (t === 30 ? 60 : 30))}>
-            <Text style={styles.text}>{`${targetFps}\nFPS`}</Text>
+          <PressableOpacity style={{
+            margin: 6,
+            overflow: 'hidden',
+            elevation: 0,
+            width: 40,
+            height: 40,
+            borderRadius: 40 / 2,
+            backgroundColor: colors.bg_primary,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }} onPress={() => setTargetFps((t) => (t === 30 ? 60 : 30))}>
+            <Text style={{ textAlign: 'center', fontSize: 11, fontWeight: "bold", color: colors.fa_primary }}>{`${targetFps}\nFPS`}</Text>
           </PressableOpacity>
         )}
-        {supportsHdr && <IconButton icon={enableHdr ? 'hdr' : 'hdr-off'} onPress={() => setEnableHdr((h) => !h)} />}
-        {canToggleNightMode && <IconButton icon={enableNightMode ? 'moon' : 'moon-outline'} onPress={() => setEnableNightMode(!enableNightMode)} />}
+        {supportsHdr && <IconButton mode='contained' icon={enableHdr ? 'hdr' : 'hdr-off'} onPress={() => setEnableHdr((h) => !h)} />}
+        {canToggleNightMode && <IconButton mode='contained' icon={enableNightMode ? 'moon' : 'moon-outline'} onPress={() => setEnableNightMode(!enableNightMode)} />}
       </View>
     </View>
   )
@@ -237,7 +247,7 @@ const styles = StyleSheet.create({
     bottom: 30,
   },
   button: {
-    marginBottom: 30,
+    margin: 6,
     width: 30,
     height: 30,
     borderRadius: 30 / 2,
@@ -254,11 +264,5 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 20,
     top: 20,
-  },
-  text: {
-    color: 'white',
-    fontSize: 11,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
+  }
 })
