@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   leftButtonRow: {
+    marginTop: Platform.OS === "ios" ? 20 : 0,
     position: "absolute",
     left: 20,
     top: 20,

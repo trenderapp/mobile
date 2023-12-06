@@ -214,7 +214,7 @@ export default function CameraPage({ route: { params } }: any): React.ReactEleme
       <View style={styles.rightButtonRow}>
         <IconButton mode='contained' icon="camera-retake" onPress={onFlipCameraPressed} />
         {supportsFlash && <IconButton mode='contained' icon={flash === 'on' ? 'flash' : 'flash-off'} onPress={onFlashPressed} />}
-        {supports60Fps && (
+        {/*supports60Fps && (
           <PressableOpacity style={{
             margin: 6,
             overflow: 'hidden',
@@ -228,7 +228,7 @@ export default function CameraPage({ route: { params } }: any): React.ReactEleme
           }} onPress={() => setTargetFps((t) => (t === 30 ? 60 : 30))}>
             <Text style={{ textAlign: 'center', fontSize: 11, fontWeight: "bold", color: colors.fa_primary }}>{`${targetFps}\nFPS`}</Text>
           </PressableOpacity>
-        )}
+        )*/}
         {supportsHdr && <IconButton mode='contained' icon={enableHdr ? 'hdr' : 'hdr-off'} onPress={() => setEnableHdr((h) => !h)} />}
         {canToggleNightMode && <IconButton mode='contained' icon={enableNightMode ? 'moon' : 'moon-outline'} onPress={() => setEnableNightMode(!enableNightMode)} />}
       </View>
