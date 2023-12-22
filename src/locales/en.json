@@ -386,7 +386,7 @@
         "14000": "Subscription ID not found",
         "14001": "Coupon ID not found",
         "verify_fields": "Please verify that all fields are correctly filled",
-        "sending_form": "Sending the form...",
+        "sending_form": "Sending ...",
         "different_password": "Passwords are different",
         "password_security": "Enter at least 8 characters for the password",
         "email_verified": "Email successfully verified"

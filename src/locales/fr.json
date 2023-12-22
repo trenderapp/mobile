@@ -392,7 +392,7 @@
         "14001": "Identifiant du coupon non trouvé",
 
         "verify_fields": "Verifier que tout les champs sont bien remplis",
-        "sending_form": "Envoi du formulaire ...",
+        "sending_form": "Envoi en cours ...",
         "different_password": "Les mots de passe sont différents",
         "password_security": "Entrer au moins 8 caractères pour le mot de passe",
         "email_verified": "Email vérifié avec succès",
