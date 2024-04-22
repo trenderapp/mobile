@@ -45,8 +45,8 @@ function FollowScreen({ route }: any) {
         if (response.error) return Toast.show({ text1: t(`errors.${response.error.code}`) as string });
         if (!response.data) return;
         if (response.data.length < 1) return;
-        if (response.pagination_key) setPaginationKey(response.pagination_key);
-        setInfo(info.concat(response.data));
+        if(response.pagination_key) setPaginationKey(response.pagination_key);
+        setInfo([...info, ...response.data])
     }
 
     const renderItem = useCallback(({ item }: { item: FollowInterface.followInformationsResponse, index?: number }) => {

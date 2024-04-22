@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Text, Card, Portal, Dialog } from 'react-native-paper';
 import SettingsContainer from '../../Components/Container/SettingsContainer';
-import { useClient, useNavigation, useTheme } from '../../Components/Container';
+import { useClient, useTheme } from '../../Components/Container';
 import { useTranslation } from 'react-i18next';
 import { ScrollView } from 'react-native';
 import Toast from 'react-native-toast-message';
 import NormalCard from '../../Components/Subscriptions/NormalCard';
 import StandardCard from '../../Components/Subscriptions/StandardCard';
-import PremiumCard from '../../Components/Subscriptions/PremiumCard';
 import EliteCard from '../../Components/Subscriptions/EliteCard';
 import { SubscriptionInterface } from 'trender-client';
 import { openURL } from '../../Services';
 
 function SubscriptionScreen() {
 
-    const navigation = useNavigation()
     const { t } = useTranslation();
     const { client, user } = useClient();
     const { colors } = useTheme();
@@ -81,7 +79,7 @@ function SubscriptionScreen() {
                     </Card.Actions>
                 </Card>
                 <StandardCard subs={subscriptions ? subscriptions.filter(s => s.premium_type === 1) : undefined} />
-                <PremiumCard subs={subscriptions ? subscriptions.filter(s => s.premium_type === 2) : undefined} />
+                { /*<PremiumCard subs={subscriptions ? subscriptions.filter(s => s.premium_type === 2) : undefined} />*/ }
                 <EliteCard subs={subscriptions ? subscriptions.filter(s => s.premium_type === 3) : undefined} />
                 <NormalCard />
             </ScrollView>

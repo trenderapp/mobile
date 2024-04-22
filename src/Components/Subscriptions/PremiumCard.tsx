@@ -74,7 +74,6 @@ function PremiumCard({ subs }: sectionProps) {
                 <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.premium_2")} left={props => <List.Icon {...props} icon="adjust" />} />
                 <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.premium_3")} left={props => <List.Icon {...props} icon="adjust" />} />
                 <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.premium_4")} left={props => <List.Icon {...props} icon="adjust" />} />
-                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.premium_5")} left={props => <List.Icon {...props} icon="adjust" />} />
             </Card.Content>
             {
                 user.premium_type === 2 ? (

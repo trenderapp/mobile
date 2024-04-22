@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Text, Card, List, Dialog, Portal, RadioButton } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
-import Toast from 'react-native-toast-message';
 import { useClient, useTheme, useNavigation } from '../../Components/Container';
-import { axiosInstance } from '../../Services';
 import { SubscriptionInterface } from 'trender-client';
 
 type sectionProps = {
@@ -76,6 +74,7 @@ function StandardCard({ subs }: sectionProps) {
                 <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.standard_2")} left={props => <List.Icon {...props} icon="adjust" />} />
                 <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.standard_3")} left={props => <List.Icon {...props} icon="adjust" />} />
                 <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.standard_4")} left={props => <List.Icon {...props} icon="adjust" />} />
+                <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.premium_5")} left={props => <List.Icon {...props} icon="adjust" />} />
                 {
                     // <List.Item titleStyle={{ fontSize: 14 }} title={t("subscription.standard_5")} left={props => <List.Icon {...props} icon="adjust" />} />
                 }
