@@ -59,7 +59,7 @@ export const DarkGreenTheme = {
 export const DarkPinkTheme = {
     colors: {
         bg_primary: "#23232e",
-        bg_primary_opacity: "##242433",
+        bg_primary_opacity: "#242433",
         bg_secondary: "#141418",
         bg_third: "#1E202C",
         text_normal: "#dddddd",
