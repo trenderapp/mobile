@@ -15,6 +15,7 @@ import { connect, useDispatch } from 'react-redux';
 import { RootState, useAppSelector } from '../../Redux';
 import { changeLastMessageGuildList, modifyGuildList } from '../../Redux/guildList/action';
 import { addGuildMessages, addScrollGuildMessages, initGuildMessages } from '../../Redux/guildMessages/action';
+import { RefreshControl } from 'react-native';
 
 const formatMessages = (messages: MessageInterface.fetchMessageResponseInterface[], guild_id: string, client: Client): MessageType.Any[] => messages.map(((m) => {
   return {
@@ -81,8 +82,11 @@ const MessageScreen = ({ route }: any) => {
   }, [notification])
 
   const onBottom = async () => {
+    console.log("oui");
+    
     const request = await client.message.fetch(params.guild_id, { pagination_key: pagination_key });
-    if(request.data) {
+
+    if(request?.data && request?.data?.length > 0) {
       dispatch(addScrollGuildMessages(formatMessages(request.data, params.guild_id, client)))
       if(request.pagination_key) setPaginationKey(request.pagination_key)
     }

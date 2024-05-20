@@ -11,7 +11,7 @@ export default ({ theme }: { theme: Theme }) =>
     emptyComponentContainer: {
       alignItems: 'center',
       marginHorizontal: 24,
-      transform: [{ rotateX: '180deg' }],
+      transform: [{ rotateX: '180deg' }, { rotateY: '180deg' }],
     },
     emptyComponentTitle: {
       ...theme.fonts.emptyChatPlaceholderTextStyle,

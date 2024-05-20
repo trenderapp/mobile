@@ -1,5 +1,7 @@
 /** Base chat l10n containing all required properties to provide localized copy. */
-export const l10n = {
+export const l10n: {
+  [x: string]: any
+} = {
   en: {
     attachmentButtonAccessibilityLabel: 'Send media',
     emptyChatPlaceholder: 'No messages here yet',

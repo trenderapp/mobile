@@ -12,8 +12,9 @@ import {
   GestureResponderHandlers,
   InteractionManager,
   LayoutAnimation,
+  RefreshControlProps,
   Text,
-  View,
+  View
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
@@ -76,12 +77,15 @@ export interface ChatProps extends ChatTopLevelProps {
   isLastPage?: boolean
   /** Override the default localized copy. */
   l10nOverride?: Partial<Record<keyof typeof l10n[keyof typeof l10n], string>>
-  locale?: keyof typeof l10n | string
+  locale?: string
   messages: MessageType.Any[]
   /** Used for pagination (infinite scroll). Called when user scrolls
    * to the very end of the list (minus `onEndReachedThreshold`).
    * See {@link ChatProps.flatListProps} to set it up. */
   onEndReached?: () => Promise<void>
+
+  refreshControl?: React.ReactElement<RefreshControlProps>
+
   /** Show user names for received messages. Useful for a group chat. Will be
    * shown only on text messages. */
   showUserNames?: boolean
@@ -114,6 +118,7 @@ export const Chat = ({
   messages,
   onAttachmentPress,
   onEndReached,
+  refreshControl,
   onMessageLongPress,
   onMessagePress,
   onPreviewDataFetched,
@@ -336,7 +341,8 @@ export const Chat = ({
         ListHeaderComponent={<View />}
         ListHeaderComponentStyle={header}
         maxToRenderPerBatch={6}
-        onEndReachedThreshold={0.75}
+        onEndReachedThreshold={0.25}
+        refreshControl={refreshControl}
         style={flatList}
         showsVerticalScrollIndicator={false}
         {...unwrap(flatListProps)}

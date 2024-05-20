@@ -63,7 +63,7 @@ const DisplayPosts: SectionProps = ({
     };
 
     useEffect(() => {
-        if (informations.attached_post_id && comments) loadAttachedPosts(informations.attached_post_id);
+        if (informations.attached_post_id && comments) loadAttachedPosts(informations.attached_post_id);        
     }, [informations]);
 
     const PinnedView = () => (
@@ -123,13 +123,11 @@ const DisplayPosts: SectionProps = ({
                 </TouchableOpacity>
                 {informations.shared_post_id && !is_share && (
                     <View style={{ margin: 10, borderColor: colors.bg_primary, borderWidth: 1, borderRadius: 8 }}>
-                        {informations.shared_post && informations.shared_user ? (
+                        {informations.shared_post ? (
                             <DisplayPosts is_share={true} informations={{
-                                from: informations.shared_user,
                                 ...informations.shared_post as any
                             }} />
-                        ) : typeof informations.shared_user === "object" ? <Button onPress={() => navigation?.push("PostStack", { screen: "PostScreen", params: { post_id: informations.shared_post_id } })}>{t("posts.hidden")}</Button>
-                            : <Button>{t("posts.unavailable")}</Button>
+                        ) : <Button>{t("posts.unavailable")}</Button>
                         }
                     </View>
                 )}

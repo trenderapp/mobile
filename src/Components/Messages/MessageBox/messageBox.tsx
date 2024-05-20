@@ -6,7 +6,7 @@ import { Text } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 import { BottomModal, ModalSection } from "../../../Other";
 import SvgElement from "../../Elements/Svg";
-import { MessageType } from "@flyerhq/react-native-chat-ui";
+import { MessageType } from "../../Chat";
 
 function MessageBox({ info, modalVisible, setModalVisible }: {
     info: MessageType.Text;
@@ -30,12 +30,16 @@ function MessageBox({ info, modalVisible, setModalVisible }: {
 
     return (
         <BottomModal onSwipeComplete={() => setModalVisible()} dismiss={() => setModalVisible()} isVisible={modalVisible}>
-            <ModalSection onPress={() => copyText(info.id)}>
+            {
+                /**
+                 *             <ModalSection onPress={() => copyText(info.id)}>
                 <>
                     <SvgElement name="copy" margin={5} size={22} />
                     <Text>{t("messages.copy_id")}</Text>
                 </>
             </ModalSection>
+                 */
+            }
             <ModalSection onPress={() => copyText(info.text)}>
                 <>
                     <SvgElement name="copy" margin={5} size={22} />

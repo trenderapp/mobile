@@ -7,11 +7,12 @@ import { useTheme, useNavigation } from "../../../Container";
 import { openURL } from "../../../../Services";
 import { SinglePostContext } from "../../../Posts/PostContext.js";
 import { UserInterface } from "trender-client";
+import { NativeSyntheticEvent, TextLayoutEventData } from "react-native";
 
 type SectionProps = React.FC<{
     content: string,
     noBr?: boolean,
-    maxLine?: number,
+    onTextLayout?: (event: NativeSyntheticEvent<TextLayoutEventData>) => void,
 }>
 
 const RE_TWEMOJI = /:(\w+):/gi;
@@ -24,7 +25,7 @@ const RE_BR = /\n/g;
 export const RE_MENTIONS = /@[A-z0-9]{1,33}/gi;
 export const RE_LINKS = /(https?:\/\/[^\s]+)/gi;
 
-const Renderer: SectionProps = ({ content, noBr, maxLine }) => {
+const Renderer: SectionProps = ({ content, noBr, onTextLayout }) => {
 
     const ctx = useContext(SinglePostContext);
     const info = ctx?.info;
@@ -38,7 +39,7 @@ const Renderer: SectionProps = ({ content, noBr, maxLine }) => {
     const enter = content.split("\n");
     
     return (
-        <Text>
+        <Text onTextLayout={onTextLayout}>
             {
                 enter.map((text, idx) =>
                     <Text key={idx}>{noBr && "\n"}{text.trim().split(" ").map((text, idx) => {
