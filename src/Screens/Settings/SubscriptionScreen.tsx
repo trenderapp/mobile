@@ -25,7 +25,7 @@ function SubscriptionScreen() {
     const openDashboardPage = async () => {
         if (loading) return;
         setLoading(true)
-        const request = await client.subscription.dashboard(user.user_id);
+        const request = await client.subscription.dashboard();
 
         const response = request;
 
