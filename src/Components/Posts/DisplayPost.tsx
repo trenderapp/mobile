@@ -5,6 +5,8 @@ import { Button, Divider, Text, Card } from "react-native-paper";
 import { PostInterface } from "trender-client";
 import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { connect } from 'react-redux';
+import RNScreenshotPrevent, { addListener } from 'react-native-screenshot-prevent';
+import Toast from 'react-native-toast-message';
 
 import { RootState, useAppDispatch, useAppSelector } from '../../Redux';
 import { addPostTempSaveTrends } from '../../Redux/postTempSaveFeed/action';
@@ -61,9 +63,8 @@ const DisplayPosts: SectionProps = ({
             return setAttachedPost(response.data);
         }
     };
-
     useEffect(() => {
-        if (informations.attached_post_id && comments) loadAttachedPosts(informations.attached_post_id);        
+        if (informations.attached_post_id && comments) loadAttachedPosts(informations.attached_post_id);
     }, [informations]);
 
     const PinnedView = () => (
@@ -79,15 +80,16 @@ const DisplayPosts: SectionProps = ({
         <View style={{
             backgroundColor: colors.bg_primary,
             borderWidth: 1,
-            borderRadius: 60, 
-            padding: 3, 
-            paddingLeft: 6, 
+            borderRadius: 60,
+            padding: 3,
+            paddingLeft: 6,
             marginLeft: 5,
         }}>
-            <Text variant="labelSmall" style={{ 
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center" }}>{t(`categories.${c}`)}</Text>
+            <Text variant="labelSmall" style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center"
+            }}>{t(`categories.${c}`)}</Text>
         </View>
     )
 
@@ -118,7 +120,7 @@ const DisplayPosts: SectionProps = ({
                     {pined && <PinnedView />}
 
                     <Postheader lefComponent={<LeftComponent />} info={informations.from} post_id={informations.post_id} created_at={informations.created_at} />
-                    { informations.categories && informations.categories.length > 0 && <View style={[styles.row, { marginTop: -5, marginLeft: 5 }]}>{informations.categories.map((c, idx) => <CategoriesBox key={idx} c={c} />)}</View> }
+                    {informations.categories && informations.categories.length > 0 && <View style={[styles.row, { marginTop: -5, marginLeft: 5 }]}>{informations.categories.map((c, idx) => <CategoriesBox key={idx} c={c} />)}</View>}
                     <PostNormal maxLines={comments ? undefined : 5} />
                 </TouchableOpacity>
                 {informations.shared_post_id && !is_share && (

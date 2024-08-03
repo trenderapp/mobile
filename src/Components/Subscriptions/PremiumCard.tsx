@@ -82,7 +82,7 @@ function PremiumCard({ subs }: sectionProps) {
                     </Card.Actions>
                 ) : (
                     <Card.Actions>
-                    {subs && subs[0].active ? <Button onPress={() => setVisible(true)}>{t("subscription.subscribe")}</Button> : <Button>{t("subscription.coming_soon")}</Button>}
+                    {subs && subs[0]?.active ? <Button onPress={() => setVisible(true)}>{t("subscription.subscribe")}</Button> : <Button>{t("subscription.coming_soon")}</Button>}
                 </Card.Actions>
                 )
             }

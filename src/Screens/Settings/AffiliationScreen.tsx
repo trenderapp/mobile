@@ -15,6 +15,7 @@ function AffiliationScreen() {
     const [affiliation_code, setAffiliate] = useState("");
     const [myCode, setCode] = useState(" ");
     const [affiliate_number, setAffiliateNumber] = useState(0);
+    const [isEditing, setIsEditing] = useState(false);
     
     async function getData() {
         const request = await client.affiliation.fetch();
@@ -29,7 +30,7 @@ function AffiliationScreen() {
     }, [])
 
     const registerAffiliate = async () => {
-        if(affiliation_code.length < 3) return;
+        Keyboard.dismiss()
         const request = await client.affiliation.set(affiliation_code);
         if(request.error) return Toast.show({ text1: t(`errors.${request.error.code}`) as string});
         Toast.show({ text1: t(`commons.success`) as string });
@@ -43,6 +44,7 @@ function AffiliationScreen() {
     }
 
     const deleteCode  = async () => {
+        Keyboard.dismiss()
         const request = await client.affiliation.delete();
         if(request.error) return Toast.show({ text1: t(`errors.${request.error.code}`) as string});
         Toast.show({ text1: t(`commons.success`) as string });
@@ -68,13 +70,16 @@ function AffiliationScreen() {
             <TextInput
                 style={{ margin: 10 }}
                 label={`${t("settings.affiliation_code")}`}
-                autoCapitalize="none"
+                autoCapitalize="none" 
                 value={affiliation_code}
+                onFocus={() => setIsEditing(true)}
+                onEndEditing={() => setIsEditing(false)}
                 right={<TextInput.Icon disabled={affiliation_code.length < 3 && affiliation_code.length !== 0} onPress={() => {
-                    Keyboard.dismiss()
-                    if(affiliation_code.length === 0) return deleteCode()
-                    else registerAffiliate()
-                }} icon={"content-save"} color={colors.text_normal} />}
+                    if(isEditing) return setAffiliate("")
+                    // if(affiliation_code.length === 0) return setAffiliate("")
+                    else if(affiliation_code.length > 0) return registerAffiliate()
+                        else return deleteCode()
+                }} icon={isEditing ? "close-circle" : "content-save"} color={colors.text_normal} />}
                 onChangeText={(text) => setAffiliate(text)}
             />
             <Text style={{ margin: 10 }}>{t("settings.affiliate_use_code", {

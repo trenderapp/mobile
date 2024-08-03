@@ -385,6 +385,8 @@
         "13001": "Cannot use this code",
         "14000": "Subscription ID not found",
         "14001": "Coupon ID not found",
+        "14002": "Create custom Subscription before starting",
+        "14003": "Active custom Subscription before starting",
         "verify_fields": "Please verify that all fields are correctly filled",
         "sending_form": "Sending ...",
         "different_password": "Passwords are different",

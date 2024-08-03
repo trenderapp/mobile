@@ -390,6 +390,8 @@
         "13001": "Impossible d'utiliser ce code",
         "14000": "Identifiant de l'abonnement non trouvé",
         "14001": "Identifiant du coupon non trouvé",
+        "14002": "Create custom Subscription before starting",
+        "14003": "Active custom Subscription before starting",
 
         "verify_fields": "Verifier que tout les champs sont bien remplis",
         "sending_form": "Envoi en cours ...",

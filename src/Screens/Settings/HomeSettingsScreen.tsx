@@ -37,10 +37,8 @@ function HomeSettingsScreen() {
 
                 { Platform.OS !== "ios" && <HomeButtonSection onPress={() => navigation?.push("SubscriptionScreen")} t={t("settings.subscriptions")} /> }
                 <HomeButtonSection onPress={() => navigation?.push("CustomSubscriptionScreen")} t={t("settings.custom_subscriptions")} />
-                <HomeButtonSection onPress={() => navigation.push("LanguageSpokenScreen")} t={t("settings.language_spoken")} />
-
                 <HomeButtonSection onPress={() => navigation.push("AffiliationScreen")} t={t("settings.affiliation")} />
-                <HomeButtonSection onPress={() => navigation.push("SessionScreen")} t={t("settings.sessions")} />
+                <HomeButtonSection onPress={() => navigation.push("LanguageSpokenScreen")} t={t("settings.language_spoken")} />
                 <Br />
                 <Text variant='bodyLarge' style={{
                     textDecorationLine: "underline"
@@ -51,6 +49,7 @@ function HomeSettingsScreen() {
                 <Text variant='bodyLarge' style={{
                     textDecorationLine: "underline"
                 }}>{t("settings.my_security")}:</Text>
+                <HomeButtonSection onPress={() => navigation.push("SessionScreen")} t={t("settings.sessions")} />
                 <HomeButtonSection onPress={() => navigation.push("BlockedScreen")} t={t("settings.blocked")} />
                 <HomeButtonSection onPress={() => navigation.push("SecurityScreen")} t={t("settings.security")} />
             </ScrollView>

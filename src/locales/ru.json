@@ -385,6 +385,9 @@
         "13001": "Невозможно использовать этот код",
         "14000": "Идентификатор подписки не найден",
         "14001": "Идентификатор купона не найден",
+        "14002": "Create custom Subscription before starting",
+        "14003": "Active custom Subscription before starting",
+        
         "verify_fields": "Убедитесь, что все поля заполнены правильно",
         "sending_form": "Отправка ...",
         "different_password": "Пароли отличаются",
