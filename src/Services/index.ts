@@ -129,19 +129,19 @@ export const getPermissions = async () => {
 
 export const cguLink = (language: string) => {
   let lang = "https://cdn.trenderapp.com/assets/legal/en/terms_of_use.pdf"
-  if(language === "fr") lang = "https://cdn.trenderapp.com/assets/legal/fr/terms_of_use.pdf"
+  if(language === "fr") lang = "https://cdn.trenderapp.com/assets/legal/fr/conditions_generales_utilisations.pdf"
   return lang;
 }
 
 export const cgvLink = (language: string) => {
   let lang = "https://cdn.trenderapp.com/assets/legal/en/terms_of_sales.pdf"
-  if(language === "fr") lang = "https://cdn.trenderapp.com/assets/legal/fr/terms_of_sales.pdf"
+  if(language === "fr") lang = "https://cdn.trenderapp.com/assets/legal/fr/conditions_generales_ventes.pdf"
   return lang;
 }
 
 export const privacyLink = (language: string) => {
-  let lang = "https://cdn.trenderapp.com/assets/legal/en/privacy.pdf"
-  if(language === "fr") lang = "https://cdn.trenderapp.com/assets/legal/fr/privacy.pdf"
+  let lang = "https://cdn.trenderapp.com/assets/legal/en/privacy_policy.pdf"
+  if(language === "fr") lang = "https://cdn.trenderapp.com/assets/legal/fr/politique_confidentialite.pdf"
   return lang;
 }
 
