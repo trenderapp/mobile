@@ -8,7 +8,7 @@ import { currencyType } from 'trender-client/Managers/Interfaces/Subscription';
 import dayjs from 'dayjs';
 
 import SettingsContainer from '../../Components/Container/SettingsContainer';
-import { useClient, useTheme } from '../../Components/Container';
+import { useClient, useNavigation, useTheme } from '../../Components/Container';
 import { Loader } from '../../Other';
 import CustomSubscriptionCreateCard from '../../Components/Subscriptions/CustomCreateCard';
 import { messageFormatDate, openURL, subscriptionCurrencyArray } from '../../Services';
@@ -25,7 +25,7 @@ const convertToFloat = (inputValue: string) => {
 
     // Convertit la chaîne en nombre à virgule
     const floatValue = parseFloat(trimmedValue.replace(',', '.'));
-    
+
     return isNaN(floatValue) ? 3 : floatValue;
 };
 
@@ -36,6 +36,7 @@ function Customsubscriptioncreen() {
     const { colors } = useTheme();
     const [loading, setLoading] = useState<boolean>(false);
     const [visible, setVisible] = useState<boolean>(false);
+    const [renewVisible, setRenewVisible] = useState<boolean>(false);
     const [loadingActivation, setLoadingActivation] = useState<boolean>(false);
     const [subscription, setsubscription] = useState<getUserSubscriptionResponseInterface | undefined>(undefined)
     const [subscriptions, setSubscriptions] = useState<getUserActiveSubscriptionInterface[]>()
@@ -45,8 +46,11 @@ function Customsubscriptioncreen() {
         name: "usd"
     })
     const [active, setCustomActive] = useState<boolean>(false);
+    
+    const navigation = useNavigation();
 
     const hideDialog = () => setVisible(false);
+    const hideDialogRenew = () => setRenewVisible(false);
 
     const linkConnectAccount = async () => {
         setLoadingActivation(true)
@@ -78,7 +82,7 @@ function Customsubscriptioncreen() {
     const sendInformations = async () => {
         if (!subscription) return;
         setLoading(true)
-        
+
         const request = await client.subscription.custom.createAndUpdate({
             active: subscription.active,
             currency: currency.name as currencyType,
@@ -86,7 +90,7 @@ function Customsubscriptioncreen() {
         });
 
         setLoading(false)
-        if(request.error) return Toast.show({ text1: t(`errors.${request.error.code}`) as string });
+        if (request.error) return Toast.show({ text1: t(`errors.${request.error.code}`) as string });
         Toast.show({ text1: t(`commons.success`) as string });
         return;
     }
@@ -105,8 +109,8 @@ function Customsubscriptioncreen() {
             user_id: user.user_id,
             user_price: 0
         });
-        const response = request.data;        
-        
+        const response = request.data;
+
         setCurrency({
             name: response?.currency ?? "usd",
             symbol: subscriptionCurrencyArray.find(c => c.name === response.currency)?.symbol ?? "$"
@@ -123,7 +127,7 @@ function Customsubscriptioncreen() {
     const getsubscriptions = async () => {
         const request = await client.subscription.custom.list();
         if (request.error || !request.data) return;
-        const response = request.data;        
+        const response = request.data;
         setSubscriptions(response);
     }
 
@@ -132,6 +136,13 @@ function Customsubscriptioncreen() {
         Toast.show({ text1: t(`commons.success`) as string });
         await getsubscriptions()
         hideDialog();
+    }
+
+    const renewSubscription = async (target_id: string) => {
+        await client.subscription.custom.renew(target_id);
+        Toast.show({ text1: t(`commons.success`) as string });
+        await getsubscriptions()
+        hideDialogRenew();
     }
 
     useEffect(() => {
@@ -146,6 +157,18 @@ function Customsubscriptioncreen() {
                 <Dialog.Actions>
                     <Button uppercase={false} onPress={() => hideDialog()}>{t("commons.cancel")}</Button>
                     <Button uppercase={false} loading={loading} onPress={() => cancelSubscription(item.subscription_info.subscription_id)}>{t("commons.continue")}</Button>
+                </Dialog.Actions>
+            </Dialog>
+        </Portal>
+    )
+
+    const ConfirmContinueSubscription = ({ item }: { item: getUserActiveSubscriptionInterface }) => (
+        <Portal>
+            <Dialog visible={renewVisible} onDismiss={hideDialogRenew}>
+                <Dialog.Title>{t("settings.renew_subscription")}</Dialog.Title>
+                <Dialog.Actions>
+                    <Button uppercase={false} onPress={() => hideDialogRenew()}>{t("commons.cancel")} ?</Button>
+                    <Button uppercase={false} loading={loading} onPress={() => renewSubscription(item.subscription_info.subscription_id)}>{t("commons.continue")}</Button>
                 </Dialog.Actions>
             </Dialog>
         </Portal>
@@ -176,13 +199,19 @@ function Customsubscriptioncreen() {
                         margin: 5
                     }}>
                         <ConfirmCancelSubscription item={item} />
+                        <ConfirmContinueSubscription item={item} />
                         <Card.Content>
-                            <UserInfo informations={item.from} onPress={undefined} full_width={undefined} noDescription={true} LeftComponent={undefined} />
+                            <UserInfo informations={item.from} onPress={() => navigation.push("ProfileStack", {
+                                screen: "ProfileScreen",
+                                params: {
+                                    nickname: item.from.nickname
+                                }
+                            })} full_width={undefined} noDescription={true} LeftComponent={undefined} />
                             <Text>{t("subscription.next_renew")} : {item.active ? messageFormatDate(dayjs(item.next_renew).format()).fullDate() : "-"}</Text>
-                            <Text>{t("subscription.price")} : {(item.subscription_info.user_price / 100).toFixed(2)} {subscriptionCurrencyArray.find(s => s.name === item.subscription_info.currency)?.symbol} /month</Text>
+                            <Text>{t("subscription.price")} : {(item.subscription_info.user_price / 100).toFixed(2)} {subscriptionCurrencyArray.find(s => s.name === item.subscription_info.currency)?.symbol} /{t("subscription.month").toLocaleLowerCase()}</Text>
                         </Card.Content>
                         <Card.Actions>
-                            <Button mode='elevated' theme={{ colors: { elevation: { level1: item.active ? colors.warning_color : undefined } } }} onPress={() => item.active ? setVisible(true) : undefined}>{item.active ? t("commons.cancel") : t("commons.canceled")}</Button>
+                            <Button mode='elevated' theme={{ colors: { elevation: { level1: item.active ? colors.warning_color : undefined } } }} onPress={() => item.active ? setVisible(true) : setRenewVisible(true)}>{item.active ? t("commons.cancel") : t("commons.canceled")}</Button>
                         </Card.Actions>
                     </Card>
                 )}

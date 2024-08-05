@@ -153,6 +153,7 @@
         "language_spoken": "Languages spoken",
         "fees_charged": "Fees charged",
         "cancel_subscription": "Cancel the subscription",
+        "renew_subscription": "Renew the subscription",
         "theme": "Theme",
         "language": "Language",
         
@@ -205,7 +206,7 @@
         "you_receive": "You receive",
         "my_subscriptions": "My subscriptions :",
         "no_subscriptions": "You didn't subscribe to an account",
-        "new_renew": "Renew",
+        "next_renew": "Renew",
 
         "recap": "Recap",
         "price": "Price",

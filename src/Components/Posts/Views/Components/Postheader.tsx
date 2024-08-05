@@ -7,7 +7,6 @@ import User from "./Menu/User";
 import styles from "../../../../Style/style";
 import { useClient, useNavigation } from "../../../Container";
 import { Avatar, Username } from "../../../Member";
-import { navigationProps } from "../../../../Services";
 import { GlobalInterface } from "trender-client";
 
 type SectionProps = {
