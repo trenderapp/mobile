@@ -5,7 +5,6 @@ import { Button, Divider, Text, Card } from "react-native-paper";
 import { PostInterface } from "trender-client";
 import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { connect } from 'react-redux';
-import RNScreenshotPrevent, { addListener } from 'react-native-screenshot-prevent';
 import Toast from 'react-native-toast-message';
 
 import { RootState, useAppDispatch, useAppSelector } from '../../Redux';
