@@ -49,8 +49,7 @@ const RegisterBirthdayAccept = ({ navigation, route }) => {
         setCaptcha(true)
     };
 
-    const onMessage = async (message) => {
-        const data = message.nativeEvent.data;
+    const onMessage = async (data) => {
         if (data === "cancel") return setCaptcha(false);
 
         setCaptcha(false)

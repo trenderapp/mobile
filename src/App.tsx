@@ -22,7 +22,7 @@ const App = () => {
 
   return (
     <StripeProvider
-      publishableKey={strip_public_key}
+      publishableKey={strip_public_key ?? ""}
       // urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
       merchantIdentifier="merchant.com.trenderapp" // required for Apple Pay
     >

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { connect } from 'react-redux';
 import { FlatList, RefreshControl, View, TouchableOpacity, SafeAreaView } from 'react-native';
 import { Appbar, Text } from 'react-native-paper';
-import { PostInterface } from 'trender-client';
+import { PostInterface, userFlags } from 'trender-client';
 
 import { useClient, useNavigation, useTheme } from '../../Components/Container';
 import DisplayPosts from '../../Components/Posts/DisplayPost';
@@ -23,7 +23,17 @@ const FollowsTrends = () => {
   const [loaderF, setLoaderF] = useState(false);
   const navigation = useNavigation();
   const { colors } = useTheme();
-  const { client } = useClient();
+  const { client, user } = useClient();
+
+  const displayPremiumUpgrade = () => {
+    const flags = client.user.flags(user.flags.toString());
+    if (flags.has(userFlags.TRENDER_EMPLOYEE)) return false;
+    if (flags.has(userFlags.PREMIUM_USER)) return false;
+    if (flags.has(userFlags.PREMIUM_2_USER)) return false;
+    if (flags.has(userFlags.PREMIUM_3_USER)) return false;
+    if (flags.has(userFlags.TRENDER_PARTNER)) return false;
+    return true;
+  }
 
   async function getData(refresh: boolean = false) {
     if (refresh) {
@@ -55,7 +65,7 @@ const FollowsTrends = () => {
     if (response.pagination_key) setPaginationKey(response.pagination_key);
     dispatch(addMainTrends(response.data));
   }
-  
+
   const flatListRef: any = useRef(undefined);
 
   const renderItem = useCallback(({ item }: { item: PostInterface.postResponseSchema }) => (
@@ -67,6 +77,11 @@ const FollowsTrends = () => {
   const CustomLeftComponent = () => {
     return (
       <View style={[styles.row, { justifyContent: "flex-end", marginRight: 10 }]}>
+        {
+          displayPremiumUpgrade() && <Appbar.Action color={colors.color_green} icon="account-arrow-up" onPress={() => navigation.navigate("SettingsStack", {
+            screen: "SubscriptionScreen"
+          })} />
+        }
         <TouchableOpacity onPress={() => navigation.navigate("NotificationScreen")} style={{ position: "relative" }}>
           <Appbar.Action color={colors.text_normal} icon="bell" onPress={() => navigation.navigate("NotificationScreen")} />
           {notifications.filter(n => n.readed === false || typeof n.readed === "undefined").length > 0 && (
@@ -94,7 +109,7 @@ const FollowsTrends = () => {
   return (
     <>
       <SafeAreaView>
-      <CustomHomeHeader leftComponent={<CustomLeftComponent />} />
+        <CustomHomeHeader leftComponent={<CustomLeftComponent />} />
       </SafeAreaView>
       <FlatList
         ref={flatListRef}
@@ -106,11 +121,11 @@ const FollowsTrends = () => {
         ListFooterComponent={loader ? <Loader /> : undefined}
         onScrollEndDrag={() => bottomHandler()}
         ListEmptyComponent={<EmptyHome />}
-        refreshControl={<RefreshControl 
-          refreshing={loaderF} 
-          progressBackgroundColor={colors.bg_primary} 
-          tintColor={colors.fa_primary} 
-          colors={[colors.fa_primary, colors.fa_secondary, colors.fa_third]} 
+        refreshControl={<RefreshControl
+          refreshing={loaderF}
+          progressBackgroundColor={colors.bg_primary}
+          tintColor={colors.fa_primary}
+          colors={[colors.fa_primary, colors.fa_secondary, colors.fa_third]}
           onRefresh={() => getData(true)} />
         }
       />

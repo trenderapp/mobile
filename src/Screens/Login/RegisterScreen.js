@@ -60,8 +60,7 @@ const RegisterScreen = ({ navigation }) => {
     setCaptcha(true)
   };
 
-  const onMessage = async (message) => {
-    const data = message.nativeEvent.data;
+  const onMessage = async (data) => {
     if(data === "cancel") return setCaptcha(false);
     
     const requestOptions = {

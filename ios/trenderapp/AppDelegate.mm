@@ -2,7 +2,6 @@
 #import <Firebase.h> // here
 
 #import <React/RCTBundleURLProvider.h>
-// #import "RNSplashScreen.h"  // here
 
 @implementation AppDelegate
 
@@ -14,14 +13,15 @@
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
 
-/*
-  [RNSplashScreen show];  // here
-
-  return YES;*/
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
+{
+  return [self bundleURL];
+}
+
+- (NSURL *)bundleURL
 {
 #if DEBUG
   return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];

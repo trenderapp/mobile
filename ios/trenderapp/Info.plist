@@ -26,14 +26,11 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>localhost</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
-		</dict>
+	  <!-- Do not change NSAllowsArbitraryLoads to true, or you will risk app rejection! -->
+		<key>NSAllowsArbitraryLoads</key>
+		<false/>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
 	</dict>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Trender need it to share audio in post or direct messages.</string>
@@ -47,10 +44,10 @@
 	<string>Trender need to upload files in posts or other like personnalize your profile.</string>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>Trender track what you use in the app to display revelant Trends and create better functionnalities.</string>
-  <key>BGTaskSchedulerPermittedIdentifiers</key>
-  <array>
-      <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-  </array>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	</array>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
@@ -76,11 +73,13 @@
 		<string>processing</string>
 		<string>remote-notification</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string></string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen.storyboard</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
-		<string>armv7</string>
+		<string>arm64</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>

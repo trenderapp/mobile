@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { useRef, useState, useCallback, useMemo } from 'react'
-import { StyleSheet, View, TouchableOpacity as PressableOpacity, Platform } from 'react-native'
-import { PinchGestureHandler, PinchGestureHandlerGestureEvent, TapGestureHandler } from 'react-native-gesture-handler'
-import { Camera, CameraRuntimeError, PhotoFile, useCameraDevice, useCameraFormat, VideoFile } from 'react-native-vision-camera'
+import { StyleSheet, View, Platform } from 'react-native'
+import { PinchGestureHandler, PinchGestureHandlerGestureEvent, TapGestureHandler, } from 'react-native-gesture-handler'
+import { Camera, CameraRuntimeError, PhotoFile, useCameraDevice, useCameraFormat, VideoFile, useLocationPermission, useMicrophonePermission, } from 'react-native-vision-camera'
 import { MAX_ZOOM_FACTOR, SCREEN_HEIGHT, SCREEN_WIDTH } from '../../Components/Camera/Constants'
-import Reanimated, { Extrapolate, interpolate, useAnimatedGestureHandler, useAnimatedProps, useSharedValue } from 'react-native-reanimated'
+import Reanimated, { Extrapolation, interpolate, useAnimatedGestureHandler, useAnimatedProps, useSharedValue } from 'react-native-reanimated'
 import { useEffect } from 'react'
 import { useIsForeground } from '../../Components/Camera/useIsForeground'
 import { CaptureButton } from '../../Components/Camera/CaptureButton'
@@ -26,9 +26,11 @@ export default function CameraPage({ route: { params } }: any): React.ReactEleme
   const navigation = useNavigation();
 
   const [isCameraInitialized, setIsCameraInitialized] = useState(false)
-  const [hasMicrophonePermission, setHasMicrophonePermission] = useState(false)
   const zoom = useSharedValue(0)
   const isPressingButton = useSharedValue(false)
+
+  const microphone = useMicrophonePermission()
+  const location = useLocationPermission()
 
   // check if camera page is active
   const isFocussed = useIsFocused()
@@ -73,6 +75,14 @@ export default function CameraPage({ route: { params } }: any): React.ReactEleme
     }
   }, [maxZoom, minZoom, zoom])
   //#endregion
+
+  useEffect(() => {
+    location.requestPermission()
+  }, [location])
+
+  useEffect(() => {
+    microphone.requestPermission()
+  }, [microphone])
 
   //#region Callbacks
   const setIsPressingButton = useCallback(
@@ -134,9 +144,6 @@ export default function CameraPage({ route: { params } }: any): React.ReactEleme
     zoom.value = neutralZoom
   }, [neutralZoom, zoom])
 
-  useEffect(() => {
-    Camera.getMicrophonePermissionStatus().then((status) => setHasMicrophonePermission(status === 'granted'))
-  }, [])
   //#endregion
 
   //#region Pinch to Zoom Gesture
@@ -149,8 +156,8 @@ export default function CameraPage({ route: { params } }: any): React.ReactEleme
     onActive: (event, context) => {
       // we're trying to map the scale gesture to a linear zoom here
       const startZoom = context.startZoom ?? 0
-      const scale = interpolate(event.scale, [1 - 1 / SCALE_FULL_ZOOM, 1, SCALE_FULL_ZOOM], [-1, 0, 1], Extrapolate.CLAMP)
-      zoom.value = interpolate(scale, [-1, 0, 1], [minZoom, startZoom, maxZoom], Extrapolate.CLAMP)
+      const scale = interpolate(event.scale, [1 - 1 / SCALE_FULL_ZOOM, 1, SCALE_FULL_ZOOM], [-1, 0, 1], Extrapolation.CLAMP)
+      zoom.value = interpolate(scale, [-1, 0, 1], [minZoom, startZoom, maxZoom], Extrapolation.CLAMP)
     },
   })
   //#endregion
@@ -185,10 +192,10 @@ export default function CameraPage({ route: { params } }: any): React.ReactEleme
                 animatedProps={cameraAnimatedProps}
                 exposure={0}
                 enableFpsGraph={true}
-                orientation="portrait"
                 photo={true}
                 video={true}
-                audio={hasMicrophonePermission}
+                enableLocation={location.hasPermission}
+                audio={microphone.hasPermission}
               />
             </TapGestureHandler>
           </Reanimated.View>

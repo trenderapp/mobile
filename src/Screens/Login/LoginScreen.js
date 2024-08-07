@@ -31,80 +31,76 @@ const LoginScreen = ({ navigation }) => {
   });
 
   const [captcha, setCaptcha] = useState(false);
-  const [users, setUsers] = useState({ 
+  const [users, setUsers] = useState({
     email: '',
     password: ''
   });
 
   const handleSubmit = async () => {
-
-    if(!users.email || !users.password) return setError({ error: true, response: t(`errors.verify_fields`) })
+    if (!users.email || !users.password) return setError({ error: true, response: t(`errors.verify_fields`) })
     setCaptcha(true)
-};
-
-const onMessage = async (message) => {
-
-  const data = message.nativeEvent.data;
-  if(data === "cancel") return setCaptcha(false);
-
-  const browser = await deviceInfo()
-            
-  let friendly_name;
-  if (browser) {
-    friendly_name = `${convertFirstCharacterToUppercase(browser.base_os)} ${browser.system_version} - Trender mobile`;
-      
-  } else {
-      friendly_name = "Unknown Device";
-  }
-
-  const requestOptions = {
-    method: "POST",
-    headers: { 
-      "Content-Type": "application/json" 
-    },
-    body: JSON.stringify({
-      email: users.email.toLowerCase(),
-      password: users.password,
-      device_name: friendly_name,
-      captcha_code: data
-    })
   };
 
-  setCaptcha(false)
+  const onMessage = async (data) => {
 
-  setLoading(true)
+    if (data === "cancel") return setCaptcha(false);
 
-  const request = await fetch(`${apibaseurl}/login`, requestOptions)
-  const response = await request.json();
+    const browser = await deviceInfo()
 
-  if(response.error){
-    setLoading(false)
-    return setError({ error: true, response: t(`errors.${response.error.code}`) })
+    let friendly_name;
+    if (browser) {
+      friendly_name = `${convertFirstCharacterToUppercase(browser.base_os)} ${browser.system_version} - Trender mobile`;
 
-  } else {
+    } else {
+      friendly_name = "Unknown Device";
+    }
 
-   setStorage("user_info", JSON.stringify(response.data));
-    
-    const new_client = new Client({
-      token: response.data.token,
-      apiurl: apibaseurl
-    })
-    
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email: users.email.toLowerCase(),
+        password: users.password,
+        device_name: friendly_name,
+        captcha_code: data
+      })
+    };
 
-    const informations = await new_client.informations();
-    
-    client.setValue({ ...client, client: new_client, token: response.data.token, user: informations.data, state: "loged" })
+    setCaptcha(false)
 
-    const fcmToken = await requestNotificationPermission(true);
+    setLoading(true)
 
-    if(fcmToken) await new_client.pushNotification.register(fcmToken);
+    const request = await fetch(`${apibaseurl}/login`, requestOptions)
+    const response = await request.json();
 
-    setTimeout(() => {
-      navigation.replace('DrawerNavigation');
-    }, 1000);
-}
+    if (response.error) {
+      setLoading(false)
+      return setError({ error: true, response: t(`errors.${response.error.code}`) })
 
-}
+    } else {
+
+      setStorage("user_info", JSON.stringify(response.data));
+
+      const new_client = new Client({
+        token: response.data.token,
+        apiurl: apibaseurl
+      })
+
+      const informations = await new_client.informations();
+
+      client.setValue({ ...client, client: new_client, token: response.data.token, user: informations.data, state: "loged" })
+
+      const fcmToken = await requestNotificationPermission(true);
+
+      if (fcmToken) await new_client.pushNotification.register(fcmToken);
+
+      setTimeout(() => {
+        navigation.replace('DrawerNavigation');
+      }, 1000);
+    }
+  }
   return (
     <SafeAreaView style={{
       ...styles.mainBody,
@@ -143,7 +139,7 @@ const onMessage = async (message) => {
                 autoCapitalize="none"
                 secureTextEntry={showPass}
                 returnKeyType="next"
-                right={<PaperTextInput.Icon onPress={() => setShowPass(!showPass)} icon={!showPass ? `eye` : "eye-off" } />}
+                right={<PaperTextInput.Icon onPress={() => setShowPass(!showPass)} icon={!showPass ? `eye` : "eye-off"} />}
                 value={users.password}
                 onChangeText={(password) => setUsers({ ...users, password: password })}
               />
