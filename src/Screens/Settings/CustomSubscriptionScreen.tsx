@@ -167,7 +167,7 @@ function Customsubscriptioncreen() {
             <Dialog visible={renewVisible} onDismiss={hideDialogRenew}>
                 <Dialog.Title>{t("settings.renew_subscription")}</Dialog.Title>
                 <Dialog.Actions>
-                    <Button uppercase={false} onPress={() => hideDialogRenew()}>{t("commons.cancel")} ?</Button>
+                    <Button uppercase={false} onPress={() => hideDialogRenew()}>{t("commons.cancel")}</Button>
                     <Button uppercase={false} loading={loading} onPress={() => renewSubscription(item.subscription_info.subscription_id)}>{t("commons.continue")}</Button>
                 </Dialog.Actions>
             </Dialog>
@@ -196,7 +196,8 @@ function Customsubscriptioncreen() {
                 renderItem={({ item }) => (
                     <Card style={{
                         backgroundColor: colors.bg_secondary,
-                        margin: 5
+                        margin: 5,
+                        borderColor: colors.color_green
                     }}>
                         <ConfirmCancelSubscription item={item} />
                         <ConfirmContinueSubscription item={item} />
@@ -207,11 +208,12 @@ function Customsubscriptioncreen() {
                                     nickname: item.from.nickname
                                 }
                             })} full_width={undefined} noDescription={true} LeftComponent={undefined} />
-                            <Text>{t("subscription.next_renew")} : {item.active ? messageFormatDate(dayjs(item.next_renew).format()).fullDate() : "-"}</Text>
+                            {item.canceled && <Text>{t("subscription.end_period")} : {item.active ? messageFormatDate(dayjs(item.next_renew).format()).fullDate() : "-"}</Text>}
+                            {!item.canceled && <Text>{t("subscription.next_renew")} : {item.canceled ? "-" : messageFormatDate(dayjs(item.next_renew).format()).fullDate()}</Text>}
                             <Text>{t("subscription.price")} : {(item.subscription_info.user_price / 100).toFixed(2)} {subscriptionCurrencyArray.find(s => s.name === item.subscription_info.currency)?.symbol} /{t("subscription.month").toLocaleLowerCase()}</Text>
                         </Card.Content>
                         <Card.Actions>
-                            <Button mode='elevated' theme={{ colors: { elevation: { level1: item.active ? colors.warning_color : undefined } } }} onPress={() => item.active ? setVisible(true) : setRenewVisible(true)}>{item.active ? t("commons.cancel") : t("commons.canceled")}</Button>
+                            <Button mode='elevated' theme={{ colors: { elevation: { level1: item.canceled ?  undefined : colors.warning_color } } }} onPress={() => item.canceled ? setRenewVisible(true) : setVisible(true)}>{item.canceled ? t("commons.canceled") : t("commons.cancel")}</Button>
                         </Card.Actions>
                     </Card>
                 )}

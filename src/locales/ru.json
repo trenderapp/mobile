@@ -208,6 +208,8 @@
         "my_subscriptions": "Мои подписки",
         "no_subscriptions": "У вас нет активных подписок",
         "next_renew": "Следующее обновление",
+        "end_period": "Subscription ending",
+        
         "recap": "Резюме",
         "price": "Цена",
         "subscription": "Подписка",
