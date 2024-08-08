@@ -3622,9 +3622,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stripe/stripe-react-native@npm:^0.35.0":
-  version: 0.35.1
-  resolution: "@stripe/stripe-react-native@npm:0.35.1"
+"@stripe/stripe-react-native@npm:^0.38.4":
+  version: 0.38.4
+  resolution: "@stripe/stripe-react-native@npm:0.38.4"
   peerDependencies:
     expo: ">=46.0.9"
     react: "*"
@@ -3632,7 +3632,7 @@ __metadata:
   peerDependenciesMeta:
     expo:
       optional: true
-  checksum: 144278ba48cee4d6dce68a91fb5d256335cd7fca46eceff3d57d6d4ecbfd88df42b3adb30c92cc2e8bcfa7140fcb42692ec186f5c8a0c5d956a5e142f648a7a7
+  checksum: 9ebb8b98177d428888182bf0378101eaf8fa3e212e6153ca372efcad6b1328cbe1457ac37846b95721c74206fb0ae97296f6858f4f792877f1f1206b2d35081f
   languageName: node
   linkType: hard
 
@@ -3776,7 +3776,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-native-vector-icons@npm:^6.4.15":
+"@types/react-native-vector-icons@npm:^6.4.18":
   version: 6.4.18
   resolution: "@types/react-native-vector-icons@npm:6.4.18"
   dependencies:
@@ -9803,9 +9803,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-i18next@npm:^15.0.0":
-  version: 15.0.0
-  resolution: "react-i18next@npm:15.0.0"
+"react-i18next@npm:^15.0.1":
+  version: 15.0.1
+  resolution: "react-i18next@npm:15.0.1"
   dependencies:
     "@babel/runtime": ^7.24.8
     html-parse-stringify: ^3.0.1
@@ -9817,7 +9817,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: 6fb904a1ff353f90aadeed6e13e00d20d2c58efa7ba31713ca9a76e7b0fddb6819cff6cca38473e9033f26d9ab7dad1fbefeef391459e590f322b6461a053ff1
+  checksum: fdff560f1a7988677fbccab2934d5d253515f5b07ea33d9a6dff8852be4df5cd72a41235d412be7016cbc96c0a33c8471e5ff7e02ee1e149654918082ea43827
   languageName: node
   linkType: hard
 
@@ -11495,12 +11495,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"trender-client@npm:^6.1.0":
-  version: 6.1.0
-  resolution: "trender-client@npm:6.1.0"
+"trender-client@npm:^6.2.0":
+  version: 6.2.0
+  resolution: "trender-client@npm:6.2.0"
   dependencies:
     axios: ^1.7.2
-  checksum: 2d8fda5f8c0a5c49ea9680b3e879d3c17bf38673b9de66f857a106992db25b06e919ddd532cbe943372f4133ef2b49a0f27194b24d844bbd50856085c2ef8edc
+  checksum: d167bc5a390b859400346c1e4676bee9bd02c9a92b50d74a41c18762f62f3ede0f111c4c62068d7a27bd3f21bc1cc6da4057eb29c28b13ec5c6cc2f018dab155
   languageName: node
   linkType: hard
 
@@ -11534,11 +11534,11 @@ __metadata:
     "@realm/babel-plugin": ^0.2.0
     "@realm/react": 0.9.0
     "@reduxjs/toolkit": ^2.2.7
-    "@stripe/stripe-react-native": ^0.35.0
+    "@stripe/stripe-react-native": ^0.38.4
     "@tsconfig/react-native": ^3.0.5
     "@types/jest": ^29.5.12
     "@types/react": ^18.2.6
-    "@types/react-native-vector-icons": ^6.4.15
+    "@types/react-native-vector-icons": ^6.4.18
     "@types/react-native-video": ^5.0.20
     "@types/react-test-renderer": ^18.0.0
     axios: ^1.7.3
@@ -11550,7 +11550,7 @@ __metadata:
     jest: ^29.7.0
     prettier: 3.3.3
     react: 18.2.0
-    react-i18next: ^15.0.0
+    react-i18next: ^15.0.1
     react-native: 0.74.5
     react-native-chart-kit: ^6.12.0
     react-native-config: ^1.5.3
@@ -11586,7 +11586,7 @@ __metadata:
     react-test-renderer: 18.2.0
     realm: 12.12.1
     redux: ^5.0.1
-    trender-client: ^6.1.0
+    trender-client: ^6.2.0
     typescript: 5.5.4
   languageName: unknown
   linkType: soft
