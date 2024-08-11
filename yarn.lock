@@ -2894,7 +2894,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-clipboard/clipboard@npm:^1.14.1":
+"@react-native-clipboard/clipboard@npm:1.14.1":
   version: 1.14.1
   resolution: "@react-native-clipboard/clipboard@npm:1.14.1"
   peerDependencies:
@@ -11516,7 +11516,7 @@ __metadata:
     "@hcaptcha/react-native-hcaptcha": ^1.7.2
     "@notifee/react-native": ^7.8.2
     "@react-native-camera-roll/camera-roll": ^7.8.3
-    "@react-native-clipboard/clipboard": ^1.14.1
+    "@react-native-clipboard/clipboard": 1.14.1
     "@react-native-firebase/app": ^20.3.0
     "@react-native-firebase/messaging": ^20.3.0
     "@react-native/babel-preset": 0.74.87

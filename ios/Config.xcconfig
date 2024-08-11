@@ -1,0 +1,11 @@
+//
+//  Config.xcconfig
+//  trenderapp
+//
+//  Created by Alex on 11/08/2024.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include? "tmp.xcconfig"

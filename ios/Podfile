@@ -1,21 +1,17 @@
-# Resolve react_native_pods.rb with node to allow for hoisting
-require Pod::Executable.execute_command('node', ['-p',
-  'require.resolve(
-    "react-native/scripts/react_native_pods.rb",
-    {paths: [process.argv[1]]},
-  )', __dir__]).strip
+def node_require(script)
+  # Resolve script with node to allow for hoisting
+  require Pod::Executable.execute_command('node', ['-p',
+    "require.resolve(
+      '#{script}',
+      {paths: [process.argv[1]]},
+    )", __dir__]).strip
+end
 
 node_require('react-native/scripts/react_native_pods.rb')
 node_require('react-native-permissions/scripts/setup.rb')
 
-platform :ios, min_ios_version_supported
+platform :ios, '14.0'
 prepare_react_native_project!
-
-linkage = ENV['USE_FRAMEWORKS']
-if linkage != nil
-  Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
-  use_frameworks! :linkage => linkage.to_sym
-end
 
 setup_permissions([
   'AppTrackingTransparency',
@@ -40,6 +36,12 @@ setup_permissions([
 #  'StoreKit',
 ])
 
+linkage = ENV['USE_FRAMEWORKS']
+if linkage != nil
+  Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
+  use_frameworks! :linkage => linkage.to_sym
+end
+
 target 'trenderapp' do
   config = use_native_modules!
 
@@ -48,10 +50,7 @@ target 'trenderapp' do
   pod 'GoogleUtilities', :modular_headers => true
 
   $RNFirebaseAsStaticFramework = true
-
-  # Flags change depending on the env values.
-  flags = get_default_flags()
-
+  
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.
@@ -63,13 +62,17 @@ target 'trenderapp' do
     # Pods for testing
   end
 
+  ENVFILES = {
+    'Debug' => '$(PODS_ROOT)/../../.env.development',
+    'Release' => '$(PODS_ROOT)/../../.env.production',
+  }
   post_install do |installer|
-    # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
-    react_native_post_install(
-      installer,
-      config[:reactNativePath],
-      :mac_catalyst_enabled => false,
-      # :ccache_enabled => true
-    )
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        if target.name == 'react-native-config'
+          config.build_settings['ENVFILE'] = ENVFILES[config.name]
+        end
+      end
+    end
   end
 end

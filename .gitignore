@@ -4,6 +4,9 @@ ios/GoogleService-Info.plist
 .env.development
 .env.production
 
+# react-native-config codegen
+ios/tmp.xcconfig
+
 # OSX
 #
 .DS_Store
@@ -78,3 +81,4 @@ yarn-error.log
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+ios/trenderapp/GoogleService-Info.plist
