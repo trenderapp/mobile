@@ -1095,10 +1095,6 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-config (1.5.3):
-    - react-native-config/App (= 1.5.3)
-  - react-native-config/App (1.5.3):
-    - React-Core
   - react-native-date-picker (5.0.4):
     - React-Core
   - react-native-mmkv (2.12.2):
@@ -1585,8 +1581,6 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreenshotPrevent (1.2.1):
-    - React
   - RNSVG (15.5.0):
     - React-Core
   - RNVectorIcons (10.1.0):
@@ -1699,7 +1693,6 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - "react-native-cameraroll (from `../node_modules/@react-native-camera-roll/camera-roll`)"
-  - react-native-config (from `../node_modules/react-native-config`)
   - react-native-date-picker (from `../node_modules/react-native-date-picker`)
   - react-native-mmkv (from `../node_modules/react-native-mmkv`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
@@ -1743,7 +1736,6 @@ DEPENDENCIES:
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
-  - RNScreenshotPrevent (from `../node_modules/react-native-screenshot-prevent`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - "stripe-react-native (from `../node_modules/@stripe/stripe-react-native`)"
@@ -1844,8 +1836,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   react-native-cameraroll:
     :path: "../node_modules/@react-native-camera-roll/camera-roll"
-  react-native-config:
-    :path: "../node_modules/react-native-config"
   react-native-date-picker:
     :path: "../node_modules/react-native-date-picker"
   react-native-mmkv:
@@ -1932,8 +1922,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
-  RNScreenshotPrevent:
-    :path: "../node_modules/react-native-screenshot-prevent"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
@@ -1961,14 +1949,14 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: f9de05ee17401e3355f68e8fc8b5064d429f5918
   GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
   GoogleUtilities: ea963c370a38a8069cc5f7ba4ca849a60b6d7d15
-  hermes-engine: c128c64b5853f738adbf192ae85d77c90054c21e
+  hermes-engine: 8c1577f3fdb849cbe7729c2e7b5abc4b845e88f8
   libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
   MMKV: 817ba1eea17421547e01e087285606eb270a8dcb
   MMKVCore: af055b00e27d88cd92fad301c5fecd1ff9b26dd9
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   RCT-Folly: 02617c592a293bd6d418e0a88ff4ee1f88329b47
-  RCTDeprecation: 121d32efb5b3b0712c2c177beb858d050e5f48c5
+  RCTDeprecation: 3afceddffa65aee666dafd6f0116f1d975db1584
   RCTRequired: ec1239bc9d8bf63e10fb92bd8b26171a9258e0c1
   RCTTypeSafety: f5ecbc86c5c5fa163c05acb7a1c5012e15b5f994
   React: fc9fa7258eff606f44d58c5b233a82dc9cf09018
@@ -1992,13 +1980,12 @@ SPEC CHECKSUMS:
   React-logger: 257858bd55f3a4e1bc0cf07ddc8fb9faba6f8c7c
   React-Mapbuffer: 6c1cacdbf40b531f549eba249e531a7d0bfd8e7f
   react-native-cameraroll: 4f313ab09aeaf42ac5f72dec840641da7656f104
-  react-native-config: aa47e487f8850a747bf849bb6a398a0bba93fbbd
   react-native-date-picker: 6891317e850deae5b53d51355226e07a495aba61
   react-native-mmkv: 8c9a677e64a1ac89b0c6cf240feea528318b3074
-  react-native-pager-view: 757f4016ec178f929361ebc48bc3694b3062359d
-  react-native-safe-area-context: b83eb362228fa9b3e4943536de526a4447836977
-  react-native-video: 5cf1dec7cad62fbe7f0da2d099adc9513cc3bd81
-  react-native-webview: 7eb9009388be4129eaac3e8afe5bee69e2fbb3dd
+  react-native-pager-view: f848f89049a8e888d38f10ff31588eb63292a95f
+  react-native-safe-area-context: b7daa1a8df36095a032dff095a1ea8963cb48371
+  react-native-video: b3ba8f424c8c3f54dd9289d47bbe60fbc09bc986
+  react-native-webview: 553abd09f58e340fdc7746c9e2ae096839e99911
   React-nativeconfig: ba9a2e54e2f0882cf7882698825052793ed4c851
   React-NativeModulesApple: 8d11ff8955181540585c944cf48e9e7236952697
   React-perflogger: ed4e0c65781521e0424f2e5e40b40cc7879d737e
@@ -2023,22 +2010,21 @@ SPEC CHECKSUMS:
   React-utils: f242eb7e7889419d979ca0e1c02ccc0ea6e43b29
   ReactCommon: f7da14a8827b72704169a48c929bcde802698361
   RealmJS: f4f6d27b325b1c1b402eb0aa5ee79e9d5f603293
-  RNCClipboard: e4d9eee403e06c40edfbe0ae340f65b7db0e6aeb
-  RNDeviceInfo: 466e99306a70c2a8a1f92a29771fd7208098fca3
+  RNCClipboard: 0a720adef5ec193aa0e3de24c3977222c7e52a37
+  RNDeviceInfo: b899ce37a403a4dea52b7cb85e16e49c04a5b88e
   RNFastImage: 5c9c9fed9c076e521b3f509fe79e790418a544e8
-  RNFBApp: 793adb33298db7e67dc365dc1ec0dc8a55a7a044
-  RNFBMessaging: 62b6c25f58225a73067c7aef25947f41aa6088c5
-  RNGestureHandler: 09defb9436ed512f7462f88c762daa05b84638a3
+  RNFBApp: a7aff07a7f212149539fce51a1326c6d208b03ad
+  RNFBMessaging: f1fdc7ac62df96e3c8362d516caaf84fab69085d
+  RNGestureHandler: efed690b8493a00b99654043daeb1335276ac4a2
   RNImageCropPicker: 771e2ca319d2cf92e04ebf334ece892ee9a6728f
   RNInAppBrowser: e36d6935517101ccba0e875bac8ad7b0cb655364
-  RNLocalize: 4b93154fe3bf2b59a8e4090d0162daaae36a21ca
+  RNLocalize: 4f22418187ecd5ca693231093ff1d912d1b3c9bc
   RNNotifee: 8e2d3df3f0e9ce8f5d1fe4c967431138190b6175
   RNPermissions: 8bb51875ce0e629478e8af99585cb86e54ab69e8
-  RNReanimated: 285ab8702b1fd6bdfb11645ec467cfc11f7c05bb
-  RNScreens: c71286ca4ddc260edf5099b35e33cb5d1ca5e079
-  RNScreenshotPrevent: 105cddf74799cbd81aac76e56a4025a345db8967
-  RNSVG: 7f2903e49915168d633a6e7c8e0cb3f8fb065d1a
-  RNVectorIcons: 17cdbd8529a35013d20f0b7488f0876e524a113b
+  RNReanimated: 45553a3ae29a75a76269595f8554d07d4090e392
+  RNScreens: aa943ad421c3ced3ef5a47ede02b0cbfc43a012e
+  RNSVG: b986585e367f4a49d8aa43065066cc9c290b3d9b
+  RNVectorIcons: 2a2f79274248390b80684ea3c4400bd374a15c90
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
@@ -2055,6 +2041,6 @@ SPEC CHECKSUMS:
   VisionCamera: 104de00dce2e04dec51bfb6027eff0312fa3174e
   Yoga: 2246eea72aaf1b816a68a35e6e4b74563653ae09
 
-PODFILE CHECKSUM: 31e092859fa42336bd3270b9f23a329db909f676
+PODFILE CHECKSUM: 1263f7c1f6dbcd9444f599f427f7d5310601ac22
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.14.3

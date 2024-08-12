@@ -3,6 +3,7 @@ android/keystores/informations.json
 ios/GoogleService-Info.plist
 .env.development
 .env.production
+.env
 
 # react-native-config codegen
 ios/tmp.xcconfig
