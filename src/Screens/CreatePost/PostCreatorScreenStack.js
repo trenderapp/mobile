@@ -140,7 +140,6 @@ const PostCreatorScreenStack = ({ route: { params } }) => {
 
     if (!response.data) {
       setSending({ send: false, progress: 0 })
-      console.log(response);
       return Toast.show({ text1: t(`errors.${response.error.code}`) })
     }
     if (response.data) dispatch(addMainCreatedTrends({ 

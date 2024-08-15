@@ -23,16 +23,16 @@ function LanguageThemeScreen() {
 
         switch (type) {
             case "theme":
-                setStorage("settings", JSON.stringify({
-                    theme: txt,
+                setStorage("settings", {
+                    ...settings,
                     locale: settings?.locale
-                }))
+                })
                 break;
             case "language":
-                setStorage("settings", JSON.stringify({
-                    theme: settings?.theme,
-                    locale: txt
-                }))
+                setStorage("settings", {
+                    ...settings,
+                    theme: settings?.theme
+                })
                 break;
             default:
                 break;

@@ -1,7 +1,7 @@
 import messaging from "@react-native-firebase/messaging";
 import notifee, { AndroidImportance } from "@notifee/react-native";
 import { checkNotifications, requestNotifications, RESULTS } from 'react-native-permissions';
-import { getStorageInfo, setStorage, userStorageI } from "../storage";
+import { getStorageInfo, setStorage, settingsStorageI } from "../storage";
 
 export const notificationChannels = async () => {
   // await notifee.deleteChannel("sound")
@@ -37,17 +37,19 @@ export const notificationChannels = async () => {
   ])
 }
 
-export const resetFcmToken = async (user_info: userStorageI, refresh: boolean = false) => {
+export const resetFcmToken = async (refresh: boolean = false) => {
   try {
     if(refresh) {
       await messaging().deleteToken();
     }
     const fcmToken = await messaging().getToken();
     if (fcmToken) {
-      setStorage("user_info", JSON.stringify({
-        ...user_info,
+      const settings = getStorageInfo("settings") as settingsStorageI;
+
+      setStorage("settings", {
+        ...settings,
         fcm_token: fcmToken
-      }));
+      });
       return fcmToken
     }
   } catch (error) {
@@ -57,13 +59,14 @@ export const resetFcmToken = async (user_info: userStorageI, refresh: boolean = 
 }
 
 export const initNotificationToken = async (refresh: boolean = false) => {
-  const user_info = getStorageInfo("user_info") as userStorageI;  
+  const settings = getStorageInfo("settings") as settingsStorageI;
+
   if(refresh) {
-    const fcmToken = await resetFcmToken(user_info, refresh);
+    const fcmToken = await resetFcmToken(refresh);
     return fcmToken;
   }
-  if(user_info?.fcm_token) return;
-  const fcmToken = await resetFcmToken(user_info, refresh);
+  if(settings?.fcm_token) return;
+  const fcmToken = await resetFcmToken(refresh);
   return fcmToken;
 }
 

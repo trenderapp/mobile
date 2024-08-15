@@ -10,7 +10,7 @@ type SectionProps = PropsWithChildren<{
         bottom: number;
         [x: string]: any
     };
-    padding: number
+    padding?: number
 }>
 
 function SafeBottomContainer({ children , safeAreaInsets, padding = 5 }: SectionProps) {

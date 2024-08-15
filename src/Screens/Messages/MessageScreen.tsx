@@ -81,9 +81,7 @@ const MessageScreen = ({ route }: any) => {
     }*/
   }, [notification])
 
-  const onBottom = async () => {
-    console.log("oui");
-    
+  const onBottom = async () => {  
     const request = await client.message.fetch(params.guild_id, { pagination_key: pagination_key });
 
     if(request?.data && request?.data?.length > 0) {

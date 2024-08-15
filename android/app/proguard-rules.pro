@@ -9,6 +9,9 @@
 
 # Add any project specific keep options here:
 
+# realm https://www.mongodb.com/docs/atlas/device-sdks/sdk/react-native/install/#extend-android-proguard-configuration
+-keep class io.realm.react.**
+
 # react-native-svg https://github.com/react-native-svg/react-native-svg#problems-with-proguard
 -keep public class com.horcrux.svg.** {*;}
 

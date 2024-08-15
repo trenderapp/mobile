@@ -65,7 +65,6 @@ function SubscriptionValidationScreen({ route }: any) {
         const { error } = await presentPaymentSheet();
 
         if (error) {
-            console.log(error);
             Toast.show({ text1: `Error : ${error.message}` });
             setLoading(false)
         } else {

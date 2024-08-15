@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Toast from 'react-native-toast-message';
 import { FlatList } from 'react-native';
-import { Button, Card, Dialog, Portal, Text } from 'react-native-paper';
+import { Appbar, Button, Card, Dialog, Portal, Text } from 'react-native-paper';
 import { getUserActiveSubscriptionInterface, getUserSubscriptionResponseInterface } from 'trender-client/Managers/Interfaces/CustomSubscription';
 import { currencyType } from 'trender-client/Managers/Interfaces/Subscription';
 import dayjs from 'dayjs';
@@ -145,6 +145,12 @@ function Customsubscriptioncreen() {
         hideDialogRenew();
     }
 
+    const openDashboard = async () => {
+        const request = await client.subscription.custom.dashboard();
+        if (request.error) return Toast.show({ text1: t(`errors.${request.error.code}`) as string });
+        openURL(request.data?.url)
+    }
+
     useEffect(() => {
         getsubscription()
         getsubscriptions()
@@ -175,7 +181,7 @@ function Customsubscriptioncreen() {
     )
 
     return (
-        <SettingsContainer title={t("settings.custom_subscriptions")}>
+        <SettingsContainer leftComponent={active ? <Button mode='text' icon="monitor-dashboard" onPress={() => openDashboard()}>{t("subscription.dashboard")}</Button> : undefined} title={t("subscription.dashboard")}>
             {
                 !active ? <Button loading={loadingActivation} focusable={!loadingActivation} onPress={() => linkConnectAccount()} mode='contained-tonal'>{t("subscription.custom_activate")}</Button> : subscription ? <CustomSubscriptionCreateCard
                     subscription={subscription}

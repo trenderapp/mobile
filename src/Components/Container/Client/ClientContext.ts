@@ -1,16 +1,15 @@
 import * as React from 'react';
 import Client, { MeInterface } from 'trender-client';
 
-
 export interface ClientContextI {
     client: Client,
     token: string,
     user: MeInterface.myInformationInterface,
-    state: "loading" | "loged" | "logout",
-    setValue: (params: { [x: string]: any }) => {} | any
+    state: "loading" | "loged" | "logout" | "switch_user",
+    setValue: (params: any) => {} | any
 }
 
-const ClientContext = React.createContext<ClientContextI>({
+export const clientContextPlaceholder: ClientContextI = {
     client: new Client({
         token: ""
     }),
@@ -29,7 +28,9 @@ const ClientContext = React.createContext<ClientContextI>({
     },
     state: "loading",
     setValue: () => {}
-});
+}
+
+const ClientContext = React.createContext<ClientContextI>(clientContextPlaceholder);
 
 ClientContext.displayName = 'ClientContext';
 

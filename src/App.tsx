@@ -11,6 +11,25 @@ import { BaseToast } from './Components/Elements/Toasts';
 import Routes from './Routes';
 import { store } from './Redux';
 import { strip_public_key } from './Services/constante';
+import { RealmProvider } from '@realm/react';
+import UserStoreRealmSchema from './Services/Realm/userDatabase';
+
+type providerProps = {
+  children: React.ReactElement;
+};
+
+const Providers = ({ children }: providerProps): JSX.Element => (
+  <RealmProvider schema={[UserStoreRealmSchema]}>
+    <StripeProvider
+      publishableKey={strip_public_key ?? ""}
+      // urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
+      merchantIdentifier="merchant.com.trenderapp" // required for Apple Pay
+    >
+      {children}
+    </StripeProvider>
+  </RealmProvider>
+)
+
 
 const App = () => {
 
@@ -21,11 +40,7 @@ const App = () => {
   }
 
   return (
-    <StripeProvider
-      publishableKey={strip_public_key ?? ""}
-      // urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
-      merchantIdentifier="merchant.com.trenderapp" // required for Apple Pay
-    >
+    <Providers>
       <ThemeContainer>
         <NavigationContainer>
           <ClientContainer>
@@ -38,7 +53,7 @@ const App = () => {
         </NavigationContainer>
         <Toast onPress={() => Toast.hide()} config={toastConfig} />
       </ThemeContainer>
-    </StripeProvider>
+    </Providers>
   );
 };
 

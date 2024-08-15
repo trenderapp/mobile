@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { connect } from 'react-redux';
-import { FlatList, RefreshControl, View, TouchableOpacity, SafeAreaView } from 'react-native';
+import { FlatList, RefreshControl, View, TouchableOpacity, SafeAreaView, Platform } from 'react-native';
 import { Appbar, Text } from 'react-native-paper';
 import { PostInterface, userFlags } from 'trender-client';
 
@@ -78,7 +78,7 @@ const FollowsTrends = () => {
     return (
       <View style={[styles.row, { justifyContent: "flex-end", marginRight: 10 }]}>
         {
-          displayPremiumUpgrade() && <Appbar.Action color={colors.color_green} icon="account-arrow-up" onPress={() => navigation.navigate("SettingsStack", {
+          Platform.OS !== "ios" && displayPremiumUpgrade() && <Appbar.Action color={colors.text_normal} icon="account-arrow-up" onPress={() => navigation.navigate("SettingsStack", {
             screen: "SubscriptionScreen"
           })} />
         }

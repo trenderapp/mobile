@@ -77,8 +77,6 @@ function LanguageSpokenScreen() {
     }, [])
 
     useEffect(() => {
-        console.log(text);
-        
         if(typeof text !== "string") return;
         if (text.length === 0) return resetLanguages();
         if (text.length > 0) return setFilter(filter.filter(l => l.local_language.original.toLocaleLowerCase().includes(text.toLocaleLowerCase()) === true));

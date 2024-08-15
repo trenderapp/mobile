@@ -123,7 +123,7 @@ function Routes() {
 
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }} >
-            {state === "loading" ? <Stack.Screen name="Splash" component={SplashScreen} />
+            {state === "loading" || state === "switch_user" ? <Stack.Screen name="Splash" component={SplashScreen} />
                 : state === "logout" ? <Stack.Screen name="LoginNavigator" component={LoginNavigator} />
                     : state === "loged" && (
                         <>

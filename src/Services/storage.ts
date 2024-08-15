@@ -4,8 +4,9 @@ import { Ithemes } from '../Components/Container/Theme/Themes';
 export const localeStorage = new MMKV()
 
 export interface settingsStorageI {
-    theme?: Ithemes,
-    locale?: string
+    theme?: Ithemes;
+    locale?: string;
+    fcm_token?: string;
 }
 
 export interface userStorageI {
@@ -37,7 +38,6 @@ export const initStorage = async () => {
 
         if(user_info_storage) to_return.user_info = JSON.parse(user_info_storage);
         if(settings_storage) to_return.settings = JSON.parse(settings_storage);
-
     }
 
     return to_return;
@@ -67,6 +67,6 @@ export const getStorageInfo = (key: localeStorageKeysT | 'all'): userStorageI | 
     return JSON.parse(storage)
 }
 
-export const setStorage = (key: localeStorageKeysT, value: string) => {
-    return localeStorage.set(key, value)
+export const setStorage = (key: localeStorageKeysT, value: object) => {
+    return localeStorage.set(key, JSON.stringify(value))
 }

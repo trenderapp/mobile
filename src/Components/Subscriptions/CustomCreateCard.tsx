@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Card, TextInput, Text, Divider } from 'react-native-paper';
 import { View } from 'react-native';
-import Toast from 'react-native-toast-message';
 import { useNavigation } from "@react-navigation/native";
 import SelectDropdown from 'react-native-select-dropdown'
 import { getUserSubscriptionResponseInterface } from "trender-client/Managers/Interfaces/CustomSubscription";
@@ -16,13 +15,19 @@ import { BottomModal } from '../../Other';
 
 type sectionProps = {
     subscription: getUserSubscriptionResponseInterface;
-    setCurrency: any;
-    setPrice: any;
+    setCurrency: React.Dispatch<React.SetStateAction<{
+        symbol: string;
+        name: string;
+    }>>;
+    setPrice: (price: string) => void;
     inputPrice: string;
-    setActive: any;
-    currency: any;
+    setActive: () => void;
+    currency: {
+        symbol: string,
+        name: string
+    };
     loading: boolean;
-    sendInformations: any;
+    sendInformations: () => Promise<void>;
 }
 
 const CustomSubscriptionCreateCard = ({ subscription, setCurrency, setPrice, inputPrice, setActive, currency, loading, sendInformations }: sectionProps) => {
@@ -42,19 +47,13 @@ const CustomSubscriptionCreateCard = ({ subscription, setCurrency, setPrice, inp
 
     const hideDialog = () => setVisible(false);
 
-    const openDashboard = async () => {
-        const request = await client.subscription.custom.dashboard();
-        if (request.error) return Toast.show({ text1: t(`errors.${request.error.code}`) as string });
-        openURL(request.data?.url)
-    }
-
-    useEffect(() => {       
+    useEffect(() => {
         const price = subscription.price;
-        const stripe_fees = price*0.03+0.25;
-        const trender_fees = price < 10 ? 0.12+(price*0.03) : price*0.1;
-        const final_fees = price < 10 ? stripe_fees+trender_fees : trender_fees;
+        const stripe_fees = price * 0.03 + 0.25;
+        const trender_fees = price < 10 ? 0.12 + (price * 0.03) : price * 0.1;
+        const final_fees = price < 10 ? stripe_fees + trender_fees : trender_fees;
         const final_price = price - final_fees;
-            
+
         setFees({
             creator: parseFloat(final_price.toFixed(2)),
             stripe: parseFloat(stripe_fees.toFixed(2)),
@@ -127,7 +126,7 @@ const CustomSubscriptionCreateCard = ({ subscription, setCurrency, setPrice, inp
                         justifyContent: "space-between"
                     }}>
                         <Text>{t("subscription.fees")}</Text>
-                        <Text>{(100-(fees.final_price/subscription.price)*100).toFixed(2)} %</Text>
+                        <Text>{(100 - (fees.final_price / subscription.price) * 100).toFixed(2)} %</Text>
                     </View>
                     <View style={{
                         width: "100%",
@@ -155,7 +154,6 @@ const CustomSubscriptionCreateCard = ({ subscription, setCurrency, setPrice, inp
             margin: 5
         }}>
             <SubscriptionFees />
-            <Button mode='contained-tonal' onPress={() => openDashboard()}>Dashboard</Button>
             <Card.Content>
                 <Text>Create to my account :</Text>
                 <View style={{
@@ -176,26 +174,45 @@ const CustomSubscriptionCreateCard = ({ subscription, setCurrency, setPrice, inp
                     <SelectDropdown
                         data={subscriptionCurrencyArray}
                         onSelect={(selectedItem) => setCurrency(selectedItem)}
-                        defaultButtonText={currency.symbol}
-                        buttonTextStyle={{ color: colors.text_normal }}
-                        buttonTextAfterSelection={(selectedItem) => selectedItem.symbol}
-                        buttonStyle={{
-                            marginTop: 8,
-                            marginRight: 2,
-                            backgroundColor: colors.bg_primary,
-                            borderColor: colors.fa_primary,
-                            borderWidth: 1,
-                            borderRadius: 5,
-                            width: "15%",
+                        showsVerticalScrollIndicator={false}
+                        renderItem={(item, index, isSelected) => {
+                            return (
+                                <View style={{
+                                    marginBottom: 5,
+                                    marginTop: 5,
+                                    width: "85%",
+                                    flex: 1,
+                                    flexDirection: "row",
+                                    justifyContent: "center"
+                                }}>
+                                    <Text>{item.symbol}</Text>
+                                </View>
+                            );
+                        }}
+                        renderButton={(selectedItem, isOpened) => {
+                            return (
+                                <View style={{
+                                    marginTop: 8,
+                                    marginRight: 2,
+                                    backgroundColor: colors.bg_primary,
+                                    borderColor: colors.fa_primary,
+                                    borderWidth: 1,
+                                    borderRadius: 5,
+                                    flex: 1,
+                                    flexDirection: "row",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    width: "15%",
+                                    height: "75%"
+                                }}>
+                                    <Text>{selectedItem?.symbol ?? currency.symbol}</Text>
+                                </View>
+                            );
                         }}
                         dropdownStyle={{
                             backgroundColor: colors.bg_primary,
                             borderColor: colors.fa_primary
                         }}
-                        rowTextStyle={{
-                            color: colors.text_normal
-                        }}
-                        rowTextForSelection={(item) => item.symbol}
                     />
                 </View>
                 <Button mode='contained' onPress={() => setVisible(true)}>{t("settings.fees_charged")}</Button>

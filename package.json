@@ -1,6 +1,7 @@
 {
-  "name": "trenderapp",
-  "version": "0.0.1",
+  "name": "trender",
+  "version": "7.1.0",
+  "version_number": 129,
   "private": true,
   "scripts": {
     "android": "react-native run-android",

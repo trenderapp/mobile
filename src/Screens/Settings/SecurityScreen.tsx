@@ -8,7 +8,11 @@ import { TextInput } from '../../Components/Elements/Input';
 import { axiosInstance, cguLink, cgvLink, navigationProps, openURL, privacyLink } from '../../Services';
 import { useNavigation } from "@react-navigation/native";
 import { HomeButtonSection } from '../../Components/Settings';
-import { clearStorage } from '../../Services/storage';
+import { deleteUser, getAllUsers } from '../../Services/Realm/userDatabase';
+import { useRealm } from '@realm/react';
+import { apibaseurl } from '../../Services/constante';
+import Client from 'trender-client';
+import { clearStorage, setStorage } from '../../Services/storage';
 
 function SecurityScreen() {
 
@@ -20,7 +24,7 @@ function SecurityScreen() {
     const [loading, setLoading] = useState(false);
     const client = useClient();
     const { colors } = useTheme();
-    const navigation = useNavigation<navigationProps>();
+    const realm = useRealm();
 
     const hideDialog = () => setVisible(false);
 
@@ -43,8 +47,9 @@ function SecurityScreen() {
         setLoading(false);
         if (response.error) return setError(t(`errors.${response.error.code}`) as string);
 
-        clearStorage("user_info")
-        return navigation.navigate("LoginNavigator", { screen: "Login" })
+        deleteUser(realm, client.user.user_id)
+
+        client.setValue({ ...client, client: client.client, token: client.token, user: client.user, state: "switch_user" })
     }
 
     const changeNSFW = async () => {

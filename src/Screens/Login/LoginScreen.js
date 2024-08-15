@@ -14,6 +14,8 @@ import { LinkButtonText, NormalButton } from '../../Components/Elements/Buttons'
 import { Logo } from '../../Components/Elements/Assets';
 import { convertFirstCharacterToUppercase, deviceInfo } from '../../Services';
 import { requestNotificationPermission } from '../../Services/notifications';
+import { addUser } from '../../Services/Realm/userDatabase';
+import { useRealm } from '@realm/react';
 import { setStorage } from '../../Services/storage';
 
 const LoginScreen = ({ navigation }) => {
@@ -23,6 +25,7 @@ const LoginScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [showPass, setShowPass] = useState(true);
 
+  const realm = useRealm();
   const client = useClient();
 
   const [error, setError] = useState({
@@ -81,7 +84,6 @@ const LoginScreen = ({ navigation }) => {
 
     } else {
 
-      setStorage("user_info", JSON.stringify(response.data));
 
       const new_client = new Client({
         token: response.data.token,
@@ -89,12 +91,15 @@ const LoginScreen = ({ navigation }) => {
       })
 
       const informations = await new_client.informations();
+      if(!informations.data) return setLoading(false);
 
       client.setValue({ ...client, client: new_client, token: response.data.token, user: informations.data, state: "loged" })
 
-      const fcmToken = await requestNotificationPermission(true);
-
+      const fcmToken = await requestNotificationPermission(false);
       if (fcmToken) await new_client.pushNotification.register(fcmToken);
+      
+      addUser(realm, informations.data);
+      setStorage("user_info", informations.data);
 
       setTimeout(() => {
         navigation.replace('DrawerNavigation');
