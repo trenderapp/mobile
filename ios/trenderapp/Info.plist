@@ -8,6 +8,10 @@
 	<string>Trender</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	</array>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -38,7 +42,7 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2021-2024, Trender Inc.,All Rights Reserved.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Trender need it to tag your photos with the current position or when you create a posts.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Trender needs access to your Microphone to create audio or videos.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
