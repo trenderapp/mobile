@@ -22,5 +22,3 @@ const DrawerNavigation = () => {
 }
 
 export default DrawerNavigation
-
-
